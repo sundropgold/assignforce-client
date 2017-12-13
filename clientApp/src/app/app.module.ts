@@ -15,14 +15,23 @@ import { SettingsComponent } from './settings/settings.component';
 import {AppRouting} from './app.routing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
+<<<<<<< HEAD
+  MatCardContent, MatCardModule,
+  MatExpansionModule, MatIconModule, MatListModule, MatProgressSpinnerModule, MatSortModule, MatTableModule,
+=======
   MatButtonModule, MatCardModule, MatChipsModule,
   MatExpansionModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressSpinnerModule,
   MatSortModule, MatTableModule,
+>>>>>>> 2ed44bb071562b353c593419230b606d2a31ec59
   MatTabsModule, MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 import {TrainerService} from './services/trainer.service';
 import {SkillService} from './services/skill.service';
 import {S3CredentialService} from './services/s3-credential.service';
+import {
+  MatButtonModule, MatCardModule, MatChipsModule, MatFormFieldModule, MatInputModule, MatMenuModule,
+  MatProgressSpinnerModule, MatTooltipModule
+} from "@angular/material";
 
 
 @NgModule({
@@ -50,6 +59,10 @@ import {S3CredentialService} from './services/s3-credential.service';
     MatExpansionModule,
     MatSortModule,
     MatTableModule,
+    MatTooltipModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
     MatButtonModule,
     MatMenuModule,
     MatToolbarModule,
