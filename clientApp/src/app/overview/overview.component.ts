@@ -22,6 +22,11 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
+
+  test(evt) {
+    console.log('test');
+    evt.stopPropagation();
+  }
 }
 
 
