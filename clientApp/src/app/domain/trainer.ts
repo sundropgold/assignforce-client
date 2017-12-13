@@ -1,7 +1,11 @@
-export class Trainer {
+import {Skill} from './skill';
+
+export interface Trainer {
   trainerId: number;
   firstName: string;
   lastName: string;
-  skills: string[];
+  skills: Skill[];
+  certifications: any;
+  active: boolean;
+  resume: string;
 }
-
