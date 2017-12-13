@@ -14,7 +14,10 @@ import { ReportsComponent } from './reports/reports.component';
 import { SettingsComponent } from './settings/settings.component';
 import {AppRouting} from './app.routing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatIconModule, MatListModule, MatTabsModule} from '@angular/material';
+import {
+  MatExpansionModule, MatIconModule, MatListModule, MatSortModule, MatTableModule,
+  MatTabsModule
+} from '@angular/material';
 
 
 @NgModule({
@@ -38,7 +41,10 @@ import {MatIconModule, MatListModule, MatTabsModule} from '@angular/material';
     BrowserAnimationsModule,
     MatListModule,
     MatIconModule,
-    MatTabsModule
+    MatTabsModule,
+    MatExpansionModule,
+    MatSortModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
