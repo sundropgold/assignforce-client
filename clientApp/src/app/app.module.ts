@@ -15,9 +15,14 @@ import { SettingsComponent } from './settings/settings.component';
 import {AppRouting} from './app.routing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
-  MatExpansionModule, MatIconModule, MatListModule, MatSortModule, MatTableModule,
-  MatTabsModule
+  MatButtonModule, MatCardModule, MatChipsModule,
+  MatExpansionModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressSpinnerModule,
+  MatSortModule, MatTableModule,
+  MatTabsModule, MatToolbarModule, MatTooltipModule
 } from '@angular/material';
+import {TrainerService} from './services/trainer.service';
+import {SkillService} from './services/skill.service';
+import {S3CredentialService} from './services/s3-credential.service';
 
 
 @NgModule({
@@ -44,9 +49,18 @@ import {
     MatTabsModule,
     MatExpansionModule,
     MatSortModule,
-    MatTableModule
+    MatTableModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatTooltipModule,
+    MatChipsModule,
+    MatProgressSpinnerModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
-  providers: [],
+  providers: [TrainerService, SkillService, S3CredentialService],
   bootstrap: [AppComponent]
 })
 
