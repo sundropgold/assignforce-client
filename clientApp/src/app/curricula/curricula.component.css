@@ -1,5 +1,8 @@
+.fill-space {
+  flex: 1 1 auto;
+}
 .container-curricula{
-  margin-top: 2%;
+  margin-top: 5%;
 }
 .toolbar-curricula{
   background-color: #38464E;
@@ -10,5 +13,16 @@
 .toolbar-curricula-sub{
   background-color:#3D5360;
   color: white;
-  max-height: 48px;
+
 }
+
+.toolbar-mat-buttons {
+  margin: 12px 6px;
+}
+
+.mat-expansion-panel-header-title {
+  color: white;
+  font-weight: 600;
+}
+
+

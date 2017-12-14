@@ -12,4 +12,10 @@ export class CurriculaComponent implements OnInit {
   ngOnInit() {
   }
 
+
+  clickTest(evt) {
+    console.log('button clicked');
+    evt.stopPropagation();
+  }
+
 }
