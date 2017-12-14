@@ -21,10 +21,16 @@ import {
   MatButtonModule, MatCardModule, MatCheckbox, MatCheckboxModule, MatChipsModule, MatExpansionModule,
   MatFormFieldModule, MatIconModule,
   MatInputModule,
+  MatDatepickerModule,
+  MatOptionModule,
+  MatNativeDateModule,
   MatListModule,
   MatMenuModule, MatPaginatorModule, MatProgressBarModule,
   MatProgressSpinnerModule, MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule
 } from '@angular/material';
+import {MatSelectModule} from '@angular/material/select';
+import {ReactiveFormsModule} from '@angular/forms';
+
 
 
 @NgModule({
@@ -66,6 +72,13 @@ import {
     MatChipsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatOptionModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [TrainerService, SkillService, S3CredentialService],
   bootstrap: [AppComponent]
