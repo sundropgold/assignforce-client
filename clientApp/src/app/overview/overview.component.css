@@ -1,3 +1,8 @@
+.mat-paginator-active {
+  outline-color: orangered;
+  color: orangered;
+}
+
 .mat-expansion-panel {
   background-color: #333;
 }

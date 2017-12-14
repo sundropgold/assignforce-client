@@ -21,7 +21,7 @@ import {S3CredentialService} from './services/s3-credential.service';
 import {
   MatButtonModule, MatCardModule, MatChipsModule, MatExpansionModule, MatFormFieldModule, MatIconModule, MatInputModule,
   MatListModule,
-  MatMenuModule,
+  MatMenuModule, MatPaginatorModule, MatProgressBarModule,
   MatProgressSpinnerModule, MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 
@@ -61,7 +61,9 @@ import {
     MatTooltipModule,
     MatChipsModule,
     MatProgressSpinnerModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatProgressBarModule,
+    MatPaginatorModule
   ],
   providers: [TrainerService, SkillService, S3CredentialService],
   bootstrap: [AppComponent]
