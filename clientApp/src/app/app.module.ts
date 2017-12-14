@@ -54,18 +54,15 @@ import {S3CredentialService} from './services/s3-credential.service';
     MatTableModule,
     MatTooltipModule,
     MatToolbarModule,
-    MatCardModule,
     MatProgressSpinnerModule,
     MatButtonModule,
     MatMenuModule,
-    MatToolbarModule,
     MatCardModule,
-    MatTooltipModule,
     MatChipsModule,
     MatProgressSpinnerModule,
-    MatFormFieldModule,
     MatInputModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [TrainerService, SkillService, S3CredentialService],
   bootstrap: [AppComponent]

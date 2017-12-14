@@ -7,12 +7,32 @@
   color: #E0E4E6;
 }
 
+.md-list-item {
+  border-radius: 10px;
+  margin: 6px 8px;
+  padding: 0 6px;
+}
+
+.inputFile {
+  display: none;
+}
+
+mat-card {
+  margin: 0 16px;
+  padding: 0;
+}
+
 mat-card-content {
+  margin: 0;
   padding: 16px;
 }
 
-i {
-  margin: 0px;
+.mat-list-item-content {
+  padding: 0;
+}
+
+mat-icon {
+  margin: 0;
   display: inline-flex;
   vertical-align: middle;
 }
