@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {MatSort, MatTableDataSource} from '@angular/material';
+import {Batch} from '../domain/batch';
 
 @Component({
   selector: 'app-batches',
@@ -9,11 +10,12 @@ import {MatSort, MatTableDataSource} from '@angular/material';
 })
 export class BatchesComponent implements OnInit, AfterViewInit {
 
-  batchValues = ['Name', 'Curriculum', 'Focus', 'Trainer/Co-Trainer', 'Loocation', 'Building', 'Room', 'Start Date', 'End Date'];
-
   panelOpenState = false;
-  displayedColumns = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns = ['position', 'name', 'weight', 'symbol', 'test'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
+
+  batchValues = ['Name', 'Curriculum', 'Focus', 'Trainer/Co-Trainer', 'Location', 'Building', 'Room', 'StartDate', 'EndDate'];
+  batchData = new MatTableDataSource(BatchData);
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -24,9 +26,11 @@ export class BatchesComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+    this.batchData.sort = this.sort;
   }
 
 }
+
 
 export interface Element {
   name: string;
@@ -56,4 +60,11 @@ const ELEMENT_DATA: Element[] = [
   {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
   {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
   {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
+];
+
+const BatchData: Batch[] = [
+  {name: 'batch1', startDate: new Date('February 4, 2017 10:13:00'), endDate: new Date('February 14, 2017 20:24:00'),
+    curriculum: 'Java', focus: 'Microservices', trainer: 'Steve', cotrainer: 'Sarah', location: 'here', building: 'buildo', room: 'roo'},
+  {name: 'batch2', startDate: new Date('February 4, 2017 10:13:00'), endDate: new Date('February 14, 2017 20:24:00'),
+    curriculum: 'Java', focus: 'Microservices', trainer: 'Steve', cotrainer: 'Sarah', location: 'here', building: 'buildo', room: 'roo'}
 ];
