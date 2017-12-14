@@ -24,5 +24,21 @@
   color: white;
   font-weight: 600;
 }
+.panel-title-fix {
+  padding-top: 8px;
+}
+.icon-margin-fix {
+  margin:0px;
+}
+.button-orange {
+  background-color: #FB8C00;
+  margin: 5px;
+}
+.item-detail{
+  margin: 2%;
+}
+[hidden]{
+  display: none;
+}
 
 
