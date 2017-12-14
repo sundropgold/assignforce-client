@@ -4,6 +4,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material';
 import {MatOptionModule} from '@angular/material';
 import {FormControl} from '@angular/forms';
+import {DomSanitizer} from '@angular/platform-browser';
+import {MatIconRegistry} from '@angular/material';
 
 @Component({
   selector: 'app-batches',
@@ -74,7 +76,11 @@ export class BatchesComponent implements OnInit {
     {value: 'room-0', viewValue: '201'},
     {value: 'room-1', viewValue: '301'},
   ]
-  constructor() { }
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+    iconRegistry.addSvgIcon(
+      'thumbs-up',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/img/examples/thumbup-icon.svg'));
+  }
 
   ngOnInit() {
   }
