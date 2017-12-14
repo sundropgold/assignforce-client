@@ -85,10 +85,10 @@
 
 <mat-card class="md-whiteframe">
   <!--orange trainer title above list of trainers-->
-  <mat-toolbar fxLayout="column">
+  <mat-toolbar fxLayout="columns">
     <div class="md-toolbar-tools">
       <span> Trainers </span>
-      <span fxFlex> </span>
+      <span class="md-toolbar-spacer"> </span>
       <button mat-icon-button (click)="addTrainer()" (show)="isManager" matTooltip="Add Trainer">
         <mat-icon svgIcon="img/ic_add_circle_white_24px.svg"></mat-icon>
       </button>
@@ -104,20 +104,20 @@
   <!--shows a list of all the active trainers-->
   <mat-card-content *ngIf="trainers != undefined">
     <mat-list>
-      <mat-list-item class="mat-2-line" mat-ripple="#ff0000" *ngFor="let trainer of trainers">
-        <mat-icon svgIcon="img/ic_people_black_48px.svg" mat-list-icon></mat-icon>
+      <mat-list-item mat-ripple="#ff0000" *ngFor="let trainer of trainers">
+        <mat-icon matListIcon svgIcon="img/ic_people_black_48px.svg" mat-list-icon></mat-icon>
         <div class="md-list-item-text">
-          <h3 mat-line> {{ trainer.firstName }} {{ trainer.lastName }} </h3>
-          <p *ngIf="trainer.skills.length > 0" mat-line> Skills: Test </p>
-          <p *ngIf="trainer.skills.length <= 0" mat-line> Skills: none </p>
+          <h3 matLine> {{ trainer.firstName }} {{ trainer.lastName }} </h3>
+          <p *ngIf="trainer.skills.length > 0" matLine> Skills: Test </p>
+          <p *ngIf="trainer.skills.length <= 0" matLine> Skills: none </p>
         </div>
-        <span fxFlex> </span>
+        <span class="md-toolbar-spacer"> </span>
 
         <button mat-icon-button (click)="grabS3Resume(trainer)" matTooltip="Download Resume">
-          <i class="material-icons revOrange">file_download</i>
+          <mat-icon class="revOrange">file_download</mat-icon>
         </button>
         <button mat-icon-button (click)="removeTrainer(trainer)" (show)="isManager" matTooltip="Deactivate Trainer">
-          <i class="material-icons revOrange">remove_circle</i>
+          <mat-icon class="revOrange">remove_circle</mat-icon>
         </button>
       </mat-list-item>
       <mat-divider></mat-divider>
@@ -142,16 +142,16 @@
   <mat-card-content class="md-padding" *ngIf="trainers != undefined">
     <mat-list>
       <mat-list-item class="md-2-line" mat-ripple="#ff0000" *ngFor=" let trainer of trainers">
-        <mat-icon svgIcon="img/ic_people_black_48px.svg"></mat-icon>
-        <div class="mat-list-item-text" fxLayout="column">
-          <h3 mat-line> {{ trainer.firstName }} {{ trainer.lastName }} </h3>
-          <p *ngIf="trainer.skills.length > 0" mat-line> Skills: Test </p>
-          <p *ngIf="trainer.skills.length <= 0" mat-line> Skills: none </p>
+        <mat-icon matListIcon svgIcon="img/ic_people_black_48px.svg"></mat-icon>
+        <div class="mat-list-item-text" fxLayout="columns">
+          <h3 matLine> {{ trainer.firstName }} {{ trainer.lastName }} </h3>
+          <p *ngIf="trainer.skills.length > 0" matLine> Skills: Test </p>
+          <p *ngIf="trainer.skills.length <= 0" matLine> Skills: none </p>
         </div>
-        <span fxFlex> </span>
+        <span class="md-toolbar-spacer"> </span>
         <!--button activates a Trainer-->
         <button mat-icon-button (click)="activateTrainer(trainer)" (show)="isManager" matTooltip="Reactivate Trainer">
-          <i class="material-icons revOrange">add_circle</i>
+          <mat-icon class="revOrange">add_circle</mat-icon>
         </button>
       </mat-list-item>
     </mat-list>
