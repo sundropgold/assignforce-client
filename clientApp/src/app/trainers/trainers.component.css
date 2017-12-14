@@ -14,13 +14,22 @@ mat-toolbar {
 }
 
 
-mat-list-item .md-list-item-inner {
+mat-list-item{
   margin-right: 7px;
+  transition: background 0.3s linear;
+}
+
+mat-list-item:hover{
+  background-color: #DDDDDD;
 }
 
 
 mat-card-content {
   padding: 16px;
+}
+
+mat-icon {
+  margin: 0;
 }
 
 i {
