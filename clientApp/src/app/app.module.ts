@@ -15,6 +15,7 @@ import { SettingsComponent } from './settings/settings.component';
 import {AppRouting} from './app.routing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
+<<<<<<< HEAD
   MatButtonModule,
   MatCardModule, MatCheckboxModule, MatChipsModule,
   MatExpansionModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
@@ -26,6 +27,15 @@ import {
 import {TrainerService} from './services/trainer.service';
 import {SkillService} from './services/skill.service';
 import {S3CredentialService} from './services/s3-credential.service';
+=======
+  MatExpansionModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatSortModule, MatTableModule,
+  MatTabsModule, MatOptionModule, MatDatepickerModule , MatNativeDateModule
+} from '@angular/material';
+import {MatSelectModule} from '@angular/material/select';
+import {ReactiveFormsModule} from '@angular/forms';
+
+
+>>>>>>> e767e60584eaf5eda006c149e74b2ba42a6cc4b2
 
 @NgModule({
   declarations: [
@@ -52,6 +62,7 @@ import {S3CredentialService} from './services/s3-credential.service';
     MatExpansionModule,
     MatSortModule,
     MatTableModule,
+<<<<<<< HEAD
     MatTooltipModule,
     MatToolbarModule,
     MatProgressSpinnerModule,
@@ -63,6 +74,16 @@ import {S3CredentialService} from './services/s3-credential.service';
     MatInputModule,
     MatFormFieldModule,
     MatCheckboxModule
+=======
+    MatFormFieldModule,
+    MatInputModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+>>>>>>> e767e60584eaf5eda006c149e74b2ba42a6cc4b2
   ],
   providers: [TrainerService, SkillService, S3CredentialService],
   bootstrap: [AppComponent]
