@@ -4,7 +4,6 @@ import {Batch} from '../domain/batch';
 import {FormControl} from '@angular/forms';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
-
 @Component({
   selector: 'app-batches',
   templateUrl: './batches.component.html',
