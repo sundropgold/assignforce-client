@@ -1,20 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import {MatFormField} from '@angular/material';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material';
-import {MatOptionModule} from '@angular/material';
+import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {MatSort, MatTableDataSource, MatCheckbox} from '@angular/material';
+import {Batch} from '../domain/batch';
 import {FormControl} from '@angular/forms';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
-
 @Component({
   selector: 'app-batches',
   templateUrl: './batches.component.html',
-  styleUrls: ['./batches.component.css']
+  styleUrls: ['./batches.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
-export class BatchesComponent implements OnInit {
+export class BatchesComponent implements OnInit, AfterViewInit {
 
-  batchValues = ['Name', 'Curriculum', 'Focus', 'Trainer/Co-Trainer', 'Loocation', 'Building', 'Room', 'Start Date', 'End Date'];
+  batchValues = ['Checkbox', 'Name', 'Curriculum', 'Focus', 'Trainer/Co-Trainer', 'Location', 'Building', 'Room', 'StartDate', 'EndDate', 'Icons'];
+  batchData = new MatTableDataSource(BatchData);
+
+  @ViewChild(MatSort) sort: MatSort;
   datebetween = 0;
 
   Curriculums = [
@@ -85,4 +86,24 @@ export class BatchesComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngAfterViewInit() {
+    this.batchData.sort = this.sort;
+  }
+
 }
+
+
+export interface Element {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
+}
+
+
+const BatchData: Batch[] = [
+  {name: 'batch1', startDate: new Date('February 4, 2017 10:13:00'), endDate: new Date('February 14, 2017 20:24:00'),
+    curriculum: 'Java', focus: 'Microservices', trainer: 'Steve', cotrainer: 'Sarah', location: 'here', building: 'buildo', room: 'roo'},
+  {name: 'batch2', startDate: new Date('February 4, 2017 10:13:00'), endDate: new Date('February 14, 2017 20:24:00'),
+    curriculum: 'Java', focus: 'Microservices', trainer: 'Steve', cotrainer: 'Sarah', location: 'here', building: 'buildo', room: 'roo'}
+];
