@@ -54,7 +54,6 @@ import {
     MatTableModule,
     MatTooltipModule,
     MatToolbarModule,
-    MatCardModule,
     MatProgressSpinnerModule,
     MatButtonModule,
     MatMenuModule,
@@ -63,6 +62,9 @@ import {
     MatProgressBarModule,
     MatPaginatorModule,
     MatCheckboxModule,
+    MatCardModule,
+    MatChipsModule,
+    MatFormFieldModule,
     MatInputModule
   ],
   providers: [TrainerService, SkillService, S3CredentialService],

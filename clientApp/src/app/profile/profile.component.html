@@ -8,17 +8,19 @@ The second md-card/ng-show is for other users to look at other trainers profiles
 <div style="margin-top: 5%">
   <!--<mat-card *ngIf="tId == -1" md-whiteframe="8" ng-cloak>-->
   <mat-card>
-    <mat-toolbar class="md-toolbar" layout="columns">
-      <div>
-        <span> Profile </span>
-      </div>
-    </mat-toolbar>
+    <mat-toolbar-row>
+      <mat-toolbar class="md-toolbar" layout="columns">
+        <div>
+          <span>Profile</span>
+        </div>
+      </mat-toolbar>
+    </mat-toolbar-row>
 
     <!--info section-->
     <mat-card-content *ngIf="trainer != undefined && skills != undefined">
       <div class="row">
         <div class="col-lg-2">
-          <img layout="column" style="border-radius: 50%" alt=""
+          <img layout="column" style="border-radius: 50%;" alt=""
                ng-src="https://app.revature.com/core/resources/download/default/interns/image?t=1486138020884"
                id="displayImage" class="width-200 height-200"
                src="https://app.revature.com/core/resources/download/default/interns/image?t=1486138020884">
@@ -42,10 +44,10 @@ The second md-card/ng-show is for other users to look at other trainers profiles
           </div>
           <div class="row">
             <div class="col-lg-1">
-              <input style="display: none" id="input-file-id"  type="file" (change)="getFiles($event)">
-              <label for="input-file-id">
-                <mat-icon matTooltip="Add/Update Resume" class="material-icons" style="color: #FB8C00;">add_circle</mat-icon>
-              </label>
+              <button mat-icon-button (click)="inputResume.click()">
+                <input class="inputFile" #inputResume type="file" (change)="getFiles($event)">
+                <mat-icon matTooltip="Add/Update Resume" position="below" class="material-icons revOrange">add_circle</mat-icon>
+              </button>
             </div>
             <div class="col-lg-11" *ngIf="myFile != undefined">
               <label>{{myFile[0].name}}</label>
@@ -57,13 +59,15 @@ The second md-card/ng-show is for other users to look at other trainers profiles
     </mat-card-content>
 
     <!--skills section-->
-    <mat-toolbar class="md-toolbar">
-      <span>Skills</span>
-      <span class="md-toolbar-spacer"></span>
-      <button mat-icon-button>
-        <mat-icon matTooltip="Save" class="material-icons" style="margin: 0px" (click)="saveTSkills()">save</mat-icon>
-      </button>
-    </mat-toolbar>
+    <mat-toolbar-row>
+      <mat-toolbar class="md-toolbar">
+        <span>Skills</span>
+        <span class="md-toolbar-spacer"></span>
+        <button mat-icon-button (click)="saveTSkills()">
+          <mat-icon matTooltip="Save" class="material-icons">save</mat-icon>
+        </button>
+      </mat-toolbar>
+    </mat-toolbar-row>
     <!--<mat-card-content *ngIf="trainer != undefined && skills != undefined">-->
     <mat-card-content>
       <div class="md-padding" layout="column">
@@ -77,7 +81,7 @@ The second md-card/ng-show is for other users to look at other trainers profiles
         <h2 matSubheader>Current skills:</h2>
         <mat-list>
           <button mat-button class="md-list-item" *ngFor="let skill of trainer.skills" (click)="removeSkill(skill)">
-            <i class="material-icons" style="color: #FB8C00">stars</i>
+            <mat-icon class="material-icons" style="color: #FB8C00">stars</mat-icon>
             <h5>{{skill.name}}</h5>
           </button>
         </mat-list>
@@ -86,14 +90,17 @@ The second md-card/ng-show is for other users to look at other trainers profiles
 
     <!--certifications section-->
     <!--<mat-card-content *ngIf="trainer != undefined && skills != undefined">-->
-    <mat-toolbar class="md-toolbar">
-      <span>Certifications</span>
-      <span class="md-toolbar-spacer"></span>
-      <input style="display: none" id="input-file-cert"  type="file" (change)="getCert($event)">
-      <label for="input-file-cert">
-      <i matTooltip="Add Certification" class="material-icons md-toolbar-icon">add_circle</i>
-      </label>
-    </mat-toolbar>
+    <mat-toolbar-row>
+      <mat-toolbar class="md-toolbar">
+        <span>Certifications</span>
+        <span class="md-toolbar-spacer"></span>
+        <button mat-icon-button (click)="inputCert.click()">
+          <input class="inputFile" #inputCert  type="file" (change)="getCert($event)">
+          <mat-icon matTooltip="Add Certification" class="material-icons md-toolbar-icon">add_circle</mat-icon>
+        </button>
+      </mat-toolbar>
+    </mat-toolbar-row>
+
     <mat-card-content>
       <!--see the list of certifications and remove any that exist-->
       <div class="md-padding" layout="column">
@@ -104,8 +111,7 @@ The second md-card/ng-show is for other users to look at other trainers profiles
             </mat-form-field>
             <br>
             <label>{{certFile[0].name}}</label>
-            <button mat-button (click)="uploadCertification()" *ngIf="certName != undefined">Update
-            </button>
+            <button mat-button (click)="uploadCertification()" *ngIf="certName != undefined">Update</button>
             <br>
           </div>
         </div>
@@ -117,9 +123,9 @@ The second md-card/ng-show is for other users to look at other trainers profiles
           <mat-list-item *ngFor="let cert of trainer.certifications">
             <mat-icon matListIcon class="material-icons" style="color: black;">insert_drive_file</mat-icon>
             <h3 matLine>{{cert.name}}</h3>
-            <span flex></span>
+            <span class="md-toolbar-spacer"></span>
             <button mat-icon-button class="md-icon-button" (click)="removeCertification(cert)">
-              <i matTooltip="Remove Certification" class="material-icons">remove_circle</i>
+              <mat-icon matTooltip="Remove Certification" class="material-icons" style="color: black">remove_circle</mat-icon>
             </button>
           </mat-list-item>
         </mat-list>
@@ -177,7 +183,7 @@ The second md-card/ng-show is for other users to look at other trainers profiles
           <div layout="row">
             <!--<input class="ng-hide" id="input-file-id"  type="file" [(ngModel)]="myFile">-->
             <label *ngIf="lockProfile" class="md-button md-icon-button">
-              <mat-icon md-menu-origin class="material-icons" style="color: #FB8C00;"> add_circle</mat-icon>
+              <mat-icon class="material-icons revOrange"> add_circle</mat-icon>
               <span matTooltip="Add" class="md-title"> Add/Update Resume </span>
             </label>
             <div *ngIf="myFile != undefined">
