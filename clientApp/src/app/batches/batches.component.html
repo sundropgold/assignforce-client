@@ -87,16 +87,16 @@
 
           <mat-form-field>
             <mat-select placeholder="Building">
-              <mat-option *ngFor="let building of location" [value]="location[0].building">
-                {{ building.toString().valueOf() }}
+              <mat-option *ngFor="let building of buildings" [value]="building.value">
+                {{ building.viewValue}}
               </mat-option>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field>
             <mat-select placeholder="Room">
-              <mat-option *ngFor="let building of location" [value]="location[0].building">
-                {{ building.toString().valueOf() }}
+              <mat-option *ngFor="let room of rooms" [value]="room.value">
+                {{ room.viewValue }}
               </mat-option>
             </mat-select>
           </mat-form-field>

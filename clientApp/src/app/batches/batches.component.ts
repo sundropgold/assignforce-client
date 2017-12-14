@@ -65,6 +65,15 @@ export class BatchesComponent implements OnInit {
       ]
     }
   ];
+
+  buildings = [
+      {value: 'building-0', viewValue: 'Reston'},
+      {value: 'trainer-1', viewValue: 'CSPS'},
+      {value: 'trainer-2', viewValue: 'Steven Kelsey'}];
+  rooms = [
+    {value: 'room-0', viewValue: '201'},
+    {value: 'room-1', viewValue: '301'},
+  ]
   constructor() { }
 
   ngOnInit() {
