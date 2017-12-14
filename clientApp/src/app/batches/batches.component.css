@@ -1,19 +1,6 @@
-#check {
-  max-width: 50px;
+#check, #checkcell{
+  max-width: 30px;
 }
-
-#checkcell {
-  max-width: 50px;
-}
-
-#room {
-  max-width: 100px;
-}
-
-#roomcell {
-  max-width: 100px;
-}
-
 .mat-expansion-panel {
   background-color: black;
 }

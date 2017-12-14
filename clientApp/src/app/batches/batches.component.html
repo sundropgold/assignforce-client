@@ -87,16 +87,16 @@
 
           <mat-form-field>
             <mat-select placeholder="Building">
-              <mat-option *ngFor="let building of location" [value]="location[0].building">
-                {{ building.toString().valueOf() }}
+              <mat-option *ngFor="let building of buildings" [value]="building.value">
+                {{ building.viewValue}}
               </mat-option>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field>
             <mat-select placeholder="Room">
-              <mat-option *ngFor="let building of location" [value]="location[0].building">
-                {{ building.toString().valueOf() }}
+              <mat-option *ngFor="let room of rooms" [value]="room.value">
+                {{ room.viewValue }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -121,7 +121,7 @@
           All Batches
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <div class="example-container mat-elevation-z8">
+      <div class="example-container_mat-elevation-z8">
         <mat-table #table [dataSource]="batchData" matSort>
 
           <!-- Checkbox Column -->
@@ -169,8 +169,8 @@
 
           <!-- Room Column -->
           <ng-container matColumnDef="Room">
-            <mat-header-cell *matHeaderCellDef mat-sort-header id="room"> Room </mat-header-cell>
-            <mat-cell *matCellDef="let batch" id="roomcell"> {{batch.room}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header > Room </mat-header-cell>
+            <mat-cell *matCellDef="let batch"> {{batch.room}} </mat-cell>
           </ng-container>
 
           <!-- StartDate Column -->
