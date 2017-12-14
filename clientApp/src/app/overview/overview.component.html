@@ -1,10 +1,30 @@
 <div style="margin-top: 5%">
   <mat-accordion>
-    <mat-expansion-panel>
+    <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
           All Batches
         </mat-panel-title>
+        <mat-panel-description>
+          <span class="fill-space"></span>
+          <mat-icon title="Export to CSV" (click)="exportToCSV($event)">get_app</mat-icon>
+
+          <mat-icon [matMenuTriggerFor]="menu" (click)="openMenu($event)">
+            menu
+          </mat-icon>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+              <span>In Progress</span>
+            </button>
+            <button mat-menu-item>
+              <span>Beginging within two weeks</span>
+            </button>
+            <button mat-menu-item>
+              <span>All</span>
+            </button>
+          </mat-menu>
+
+        </mat-panel-description>
       </mat-expansion-panel-header>
 
       <div class="example-container mat-elevation-z8">

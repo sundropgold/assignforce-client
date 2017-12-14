@@ -1,5 +1,9 @@
 import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {MatSort, MatTableDataSource} from '@angular/material';
+<<<<<<< HEAD
+=======
+import {Angular2Csv } from 'angular2-csv/Angular2-csv';
+>>>>>>> 015c061820c73488aefdacb73cf3c50f1b3f4a57
 
 @Component({
   selector: 'app-overview',
@@ -8,12 +12,10 @@ import {MatSort, MatTableDataSource} from '@angular/material';
   encapsulation: ViewEncapsulation.None
 })
 export class OverviewComponent implements OnInit, AfterViewInit {
-  panelOpenState = false;
   displayedColumns = ['position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   @ViewChild(MatSort) sort: MatSort;
-
 
   constructor() { }
 
@@ -21,6 +23,16 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+  }
+
+  exportToCSV(evt) {
+    evt.stopPropagation();
+   // this.csvService.download(this.dataSource, 'Batches');
+    new Angular2Csv(ELEMENT_DATA, 'batches');
+  }
+
+  openMenu(evt) {
+    evt.stopPropagation();
   }
 }
 
