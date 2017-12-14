@@ -27,7 +27,6 @@ import {
 } from '@angular/material';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,7 +62,8 @@ import {
     MatFormFieldModule,
     MatProgressBarModule,
     MatPaginatorModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatInputModule
   ],
   providers: [TrainerService, SkillService, S3CredentialService],
   bootstrap: [AppComponent]
