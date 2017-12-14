@@ -16,7 +16,7 @@ import {AppRouting} from './app.routing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatExpansionModule, MatIconModule, MatListModule, MatSortModule, MatTableModule,
-  MatTabsModule
+  MatTabsModule, MatToolbarModule
 } from '@angular/material';
 
 
@@ -44,7 +44,8 @@ import {
     MatTabsModule,
     MatExpansionModule,
     MatSortModule,
-    MatTableModule
+    MatTableModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
