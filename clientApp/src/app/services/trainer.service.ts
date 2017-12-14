@@ -6,7 +6,7 @@ import {Trainer} from '../domain/trainer';
 @Injectable()
 export class TrainerService {
 
-  url: 'api/v2/trainer';
+  url = 'api/v2/trainer';
 
   constructor(private http: HttpClient) { }
 
@@ -33,6 +33,7 @@ export class TrainerService {
   }
 
   update(trainer): Observable<any> {
+    console.log(`${this.url}`);
     return this.http.put<any>(`${this.url}`, trainer);
   }
 

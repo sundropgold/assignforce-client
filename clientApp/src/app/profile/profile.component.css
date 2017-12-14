@@ -1,7 +1,18 @@
-.example-icon {
-  padding: 0 14px;
+.md-toolbar-spacer {
+  flex: 1 1 auto;
 }
 
-example-spacer {
-  flex: 1 1 auto;
+.md-toolbar {
+  background-color: #37474F;
+  color: #E0E4E6;
+}
+
+mat-card-content {
+  padding: 16px;
+}
+
+i {
+  margin: 0px;
+  display: inline-flex;
+  vertical-align: middle;
 }
