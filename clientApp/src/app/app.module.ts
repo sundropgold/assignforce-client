@@ -18,6 +18,7 @@ import {
   MatExpansionModule, MatIconModule, MatListModule, MatSortModule, MatTableModule,
   MatTabsModule
 } from '@angular/material';
+import { TimelineComponent } from './timeline/timeline.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import {
     TrainersComponent,
     ProfileComponent,
     ReportsComponent,
-    SettingsComponent
+    SettingsComponent,
+    TimelineComponent
   ],
   imports: [
     HttpClientModule,
