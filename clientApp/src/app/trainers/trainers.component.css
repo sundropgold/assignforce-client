@@ -1,0 +1,11 @@
+mat-toolbar {
+  padding: 0px 16px;
+}
+
+mat-toolbar * {
+  font-weight: bold;
+}
+
+mat-list-item .md-list-item-inner {
+  margin-right: 7px;
+}
