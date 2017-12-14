@@ -2,7 +2,6 @@ import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@a
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Angular2Csv } from 'angular2-csv/Angular2-csv';
 
-
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
