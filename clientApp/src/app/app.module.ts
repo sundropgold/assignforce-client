@@ -24,6 +24,7 @@ import {
   MatTableModule,
   MatTabsModule, MatToolbarModule, MatTooltipModule
 } from '@angular/material';
+<<<<<<< HEAD
 import {TrainerService} from './services/trainer.service';
 import {SkillService} from './services/skill.service';
 import {S3CredentialService} from './services/s3-credential.service';
@@ -34,6 +35,9 @@ import {S3CredentialService} from './services/s3-credential.service';
 import {MatSelectModule} from '@angular/material/select';
 import {ReactiveFormsModule} from '@angular/forms';
 
+=======
+import { TimelineComponent } from './timeline/timeline.component';
+>>>>>>> 0f3828e8db8be52345dcaca66e6b9aac0c3c1a61
 
 >>>>>>> e767e60584eaf5eda006c149e74b2ba42a6cc4b2
 
@@ -48,7 +52,8 @@ import {ReactiveFormsModule} from '@angular/forms';
     TrainersComponent,
     ProfileComponent,
     ReportsComponent,
-    SettingsComponent
+    SettingsComponent,
+    TimelineComponent
   ],
   imports: [
     HttpClientModule,
