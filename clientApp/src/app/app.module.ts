@@ -14,18 +14,18 @@ import { ReportsComponent } from './reports/reports.component';
 import { SettingsComponent } from './settings/settings.component';
 import {AppRouting} from './app.routing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
+
 import {TrainerService} from './services/trainer.service';
 import {SkillService} from './services/skill.service';
 import {S3CredentialService} from './services/s3-credential.service';
 import {
-  MatButtonModule,
-  MatCardModule, MatChipsModule,
-  MatExpansionModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
-  MatProgressSpinnerModule,
-  MatSortModule,
-  MatTableModule,
-  MatTabsModule, MatToolbarModule, MatTooltipModule
-} from "@angular/material";
+  MatButtonModule, MatCardModule, MatChipsModule, MatExpansionModule, MatFormFieldModule, MatIconModule, MatInputModule,
+  MatListModule,
+  MatMenuModule,
+  MatProgressSpinnerModule, MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule
+} from '@angular/material';
+
 
 @NgModule({
   declarations: [
@@ -60,7 +60,7 @@ import {
     MatCardModule,
     MatChipsModule,
     MatFormFieldModule,
-    MatInputModule,
+    MatInputModule
   ],
   providers: [TrainerService, SkillService, S3CredentialService],
   bootstrap: [AppComponent]
