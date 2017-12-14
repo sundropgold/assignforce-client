@@ -15,9 +15,12 @@ import { SettingsComponent } from './settings/settings.component';
 import {AppRouting} from './app.routing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
-  MatExpansionModule, MatIconModule, MatListModule, MatSortModule, MatTableModule,
-  MatTabsModule
+  MatExpansionModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatSortModule, MatTableModule,
+  MatTabsModule, MatOptionModule, MatDatepickerModule , MatNativeDateModule
 } from '@angular/material';
+import {MatSelectModule} from '@angular/material/select';
+import {ReactiveFormsModule} from '@angular/forms';
+
 
 
 @NgModule({
@@ -44,7 +47,15 @@ import {
     MatTabsModule,
     MatExpansionModule,
     MatSortModule,
-    MatTableModule
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatOptionModule,
+    MatSelectModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]
