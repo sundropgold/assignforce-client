@@ -1,0 +1,170 @@
+<!--<mat-card class="md-whiteframe" ng-cloak>-->
+  <!--&lt;!&ndash;orange trainer title above list of trainers&ndash;&gt;-->
+  <!--<mat-toolbar layout="columns">-->
+    <!--<div class="md-toolbar-tools" >-->
+      <!--<span> Trainers </span>-->
+      <!--<span flex> </span>-->
+      <!--<button class="md-icon-button" (click)="addTrainer()" (show)="isManager">-->
+        <!--<mat-tooltip-component class="md-title"> Add Trainer </mat-tooltip-component>-->
+        <!--<mat-icon svgIcon="img/ic_add_circle_white_24px.svg"> </mat-icon>-->
+      <!--</button>-->
+      <!--<button class="mat-icon-button" (click)="showCalendar()">-->
+        <!--<mat-tooltip-component class="mat-title"> View PTO Calendar </mat-tooltip-component>-->
+        <!--<mat-icon svgIcon="img/ic_perm_contact_calendar_white_24px.svg"> </mat-icon>-->
+      <!--</button>-->
+      <!--&lt;!&ndash;<button class="mat-icon-button" ng-click="tCtrl.googleAuth()">&ndash;&gt;-->
+      <!--&lt;!&ndash;<mat-tooltip class="mat-title"> Google Authentication </mat-tooltip>&ndash;&gt;-->
+      <!--&lt;!&ndash;<mat-icon mat-svg-icon="img/ic_perm_contact_calendar_white_24px.svg"> </mat-icon>&ndash;&gt;-->
+      <!--&lt;!&ndash;</button>&ndash;&gt;-->
+    <!--</div>-->
+  <!--</mat-toolbar>-->
+  <!--&lt;!&ndash;shows a list of all the active trainers&ndash;&gt;-->
+  <!--<mat-card-content *ngIf="trainers != undefined">-->
+    <!--<mat-list>-->
+      <!--<mat-list-item class="mat-2-line" mat-ripple="#ff0000" *ngFor="let trainer of trainers | orderBy: 'firstName' | activeItem track by trainer.trainerId" onclick="goToTrainer(trainer)">-->
+        <!--<mat-icon svgIcon="img/ic_people_black_48px.svg"> </mat-icon>-->
+        <!--<div class="mat-list-item-text" layout="column">-->
+          <!--<h3> {{ trainer.firstName }} {{ trainer.lastName }} </h3>-->
+          <!--<p *ngIf="trainer.skills.length > 0"> Skills: {{ trainer.skills.map(tCtrl.joinObjArrayByName).join(", "); }} </p>-->
+          <!--<p *ngIf="trainer.skills.length <= 0"> Skills: none </p>-->
+        <!--</div>-->
+        <!--<span flex> </span>-->
+
+        <!--<button class="mat-icon-button" (click)="grabS3Resume(trainer)">-->
+          <!--<mat-tooltip-component class="mat-title"> Download Resume </mat-tooltip-component>-->
+          <!--<i class="material-icons revOrange">file_download</i>-->
+        <!--</button>-->
+        <!--<button class="mat-icon-button" (click)="removeTrainer(Trainer)" (show)="isManager">-->
+          <!--<mat-tooltip-component class="mat-title"> Deactivate Trainer </mat-tooltip-component>-->
+          <!--<i class="material-icons revOrange">remove_circle</i>-->
+        <!--</button>-->
+      <!--</mat-list-item>-->
+    <!--</mat-list>-->
+  <!--</mat-card-content>-->
+  <!--&lt;!&ndash;displays a loading circle if trainers is undefined&ndash;&gt;-->
+  <!--<div *ngIf="trainers == undefined" layout="column" layout-wrap layout-align="center center">-->
+    <!--<div flex="100"> &nbsp; </div>-->
+    <!--<mat-progress-spinner flex="100" mode="indeterminate"> </mat-progress-spinner>-->
+    <!--<div flex="100"> &nbsp; </div>-->
+  <!--</div>-->
+
+  <!--&lt;!&ndash;toolbar for the inactive trainers&ndash;&gt;-->
+  <!--<mat-toolbar layout="columns">-->
+    <!--<div class="mat-toolbar-tools">-->
+      <!--<span> Inactive Trainers </span>-->
+      <!--<span flex> </span>-->
+    <!--</div>-->
+  <!--</mat-toolbar>-->
+
+  <!--&lt;!&ndash;shows a list of all inactive trainers&ndash;&gt;-->
+  <!--<mat-card-content class="mat-padding" *ngIf="trainers != undefined">-->
+    <!--<mat-list>-->
+      <!--<mat-list-item class="mat-2-line" mat-ripple="#ff0000" *ngFor=" let trainer of trainers | orderBy: 'firstName' | inactiveItem">-->
+        <!--<mat-icon svgIcon="img/ic_people_black_48px.svg"> </mat-icon>-->
+        <!--<div class="mat-list-item-text" layout="column">-->
+          <!--<h3> {{ trainer.firstName }} {{ trainer.lastName }} </h3>-->
+          <!--<p *ngIf="trainer.skills.length > 0"> Skills: {{ trainer.skills.map(tCtrl.joinObjArrayByName).join(", "); }} </p>-->
+          <!--<p *ngIf="trainer.skills.length <= 0"> Skills: none </p>-->
+        <!--</div>-->
+        <!--<span flex> </span>-->
+        <!--&lt;!&ndash;button activates a Trainer&ndash;&gt;-->
+        <!--<button class="mat-icon-button" (click)="activateTrainer(trainer)" (show)="isManager">-->
+          <!--<mat-tooltip-component class="mat-title"> Reactivate Trainer </mat-tooltip-component>-->
+          <!--<i class="material-icons revOrange">add_circle</i>-->
+        <!--</button>-->
+      <!--</mat-list-item>-->
+    <!--</mat-list>-->
+  <!--</mat-card-content>-->
+  <!--&lt;!&ndash;shows a loading circle if trainers is undefined&ndash;&gt;-->
+  <!--<div *ngIf="trainers == undefined" layout="column" layout-wrap layout-align="center center">-->
+    <!--<div flex="100"> &nbsp; </div>-->
+    <!--<mat-progress-spinner flex="100" mode="indeterminate"> </mat-progress-spinner>-->
+    <!--<div flex="100"> &nbsp; </div>-->
+  <!--</div>-->
+<!--</mat-card>-->
+
+<mat-card class="md-whiteframe">
+  <!--orange trainer title above list of trainers-->
+  <mat-toolbar>
+    <div class="md-toolbar-tools" >
+      <span> Trainers </span>
+      <span> </span>
+      <button class="md-icon-button" (click)="addTrainer()" (show)="isManager">
+        <mat-tooltip-component class="md-title"> Add Trainer </mat-tooltip-component>
+        <mat-icon svgIcon="img/ic_add_circle_white_24px.svg"> </mat-icon>
+      </button>
+      <button class="mat-icon-button" (click)="showCalendar()">
+        <mat-tooltip-component class="mat-title"> View PTO Calendar </mat-tooltip-component>
+        <mat-icon svgIcon="img/ic_perm_contact_calendar_white_24px.svg"> </mat-icon>
+      </button>
+      <!--<button class="mat-icon-button" ng-click="tCtrl.googleAuth()">-->
+      <!--<mat-tooltip class="mat-title"> Google Authentication </mat-tooltip>-->
+      <!--<mat-icon mat-svg-icon="img/ic_perm_contact_calendar_white_24px.svg"> </mat-icon>-->
+      <!--</button>-->
+    </div>
+  </mat-toolbar>
+  <!--shows a list of all the active trainers-->
+  <mat-card-content *ngIf="trainers != undefined">
+    <mat-list>
+      <mat-list-item class="mat-2-line" mat-ripple="#ff0000" *ngFor="let trainer of trainers">
+        <mat-icon svgIcon="img/ic_people_black_48px.svg"> </mat-icon>
+        <div class="mat-list-item-text">
+          <h3> {{ trainer.firstName }} {{ trainer.lastName }} </h3>
+          <p *ngIf="trainer.skills.length > 0"> Skills: Test </p>
+          <p *ngIf="trainer.skills.length <= 0"> Skills: none </p>
+        </div>
+        <span> </span>
+
+        <button class="mat-icon-button" (click)="grabS3Resume(trainer)">
+          <mat-tooltip-component class="mat-title"> Download Resume </mat-tooltip-component>
+          <i class="material-icons revOrange">file_download</i>
+        </button>
+        <button class="mat-icon-button" (click)="removeTrainer(Trainer)" (show)="isManager">
+          <mat-tooltip-component class="mat-title"> Deactivate Trainer </mat-tooltip-component>
+          <i class="material-icons revOrange">remove_circle</i>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+  <!--displays a loading circle if trainers is undefined-->
+  <div *ngIf="trainers == undefined">
+    <div > &nbsp; </div>
+    <mat-progress-spinner  mode="indeterminate"> </mat-progress-spinner>
+    <div> &nbsp; </div>
+  </div>
+
+  <!--toolbar for the inactive trainers-->
+  <mat-toolbar>
+    <div class="mat-toolbar-tools">
+      <span> Inactive Trainers </span>
+      <span> </span>
+    </div>
+  </mat-toolbar>
+
+  <!--shows a list of all inactive trainers-->
+  <mat-card-content class="mat-padding" *ngIf="trainers != undefined">
+    <mat-list>
+      <mat-list-item class="mat-2-line" mat-ripple="#ff0000" *ngFor=" let trainer of trainers">
+        <mat-icon svgIcon="img/ic_people_black_48px.svg"> </mat-icon>
+        <div class="mat-list-item-text" layout="column">
+          <h3> {{ trainer.firstName }} {{ trainer.lastName }} </h3>
+          <p *ngIf="trainer.skills.length > 0"> Skills: Test </p>
+          <p *ngIf="trainer.skills.length <= 0"> Skills: none </p>
+        </div>
+        <span> </span>
+        <!--button activates a Trainer-->
+        <button class="mat-icon-button" (click)="activateTrainer(trainer)" (show)="isManager">
+          <mat-tooltip-component class="mat-title"> Reactivate Trainer </mat-tooltip-component>
+          <i class="material-icons revOrange">add_circle</i>
+        </button>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+  <!--shows a loading circle if trainers is undefined-->
+  <div *ngIf="trainers == undefined">
+    <div> &nbsp; </div>
+    <mat-progress-spinner mode="indeterminate"> </mat-progress-spinner>
+    <div> &nbsp; </div>
+  </div>
+</mat-card>
+

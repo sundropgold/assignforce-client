@@ -1,0 +1,19 @@
+#check, #checkcell{
+  max-width: 30px;
+}
+.mat-expansion-panel {
+  background-color: black;
+}
+
+.mat-expansion-panel-body {
+  background-color: white;
+}
+
+.mat-expansion-panel-header {
+  background-color: black;
+}
+
+.mat-expansion-panel-header-title {
+  color: white;
+  font-weight: 600;
+}
