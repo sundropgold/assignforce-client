@@ -22,7 +22,7 @@
           All Batches
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <div class="example-container mat-elevation-z8">
+      <div class="example-container_mat-elevation-z8">
         <mat-table #table [dataSource]="batchData" matSort>
 
           <!-- Checkbox Column -->
@@ -70,8 +70,8 @@
 
           <!-- Room Column -->
           <ng-container matColumnDef="Room">
-            <mat-header-cell *matHeaderCellDef mat-sort-header id="room"> Room </mat-header-cell>
-            <mat-cell *matCellDef="let batch" id="roomcell"> {{batch.room}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header > Room </mat-header-cell>
+            <mat-cell *matCellDef="let batch"> {{batch.room}} </mat-cell>
           </ng-container>
 
           <!-- StartDate Column -->
