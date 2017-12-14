@@ -16,6 +16,7 @@ import {AppRouting} from './app.routing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
 <<<<<<< HEAD
+<<<<<<< HEAD
   MatButtonModule,
   MatCardModule, MatCheckboxModule, MatChipsModule,
   MatExpansionModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
@@ -23,6 +24,10 @@ import {
   MatSortModule,
   MatTableModule,
   MatTabsModule, MatToolbarModule, MatTooltipModule
+=======
+  MatExpansionModule, MatIconModule, MatListModule, MatSortModule, MatTableModule,
+  MatTabsModule, MatToolbarModule
+>>>>>>> 29d317cc24d65e69c53bf1e3db9f3e5c8da4375f
 } from '@angular/material';
 <<<<<<< HEAD
 import {TrainerService} from './services/trainer.service';
@@ -68,6 +73,7 @@ import { TimelineComponent } from './timeline/timeline.component';
     MatSortModule,
     MatTableModule,
 <<<<<<< HEAD
+<<<<<<< HEAD
     MatTooltipModule,
     MatToolbarModule,
     MatProgressSpinnerModule,
@@ -89,6 +95,9 @@ import { TimelineComponent } from './timeline/timeline.component';
     MatDatepickerModule,
     MatNativeDateModule
 >>>>>>> e767e60584eaf5eda006c149e74b2ba42a6cc4b2
+=======
+    MatToolbarModule
+>>>>>>> 29d317cc24d65e69c53bf1e3db9f3e5c8da4375f
   ],
   providers: [TrainerService, SkillService, S3CredentialService],
   bootstrap: [AppComponent]
