@@ -1,9 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {MatSort, MatTableDataSource} from '@angular/material';
-<<<<<<< HEAD
-=======
 import {Angular2Csv } from 'angular2-csv/Angular2-csv';
->>>>>>> 015c061820c73488aefdacb73cf3c50f1b3f4a57
 
 @Component({
   selector: 'app-overview',
