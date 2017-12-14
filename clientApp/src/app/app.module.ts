@@ -14,7 +14,6 @@ import { ReportsComponent } from './reports/reports.component';
 import { SettingsComponent } from './settings/settings.component';
 import {AppRouting} from './app.routing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
 import {TrainerService} from './services/trainer.service';
 import {SkillService} from './services/skill.service';
 import {S3CredentialService} from './services/s3-credential.service';
@@ -26,6 +25,8 @@ import {
   MatMenuModule, MatPaginatorModule, MatProgressBarModule,
   MatProgressSpinnerModule, MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule
 } from '@angular/material';
+
+
 
 @NgModule({
   declarations: [
@@ -58,11 +59,7 @@ import {
     MatProgressSpinnerModule,
     MatButtonModule,
     MatMenuModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatTooltipModule,
     MatChipsModule,
-    MatProgressSpinnerModule,
     MatFormFieldModule,
     MatProgressBarModule,
     MatPaginatorModule,
