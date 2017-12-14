@@ -16,7 +16,7 @@ import {AppRouting} from './app.routing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatButtonModule,
-  MatCardModule, MatChipsModule,
+  MatCardModule, MatCheckboxModule, MatChipsModule,
   MatExpansionModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
   MatProgressSpinnerModule,
   MatSortModule,
@@ -62,7 +62,7 @@ import {S3CredentialService} from './services/s3-credential.service';
     MatProgressSpinnerModule,
     MatInputModule,
     MatFormFieldModule,
-    MatInputModule
+    MatCheckboxModule
   ],
   providers: [TrainerService, SkillService, S3CredentialService],
   bootstrap: [AppComponent]
