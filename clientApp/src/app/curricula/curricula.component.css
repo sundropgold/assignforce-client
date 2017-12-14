@@ -1,0 +1,14 @@
+.container-curricula{
+  margin-top: 2%;
+}
+.toolbar-curricula{
+  background-color: #38464E;
+  color: white;
+  max-height: 50px;
+}
+/* #38464E #3D5360*/
+.toolbar-curricula-sub{
+  background-color:#3D5360;
+  color: white;
+  max-height: 48px;
+}
