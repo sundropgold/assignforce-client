@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {MatSort, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Angular2Csv } from 'angular2-csv/Angular2-csv';
 
 @Component({
@@ -9,10 +9,15 @@ import {Angular2Csv } from 'angular2-csv/Angular2-csv';
   encapsulation: ViewEncapsulation.None
 })
 export class OverviewComponent implements OnInit, AfterViewInit {
-  displayedColumns = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns = ['position', 'name', 'weight', 'symbol', 'progress'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
+  color = 'warn';
+  mode = 'determinate';
+  value = 10;
+  bufferValue = 75;
 
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor() { }
 
@@ -20,6 +25,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   exportToCSV(evt) {
