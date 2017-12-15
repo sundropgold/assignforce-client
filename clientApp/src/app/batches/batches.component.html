@@ -6,7 +6,7 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Create New Batch
+          {{firstTabHeader}}
         </mat-panel-title>
       </mat-expansion-panel-header>
 
@@ -186,14 +186,23 @@
           </ng-container>
 
 
-          <!-- Edit Icon -->
+          <!-- Buttons -->
           <ng-container matColumnDef="Icons">
             <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
             <mat-cell *matCellDef="let batch">
-              <mat-icon>mode_edit</mat-icon>
-              <mat-icon>filter_none</mat-icon>
-              <mat-icon>delete</mat-icon>
-              <mat-icon>publish</mat-icon>
+
+              <button mat-icon-button color (click)="EditBatch()">
+                <mat-icon matTooltip="Edit" matTooltipPosition="above">mode_edit</mat-icon>
+              </button>
+              <button mat-icon-button color (click)="CloneBatch()">
+                <mat-icon matTooltip="Clone" matTooltipPosition="above">filter_none</mat-icon>
+              </button>
+              <button mat-icon-button color>
+                <mat-icon matTooltip="Delete" matTooltipPosition="above">delete</mat-icon>
+              </button>
+              <button mat-icon-button color>
+                <mat-icon matTooltip="Synchronize" matTooltipPosition="above">publish</mat-icon>
+              </button>
             </mat-cell>
           </ng-container>
 

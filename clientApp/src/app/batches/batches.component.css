@@ -1,5 +1,5 @@
 #check, #checkcell{
-  max-width: 30px;
+  max-width: 25px;
 }
 .mat-expansion-panel {
   background-color: black;
@@ -19,5 +19,13 @@
 }
 
 .mat-icon {
-  color: black;
+  color: darkorange;
+}
+
+.mat-icon-button {
+  line-height: 5.6rem;
+  min-width: 0;
+  width: 5.6rem;
+  height: 5.6rem;
+  border-radius: 50%;
 }
