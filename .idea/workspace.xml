@@ -2,70 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="65a7158a-1441-4f1e-b1ab-b3c6e7825341" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/app/domain/skill.ts" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/app/domain/trainer.ts" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/app/services/s3-credential.service.spec.ts" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/app/services/s3-credential.service.ts" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/app/services/skill.service.spec.ts" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/app/services/skill.service.ts" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/app/services/trainer.service.spec.ts" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/app/services/trainer.service.ts" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/Revature_CMYK.jpg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/editPencil.ico" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/favicon.ico" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_add_circle_outline_black_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_add_circle_outline_white_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_add_circle_white_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_add_location_white_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_arrow_back_black_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_arrow_back_white_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_arrow_forward_black_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_arrow_forward_white_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_assessment_black_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_business_black_48px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_cancel_white_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_content_copy_white_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_delete_black_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_delete_white_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_done_white_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_edit_location_black_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_edit_location_white_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_edit_white_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_expand_less_white_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_expand_more_white_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_filter_list_white_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_location_city_black_48px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_menu_white_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_people_black_48px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_perm_contact_calendar_white_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_place_black_48px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_settings_white_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_sim_card_black_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_skip_next_white_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/ic_skip_previous_white_24px.svg" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/large_profile_default.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/revature_logo.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/revature_logo_1080.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/revature_logo_250.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/revature_logo_500.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/revature_logo_750.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/clientApp/src/assets/img/revature_logo_full.png" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/jun_documentation/documentation.txt" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/clientApp/package-lock.json" afterPath="$PROJECT_DIR$/clientApp/package-lock.json" />
-      <change beforePath="$PROJECT_DIR$/clientApp/package.json" afterPath="$PROJECT_DIR$/clientApp/package.json" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/app.module.ts" afterPath="$PROJECT_DIR$/clientApp/src/app/app.module.ts" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/locations/locations.component.css" afterPath="$PROJECT_DIR$/clientApp/src/app/locations/locations.component.css" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/locations/locations.component.html" afterPath="$PROJECT_DIR$/clientApp/src/app/locations/locations.component.html" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/locations/locations.component.ts" afterPath="$PROJECT_DIR$/clientApp/src/app/locations/locations.component.ts" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/overview/overview.component.css" afterPath="$PROJECT_DIR$/clientApp/src/app/overview/overview.component.css" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/overview/overview.component.html" afterPath="$PROJECT_DIR$/clientApp/src/app/overview/overview.component.html" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/overview/overview.component.ts" afterPath="$PROJECT_DIR$/clientApp/src/app/overview/overview.component.ts" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/profile/profile.component.css" afterPath="$PROJECT_DIR$/clientApp/src/app/profile/profile.component.css" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/profile/profile.component.html" afterPath="$PROJECT_DIR$/clientApp/src/app/profile/profile.component.html" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/profile/profile.component.ts" afterPath="$PROJECT_DIR$/clientApp/src/app/profile/profile.component.ts" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/trainers/trainers.component.html" afterPath="$PROJECT_DIR$/clientApp/src/app/trainers/trainers.component.html" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/trainers/trainers.component.ts" afterPath="$PROJECT_DIR$/clientApp/src/app/trainers/trainers.component.ts" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -335,16 +272,15 @@
       <option name="presentableId" value="Default" />
       <updated>1513193049031</updated>
       <workItem from="1513193050411" duration="3070000" />
-      <workItem from="1513232161652" duration="17111000" />
+      <workItem from="1513232161652" duration="17211000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20181000" />
+    <option name="totallyTimeSpent" value="20281000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="TypeScript" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24947146" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -355,7 +291,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32904884" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32904884" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32904884" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
