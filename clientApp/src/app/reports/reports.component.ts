@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatSort, MatTableDataSource} from '@angular/material';
+import {FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-reports',
@@ -7,8 +8,19 @@ import {MatSort, MatTableDataSource} from '@angular/material';
   styleUrls: ['./reports.component.css']
 })
 export class ReportsComponent implements OnInit, AfterViewInit {
+  // for table
   displayedColumns = ['position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
+
+  // for curriculum selection
+  animalControl = new FormControl('', [Validators.required]);
+
+  animals = [
+    {name: 'Dog', sound: 'Woof!'},
+    {name: 'Cat', sound: 'Meow!'},
+    {name: 'Cow', sound: 'Moo!'},
+    {name: 'Fox', sound: 'Wa-pa-pa-pa-pa-pa-pow!'},
+  ];
 
   @ViewChild(MatSort) sort: MatSort;
 

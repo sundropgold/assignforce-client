@@ -18,7 +18,7 @@ import {TrainerService} from './services/trainer.service';
 import {SkillService} from './services/skill.service';
 import {S3CredentialService} from './services/s3-credential.service';
 import {
-  MatButtonModule, MatCardModule, MatCheckbox, MatCheckboxModule, MatChipsModule, MatExpansionModule,
+  MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatExpansionModule,
   MatFormFieldModule, MatIconModule,
   MatInputModule,
   MatDatepickerModule,
@@ -30,6 +30,8 @@ import {
 } from '@angular/material';
 import {MatSelectModule} from '@angular/material/select';
 import {ReactiveFormsModule} from '@angular/forms';
+import {FlexLayoutModule} from '@angular/flex-layout';
+
 
 
 
@@ -69,16 +71,13 @@ import {ReactiveFormsModule} from '@angular/forms';
     MatPaginatorModule,
     MatCheckboxModule,
     MatCardModule,
-    MatChipsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatFormFieldModule,
     MatInputModule,
     MatOptionModule,
     MatSelectModule,
     ReactiveFormsModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    FlexLayoutModule
   ],
   providers: [TrainerService, SkillService, S3CredentialService],
   bootstrap: [AppComponent]
