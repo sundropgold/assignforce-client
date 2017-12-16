@@ -26,10 +26,13 @@ import {
   MatNativeDateModule,
   MatListModule,
   MatMenuModule, MatPaginatorModule, MatProgressBarModule,
-  MatProgressSpinnerModule, MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule
+  MatProgressSpinnerModule, MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule, MatSnackBarModule
 } from '@angular/material';
 import {MatSelectModule} from '@angular/material/select';
 import {ReactiveFormsModule} from '@angular/forms';
+import {OrderModule} from 'ngx-order-pipe';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {NotificationService} from './services/notification.service';
 
 
 
@@ -78,9 +81,12 @@ import {ReactiveFormsModule} from '@angular/forms';
     MatSelectModule,
     ReactiveFormsModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSnackBarModule,
+    OrderModule,
+    FlexLayoutModule
   ],
-  providers: [TrainerService, SkillService, S3CredentialService],
+  providers: [TrainerService, SkillService, S3CredentialService, NotificationService],
   bootstrap: [AppComponent]
 })
 
