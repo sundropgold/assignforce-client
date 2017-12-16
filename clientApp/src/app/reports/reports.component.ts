@@ -8,6 +8,8 @@ import {FormControl, Validators} from '@angular/forms';
   styleUrls: ['./reports.component.css']
 })
 export class ReportsComponent implements OnInit, AfterViewInit {
+  // for creating new projection
+  cardArr = [];
   // for table
   displayedColumns = ['position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
@@ -31,6 +33,19 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+  }
+  genCard(evt) {
+    evt.stopPropagation();
+    const temp: any = {};
+    temp.requiredGrads = 13;
+    // temp.requiredGrads = this.rc.requiredGrads;
+    // temp.reqDate = new Date();
+    // temp.requiredBatches = this.rc.requiredBatches;
+    // temp.startDate = this.rc.startDate;
+    // temp.formattedStartDate = this.rc.formattedStartDate;
+    // temp.batchType = this.rc.batchType;
+    this.cardArr.push(temp);
+    console.log(this.cardArr);
   }
 
 }
