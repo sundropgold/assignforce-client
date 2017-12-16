@@ -18,7 +18,7 @@ import {TrainerService} from './services/trainer.service';
 import {SkillService} from './services/skill.service';
 import {S3CredentialService} from './services/s3-credential.service';
 import {
-  MatButtonModule, MatCardModule, MatCheckbox, MatCheckboxModule, MatChipsModule, MatExpansionModule,
+  MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatExpansionModule,
   MatFormFieldModule, MatIconModule,
   MatInputModule,
   MatDatepickerModule,
@@ -72,10 +72,6 @@ import {NotificationService} from './services/notification.service';
     MatPaginatorModule,
     MatCheckboxModule,
     MatCardModule,
-    MatChipsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatFormFieldModule,
     MatInputModule,
     MatOptionModule,
     MatSelectModule,
