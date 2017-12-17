@@ -1,5 +1,7 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {AfterContentInit, Component, ContentChildren, OnInit, QueryList, ViewEncapsulation} from '@angular/core';
 import {Router} from '@angular/router';
+import {Subject} from 'rxjs/Subject';
+import {MatTab} from '@angular/material';
 
 @Component({
   selector: 'app-menu-bar',
@@ -8,14 +10,17 @@ import {Router} from '@angular/router';
   encapsulation: ViewEncapsulation.None
 })
 export class MenuBarComponent implements OnInit {
+  selectedTab = localStorage.getItem('active');
 
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   ngOnInit() {
-    this.toOverview();
+
   }
 
+
   selectTab(evt) {
+    localStorage.setItem('active', evt.index);
     switch (evt.index) {
       case 0: this.toOverview();
       break;

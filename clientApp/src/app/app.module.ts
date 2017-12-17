@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import { MenuBarComponent } from './menu-bar/menu-bar.component';
 import { OverviewComponent } from './overview/overview.component';
@@ -14,22 +14,26 @@ import { ReportsComponent } from './reports/reports.component';
 import { SettingsComponent } from './settings/settings.component';
 import {AppRouting} from './app.routing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {TimelineComponent} from './timeline/timeline.component';
-import {
-  MatButtonModule,
-  MatCardModule, MatCheckboxModule, MatChipsModule, MatDatepickerModule, MatExpansionModule, MatFormFieldModule,
-  MatIconModule,
-  MatInputModule, MatListModule, MatMenuModule, MatNativeDateModule,
-  MatOptionModule,
-  MatPaginatorModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule,
-  MatSelectModule, MatSortModule, MatTableModule,
-  MatTabsModule, MatToolbarModule, MatTooltipModule
-} from '@angular/material';
 import {TrainerService} from './services/trainer.service';
 import {SkillService} from './services/skill.service';
 import {S3CredentialService} from './services/s3-credential.service';
+import {UrlService} from './services/url.service';
+import {
+  MatButtonModule, MatCardModule, MatCheckbox, MatCheckboxModule, MatChipsModule, MatExpansionModule,
+  MatFormFieldModule, MatIconModule,
+  MatInputModule,
+  MatDatepickerModule,
+  MatOptionModule,
+  MatNativeDateModule,
+  MatListModule,
+  MatMenuModule, MatPaginatorModule, MatProgressBarModule,
+  MatProgressSpinnerModule, MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule
+} from '@angular/material';
+import {MatSelectModule} from '@angular/material/select';
+import {ReactiveFormsModule} from '@angular/forms';
+import { LoginComponent } from './login/login.component';
+
+
 
 @NgModule({
   declarations: [
@@ -43,7 +47,7 @@ import {S3CredentialService} from './services/s3-credential.service';
     ProfileComponent,
     ReportsComponent,
     SettingsComponent,
-    TimelineComponent
+    LoginComponent
   ],
   imports: [
     HttpClientModule,
@@ -63,24 +67,23 @@ import {S3CredentialService} from './services/s3-credential.service';
     MatButtonModule,
     MatMenuModule,
     MatChipsModule,
-    MatProgressSpinnerModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatCheckboxModule,
     MatFormFieldModule,
     MatProgressBarModule,
     MatPaginatorModule,
     MatCheckboxModule,
     MatCardModule,
+    MatChipsModule,
     MatFormFieldModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatInputModule,
     MatOptionModule,
     MatSelectModule,
     ReactiveFormsModule,
     MatDatepickerModule,
-    MatNativeDateModule,
-    MatToolbarModule
+    MatNativeDateModule
   ],
-  providers: [TrainerService, SkillService, S3CredentialService],
+  providers: [TrainerService, SkillService, S3CredentialService, UrlService],
   bootstrap: [AppComponent]
 })
 

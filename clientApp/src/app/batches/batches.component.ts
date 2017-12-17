@@ -2,6 +2,8 @@ import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@a
 import {MatSort, MatTableDataSource, MatCheckbox} from '@angular/material';
 import {Batch} from '../domain/batch';
 import {FormControl} from '@angular/forms';
+import {DomSanitizer} from '@angular/platform-browser';
+import {MatIconRegistry} from '@angular/material';
 @Component({
   selector: 'app-batches',
   templateUrl: './batches.component.html',
@@ -74,7 +76,11 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     {value: 'room-0', viewValue: '201'},
     {value: 'room-1', viewValue: '301'},
   ]
-  constructor() { }
+  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+    iconRegistry.addSvgIcon(
+      'thumbs-up',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/img/examples/thumbup-icon.svg'));
+  }
 
   ngOnInit() {
   }
