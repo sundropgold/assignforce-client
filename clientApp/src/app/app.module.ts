@@ -17,6 +17,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TrainerService} from './services/trainer.service';
 import {SkillService} from './services/skill.service';
 import {S3CredentialService} from './services/s3-credential.service';
+import {UrlService} from './services/url.service';
 import {
   MatButtonModule, MatCardModule, MatCheckbox, MatCheckboxModule, MatChipsModule, MatExpansionModule,
   MatFormFieldModule, MatIconModule,
@@ -30,6 +31,7 @@ import {
 } from '@angular/material';
 import {MatSelectModule} from '@angular/material/select';
 import {ReactiveFormsModule} from '@angular/forms';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -44,7 +46,8 @@ import {ReactiveFormsModule} from '@angular/forms';
     TrainersComponent,
     ProfileComponent,
     ReportsComponent,
-    SettingsComponent
+    SettingsComponent,
+    LoginComponent
   ],
   imports: [
     HttpClientModule,
@@ -80,7 +83,7 @@ import {ReactiveFormsModule} from '@angular/forms';
     MatDatepickerModule,
     MatNativeDateModule
   ],
-  providers: [TrainerService, SkillService, S3CredentialService],
+    providers: [TrainerService, SkillService, S3CredentialService, UrlService],
   bootstrap: [AppComponent]
 })
 
