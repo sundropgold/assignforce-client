@@ -6,6 +6,7 @@ import {Trainer} from '../domain/trainer';
 import {Skill} from '../domain/skill';
 import {NotificationService} from '../services/notification.service';
 import {S3Credential} from '../domain/s3-credential';
+import * as AWS from 'aws-sdk';
 
 @Component({
   selector: 'app-profile',
@@ -35,7 +36,11 @@ export class ProfileComponent implements OnInit {
     {skillId: 13, name: 'CSS', active: true}
     ];
   myFile: FileList;
-  creds: S3Credential;
+  creds: S3Credential = {
+    ID: 'AKIAIRUM7DHQJEFIKK7A',
+    SecretKey: '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',
+    BucketName: 'jw1010'
+  };
   certFile: FileList = null;
   certName: string;
   skillsList: string[] = [];
@@ -101,32 +106,32 @@ export class ProfileComponent implements OnInit {
     const path = 'Resumes/' + this.trainer.trainerId + '_' + this.myFile[0].name;
 
     // This initializes a bucket with the keys obtained from Creds rest controller
-    // const AWS = require('aws-sdk');
-    //
-    // const bucket = new AWS.S3({
-    //   apiVersion: '2006-03-01',
-    //   accessKeyId: this.creds.ID,
-    //   secretAccessKey: this.creds.SecretKey,
-    //   region: 'us-east-1',
-    //   httpOptions: {
-    //     proxy: 'http://dev.assignforce.revature.pro/'
-    //   }
-    // });
-    //
-    // // set the parameters needed to put an object in the aws s3 bucket
-    // const params = {
-    //   Bucket: this.creds.BucketName,
-    //   Key: path,
-    //   Body: this.myFile
-    // };
-    //
-    // // putting an object in the s3 bucket
-    // bucket.putObject(params, function (err) {
-    //   if (err) {
-    //     this.showToast('could not upload file.');
-    //     return;
-    //   }
-    // });
+
+    const bucket = new AWS.S3({
+      apiVersion: '2006-03-01',
+      accessKeyId: this.creds.ID,
+      secretAccessKey: this.creds.SecretKey,
+      region: 'us-east-1',
+      httpOptions: {
+        proxy: 'http://localhost:4200/'
+      }
+    });
+
+    // set the parameters needed to put an object in the aws s3 bucket
+    const params = {
+      Body: this.myFile[0],
+      Bucket: this.creds.BucketName,
+      Key: path,
+      ACL: 'public-read'
+    };
+
+    // putting an object in the s3 bucket
+    bucket.putObject(params, err => {
+      if (err) {
+        this.showToast(err);
+        return;
+      }
+    });
 
     this.trainer.resume = this.myFile[0].name; // set the trainer resume to the file name(s3 file key to grab that object)
 
@@ -198,32 +203,31 @@ export class ProfileComponent implements OnInit {
       () => this.showToast('Failed saving Certification.'),
       () => this.showToast('Certification has been saved.'));
 
-    // const AWS = require('aws-sdk');
-    // // create a aws s3 bucket
-    // const bucket = new AWS.S3({
-    //   apiVersion: '2006-03-01',
-    //   accessKeyId: this.creds.ID,
-    //   secretAccessKey: this.creds.SecretKey,
-    //   region: 'us-east-1',
-    //   sslEnabled: false,
-    //   httpOptions: {
-    //     proxy: 'http://dev.assignforce.revature.pro/'
-    //   }
-    // });
-    //
-    // // set the parameters needed to put an object in the aws s3 bucket
-    // const params = {
-    //   Bucket: this.creds.BucketName,
-    //   Key: path,
-    //   Body: this.certFile
-    // };
-    //
-    // // putting an object in the s3 bucket
-    // bucket.putObject(params, function (err) {
-    //   if (err) {
-    //     this.showToast('File could not be uploaded.');
-    //   }
-    // });
+    // create a aws s3 bucket
+    const bucket = new AWS.S3({
+      apiVersion: '2006-03-01',
+      accessKeyId: this.creds.ID,
+      secretAccessKey: this.creds.SecretKey,
+      region: 'us-east-1',
+      sslEnabled: false,
+      httpOptions: {
+        proxy: 'http://dev.assignforce.revature.pro/'
+      }
+    });
+
+    // set the parameters needed to put an object in the aws s3 bucket
+    const params = {
+      Bucket: this.creds.BucketName,
+      Key: path,
+      Body: this.certFile
+    };
+
+    // putting an object in the s3 bucket
+    bucket.putObject(params, err => {
+      if (err) {
+        this.showToast('File could not be uploaded.');
+      }
+    });
 
     this.certFile = undefined;
     this.certName = undefined;
@@ -238,7 +242,7 @@ export class ProfileComponent implements OnInit {
     }
 
     this.trainerService.update(this.trainer).subscribe( () => {},
-      err => this.showToast(err) ,
+      () => this.showToast('Could not update trainer.') ,
       () => this.showToast('Removed Certification Successfully'));
   }
 

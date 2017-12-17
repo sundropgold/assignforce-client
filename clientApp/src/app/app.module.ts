@@ -33,6 +33,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {OrderModule} from 'ngx-order-pipe';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {NotificationService} from './services/notification.service';
+import 'aws-sdk/dist/aws-sdk.min';
 
 
 
