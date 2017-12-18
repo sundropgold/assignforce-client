@@ -12,10 +12,7 @@ import {MatIconRegistry} from '@angular/material';
 })
 export class BatchesComponent implements OnInit, AfterViewInit {
 
-  batchValues = ['Checkbox', 'Name', 'Curriculum', 'Focus', 'Trainer/Co-Trainer', 'Location', 'Building', 'Room', 'StartDate', 'EndDate', 'Icons'];
-  batchData = new MatTableDataSource(BatchData);
-
-  @ViewChild(MatSort) sort: MatSort;
+  // FAKE VALUES FOR THE FIRST TAB
   datebetween = 0;
 
   Curriculums = [
@@ -77,11 +74,26 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     {value: 'room-0', viewValue: '201'},
     {value: 'room-1', viewValue: '301'},
   ]
+
+    
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-    iconRegistry.addSvgIcon(
+      iconRegistry.addSvgIcon(
       'thumbs-up',
       sanitizer.bypassSecurityTrustResourceUrl('assets/img/examples/thumbup-icon.svg'));
   }
+
+
+  firstTabHeader = 'Create New Batch';
+
+  //  VALUES FOR THE ALL BATCHES TAB
+  batchValues = ['Checkbox', 'Name', 'Curriculum', 'Focus', 'Trainer/Co-Trainer', 'Location', 'Building', 'Room', 'StartDate', 'EndDate', 'Icons'];
+  batchData = new MatTableDataSource(BatchData);
+
+  @ViewChild(MatSort) sort: MatSort;
+
+
+
+
 
   ngOnInit() {
   }
@@ -90,14 +102,20 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     this.batchData.sort = this.sort;
   }
 
-}
+  EditBatch() {
+    this.firstTabHeader = 'Edit Batch';
+  }
 
+  CloneBatch() {
+    this.firstTabHeader = 'Clone Batch';
+  }
 
-export interface Element {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+  DeleteBatch() {
+  }
+
+  SynchronizeBatch() {
+  }
+
 }
 
 
@@ -107,3 +125,4 @@ const BatchData: Batch[] = [
   {name: 'batch2', startDate: new Date('February 4, 2017 10:13:00'), endDate: new Date('February 14, 2017 20:24:00'),
     curriculum: 'Java', focus: 'Microservices', trainer: 'Steve', cotrainer: 'Sarah', location: 'here', building: 'buildo', room: 'roo'}
 ];
+
