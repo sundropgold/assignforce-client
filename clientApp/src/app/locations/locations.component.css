@@ -1,5 +1,5 @@
 .mat-expansion-panel {
-  background-color: #333;
+  background-color: #37474F;
 }
 
 .mat-expansion-panel-body {
@@ -7,7 +7,7 @@
 }
 
 .mat-expansion-panel-header {
-  background-color: #333;
+  background-color: #37474F;
 }
 
 .mat-expansion-panel-header-title {
@@ -25,7 +25,7 @@
 
 .mat-icon {
   margin-left: 10px;
-  color: white;
+  color: gray;
 }
 
 #download {
@@ -38,5 +38,3 @@
 #download:hover .downloadText{
   visibility:visible;
 }
-
-

@@ -6,7 +6,14 @@ import {HttpClientModule} from '@angular/common/http';
 import { MenuBarComponent } from './menu-bar/menu-bar.component';
 import { OverviewComponent } from './overview/overview.component';
 import { BatchesComponent } from './batches/batches.component';
-import { LocationsComponent } from './locations/locations.component';
+import {
+  LocationAddBuildingDialogComponent,
+  LocationAddLocationDialogComponent, LocationAddRoomDialogComponent, LocationDeleteBuildingDialogComponent,
+  LocationDeleteLocationDialogComponent, LocationDeleteRoomDialogComponent,
+  LocationEditBuildingDialogComponent,
+  LocationEditLocationDialogComponent, LocationEditRoomDialogComponent,
+  LocationsComponent
+} from './locations/locations.component';
 import { CurriculaComponent } from './curricula/curricula.component';
 import { TrainersComponent } from './trainers/trainers.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -15,10 +22,10 @@ import { SettingsComponent } from './settings/settings.component';
 import {AppRouting} from './app.routing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
-  MatCardContent, MatButtonModule, MatCardModule, MatChipsModule,
+  MatButtonModule, MatCardModule, MatChipsModule,
   MatExpansionModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressSpinnerModule,
   MatSortModule, MatTableModule,
-  MatTabsModule, MatToolbarModule, MatTooltipModule
+  MatTabsModule, MatToolbarModule, MatTooltipModule, MatDialogModule
 } from '@angular/material';
 import {TrainerService} from './services/trainer.service';
 import {SkillService} from './services/skill.service';
@@ -37,7 +44,16 @@ import {S3CredentialService} from './services/s3-credential.service';
     TrainersComponent,
     ProfileComponent,
     ReportsComponent,
-    SettingsComponent
+    SettingsComponent,
+    LocationAddLocationDialogComponent,
+    LocationDeleteLocationDialogComponent,
+    LocationEditLocationDialogComponent,
+    LocationAddBuildingDialogComponent,
+    LocationDeleteBuildingDialogComponent,
+    LocationEditBuildingDialogComponent,
+    LocationAddRoomDialogComponent,
+    LocationDeleteRoomDialogComponent,
+    LocationEditRoomDialogComponent
   ],
   imports: [
     HttpClientModule,
@@ -59,10 +75,24 @@ import {S3CredentialService} from './services/s3-credential.service';
     MatMenuModule,
     MatChipsModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatDialogModule
   ],
   providers: [TrainerService, SkillService, S3CredentialService],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ],
+  entryComponents: [
+    LocationAddLocationDialogComponent,
+    LocationDeleteLocationDialogComponent,
+    LocationEditLocationDialogComponent,
+    LocationAddBuildingDialogComponent,
+    LocationDeleteBuildingDialogComponent,
+    LocationEditBuildingDialogComponent,
+    LocationAddRoomDialogComponent,
+    LocationDeleteRoomDialogComponent,
+    LocationEditRoomDialogComponent
+  ]
 })
 
 export class AppModule {}
