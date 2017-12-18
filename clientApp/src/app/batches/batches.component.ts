@@ -72,14 +72,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   rooms = [
     {value: 'room-0', viewValue: '201'},
     {value: 'room-1', viewValue: '301'},
-  ]
-
-    
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-      iconRegistry.addSvgIcon(
-      'thumbs-up',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/img/examples/thumbup-icon.svg'));
-  }
+  ];
 
 
   firstTabHeader = 'Create New Batch';
@@ -90,9 +83,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-
-
-
+  constructor() {}
 
   ngOnInit() {
   }

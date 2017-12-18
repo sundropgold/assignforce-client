@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatSort, MatTableDataSource} from '@angular/material';
+import {FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-reports',
@@ -7,8 +8,21 @@ import {MatSort, MatTableDataSource} from '@angular/material';
   styleUrls: ['./reports.component.css']
 })
 export class ReportsComponent implements OnInit, AfterViewInit {
+  // for creating new projection
+  cardArr = [];
+  // for table
   displayedColumns = ['position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
+
+  // for curriculum selection
+  animalControl = new FormControl('', [Validators.required]);
+
+  animals = [
+    {name: 'Dog', sound: 'Woof!'},
+    {name: 'Cat', sound: 'Meow!'},
+    {name: 'Cow', sound: 'Moo!'},
+    {name: 'Fox', sound: 'Wa-pa-pa-pa-pa-pa-pow!'},
+  ];
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -19,6 +33,19 @@ export class ReportsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+  }
+  genCard(evt) {
+    evt.stopPropagation();
+    const temp: any = {};
+    temp.requiredGrads = 13;
+    // temp.requiredGrads = this.rc.requiredGrads;
+    // temp.reqDate = new Date();
+    // temp.requiredBatches = this.rc.requiredBatches;
+    // temp.startDate = this.rc.startDate;
+    // temp.formattedStartDate = this.rc.formattedStartDate;
+    // temp.batchType = this.rc.batchType;
+    this.cardArr.push(temp);
+    console.log(this.cardArr);
   }
 
 }
