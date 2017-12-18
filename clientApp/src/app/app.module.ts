@@ -17,6 +17,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TrainerService} from './services/trainer.service';
 import {SkillService} from './services/skill.service';
 import {S3CredentialService} from './services/s3-credential.service';
+import {UrlService} from './services/url.service';
 import {
   MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatExpansionModule,
   MatFormFieldModule, MatIconModule,
@@ -34,6 +35,8 @@ import {OrderModule} from 'ngx-order-pipe';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {NotificationService} from './services/notification.service';
 import 'aws-sdk/dist/aws-sdk.min';
+import { LoginComponent } from './login/login.component';
+import {TimelineComponent} from './timeline/timeline.component';
 
 
 
@@ -48,7 +51,9 @@ import 'aws-sdk/dist/aws-sdk.min';
     TrainersComponent,
     ProfileComponent,
     ReportsComponent,
-    SettingsComponent
+    SettingsComponent,
+    LoginComponent,
+    TimelineComponent
   ],
   imports: [
     HttpClientModule,
@@ -83,7 +88,7 @@ import 'aws-sdk/dist/aws-sdk.min';
     OrderModule,
     FlexLayoutModule
   ],
-  providers: [TrainerService, SkillService, S3CredentialService, NotificationService],
+  providers: [TrainerService, SkillService, S3CredentialService, UrlService, NotificationService],
   bootstrap: [AppComponent]
 })
 

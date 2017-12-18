@@ -209,17 +209,17 @@ export class ProfileComponent implements OnInit {
       accessKeyId: this.creds.ID,
       secretAccessKey: this.creds.SecretKey,
       region: 'us-east-1',
-      sslEnabled: false,
       httpOptions: {
-        proxy: 'http://dev.assignforce.revature.pro/'
+        proxy: 'http://localhost:4200/'
       }
     });
 
     // set the parameters needed to put an object in the aws s3 bucket
     const params = {
+      Body: this.certFile[0],
       Bucket: this.creds.BucketName,
       Key: path,
-      Body: this.certFile
+      ACL: 'public-read'
     };
 
     // putting an object in the s3 bucket
