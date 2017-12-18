@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import {SpringXsrfInterceptor} from './interceptors/springXsrfInterceptor';
 import { MenuBarComponent } from './menu-bar/menu-bar.component';
 import { OverviewComponent } from './overview/overview.component';

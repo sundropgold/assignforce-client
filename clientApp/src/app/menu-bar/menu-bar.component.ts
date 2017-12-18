@@ -13,7 +13,7 @@ export class MenuBarComponent implements OnInit {
 
     selectedTab = 0;
 
-    tabs = ['overiview', 'batches', 'locations', 'curricula', 'trainers', 'profile', 'reports', 'settings', 'logout'];
+    tabs = ['overview', 'batches', 'locations', 'curricula', 'trainers', 'profile', 'reports', 'settings', 'logout'];
     
     constructor(private router: Router,
 		private route: ActivatedRoute) {}
@@ -21,8 +21,8 @@ export class MenuBarComponent implements OnInit {
     ngOnInit() {
 	this.router.events.subscribe(event => {
 	    if (event instanceof NavigationEnd ) {
-		console.log("current url",event.url);
-		this.selectedTab = this.tabs.indexOf(event.url.split('/')[0]);
+		console.log("current url",event.url.split('/'));
+		this.selectedTab = this.tabs.indexOf(event.url.split('/')[1]);
 	    }
 	});
     }
