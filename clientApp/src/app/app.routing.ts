@@ -13,7 +13,7 @@ import {LoginComponent} from './login/login.component';
 const appRoutes: Routes = [
   {
     path: '',
-    component: LoginComponent, 
+    component: LoginComponent,
     pathMatch: 'full'
   },
   {
