@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import {SpringXsrfInterceptor} from './interceptors/springXsrfInterceptor';
 import { MenuBarComponent } from './menu-bar/menu-bar.component';
 import { OverviewComponent } from './overview/overview.component';
 import { BatchesComponent } from './batches/batches.component';
@@ -83,7 +84,13 @@ import { LoginComponent } from './login/login.component';
     MatDatepickerModule,
     MatNativeDateModule
   ],
-    providers: [TrainerService, SkillService, S3CredentialService, UrlService],
+    providers: [TrainerService,
+		SkillService,
+		S3CredentialService,
+		UrlService,
+	       {provide: HTTP_INTERCEPTORS,
+		 useClass: SpringXsrfInterceptor,
+		 multi: true}],
   bootstrap: [AppComponent]
 })
 
