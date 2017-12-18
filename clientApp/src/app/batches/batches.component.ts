@@ -74,6 +74,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     {value: 'room-1', viewValue: '301'},
   ];
 
+
   firstTabHeader = 'Create New Batch';
 
   //  VALUES FOR THE ALL BATCHES TAB

@@ -1,5 +1,5 @@
 import {AfterContentInit, Component, ContentChildren, OnInit, QueryList, ViewEncapsulation} from '@angular/core';
-import {Router} from '@angular/router';
+import {Router, ActivatedRoute, NavigationEnd} from '@angular/router';
 import {Subject} from 'rxjs/Subject';
 import {MatTab} from '@angular/material';
 
@@ -10,18 +10,30 @@ import {MatTab} from '@angular/material';
   encapsulation: ViewEncapsulation.None
 })
 export class MenuBarComponent implements OnInit {
-  selectedTab = localStorage.getItem('active');
 
-  constructor(private router: Router) {}
+    selectedTab = 0;
 
-  ngOnInit() {
+    tabs = ['overview', 'batches', 'locations', 'curricula', 'trainers', 'profile', 'reports', 'settings', 'logout'];
+    
+    constructor(private router: Router,
+		private route: ActivatedRoute) {}
 
-  }
+    ngOnInit() {
+	this.router.events.subscribe(event => {
+	    if (event instanceof NavigationEnd ) {
+		console.log("current url",event.url.split('/'));
+		this.selectedTab = this.tabs.indexOf(event.url.split('/')[1]);
+	    }
+	});
+    }
 
 
   selectTab(evt) {
-    localStorage.setItem('active', evt.index);
-    switch (evt.index) {
+      //localStorage.setItem('active', evt.index);
+
+      this.router.navigate([(this.tabs[evt.index])]);
+/*
+      switch (evt.index) {
       case 0: this.toOverview();
       break;
 
@@ -49,9 +61,11 @@ export class MenuBarComponent implements OnInit {
       case 8: this.logout();
         break;
     }
-
+*/
   }
-  toOverview() {
+
+	/*
+    toOverview() {
     this.router.navigate([('overview')]);
   }
 
@@ -83,6 +97,7 @@ export class MenuBarComponent implements OnInit {
     this.router.navigate([('settings')]);
   }
 
+*/
   logout() {
     //has to redirect to login page
   }
