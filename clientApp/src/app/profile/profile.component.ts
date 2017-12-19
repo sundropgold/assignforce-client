@@ -19,12 +19,13 @@ export class ProfileComponent implements OnInit {
 
   // data
   skills: Skill[] = [{skillId: 1, name: 'Java', active: true}, {skillId: 2, name: 'SQL', active: true}, {skillId: 3, name: 'Angular', active: true}, {skillId: 4, name: 'C++', active: true}];
-  myFile: any = null;
+  myFile: FileList;
   creds: any;
-  certFile: any = null;
+  certFile: FileList = null;
   certName: string;
   skillsList: string[] = [];
-  trainer: Trainer = {trainerId: 1, firstName: 'Joseph', lastName: 'Wong', skills: [], resume: null, certifications: null, active: true};
+  hidden: true;
+  trainer: Trainer = {trainerId: 1, firstName: 'Joseph', lastName: 'Wong', skills: [], resume: null, certifications: [], active: true};
 
   constructor(private trainerService: TrainerService, private skillService: SkillService, private s3Service: S3CredentialService) { }
 
@@ -47,11 +48,20 @@ export class ProfileComponent implements OnInit {
     // this.s3Service.getCreds().subscribe( response => this.creds = response, () => this.showToast('Failed to fetch Credentials'));
   }
 
+  getFiles(event) {
+    this.myFile = event.target.files;
+    console.log(this.myFile);
+  }
+
+  getCert(event) {
+    this.certFile = event.target.files;
+  }
+
   showToast(message) {
     // this.aCtrl.showToast( message );
   }
 
-  // uploadResume() {
+  uploadResume() {
   //   const path = 'Resumes/' + this.trainer.trainerId + '_' + this.myFile.name;
   //
   //   // This initializes a bucket with the keys obtained from Creds rest controller
@@ -80,7 +90,7 @@ export class ProfileComponent implements OnInit {
   //     }
   //   });
   //
-  //   this.trainer.resume = this.myFile.name; // set the trainer resume to the file name(s3 file key to grab that object)
+    this.trainer.resume = this.myFile[0].name; // set the trainer resume to the file name(s3 file key to grab that object)
   //
   //   // save the modified trainer resume field
   //   this.trainerService.update(this.trainer).subscribe( () => {},
@@ -88,8 +98,8 @@ export class ProfileComponent implements OnInit {
   //     () => this.showToast('Resume upload finished'));
   //
   //   // set my file to undefined so that update and label will be hidden in the html
-  //   this.myFile = undefined;
-  // }
+    this.myFile = undefined;
+  }
 
   // called to save the current state of the trainers skills
   saveTSkills() {
@@ -132,18 +142,18 @@ export class ProfileComponent implements OnInit {
   }
 
   // // func to upload a resume to the s3 bucket
-  // uploadCertification() {
-  //   // set the path to certifications folder and use trainer id with the file name
-  //   const path = 'Certifications/' + this.trainer.trainerId + '_' + this.certFile.name;
+  uploadCertification() {
+    // set the path to certifications folder and use trainer id with the file name
+    const path = 'Certifications/' + this.trainer.trainerId + '_' + this.certFile[0].name;
   //
   //   // create a certification object to save in the database
-  //   const certification = {
-  //     file: path,
-  //     name: this.certName,
-  //     trainer: this.trainer.trainerId
-  //   };
+    const certification = {
+      file: path,
+      name: this.certName,
+      trainer: this.trainer.trainerId
+    };
   //
-  //   this.trainer.certifications.push(certification); // add the certification to the trainer
+    this.trainer.certifications.push(certification); // add the certification to the trainer
   //
   //   // update trainer
   //   this.trainerService.update(this.trainer).subscribe( () => {},
@@ -176,9 +186,9 @@ export class ProfileComponent implements OnInit {
   //     }
   //   });
   //
-  //   this.certFile = undefined;
-  //   this.certName = undefined;
-  // }
+    this.certFile = undefined;
+    this.certName = undefined;
+  }
 
   // remove a certification from a trainer(need to remove the certification from the certification Table)
   removeCertification(cert) {
@@ -227,7 +237,6 @@ export class ProfileComponent implements OnInit {
 
   populateSkillList() {
     for (let i = 0; i < this.skills.length; i++) {
-      console.log(this.skills[i].name);
       this.skillsList.push(this.skills[i].name);
     }
   }
