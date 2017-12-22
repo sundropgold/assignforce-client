@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatSort, MatTableDataSource} from '@angular/material';
 import {FormControl, Validators} from '@angular/forms';
+import {Angular2Csv} from 'angular2-csv';
 
 @Component({
   selector: 'app-reports',
@@ -46,6 +47,11 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     // temp.batchType = this.rc.batchType;
     this.cardArr.push(temp);
     console.log(this.cardArr);
+  }
+
+  exportToCSV(evt, name) {
+    evt.stopPropagation();
+    new Angular2Csv(ELEMENT_DATA, name);
   }
 
 }
