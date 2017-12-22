@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Trainer} from '../domain/trainer';
 import {Skill} from "../domain/skill";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-trainers',
@@ -11,7 +12,7 @@ export class TrainersComponent implements OnInit {
   trainers: Trainer[];
   isManager: boolean;
 
-  constructor() {
+  constructor(private router: Router) {
   }
 
   ngOnInit() {
@@ -66,6 +67,8 @@ export class TrainersComponent implements OnInit {
   }
 
   goToTrainer(trainer: Trainer) {
+    const id = trainer.trainerId;
+    this.router.navigate(['profile/' + id]);
   }
 
   grabS3Resume(trainer: Trainer) {

@@ -21,7 +21,7 @@
   <!--shows a list of all the active trainers-->
   <mat-card-content *ngIf="trainers != undefined">
     <mat-list *ngFor="let trainer of trainers">
-      <mat-list-item mat-ripple="#ff0000" *ngIf="trainer.active">
+      <mat-list-item mat-ripple="#ff0000" *ngIf="trainer.active" (click)="goToTrainer(trainer)">
         <mat-icon matListIcon style="color: #000;" >people</mat-icon>
           <h4 matLine> {{ trainer.firstName }} {{ trainer.lastName }} </h4>
           <p *ngIf="trainer.skills.length > 0" matLine> Skills: Test </p>

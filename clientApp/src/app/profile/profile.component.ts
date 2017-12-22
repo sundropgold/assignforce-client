@@ -7,6 +7,7 @@ import {Skill} from '../domain/skill';
 import {NotificationService} from '../services/notification.service';
 import {S3Credential} from '../domain/s3-credential';
 import * as AWS from 'aws-sdk';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -15,9 +16,10 @@ import * as AWS from 'aws-sdk';
 })
 export class ProfileComponent implements OnInit {
 
-  @Input() fName: string;
-  @Input() lName: string;
-  tId: -1;
+  @Input() fName: string = null;
+  @Input() lName: string = null;
+  tId: number;
+  lockProfile: boolean;
 
   // data
   skills: Skill[] = [
@@ -60,24 +62,26 @@ export class ProfileComponent implements OnInit {
   constructor(private trainerService: TrainerService,
               private skillService: SkillService,
               private s3Service: S3CredentialService,
-              private notificationService: NotificationService) { }
+              private notificationService: NotificationService,
+              private route: ActivatedRoute) {}
 
   ngOnInit() {
+    this.route.params.subscribe( params => this.tId = params.id);
     this.populateSkillList();
     // data gathering
 
     // id is hard coded for testing. unless you click on a trainer in the trainer page.
-    // if (this.tId > -1) {
-    //   this.lockProfile = false;
-    //   this.trainerService.getById(this.tId)
-    //     .subscribe(response => {this.trainer = response; this.getAllSkills(); },
-    //     () => this.showToast('Could not fetch trainer.'));
-    // } else {
-    //   this.trainerService.getByFirstNameAndLastName(this.fName, this.lName)
-    //     .subscribe(response => {this.trainer = response; this.getAllSkills(); },
-    //     () => this.showToast('Could not fetch trainer.'));
-    //   this.lockProfile = true;
-    // }
+    if (this.tId !== undefined) {
+      this.lockProfile = true;
+      this.trainerService.getById(this.tId)
+        .subscribe(response => {this.trainer = response; this.getAllSkills(); },
+        () => this.showToast('Could not fetch trainer.'));
+    } else {
+      this.trainerService.getByFirstNameAndLastName(this.fName, this.lName)
+        .subscribe(response => {this.trainer = response; this.getAllSkills(); },
+        () => this.showToast('Could not fetch trainer.'));
+      this.lockProfile = false;
+    }
 
     // grab credentials for s3
     this.s3Service.getCreds().subscribe( response => this.creds = response,
@@ -121,8 +125,7 @@ export class ProfileComponent implements OnInit {
     const params = {
       Body: this.myFile[0],
       Bucket: this.creds.BucketName,
-      Key: path,
-      ACL: 'public-read'
+      Key: path
     };
 
     // putting an object in the s3 bucket
@@ -143,6 +146,33 @@ export class ProfileComponent implements OnInit {
     // set my file to undefined so that update and label will be hidden in the html
     this.myFile = undefined;
   }
+
+  // grabResume() {
+  //   const bucket = new AWS.S3({
+  //     accessKeyId: this.creds.ID,
+  //     secretAccessKey: this.creds.SecretKey,
+  //     region: 'us-east-1'
+  //   });
+  //
+  //   //set the parameters needed to get an object from aws s3 bucket
+  //   const params = {
+  //     Bucket: this.creds.BucketName,
+  //     Key: 'Resumes/' + this.trainer.trainerId + '_' + this.trainer.resume,
+  //     Expires: 60 //url expires in 60 seconds with signed urls
+  //   };
+  //
+  //   //grabs a url to the object in the s3 bucket
+  //   const url = bucket.getSignedUrl('getObject', params);
+  //
+  //   //this will create a link, set download and href, and invoke the click action on it
+  //   // it will download the file
+  //   const link = document.createElement('a');
+  //   // link.download = "test.png";
+  //   link.href = url;
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  // }
 
   // called to save the current state of the trainers skills
   saveTSkills() {
