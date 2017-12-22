@@ -1,3 +1,175 @@
-<p>
-  reports works!
-</p>
+<!--Main Toolbar -->
+<mat-toolbar color="#333">
+  <mat-toolbar-row>
+    <span> Reports </span>
+    <span flex> </span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<!--Future Projection Tab-->
+<mat-card>
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Batch Projection</mat-panel-title>
+        <span fxFlex=""></span>
+        <mat-icon (click)="genCard($event)">add</mat-icon>
+      </mat-expansion-panel-header>
+      <mat-card-content>
+        <div fxFlex="70%" fxLayout="row" layoutXs="column" style="overflow: auto">
+          <!--<div style="padding: 1%" fxFlex="80" flexXs="" flexGtXs="20" fxLayout="column"  *ngFor="let number of [0,1,2,3,4,5,6,7,8]" >-->
+          <div style="padding: 1%" fxFlex="80" flexXs="" flexGtXs="20" fxLayout="column"  *ngFor="let item of cardArr" >
+            <!--*ngFor="let item of items"-->
+            <mat-card class="example-card">
+              <mat-card-title>
+                <span fxFlex=""></span>
+                <mat-icon style="color: #FB8C00">remove_circle</mat-icon>
+              </mat-card-title>
+              <mat-card-content>
+                <mat-form-field>
+                  <input matInput type="number" placeholder="Trainer's Needed: ">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput type="date" placeholder="Hire Date: ">
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-select placeholder="Curriculum: " [formControl]="animalControl" required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let animal of animals" [value]="animal">
+                      {{animal.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="animalControl.hasError('required')">Please choose an animal</mat-error>
+                  <mat-hint>{{animalControl.value?.sound}}</mat-hint>
+                </mat-form-field>
+                <p>Start Date: </p>
+                <p>Requested Batches: </p>
+              </mat-card-content>
+              <mat-card-actions>
+                <div fxLayoutAlign="center" class="btn">
+                  <span>Create Batch</span>
+                  <div class="dot"></div>
+                </div>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </div>
+        <div fxFlex="25%" fxLayout="row"
+             layoutXs="column" fxLayoutAlign="end start">
+          <div style="padding: 1%" fxFlex="80" flexXs="" flexGtXs="20" fxLayout="column">
+
+          <mat-card>
+            <mat-card-title>
+              Batch Totals
+            </mat-card-title>
+            <mat-card-content>
+              <p>Total Java Batches: </p>
+              <p>Total .Net Batches: </p>
+              <p>Total SDET Batches: </p>
+              <p>Total Salesforce Batches: </p>
+              <p>Total Big Data Batches:</p>
+              <p>Cumulative Number of Batches: </p>
+            </mat-card-content>
+            <mat-card-actions>
+              <div fxLayoutAlign="center" class="btn">
+                <span>Create All</span>
+                <div class="dot"></div>
+              </div>
+            </mat-card-actions>
+          </mat-card>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-expansion-panel>
+  </mat-accordion>
+</mat-card>
+<!--Graduates Table and Graph Accordion-->
+<!--Incoming Trianee Table and Graph Accordion-->
+<mat-card>
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Graduate Summary for 2018</mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-card>
+        <mat-table #table [dataSource]="dataSource" matSort>
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="position">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="weight">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Weight </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="symbol">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+      </mat-card>
+      <mat-card>
+        <p>Graph goes here</p>
+      </mat-card>
+    </mat-expansion-panel>
+  </mat-accordion>
+</mat-card>
+
+<!--Incoming Trianee Table and Graph Accordion-->
+<mat-card>
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>Incoming Trainee Summary for 2018</mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-card>
+        <mat-table #table [dataSource]="dataSource" matSort>
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="position">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="weight">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Weight </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="symbol">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+      </mat-card>
+      <mat-card>
+        <p>Graph goes here</p>
+      </mat-card>
+    </mat-expansion-panel>
+  </mat-accordion>
+</mat-card>

@@ -1,0 +1,44 @@
+.revOrange {
+  color: #f26a25;
+}
+
+.md-toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+mat-card {
+  margin: 0 16px;
+  padding: 0;
+}
+
+mat-toolbar {
+  padding: 0px 16px;
+  background-color: #37474F;
+  color: #E0E4E6;
+}
+
+
+mat-list-item{
+  margin-right: 7px;
+  transition: background 0.3s linear;
+}
+
+mat-list-item:hover{
+  background-color: #DDDDDD;
+}
+
+
+mat-card-content {
+  margin: 0px;
+  padding: 16px;
+}
+
+mat-icon {
+  margin: 0;
+}
+
+i {
+  margin: 0px;
+  display: inline-flex;
+  vertical-align: middle;
+}
