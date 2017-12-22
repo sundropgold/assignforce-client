@@ -74,8 +74,6 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     {value: 'room-0', viewValue: '201'},
     {value: 'room-1', viewValue: '301'},
   ]
-
-    
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
       iconRegistry.addSvgIcon(
       'thumbs-up',
