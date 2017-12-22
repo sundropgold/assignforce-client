@@ -8,9 +8,14 @@ import {TrainersComponent} from './trainers/trainers.component';
 import {ProfileComponent} from './profile/profile.component';
 import {ReportsComponent} from './reports/reports.component';
 import {SettingsComponent} from './settings/settings.component';
-
+import {LoginComponent} from './login/login.component';
 
 const appRoutes: Routes = [
+  {
+    path: '',
+    component: LoginComponent,
+    pathMatch: 'full'
+  },
   {
     path: 'overview',
     component: OverviewComponent
