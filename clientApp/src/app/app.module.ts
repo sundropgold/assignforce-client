@@ -111,6 +111,7 @@ import {TimelineComponent} from './timeline/timeline.component';
     SkillService,
     S3CredentialService,
     UrlService,
+    NotificationService,
     {provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,
       multi: true}],
