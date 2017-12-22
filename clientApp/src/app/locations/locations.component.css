@@ -1,0 +1,40 @@
+.mat-expansion-panel {
+  background-color: #37474F;
+}
+
+.mat-expansion-panel-body {
+  background-color: white;
+}
+
+.mat-expansion-panel-header {
+  background-color: #37474F;
+}
+
+.mat-expansion-panel-header-title {
+  color: white;
+  font-weight: 600;
+}
+
+.mat-expansion-panel-header-description {
+  color: white;
+}
+
+.fill-space{
+  flex: 1 1 auto;
+}
+
+.mat-icon {
+  margin-left: 10px;
+  color: gray;
+}
+
+#download {
+  position:relative;
+  bottom:30px;
+  left:0px;
+  visibility:hidden;
+}
+
+#download:hover .downloadText{
+  visibility:visible;
+}

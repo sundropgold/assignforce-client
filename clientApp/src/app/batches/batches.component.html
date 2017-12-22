@@ -1,0 +1,231 @@
+<div style="margin-top: 5%">
+
+  <!--------Create New Batch ------->
+  <!-- Only Appears if they are admin ------>
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{firstTabHeader}}
+        </mat-panel-title>
+        <mat-icon svgIcon="thumbs-up"></mat-icon>
+        <mat-icon svgIcon="thumbs-up"></mat-icon>
+      </mat-expansion-panel-header>
+
+      <form class="example-form">
+        <div class="example-container">
+          <div>
+            <mat-form-field>
+            <mat-select placeholder="Core Curriculum" >
+              <mat-option *ngFor="let Curriculum of Curriculums" [value]="Curriculum.value" >
+                {{ Curriculum.viewValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select placeholder="Focus">
+              <mat-option *ngFor="let focus of focuses" [value]="focus.value">
+                {{ focus.viewValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select placeholder="Skills" [formControl]="skills" multiple>
+              <mat-option *ngFor="let skill of skillsList" [value]="skill">{{skill}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          </div>
+          <div>
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker1" placeholder="Choose a start date">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker2" placeholder="Choose an end date">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput placeholder="spans {{datebetween}} weeks" readonly>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput placeholder="Name">
+          </mat-form-field>
+
+          </div>
+          <div>
+          <mat-form-field>
+            <mat-select placeholder="Trainer">
+              <mat-option *ngFor="let trainer of trainers" [value]="trainer.value">
+                {{ trainer.viewValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select placeholder="Co-Trainer">
+              <mat-option *ngFor="let trainer of trainers" [value]="trainer.value">
+                {{ trainer.viewValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+            </div>
+
+          <mat-form-field>
+            <mat-select placeholder="Location">
+              <mat-option *ngFor="let location of locations" [value]="location">
+                {{ location.location.toString().valueOf() }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+
+          <mat-form-field>
+            <mat-select placeholder="Building">
+              <mat-option *ngFor="let building of buildings" [value]="building.value">
+                {{ building.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select placeholder="Room">
+              <mat-option *ngFor="let room of rooms" [value]="room.value">
+                {{ room.viewValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+
+        </div>
+        <!--Coriculum <input type="text" name="coriculum">-->
+      </form>
+
+    </mat-expansion-panel>
+
+
+
+  </mat-accordion>
+
+  <!------All Batches------->
+  <!------This has some Admin properties------->
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          All Batches
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="example-container_mat-elevation-z8">
+        <mat-table #table [dataSource]="batchData" matSort>
+
+          <!-- Checkbox Column -->
+          <ng-container matColumnDef="Checkbox">
+            <mat-header-cell *matHeaderCellDef mat-sort-header id="check"> </mat-header-cell>
+            <mat-cell *matCellDef="let batch" id="checkcell"> <mat-checkbox></mat-checkbox> </mat-cell>
+          </ng-container>
+
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="Name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+            <mat-cell *matCellDef="let batch"> {{batch.name}} </mat-cell>
+          </ng-container>
+
+          <!-- Curriculum Column -->
+          <ng-container matColumnDef="Curriculum">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Curriculum </mat-header-cell>
+            <mat-cell *matCellDef="let batch"> {{batch.curriculum}} </mat-cell>
+          </ng-container>
+
+          <!-- Focus Column -->
+          <ng-container matColumnDef="Focus">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Focus </mat-header-cell>
+            <mat-cell *matCellDef="let batch"> {{batch.focus}} </mat-cell>
+          </ng-container>
+
+          <!-- Trainer Column -->
+          <ng-container matColumnDef="Trainer/Co-Trainer">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Trainer/Cotrainer </mat-header-cell>
+            <mat-cell *matCellDef="let batch"> {{batch.trainer}} / {{batch.cotrainer}}</mat-cell>
+          </ng-container>
+
+          <!-- Location Column -->
+          <ng-container matColumnDef="Location">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Location </mat-header-cell>
+            <mat-cell *matCellDef="let batch"> {{batch.location}} </mat-cell>
+          </ng-container>
+
+          <!-- Building Column -->
+          <ng-container matColumnDef="Building">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Building </mat-header-cell>
+            <mat-cell *matCellDef="let batch"> {{batch.building}} </mat-cell>
+          </ng-container>
+
+          <!-- Room Column -->
+          <ng-container matColumnDef="Room">
+            <mat-header-cell *matHeaderCellDef mat-sort-header > Room </mat-header-cell>
+            <mat-cell *matCellDef="let batch"> {{batch.room}} </mat-cell>
+          </ng-container>
+
+          <!-- StartDate Column -->
+          <ng-container matColumnDef="StartDate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> StartDate </mat-header-cell>
+            <mat-cell *matCellDef="let batch"> {{batch.startDate| date : 'dd/MM/yyyy'}}</mat-cell>
+          </ng-container>
+
+          <!-- EndDate Column -->
+          <ng-container matColumnDef="EndDate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> EndDate </mat-header-cell>
+            <mat-cell *matCellDef="let batch"> {{batch.endDate| date : 'dd/MM/yyyy'}} </mat-cell>
+          </ng-container>
+
+
+          <!-- Buttons -->
+          <ng-container matColumnDef="Icons">
+            <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+            <mat-cell *matCellDef="let batch">
+
+              <button mat-icon-button color (click)="EditBatch()">
+                <mat-icon matTooltip="Edit" matTooltipPosition="above">mode_edit</mat-icon>
+              </button>
+              <button mat-icon-button color (click)="CloneBatch()">
+                <mat-icon matTooltip="Clone" matTooltipPosition="above">filter_none</mat-icon>
+              </button>
+              <button mat-icon-button color>
+                <mat-icon matTooltip="Delete" matTooltipPosition="above">delete</mat-icon>
+              </button>
+              <button mat-icon-button color>
+                <mat-icon matTooltip="Synchronize" matTooltipPosition="above">publish</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="batchValues"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: batchValues;"></mat-row>
+        </mat-table>
+      </div>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <!-----Batch TimeLine------>
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Batch Timeline
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+
+</div>

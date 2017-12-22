@@ -1,0 +1,20 @@
+.mat-tab-label {
+  min-width: 0.9vw !important;
+  width: 7.4vw;
+  padding: 0px;
+  background-color: transparent;
+  color: black;
+  font-weight: 700;
+  font-size: 0.9vw;
+}
+
+/* Styles for the active tab label */
+.mat-tab-label.mat-tab-label-active {
+  min-width: 25px !important;
+  outline-color: orangered;
+  color: orangered;
+}
+
+.mat-ink-bar {
+  background-color: orangered !important;
+}
