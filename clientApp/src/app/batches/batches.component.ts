@@ -40,7 +40,6 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   //   {value: 'location-0', viewValue: 'Revature HQ - Reston,VA'},
   //   {value: 'location-1', viewValue: 'CUNY - SPS,NY'}
   // ];
-
   locations: any[] = [
     {
       'location': 'Reston HQ - Reston, VA',
@@ -67,20 +66,13 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   ];
 
   buildings = [
-      {value: 'building-0', viewValue: 'Reston'},
-      {value: 'trainer-1', viewValue: 'CSPS'},
-      {value: 'trainer-2', viewValue: 'Steven Kelsey'}];
+    {value: 'building-0', viewValue: 'Reston'},
+    {value: 'trainer-1', viewValue: 'CSPS'},
+    {value: 'trainer-2', viewValue: 'Steven Kelsey'}];
   rooms = [
     {value: 'room-0', viewValue: '201'},
     {value: 'room-1', viewValue: '301'},
-  ]
-
-    
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-      iconRegistry.addSvgIcon(
-      'thumbs-up',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/img/examples/thumbup-icon.svg'));
-  }
+  ];
 
 
   firstTabHeader = 'Create New Batch';
@@ -91,9 +83,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
-
-
-
+  constructor() {}
 
   ngOnInit() {
   }

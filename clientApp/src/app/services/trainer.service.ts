@@ -33,7 +33,6 @@ export class TrainerService {
   }
 
   update(trainer): Observable<any> {
-    console.log(`${this.url}`);
     return this.http.put<any>(`${this.url}`, trainer);
   }
 
