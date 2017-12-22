@@ -41,6 +41,7 @@ import {
 import {MatSelectModule} from '@angular/material/select';
 import {ReactiveFormsModule} from '@angular/forms';
 import { LoginComponent } from './login/login.component';
+import {TimelineComponent} from './timeline/timeline.component';
 
 
 
@@ -65,7 +66,8 @@ import { LoginComponent } from './login/login.component';
     LocationAddRoomDialogComponent,
     LocationDeleteRoomDialogComponent,
     LocationEditRoomDialogComponent,
-    LoginComponent
+    LoginComponent,
+    TimelineComponent
   ],
   imports: [
     HttpClientModule,
