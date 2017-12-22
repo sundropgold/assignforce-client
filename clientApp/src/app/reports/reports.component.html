@@ -17,7 +17,6 @@
       </mat-expansion-panel-header>
       <mat-card-content>
         <div fxFlex="70%" fxLayout="row" layoutXs="column" style="overflow: auto">
-          <!--<div style="padding: 1%" fxFlex="80" flexXs="" flexGtXs="20" fxLayout="column"  *ngFor="let number of [0,1,2,3,4,5,6,7,8]" >-->
           <div style="padding: 1%" fxFlex="80" flexXs="" flexGtXs="20" fxLayout="column"  *ngFor="let item of cardArr" >
             <!--*ngFor="let item of items"-->
             <mat-card class="example-card">
@@ -90,6 +89,14 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>Graduate Summary for 2018</mat-panel-title>
+        <span fxFlex=""></span>
+        <mat-icon title="Export to CSV" (click)="exportToCSV($event, 'gruduateSummary')">get_app</mat-icon>
+        <mat-menu #settingGraduate="matMenu">
+          <button mat-menu-item>Settings</button>
+        </mat-menu>
+        <button mat-icon-button [matMenuTriggerFor]="settingGraduate">
+          <mat-icon>settings</mat-icon>
+        </button>
       </mat-expansion-panel-header>
       <mat-card>
         <mat-table #table [dataSource]="dataSource" matSort>
@@ -135,6 +142,9 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>Incoming Trainee Summary for 2018</mat-panel-title>
+        <span fxFlex=""></span>
+        <mat-icon title="Export to CSV" (click)="exportToCSV($event, 'incomingSummary')">get_app</mat-icon>
+        <mat-icon>settings</mat-icon>
       </mat-expansion-panel-header>
       <mat-card>
         <mat-table #table [dataSource]="dataSource" matSort>
