@@ -100,7 +100,7 @@ import {TimelineComponent} from './timeline/timeline.component';
       useClass: SpringXsrfInterceptor,
       multi: true
     }
-    ],
+  ],
   bootstrap: [AppComponent]
 })
 
