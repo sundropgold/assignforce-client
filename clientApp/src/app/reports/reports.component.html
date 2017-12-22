@@ -91,7 +91,12 @@
         <mat-panel-title>Graduate Summary for 2018</mat-panel-title>
         <span fxFlex=""></span>
         <mat-icon title="Export to CSV" (click)="exportToCSV($event, 'gruduateSummary')">get_app</mat-icon>
-        <mat-icon>settings</mat-icon>
+        <mat-menu #settingGraduate="matMenu">
+          <button mat-menu-item>Settings</button>
+        </mat-menu>
+        <button mat-icon-button [matMenuTriggerFor]="settingGraduate">
+          <mat-icon>settings</mat-icon>
+        </button>
       </mat-expansion-panel-header>
       <mat-card>
         <mat-table #table [dataSource]="dataSource" matSort>
