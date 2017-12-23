@@ -74,7 +74,7 @@ The second md-card/ng-show is for other users to look at other trainers profiles
       <div class="md-padding">
         <h2 matSubheader>Select a skill:</h2>
         <mat-chip-list>
-          <mat-chip *ngFor="let skill of skillsList | orderBy: skill" (click)="addSkill(skill)">
+          <mat-chip style="margin: 8px" *ngFor="let skill of skillsList | orderBy: skill" (click)="addSkill(skill)">
             {{skill}}
           </mat-chip>
         </mat-chip-list>

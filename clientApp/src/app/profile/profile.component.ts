@@ -22,21 +22,7 @@ export class ProfileComponent implements OnInit {
   lockProfile: boolean;
 
   // data
-  skills: Skill[] = [
-    {skillId: 1, name: 'Java', active: true},
-    {skillId: 2, name: 'SQL', active: true},
-    {skillId: 3, name: 'Angular', active: true},
-    {skillId: 4, name: 'C++', active: true},
-    {skillId: 5, name: 'Pega', active: true},
-    {skillId: 6, name: 'JUnit', active: true},
-    {skillId: 7, name: 'Spring', active: true},
-    {skillId: 8, name: 'JDBC', active: true},
-    {skillId: 9, name: 'HTML', active: true},
-    {skillId: 10, name: 'C#', active: true},
-    {skillId: 11, name: 'SOAP', active: true},
-    {skillId: 12, name: 'REST', active: true},
-    {skillId: 13, name: 'CSS', active: true}
-    ];
+  skills: Skill[];
   myFile: FileList;
   creds: S3Credential = {
     ID: 'AKIAIRUM7DHQJEFIKK7A',
@@ -51,7 +37,7 @@ export class ProfileComponent implements OnInit {
     firstName: 'Joseph',
     lastName: 'Wong',
     skills: [
-      {skillId: 1, name: 'Java', active: true},
+      {skillId: 108, name: 'Java', active: true},
       {skillId: 8, name: 'JDBC', active: true},
       {skillId: 3, name: 'Angular', active: true}
     ],
@@ -67,19 +53,20 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe( params => this.tId = params.id);
-    this.populateSkillList();
+
+    this.getAllSkills();
     // data gathering
 
     // id is hard coded for testing. unless you click on a trainer in the trainer page.
     if (this.tId !== undefined) {
       this.lockProfile = true;
-      this.trainerService.getById(this.tId)
-        .subscribe(response => {this.trainer = response; this.getAllSkills(); },
-        () => this.showToast('Could not fetch trainer.'));
+      // this.trainerService.getById(this.tId)
+      //   .subscribe(response => {this.trainer = response; this.getAllSkills(); },
+      //   () => this.showToast('Could not fetch trainer.'));
     } else {
-      this.trainerService.getByFirstNameAndLastName(this.fName, this.lName)
-        .subscribe(response => {this.trainer = response; this.getAllSkills(); },
-        () => this.showToast('Could not fetch trainer.'));
+      // this.trainerService.getByFirstNameAndLastName(this.fName, this.lName)
+      //   .subscribe(response => {this.trainer = response; this.getAllSkills(); },
+      //   () => this.showToast('Could not fetch trainer.'));
       this.lockProfile = false;
     }
 
@@ -294,27 +281,11 @@ export class ProfileComponent implements OnInit {
   getAllSkills() {
     this.skillService.getAll().subscribe(response => {
       this.skills = response;
-      let status = true;
       for (let i = 0; i < this.skills.length; i++) {
-        for (let j = 0; j < this.trainer.skills.length; j++) {
-          if (this.skills[j].skillId === this.skills[i].skillId) {
-            status = false;
-            break;
-          }
-        }
-        if (status) {
+        if ((this.trainer.skills.filter(a => this.skills[i].skillId === a.skillId)).length === 0) {
           this.skillsList.push(this.skills[i].name);
         }
-        status = true;
       }
     }, () => this.showToast('Could not fetch skills.'));
-  }
-
-  populateSkillList() {
-    for (let i = 0; i < this.skills.length; i++) {
-      if ((this.trainer.skills.filter(a => this.skills[i].name === a.name)).length === 0) {
-        this.skillsList.push(this.skills[i].name);
-      }
-    }
   }
 }
