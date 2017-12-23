@@ -10,7 +10,7 @@ import {OverviewComponent} from './overview/overview.component';
 import {BatchesComponent} from './batches/batches.component';
 import {LocationsComponent} from './locations/locations.component';
 import {CurriculaComponent} from './curricula/curricula.component';
-import { TrainersComponent} from './trainers/trainers.component';
+import {TrainerDialogComponent, TrainersComponent} from './trainers/trainers.component';
 import {ProfileComponent} from './profile/profile.component';
 import {ReportsComponent} from './reports/reports.component';
 import {SettingsComponent} from './settings/settings.component';
@@ -29,7 +29,8 @@ import {
   MatNativeDateModule,
   MatListModule,
   MatMenuModule, MatPaginatorModule, MatProgressBarModule,
-  MatProgressSpinnerModule, MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule, MatSnackBarModule
+  MatProgressSpinnerModule, MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule, MatSnackBarModule,
+  MatDialogModule
 } from '@angular/material';
 import {MatSelectModule} from '@angular/material/select';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -50,6 +51,7 @@ import {TimelineComponent} from './timeline/timeline.component';
     LocationsComponent,
     CurriculaComponent,
     TrainersComponent,
+    TrainerDialogComponent,
     ProfileComponent,
     ReportsComponent,
     SettingsComponent,
@@ -87,7 +89,8 @@ import {TimelineComponent} from './timeline/timeline.component';
     MatNativeDateModule,
     MatSnackBarModule,
     OrderModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatDialogModule
   ],
   providers: [
     TrainerService,
@@ -101,6 +104,7 @@ import {TimelineComponent} from './timeline/timeline.component';
       multi: true
     }
   ],
+  entryComponents: [TrainerDialogComponent],
   bootstrap: [AppComponent]
 })
 
