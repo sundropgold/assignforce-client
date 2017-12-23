@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Trainer} from '../domain/trainer';
 import {Skill} from '../domain/skill';
 import {NotificationService} from '../services/notification.service';
 import {TrainerService} from '../services/trainer.service';
 import {NavigationExtras, Params, Router} from '@angular/router';
 import {S3CredentialService} from '../services/s3-credential.service';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 
 @Component({
   selector: 'app-trainers',
@@ -18,6 +19,7 @@ export class TrainersComponent implements OnInit {
   constructor(private notificationService: NotificationService,
               private trainerService: TrainerService,
               private s3Service: S3CredentialService,
+              public dialog: MatDialog,
               private router: Router) {
   }
 
@@ -36,7 +38,7 @@ export class TrainersComponent implements OnInit {
       skills: Skillz,
       certifications: 'Certs',
       active: true,
-      resume: 'Resume',
+      resume: null,
     },
       {
         trainerId: 2,
@@ -73,7 +75,10 @@ export class TrainersComponent implements OnInit {
   }
 
   //Adds a trainer by popping up a dialog box
-  addTrainer() {
+  addTrainer(evt):void {
+    evt.stopPropagation();
+    const dialogRef = this.dialog.open(TrainerDialogComponent,{
+      width: '450px'})
 
   }
 
@@ -119,7 +124,8 @@ export class TrainersComponent implements OnInit {
   }
 
   grabS3Resume(trainer: Trainer) {
-    var filename = trainer.resume;
+    let filename = trainer.resume;
+    event.stopPropagation();
 
     //show toast if there is no resume for this trainer in the database
     if(filename == null){
@@ -159,5 +165,24 @@ export class TrainersComponent implements OnInit {
   googleAuth(){
     this.router.navigate(['api/v2/google/google'])
   }
+
+}
+
+@Component({
+  selector: 'app-trainer-dialog',
+  templateUrl: './trainer-dialog.component.html',
+})
+export class TrainerDialogComponent implements OnInit {
+
+  constructor(public dialogRef: MatDialogRef<TrainerDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  ngOnInit() {
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
 
 }

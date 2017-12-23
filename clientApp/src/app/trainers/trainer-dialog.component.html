@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Add New Trainer</h2>
+
+<div mat-dialog-content>
+  <div class="md-padding">
+    <div fxLayout>
+      <mat-form-field fxFlex="100">
+        <label>First Name</label>
+        <input matInput ngModel="trainer.firstName" required>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="100">
+        <label>Last Name</label>
+        <input matInput ngModel="trainer.lastName" required>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button type="submit">Save</button>
+  <button mat-button>Cancel</button>
+</div>

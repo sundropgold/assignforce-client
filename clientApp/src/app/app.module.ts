@@ -10,7 +10,7 @@ import {OverviewComponent} from './overview/overview.component';
 import {BatchesComponent} from './batches/batches.component';
 import {LocationsComponent} from './locations/locations.component';
 import {CurriculaComponent} from './curricula/curricula.component';
-import {TrainersComponent} from './trainers/trainers.component';
+import { TrainersComponent} from './trainers/trainers.component';
 import {ProfileComponent} from './profile/profile.component';
 import {ReportsComponent} from './reports/reports.component';
 import {SettingsComponent} from './settings/settings.component';
@@ -54,7 +54,7 @@ import {TimelineComponent} from './timeline/timeline.component';
     ReportsComponent,
     SettingsComponent,
     LoginComponent,
-    TimelineComponent
+    TimelineComponent,
   ],
   imports: [
     HttpClientModule,
