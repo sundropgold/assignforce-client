@@ -8,8 +8,17 @@ import {SpringXsrfInterceptor} from './interceptors/springXsrfInterceptor';
 import {MenuBarComponent} from './menu-bar/menu-bar.component';
 import {OverviewComponent} from './overview/overview.component';
 import {BatchesComponent} from './batches/batches.component';
-import {LocationsComponent} from './locations/locations.component';
-import {CurriculaComponent} from './curricula/curricula.component';
+import {
+  LocationAddBuildingDialogComponent,
+  LocationAddLocationDialogComponent, LocationAddRoomDialogComponent, LocationDeleteBuildingDialogComponent,
+  LocationDeleteLocationDialogComponent, LocationDeleteRoomDialogComponent,
+  LocationEditBuildingDialogComponent,
+  LocationEditLocationDialogComponent, LocationEditRoomDialogComponent,
+  LocationsComponent
+} from './locations/locations.component';
+import {CurriculaComponent,
+  CurriculaCreateCurrDialogComponent,
+  CurriculaCreateSkillDialogComponent} from './curricula/curricula.component';
 import {TrainerDialogComponent, TrainersComponent} from './trainers/trainers.component';
 import {ProfileComponent} from './profile/profile.component';
 import {ReportsComponent} from './reports/reports.component';
@@ -49,7 +58,18 @@ import {TimelineComponent} from './timeline/timeline.component';
     OverviewComponent,
     BatchesComponent,
     LocationsComponent,
+    LocationAddLocationDialogComponent,
+    LocationDeleteLocationDialogComponent,
+    LocationEditLocationDialogComponent,
+    LocationAddBuildingDialogComponent,
+    LocationDeleteBuildingDialogComponent,
+    LocationEditBuildingDialogComponent,
+    LocationAddRoomDialogComponent,
+    LocationDeleteRoomDialogComponent,
+    LocationEditRoomDialogComponent,
     CurriculaComponent,
+    CurriculaCreateCurrDialogComponent,
+    CurriculaCreateSkillDialogComponent,
     TrainersComponent,
     TrainerDialogComponent,
     ProfileComponent,
@@ -104,7 +124,20 @@ import {TimelineComponent} from './timeline/timeline.component';
       multi: true
     }
   ],
-  entryComponents: [TrainerDialogComponent],
+  entryComponents: [
+    TrainerDialogComponent,
+    LocationAddLocationDialogComponent,
+    LocationDeleteLocationDialogComponent,
+    LocationEditLocationDialogComponent,
+    LocationAddBuildingDialogComponent,
+    LocationDeleteBuildingDialogComponent,
+    LocationEditBuildingDialogComponent,
+    LocationAddRoomDialogComponent,
+    LocationDeleteRoomDialogComponent,
+    LocationEditRoomDialogComponent,
+    CurriculaCreateCurrDialogComponent,
+    CurriculaCreateSkillDialogComponent
+  ],
   bootstrap: [AppComponent]
 })
 
