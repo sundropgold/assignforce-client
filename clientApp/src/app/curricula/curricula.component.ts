@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Curriculum} from '../domain/curriculum';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-curricula',
@@ -30,6 +31,7 @@ export class CurriculaComponent implements OnInit {
     {currId: 9, name: 'C++', core: true, active: false,
       skills: ['Core C++']}
   ];
+
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -42,17 +44,42 @@ export class CurriculaComponent implements OnInit {
   }
 
   /* Create Curriculum button*/
-  createCurr(evt): void {
+  createCore(evt): void {
     const dialogRef  = this.dialog.open(CurriculaCreateCurrDialogComponent,
       {
             width: '250px'
       });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('create-curr dialog closed');
+      console.log('create-core dialog closed');
     });
     evt.stopPropagation();
   }
+
+  createFocus(evt): void {
+    const dialogRef  = this.dialog.open(CurriculaCreateCurrDialogComponent,
+      {
+        width: '250px'
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('create-focus dialog closed');
+    });
+    evt.stopPropagation();
+  }
+
+  createSkill(evt): void {
+    const dialogRef  = this.dialog.open(CurriculaCreateSkillDialogComponent,
+      {
+        width: '250px'
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('create-skill dialog closed');
+    });
+    evt.stopPropagation();
+  }
+
 
 
 
@@ -63,12 +90,46 @@ export class CurriculaComponent implements OnInit {
   templateUrl: 'curricula-create-curr-dialog.component.html',
   styleUrls: ['./curricula.component.css']
 })
-export class CurriculaCreateCurrDialogComponent{
+export class CurriculaCreateCurrDialogComponent {
+  skills = new FormControl();
+  skillList = [
+    'AngularJS',
+    'Angular4',
+    'ASP.NET MVC',
+    'ASP.NET WEB API',
+    'C',
+    'C#',
+    'C++',
+    'Core.NET',
+    'Core Java',
+    'Core SDET',
+    'CSS',
+    'HTML',
+    'SQL',
+    'Spring'
+  ];
+
   constructor(
     public dialogRef: MatDialogRef<CurriculaCreateCurrDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
+
     onNoClick(): void {
       this.dialogRef.close();
     }
+}
+
+@Component({
+  selector: 'app-curricula-create-skill-dialog',
+  templateUrl: 'curricula-create-skill-dialog.component.html',
+  styleUrls: ['./curricula.component.css']
+})
+export class CurriculaCreateSkillDialogComponent {
+  constructor(
+    public dialogRef: MatDialogRef<CurriculaCreateSkillDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }

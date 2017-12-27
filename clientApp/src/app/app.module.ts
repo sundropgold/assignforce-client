@@ -10,7 +10,8 @@ import {OverviewComponent} from './overview/overview.component';
 import {BatchesComponent} from './batches/batches.component';
 import {LocationsComponent} from './locations/locations.component';
 import {CurriculaComponent,
-  CurriculaCreateCurrDialogComponent} from './curricula/curricula.component';
+  CurriculaCreateCurrDialogComponent,
+  CurriculaCreateSkillDialogComponent} from './curricula/curricula.component';
 import {TrainerDialogComponent, TrainersComponent} from './trainers/trainers.component';
 import {ProfileComponent} from './profile/profile.component';
 import {ReportsComponent} from './reports/reports.component';
@@ -52,6 +53,7 @@ import {TimelineComponent} from './timeline/timeline.component';
     LocationsComponent,
     CurriculaComponent,
     CurriculaCreateCurrDialogComponent,
+    CurriculaCreateSkillDialogComponent,
     TrainersComponent,
     TrainerDialogComponent,
     ProfileComponent,
@@ -108,7 +110,8 @@ import {TimelineComponent} from './timeline/timeline.component';
   ],
   entryComponents: [
     TrainerDialogComponent,
-    CurriculaCreateCurrDialogComponent
+    CurriculaCreateCurrDialogComponent,
+    CurriculaCreateSkillDialogComponent
   ],
   bootstrap: [AppComponent]
 })
