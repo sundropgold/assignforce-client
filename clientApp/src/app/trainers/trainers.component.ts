@@ -6,10 +6,6 @@ import {TrainerService} from '../services/trainer.service';
 import {NavigationExtras, Params, Router} from '@angular/router';
 import {S3CredentialService} from '../services/s3-credential.service';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
-import {Locations} from '../model/locations';
-import {int} from 'aws-sdk/clients/datapipeline';
-import {letProto} from 'rxjs/operator/let';
-import {forEach} from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-trainers',
