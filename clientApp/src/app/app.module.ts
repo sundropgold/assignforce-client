@@ -16,7 +16,9 @@ import {
   LocationEditLocationDialogComponent, LocationEditRoomDialogComponent,
   LocationsComponent
 } from './locations/locations.component';
-import {CurriculaComponent} from './curricula/curricula.component';
+import {CurriculaComponent,
+  CurriculaCreateCurrDialogComponent,
+  CurriculaCreateSkillDialogComponent} from './curricula/curricula.component';
 import {TrainerDialogComponent, TrainersComponent} from './trainers/trainers.component';
 import {ProfileComponent} from './profile/profile.component';
 import {ReportsComponent} from './reports/reports.component';
@@ -66,6 +68,8 @@ import {TimelineComponent} from './timeline/timeline.component';
     LocationDeleteRoomDialogComponent,
     LocationEditRoomDialogComponent,
     CurriculaComponent,
+    CurriculaCreateCurrDialogComponent,
+    CurriculaCreateSkillDialogComponent,
     TrainersComponent,
     TrainerDialogComponent,
     ProfileComponent,
@@ -130,7 +134,9 @@ import {TimelineComponent} from './timeline/timeline.component';
     LocationEditBuildingDialogComponent,
     LocationAddRoomDialogComponent,
     LocationDeleteRoomDialogComponent,
-    LocationEditRoomDialogComponent
+    LocationEditRoomDialogComponent,
+    CurriculaCreateCurrDialogComponent,
+    CurriculaCreateSkillDialogComponent
   ],
   bootstrap: [AppComponent]
 })
