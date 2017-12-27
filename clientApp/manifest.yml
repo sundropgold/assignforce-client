@@ -1,0 +1,12 @@
+---
+applications:
+ - name: assignforce-frontend
+   memory: 1000M
+   domain: revatureapps.io
+   host: assignforce-frontend
+   instances: 2
+   buildpack: https://github.com/cloudfoundry/staticfile-buildpack.git
+   services:
+     - service-registry //registers with built in eureka discovery
+   env:
+     SPRING_PROFILES_ACTIVE: dev

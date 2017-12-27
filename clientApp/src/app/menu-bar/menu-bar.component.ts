@@ -12,7 +12,6 @@ import {MatTab} from '@angular/material';
 export class MenuBarComponent implements OnInit {
 
   selectedTab = 0;
-  pathParam: string;
 
   tabs = ['overview', 'batches', 'locations', 'curricula', 'trainers', 'profile', 'reports', 'settings', 'logout'];
 
@@ -23,24 +22,18 @@ export class MenuBarComponent implements OnInit {
   ngOnInit() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        console.log('current url', event.url.split('/'));
-        if (event.url.split('/').length > 2) {
-          this.pathParam = event.url.split('/')[2];
+        const urlParts = event.url.split('/');
+        console.log('current url', urlParts);
+        if (!(urlParts.length > 2)) {
+          this.selectedTab = this.tabs.indexOf(urlParts[1]);
         }
-        this.selectedTab = this.tabs.indexOf(event.url.split('/')[1]);
       }
     });
   }
 
-
   selectTab(evt) {
     //localStorage.setItem('active', evt.index);
-    if (this.pathParam != null && evt.index === 5) {
-      this.router.navigate([(this.tabs[evt.index]) + '/' + this.pathParam]);
-      this.pathParam = null;
-    } else {
-      this.router.navigate([(this.tabs[evt.index])]);
-    }
+    this.router.navigate([this.tabs[evt.index]]);
 
     /*
           switch (evt.index) {

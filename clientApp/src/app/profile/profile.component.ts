@@ -8,6 +8,7 @@ import {NotificationService} from '../services/notification.service';
 import {S3Credential} from '../domain/s3-credential';
 import * as AWS from 'aws-sdk';
 import {ActivatedRoute} from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-profile',
@@ -32,36 +33,57 @@ export class ProfileComponent implements OnInit {
   certFile: FileList = null;
   certName: string;
   skillsList: string[] = [];
-  trainer: Trainer = {
-    trainerId: 1,
-    firstName: 'Joseph',
-    lastName: 'Wong',
-    skills: [
-      {skillId: 108, name: 'Java', active: true},
-      {skillId: 8, name: 'JDBC', active: true},
-      {skillId: 3, name: 'Angular', active: true}
-    ],
-    resume: null,
-    certifications: [],
-    active: true};
+  trainer: Trainer;
 
   constructor(private trainerService: TrainerService,
               private skillService: SkillService,
               private s3Service: S3CredentialService,
               private notificationService: NotificationService,
-              private route: ActivatedRoute) {}
+              private route: ActivatedRoute,
+              private location: Location) {}
 
   ngOnInit() {
     this.route.params.subscribe( params => this.tId = params.id);
 
-    this.getAllSkills();
+    setTimeout(() => {
+      this.trainer = {
+        trainerId: 1,
+        firstName: 'Joseph',
+        lastName: 'Wong',
+        skills: [
+          {skillId: 108, name: 'Java', active: true},
+          {skillId: 8, name: 'JDBC', active: true},
+          {skillId: 3, name: 'Angular', active: true}
+        ],
+        resume: null,
+        certifications: [],
+        active: true};
+      this.skills = [
+        {skillId: 1, name: 'Java', active: true},
+        {skillId: 2, name: 'SQL', active: true},
+        {skillId: 3, name: 'Angular', active: true},
+        {skillId: 4, name: 'C++', active: true},
+        {skillId: 5, name: 'Pega', active: true},
+        {skillId: 6, name: 'JUnit', active: true},
+        {skillId: 7, name: 'Spring', active: true},
+        {skillId: 8, name: 'JDBC', active: true},
+        {skillId: 9, name: 'HTML', active: true},
+        {skillId: 10, name: 'C#', active: true},
+        {skillId: 11, name: 'SOAP', active: true},
+        {skillId: 12, name: 'REST', active: true},
+        {skillId: 13, name: 'CSS', active: true}
+      ];
+      this.populateSkillList();
+      }, 1000);
+
+    // this.getAllSkills();
     // data gathering
 
     // id is hard coded for testing. unless you click on a trainer in the trainer page.
     if (this.tId !== undefined) {
       this.lockProfile = true;
       // this.trainerService.getById(this.tId)
-      //   .subscribe(response => {this.trainer = response; this.getAllSkills(); },
+      //   .subscribe(response => this.trainer = response,
       //   () => this.showToast('Could not fetch trainer.'));
     } else {
       // this.trainerService.getByFirstNameAndLastName(this.fName, this.lName)
@@ -73,6 +95,9 @@ export class ProfileComponent implements OnInit {
     // grab credentials for s3
     this.s3Service.getCreds().subscribe( response => this.creds = response,
       () => this.showToast('Failed to fetch Credentials'));
+  }
+  backClick() {
+    this.location.back();
   }
 
   getFiles(event) {
@@ -287,5 +312,13 @@ export class ProfileComponent implements OnInit {
         }
       }
     }, () => this.showToast('Could not fetch skills.'));
+  }
+
+  populateSkillList() {
+    for (let i = 0; i < this.skills.length; i++) {
+      if ((this.trainer.skills.filter(a => this.skills[i].name === a.name)).length === 0) {
+        this.skillsList.push(this.skills[i].name);
+      }
+    }
   }
 }

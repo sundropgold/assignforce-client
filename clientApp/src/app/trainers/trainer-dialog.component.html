@@ -1,0 +1,26 @@
+<div mat-dialog-content>
+  <mat-toolbar layout="columns">
+    <div class="md-toolbar-tools">
+      <span>Add New Trainer</span>
+    </div>
+  </mat-toolbar>
+
+  <div class="md-padding">
+    <div layout layout-wrap>
+      <mat-form-field flex="100">
+        <label>First Name</label>
+        <input matInput [(ngModel)]="data.trainer.firstName" required>
+      </mat-form-field>
+
+      <mat-form-field flex="100">
+        <label>Last Name</label>
+        <input matInput [(ngModel)]="data.trainer.lastName" required>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data.trainer">Save</button>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+</div>
