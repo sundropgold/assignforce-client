@@ -7,6 +7,9 @@ import {NavigationExtras, Params, Router} from '@angular/router';
 import {S3CredentialService} from '../services/s3-credential.service';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {Locations} from '../model/locations';
+import {int} from 'aws-sdk/clients/datapipeline';
+import {letProto} from 'rxjs/operator/let';
+import {forEach} from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-trainers',
@@ -27,16 +30,25 @@ export class TrainersComponent implements OnInit {
   ngOnInit() {
     this.isManager = true;
     this.getAll();
-    const Skillz: Skill[] = [{
-      skillId: 1,
-      name: 'Java',
-      active: true
-    }];
+
     this.trainers = [{
       trainerId: 1,
       firstName: 'James',
       lastName: 'Smith',
-      skills: Skillz,
+      skills: [{
+        skillId: 1,
+        name: 'Java',
+        active: true
+      },
+        {skillId: 2,
+          name: 'Angular',
+          active: true
+        },
+        {
+          skillId: 3,
+          name: 'Spring',
+          active: true
+        }],
       certifications: 'Certs',
       active: true,
       resume: null,
@@ -45,7 +57,20 @@ export class TrainersComponent implements OnInit {
         trainerId: 2,
         firstName: 'Jane',
         lastName: 'Doe',
-        skills: Skillz,
+        skills: [{
+          skillId: 1,
+          name: 'C#',
+          active: true
+        },
+          {skillId: 2,
+            name: 'AngularJs',
+            active: true
+          },
+          {
+            skillId: 3,
+            name: 'Jenkins',
+            active: true
+          }],
         certifications: 'Certs',
         active: false,
         resume: 'Resume',
@@ -54,7 +79,20 @@ export class TrainersComponent implements OnInit {
         trainerId: 3,
         firstName: 'Jon',
         lastName: 'Jones',
-        skills: Skillz,
+        skills: [{
+          skillId: 1,
+          name: 'Java',
+          active: true
+        },
+          {skillId: 2,
+            name: 'Maven',
+            active: true
+          },
+          {
+            skillId: 3,
+            name: 'MongoDB',
+            active: true
+          }],
         certifications: 'Certs',
         active: false,
         resume: 'Resume',
@@ -63,7 +101,20 @@ export class TrainersComponent implements OnInit {
         trainerId: 4,
         firstName: 'Daniel',
         lastName: 'Cormier',
-        skills: Skillz,
+        skills: [{
+          skillId: 1,
+          name: 'C#',
+          active: true
+        },
+          {skillId: 2,
+            name: 'Cloud Foundry',
+            active: true
+          },
+          {
+            skillId: 3,
+            name: 'AWS',
+            active: true
+          }],
         certifications: 'Certs',
         active: true,
         resume: 'Resume',
@@ -77,7 +128,6 @@ export class TrainersComponent implements OnInit {
 
   //Adds a trainer by popping up a dialog box
   addTrainer(evt): void {
-    evt.stopPropagation();
     const trainer: Trainer = {
       trainerId: null,
       firstName: '',
@@ -202,6 +252,18 @@ export class TrainersComponent implements OnInit {
         }
       );
   }
+
+// Takes array of skills and formats their names into a string
+  joinObjArrayByName(Skillz: Skill[]) {
+    let skillslist = '';
+    for(let i = 0; i < Skillz.length; i++){
+      skillslist += Skillz[i].name;
+      if(i != Skillz.length-1){
+        skillslist += ', '
+      }
+    }
+    return skillslist;
+  };
 
   googleAuth() {
     this.router.navigate(['api/v2/google/google']);
