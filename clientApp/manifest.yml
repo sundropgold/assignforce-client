@@ -6,5 +6,3 @@ applications:
    host: assignforce-frontend
    instances: 2
    buildpack: https://github.com/cloudfoundry/nodejs-buildpack
-   env:
-     SPRING_PROFILES_ACTIVE: dev
