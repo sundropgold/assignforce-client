@@ -45,7 +45,7 @@ export class CurriculaComponent implements OnInit {
 
   /* Create Curriculum button*/
   createCore(evt): void {
-    const dialogRef  = this.dialog.open(CurriculaCreateCurrDialogComponent,
+    const dialogRef  = this.dialog.open(CurriculaCurriculumDialogComponent,
       {
             width: '250px'
       });
@@ -57,9 +57,33 @@ export class CurriculaComponent implements OnInit {
   }
 
   createFocus(evt): void {
-    const dialogRef  = this.dialog.open(CurriculaCreateCurrDialogComponent,
+    const dialogRef  = this.dialog.open(CurriculaCurriculumDialogComponent,
       {
         width: '250px'
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('create-focus dialog closed');
+    });
+    evt.stopPropagation();
+  }
+
+  editCurr(evt): void {
+    const dialogRef  = this.dialog.open(CurriculaCurriculumDialogComponent,
+      {
+        width: '250px'
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('create-focus dialog closed');
+    });
+    evt.stopPropagation();
+  }
+
+  removeCurr(evt): void {
+    const dialogRef  = this.dialog.open(CurriculaRemovalDialogComponent,
+      {
+        width: '400px'
       });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -86,11 +110,11 @@ export class CurriculaComponent implements OnInit {
 }
 
 @Component({
-  selector: 'app-curricula-create-curr-dialog',
-  templateUrl: 'curricula-create-curr-dialog.component.html',
+  selector: 'app-curricula-curriculum-dialog',
+  templateUrl: 'curricula-curriculum-dialog.component.html',
   styleUrls: ['./curricula.component.css']
 })
-export class CurriculaCreateCurrDialogComponent {
+export class CurriculaCurriculumDialogComponent {
   skills = new FormControl();
   skillList = [
     'AngularJS',
@@ -110,7 +134,7 @@ export class CurriculaCreateCurrDialogComponent {
   ];
 
   constructor(
-    public dialogRef: MatDialogRef<CurriculaCreateCurrDialogComponent>,
+    public dialogRef: MatDialogRef<CurriculaCurriculumDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
 
@@ -127,6 +151,21 @@ export class CurriculaCreateCurrDialogComponent {
 export class CurriculaCreateSkillDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<CurriculaCreateSkillDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'app-curricula-removal-dialog',
+  templateUrl: 'curricula-removal-dialog.component.html',
+  styleUrls: ['./curricula.component.css']
+})
+export class CurriculaRemovalDialogComponent {
+  constructor(
+    public dialogRef: MatDialogRef<CurriculaRemovalDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   onNoClick(): void {

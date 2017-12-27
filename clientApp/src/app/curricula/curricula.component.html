@@ -31,10 +31,10 @@
                         <p>Skills: {{curr.skills}}</p>
                       </div>
                       <span class="fill-space"></span>
-                      <button mat-icon-button class="button-orange" (click)="clickTest($event)" [hidden]="!isAdmin">
+                      <button mat-icon-button class="button-orange" (click)="editCurr($event)" [hidden]="!isAdmin">
                         <mat-icon class="icon-margin-fix" matTooltip="Edit Curriculum">mode_edit</mat-icon>
                       </button>
-                      <button mat-icon-button class="button-orange" (click)="clickTest($event)" [hidden]="!isAdmin">
+                      <button mat-icon-button class="button-orange" (click)="removeCurr($event)" [hidden]="!isAdmin">
                         <mat-icon class="icon-margin-fix" matTooltip="Remove Core">remove_circle</mat-icon>
                       </button>
                   </mat-list-item>
@@ -74,10 +74,10 @@
                         <p>Skills: {{curr.skills}}</p>
                       </div>
                       <span class="fill-space"></span>
-                      <button mat-icon-button class="button-orange" (click)="clickTest($event)" [hidden]="!isAdmin">
+                      <button mat-icon-button class="button-orange" (click)="editCurr($event)" [hidden]="!isAdmin">
                         <mat-icon class="icon-margin-fix" matTooltip="Edit Curriculum">mode_edit</mat-icon>
                       </button>
-                      <button mat-icon-button class="button-orange" (click)="clickTest($event)" [hidden]="!isAdmin">
+                      <button mat-icon-button class="button-orange" (click)="removeCurr($event)" [hidden]="!isAdmin">
                         <mat-icon class="icon-margin-fix" matTooltip="Remove Core">remove_circle</mat-icon>
                       </button>
                     </mat-list-item>
