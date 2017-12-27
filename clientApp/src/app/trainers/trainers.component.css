@@ -21,6 +21,7 @@ mat-toolbar {
 mat-list-item{
   margin-right: 7px;
   transition: background 0.3s linear;
+  cursor: pointer;
 }
 
 mat-list-item:hover{

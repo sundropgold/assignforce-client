@@ -8,7 +8,14 @@ import {SpringXsrfInterceptor} from './interceptors/springXsrfInterceptor';
 import {MenuBarComponent} from './menu-bar/menu-bar.component';
 import {OverviewComponent} from './overview/overview.component';
 import {BatchesComponent} from './batches/batches.component';
-import {LocationsComponent} from './locations/locations.component';
+import {
+  LocationAddBuildingDialogComponent,
+  LocationAddLocationDialogComponent, LocationAddRoomDialogComponent, LocationDeleteBuildingDialogComponent,
+  LocationDeleteLocationDialogComponent, LocationDeleteRoomDialogComponent,
+  LocationEditBuildingDialogComponent,
+  LocationEditLocationDialogComponent, LocationEditRoomDialogComponent,
+  LocationsComponent
+} from './locations/locations.component';
 import {CurriculaComponent,
   CurriculaCreateCurrDialogComponent,
   CurriculaCreateSkillDialogComponent} from './curricula/curricula.component';
@@ -51,6 +58,15 @@ import {TimelineComponent} from './timeline/timeline.component';
     OverviewComponent,
     BatchesComponent,
     LocationsComponent,
+    LocationAddLocationDialogComponent,
+    LocationDeleteLocationDialogComponent,
+    LocationEditLocationDialogComponent,
+    LocationAddBuildingDialogComponent,
+    LocationDeleteBuildingDialogComponent,
+    LocationEditBuildingDialogComponent,
+    LocationAddRoomDialogComponent,
+    LocationDeleteRoomDialogComponent,
+    LocationEditRoomDialogComponent,
     CurriculaComponent,
     CurriculaCreateCurrDialogComponent,
     CurriculaCreateSkillDialogComponent,
@@ -110,6 +126,15 @@ import {TimelineComponent} from './timeline/timeline.component';
   ],
   entryComponents: [
     TrainerDialogComponent,
+    LocationAddLocationDialogComponent,
+    LocationDeleteLocationDialogComponent,
+    LocationEditLocationDialogComponent,
+    LocationAddBuildingDialogComponent,
+    LocationDeleteBuildingDialogComponent,
+    LocationEditBuildingDialogComponent,
+    LocationAddRoomDialogComponent,
+    LocationDeleteRoomDialogComponent,
+    LocationEditRoomDialogComponent,
     CurriculaCreateCurrDialogComponent,
     CurriculaCreateSkillDialogComponent
   ],

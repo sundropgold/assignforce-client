@@ -220,6 +220,8 @@ export class TrainersComponent implements OnInit {
       return;
     }
 
+    event.stopPropagation();
+
 
   }
 
