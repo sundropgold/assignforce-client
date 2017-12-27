@@ -9,7 +9,8 @@ import {MenuBarComponent} from './menu-bar/menu-bar.component';
 import {OverviewComponent} from './overview/overview.component';
 import {BatchesComponent} from './batches/batches.component';
 import {LocationsComponent} from './locations/locations.component';
-import {CurriculaComponent} from './curricula/curricula.component';
+import {CurriculaComponent,
+  CurriculaCreateCurrDialogComponent} from './curricula/curricula.component';
 import {TrainerDialogComponent, TrainersComponent} from './trainers/trainers.component';
 import {ProfileComponent} from './profile/profile.component';
 import {ReportsComponent} from './reports/reports.component';
@@ -50,6 +51,7 @@ import {TimelineComponent} from './timeline/timeline.component';
     BatchesComponent,
     LocationsComponent,
     CurriculaComponent,
+    CurriculaCreateCurrDialogComponent,
     TrainersComponent,
     TrainerDialogComponent,
     ProfileComponent,
@@ -104,7 +106,10 @@ import {TimelineComponent} from './timeline/timeline.component';
       multi: true
     }
   ],
-  entryComponents: [TrainerDialogComponent],
+  entryComponents: [
+    TrainerDialogComponent,
+    CurriculaCreateCurrDialogComponent
+  ],
   bootstrap: [AppComponent]
 })
 

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Curriculum} from '../domain/curriculum';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 
 @Component({
   selector: 'app-curricula',
@@ -29,7 +30,7 @@ export class CurriculaComponent implements OnInit {
     {currId: 9, name: 'C++', core: true, active: false,
       skills: ['Core C++']}
   ];
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
   }
@@ -40,6 +41,34 @@ export class CurriculaComponent implements OnInit {
     evt.stopPropagation();
   }
 
+  /* Create Curriculum button*/
+  createCurr(evt): void {
+    const dialogRef  = this.dialog.open(CurriculaCreateCurrDialogComponent,
+      {
+            width: '250px'
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('create-curr dialog closed');
+    });
+    evt.stopPropagation();
+  }
 
 
+
+}
+
+@Component({
+  selector: 'app-curricula-create-curr-dialog',
+  templateUrl: 'curricula-create-curr-dialog.component.html',
+  styleUrls: ['./curricula.component.css']
+})
+export class CurriculaCreateCurrDialogComponent{
+  constructor(
+    public dialogRef: MatDialogRef<CurriculaCreateCurrDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+    onNoClick(): void {
+      this.dialogRef.close();
+    }
 }
