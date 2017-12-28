@@ -95,11 +95,9 @@ export class BatchesComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getAll();
-    this.batchData = new MatTableDataSource(this.BatchData);
   }
 
   ngAfterViewInit() {
-    this.batchData.sort = this.sort;
   }
 
   EditBatch() {
@@ -151,8 +149,8 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   getAll() {
     this.batchService.getAll().subscribe(data => {
       this.BatchData = data;
-      console.log(data);
-      console.log(this.BatchData);
+      this.batchData = new MatTableDataSource(this.BatchData);
+      this.batchData.sort = this.sort;
   });
   }
 
