@@ -6,7 +6,7 @@ import {Trainer} from '../domain/trainer';
 @Injectable()
 export class TrainerService {
 
-  url = 'api/v2/trainer';
+  url = 'http://localhost:9090/api/v2/trainer';
 
   constructor(private http: HttpClient) { }
 

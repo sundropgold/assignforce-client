@@ -17,8 +17,8 @@ import {Location} from '@angular/common';
 })
 export class ProfileComponent implements OnInit {
 
-  @Input() fName: string = null;
-  @Input() lName: string = null;
+  @Input() fName = 'Test';
+  @Input() lName = 'Trainer';
   tId: number;
   lockProfile: boolean;
 
@@ -83,11 +83,13 @@ export class ProfileComponent implements OnInit {
     if (this.tId !== undefined) {
       this.lockProfile = true;
       // this.trainerService.getById(this.tId)
-      //   .subscribe(response => this.trainer = response,
+      //   .subscribe(response => {this.trainer = response; },
       //   () => this.showToast('Could not fetch trainer.'));
     } else {
       // this.trainerService.getByFirstNameAndLastName(this.fName, this.lName)
-      //   .subscribe(response => {this.trainer = response; this.getAllSkills(); },
+      //   .subscribe(response => {this.trainer = response;
+      //     this.getAllSkills();
+      //   },
       //   () => this.showToast('Could not fetch trainer.'));
       this.lockProfile = false;
     }
@@ -159,32 +161,32 @@ export class ProfileComponent implements OnInit {
     this.myFile = undefined;
   }
 
-  // grabResume() {
-  //   const bucket = new AWS.S3({
-  //     accessKeyId: this.creds.ID,
-  //     secretAccessKey: this.creds.SecretKey,
-  //     region: 'us-east-1'
-  //   });
-  //
-  //   //set the parameters needed to get an object from aws s3 bucket
-  //   const params = {
-  //     Bucket: this.creds.BucketName,
-  //     Key: 'Resumes/' + this.trainer.trainerId + '_' + this.trainer.resume,
-  //     Expires: 60 //url expires in 60 seconds with signed urls
-  //   };
-  //
-  //   //grabs a url to the object in the s3 bucket
-  //   const url = bucket.getSignedUrl('getObject', params);
-  //
-  //   //this will create a link, set download and href, and invoke the click action on it
-  //   // it will download the file
-  //   const link = document.createElement('a');
-  //   // link.download = "test.png";
-  //   link.href = url;
-  //   document.body.appendChild(link);
-  //   link.click();
-  //   document.body.removeChild(link);
-  // }
+  grabResume() {
+    const bucket = new AWS.S3({
+      accessKeyId: this.creds.ID,
+      secretAccessKey: this.creds.SecretKey,
+      region: 'us-east-1'
+    });
+
+    //set the parameters needed to get an object from aws s3 bucket
+    const params = {
+      Bucket: this.creds.BucketName,
+      Key: 'Resumes/' + this.trainer.trainerId + '_' + this.trainer.resume,
+      Expires: 60 //url expires in 60 seconds with signed urls
+    };
+
+    //grabs a url to the object in the s3 bucket
+    const url = bucket.getSignedUrl('getObject', params);
+
+    //this will create a link, set download and href, and invoke the click action on it
+    // it will download the file
+    const link = document.createElement('a');
+    // link.download = "test.png";
+    link.href = url;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 
   // called to save the current state of the trainers skills
   saveTSkills() {
@@ -315,9 +317,11 @@ export class ProfileComponent implements OnInit {
   }
 
   populateSkillList() {
-    for (let i = 0; i < this.skills.length; i++) {
-      if ((this.trainer.skills.filter(a => this.skills[i].name === a.name)).length === 0) {
-        this.skillsList.push(this.skills[i].name);
+    if (this.trainer.skills != null) {
+      for (let i = 0; i < this.skills.length; i++) {
+        if ((this.trainer.skills.filter(a => this.skills[i].name === a.name)).length === 0) {
+          this.skillsList.push(this.skills[i].name);
+        }
       }
     }
   }

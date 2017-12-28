@@ -38,7 +38,7 @@ The second md-card/ng-show is for other users to look at other trainers profiles
           <div>
             <!--need to figure out accessing the file, as far as permissions go-->
             <label> Current Resume: </label>
-            <label *ngIf="trainer.resume != null">{{trainer.resume}}</label>
+            <label *ngIf="trainer.resume != null">{{trainer.resume}} <button (click)="grabResume()">Grab</button></label>
             <label *ngIf="trainer.resume == null">No resume on file</label> <br>
           </div>
           <div fxLayout="row">
