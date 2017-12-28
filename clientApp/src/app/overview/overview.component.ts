@@ -13,12 +13,12 @@ import {Batch} from '../domain/batch';
 export class OverviewComponent implements OnInit, AfterViewInit {
   BatchData: Batch[];
   batchData = new MatTableDataSource(this.BatchData);
-  batchValues = ['Name', 'Curriculum', 'Trainer/Co-Trainer', 'Location', 'Building', 'Room', 'StartDate', 'EndDate', 'progress'];
+  batchValues = ['name', 'curriculum', 'trainer', 'location', 'building', 'room', 'startDate', 'endDate', 'progress'];
 
   color = 'warn';
   mode = 'determinate';
-  value = 10;
-  bufferValue = 75;
+  value = 50;
+  bufferValue = 100;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -30,6 +30,9 @@ export class OverviewComponent implements OnInit, AfterViewInit {
       this.getAll();
     }
   ngAfterViewInit() {
+    this.batchData.sort = this.sort;
+    this.batchData.paginator = this.paginator;
+    this.batchData = new MatTableDataSource(this.BatchData);
   }
 
   exportToCSV(evt) {
@@ -46,6 +49,10 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     this.batchService.getAll().subscribe(data => {
       this.BatchData = data;
       this.batchData = new MatTableDataSource(this.BatchData);
+      var currentDate = new  Date();
+      for (let entry of this.BatchData) {
+        entry.progress = (currentDate.valueOf() - entry.startDate.valueOf()) / (entry.endDate.valueOf() - entry.startDate.valueOf()) * 100;
+      }
       this.batchData.sort = this.sort;
       this.batchData.paginator = this.paginator;
     });
