@@ -23,7 +23,7 @@
 
           <div class="mat-panel-content">
             <mat-list>
-              <div class="item-detail" *ngFor="let curr of currData">
+              <div class="item-detail" *ngFor="let curr of curricula">
                 <div *ngIf="curr.active && curr.core">
                   <mat-list-item>
                       <div>
@@ -66,7 +66,7 @@
 
             <div class="mat-panel-content">
               <mat-list>
-                <div class="item-detail" *ngFor="let curr of currData">
+                <div class="item-detail" *ngFor="let curr of curricula">
                   <div *ngIf="curr.active && !curr.core">
                     <mat-list-item>
                       <div>

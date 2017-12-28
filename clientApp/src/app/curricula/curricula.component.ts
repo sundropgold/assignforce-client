@@ -2,6 +2,10 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {Curriculum} from '../domain/curriculum';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {FormControl} from '@angular/forms';
+import {Router} from '@angular/router';
+import {S3CredentialService} from '../services/s3-credential.service';
+import {CurriculaService} from '../services/curricula.service';
+import {NotificationService} from '../services/notification.service';
 
 @Component({
   selector: 'app-curricula',
@@ -10,7 +14,6 @@ import {FormControl} from '@angular/forms';
 })
 export class CurriculaComponent implements OnInit {
 
-  isAdmin: Boolean = true;
   currData: Curriculum[] = [
     {currId: 1, name: '.NET', core: true, active: true,
       skills: ['Core .NET', 'AngularJS', 'C#', 'ASP.NET', 'MVC', 'T-SQL']},
@@ -32,15 +35,38 @@ export class CurriculaComponent implements OnInit {
       skills: ['Core C++']}
   ];
 
-  constructor(public dialog: MatDialog) { }
+  /* variables */
+  isAdmin: Boolean = true;
+  curricula: Curriculum[];
+
+  /* constructor */
+  constructor(public dialog: MatDialog,
+              private router: Router,
+              private s3Service: S3CredentialService,
+              private curriculaService: CurriculaService,
+              private notificationService: NotificationService) { }
 
   ngOnInit() {
+    /* grab curricula from server */
+    this.curriculaService.getAll()
+      .subscribe(data => {
+        this.curricula = data;
+        console.log(this.curricula);
+      }, error => {
+        this.showToast('Failed to fetch Curricula');
+        }
+      );
   }
 
 
   clickTest(evt) {
     console.log('button clicked');
     evt.stopPropagation();
+  }
+
+  /* toast message */
+  showToast(msg) {
+    this.notificationService.openSnackBar(msg);
   }
 
   /* Create Curriculum button*/
