@@ -49,6 +49,7 @@ import 'aws-sdk/dist/aws-sdk.min';
 import {LoginComponent} from './login/login.component';
 import {TimelineComponent} from './timeline/timeline.component';
 import {OrderModule} from 'ngx-order-pipe';
+import {BatchService} from './services/batch.service';
 
 
 @NgModule({
@@ -114,6 +115,7 @@ import {OrderModule} from 'ngx-order-pipe';
   ],
   providers: [
     TrainerService,
+    BatchService,
     SkillService,
     S3CredentialService,
     UrlService,
