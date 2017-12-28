@@ -30,10 +30,6 @@ export class OverviewComponent implements OnInit, AfterViewInit {
       this.getAll();
     }
   ngAfterViewInit() {
-    this.batchData = new MatTableDataSource(this.BatchData);
-    this.batchData.sort = this.sort;
-    this.batchData.paginator = this.paginator;
-    this.batchData = new MatTableDataSource(this.BatchData);
   }
 
   exportToCSV(evt) {
