@@ -49,6 +49,7 @@ import {NotificationService} from './services/notification.service';
 import 'aws-sdk/dist/aws-sdk.min';
 import {LoginComponent} from './login/login.component';
 import {TimelineComponent} from './timeline/timeline.component';
+import {BatchService} from './services/batch.service';
 
 
 @NgModule({
@@ -114,6 +115,7 @@ import {TimelineComponent} from './timeline/timeline.component';
   ],
   providers: [
     TrainerService,
+    BatchService,
     SkillService,
     S3CredentialService,
     UrlService,

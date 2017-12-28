@@ -136,55 +136,55 @@
           <!-- Name Column -->
           <ng-container matColumnDef="Name">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-            <mat-cell *matCellDef="let batch"> {{batch.name}} </mat-cell>
+            <mat-cell *matCellDef="let batch"> {{BatchData[0].name}} </mat-cell>
           </ng-container>
 
           <!-- Curriculum Column -->
           <ng-container matColumnDef="Curriculum">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Curriculum </mat-header-cell>
-            <mat-cell *matCellDef="let batch"> {{batch.curriculum}} </mat-cell>
+            <mat-cell *matCellDef="let batch"> {{BatchData[0].name}} </mat-cell>
           </ng-container>
 
           <!-- Focus Column -->
           <ng-container matColumnDef="Focus">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Focus </mat-header-cell>
-            <mat-cell *matCellDef="let batch"> {{batch.focus}} </mat-cell>
+            <mat-cell *matCellDef="let batch"> {{BatchData[0].name}} </mat-cell>
           </ng-container>
 
           <!-- Trainer Column -->
           <ng-container matColumnDef="Trainer/Co-Trainer">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Trainer/Cotrainer </mat-header-cell>
-            <mat-cell *matCellDef="let batch"> {{batch.trainer}} / {{batch.cotrainer}}</mat-cell>
+            <mat-cell *matCellDef="let batch"> {{BatchData[0].name}}</mat-cell>
           </ng-container>
 
           <!-- Location Column -->
           <ng-container matColumnDef="Location">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Location </mat-header-cell>
-            <mat-cell *matCellDef="let batch"> {{batch.location}} </mat-cell>
+            <mat-cell *matCellDef="let batch"> {{BatchData[0].name}} </mat-cell>
           </ng-container>
 
           <!-- Building Column -->
           <ng-container matColumnDef="Building">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Building </mat-header-cell>
-            <mat-cell *matCellDef="let batch"> {{batch.building}} </mat-cell>
+            <mat-cell *matCellDef="let batch"> {{BatchData[0].name}} </mat-cell>
           </ng-container>
 
           <!-- Room Column -->
           <ng-container matColumnDef="Room">
             <mat-header-cell *matHeaderCellDef mat-sort-header > Room </mat-header-cell>
-            <mat-cell *matCellDef="let batch"> {{batch.room}} </mat-cell>
+            <mat-cell *matCellDef="let batch"> {{BatchData[0].name}} </mat-cell>
           </ng-container>
 
           <!-- StartDate Column -->
           <ng-container matColumnDef="StartDate">
             <mat-header-cell *matHeaderCellDef mat-sort-header> StartDate </mat-header-cell>
-            <mat-cell *matCellDef="let batch"> {{batch.startDate| date : 'dd/MM/yyyy'}}</mat-cell>
+            <mat-cell *matCellDef="let batch"> {{BatchData[0].name}}</mat-cell>
           </ng-container>
 
           <!-- EndDate Column -->
           <ng-container matColumnDef="EndDate">
             <mat-header-cell *matHeaderCellDef mat-sort-header> EndDate </mat-header-cell>
-            <mat-cell *matCellDef="let batch"> {{batch.endDate| date : 'dd/MM/yyyy'}} </mat-cell>
+            <mat-cell *matCellDef="let batch"> {{BatchData[0].name}} </mat-cell>
           </ng-container>
 
 
@@ -229,3 +229,28 @@
   </mat-accordion>
 
 </div>
+
+<table class="table">
+  <tr>
+    <th>Name</th>
+    <th>Curriculum</th>
+    <th>Focus</th>
+    <th>Trainer/Cotrainer</th>
+    <th>Location</th>
+    <th>Building</th>
+    <th>Room</th>
+    <th>StartDate</th>
+    <th>EndDate</th>
+  </tr>
+  <tr *ngFor="let batch of BatchData">
+    <td>{{batch.name}}</td>
+    <td>{{batch.curriculum}}</td>
+    <td>{{batch.Focus}}</td>
+    <td>{{batch.trainer}} / {{batch.cotrainer}}</td>
+    <td>{{batch.batchLocation.locationName}}</td>
+    <td>{{batch.batchLocation.buildingName}}</td>
+    <td>{{batch.batchLocation.roomName}}</td>
+    <td>{{batch.startDate| date : 'dd/MM/yyyy'}}</td>
+    <td>{{batch.endDate| date : 'dd/MM/yyyy'}}</td>
+  </tr>
+</table>`
