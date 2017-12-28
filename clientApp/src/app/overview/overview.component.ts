@@ -13,7 +13,7 @@ import {Batch} from '../domain/batch';
 export class OverviewComponent implements OnInit, AfterViewInit {
   BatchData: Batch[];
   batchData = new MatTableDataSource(this.BatchData);
-  batchValues = ['Name', 'Curriculum', 'Trainer/Co-Trainer', 'Location', 'Building', 'Room', 'StartDate', 'EndDate', 'progress'];
+  batchValues = ['name', 'curriculum', 'trainer', 'location', 'building', 'room', 'startDate', 'endDate', 'progress'];
 
   color = 'warn';
   mode = 'determinate';
@@ -30,6 +30,9 @@ export class OverviewComponent implements OnInit, AfterViewInit {
       this.getAll();
     }
   ngAfterViewInit() {
+    this.batchData.sort = this.sort;
+    this.batchData.paginator = this.paginator;
+    this.batchData = new MatTableDataSource(this.BatchData);
   }
 
   exportToCSV(evt) {
