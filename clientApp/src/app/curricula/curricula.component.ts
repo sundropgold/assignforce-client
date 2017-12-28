@@ -6,6 +6,8 @@ import {Router} from '@angular/router';
 import {S3CredentialService} from '../services/s3-credential.service';
 import {CurriculaService} from '../services/curricula.service';
 import {NotificationService} from '../services/notification.service';
+import {Skill} from '../domain/skill';
+import {SkillService} from '../services/skill.service';
 
 
 @Component({
@@ -17,51 +19,93 @@ export class CurriculaComponent implements OnInit {
 
   currData: Curriculum[] = [
     {currId: 1, name: '.NET', core: true, active: true,
-      skills: ['Core .NET', 'AngularJS', 'C#', 'ASP.NET', 'MVC', 'T-SQL']},
+      skills: ['Core .NET', 'AngularJS', 'C#', 'ASP.NET', 'MVC', 'T-SQL'],
+    skillObjects: null},
     {currId: 2, name: 'JAVA', core: true, active: true,
-      skills: ['Core JAVA', 'Angular4', 'HTML5', 'Spring', 'MVC', 'SQL']},
+      skills: ['Core JAVA', 'Angular4', 'HTML5', 'Spring', 'MVC', 'SQL'],
+      skillObjects: null},
     {currId: 3, name: 'SDET', core: true, active: true,
-      skills: ['Core SDET', 'Python', 'UFT', 'Manual Testing']},
+      skills: ['Core SDET', 'Python', 'UFT', 'Manual Testing'],
+      skillObjects: null},
     {currId: 4, name: 'IntelliJ', core: true, active: true,
-      skills: ['JAVA']},
+      skills: ['JAVA'],
+      skillObjects: null},
     {currId: 5, name: 'Salesforce', core: true, active: true,
-      skills: []},
+      skills: [], skillObjects: null},
     {currId: 6, name: 'Microservices', core: false, active: true,
-      skills: ['Core JAVA', 'JUnit', 'Spring', 'REST', 'MVC', 'SOAP']},
+      skills: ['Core JAVA', 'JUnit', 'Spring', 'REST', 'MVC', 'SOAP'],
+      skillObjects: null},
     {currId: 7, name: 'Pega', core: false, active: true,
-      skills: ['Pega']},
+      skills: ['Pega'],
+      skillObjects: null},
     {currId: 8, name: 'Oracle Fusion', core: false, active: true,
-      skills: ['Core JAVA', 'Oracle SQL']},
+      skills: ['Core JAVA', 'Oracle SQL'],
+      skillObjects: null},
     {currId: 9, name: 'C++', core: true, active: false,
-      skills: ['Core C++']}
+      skills: ['Core C++'], skillObjects: null}
   ];
 
   /* variables */
   isAdmin: Boolean = true;
   curricula: Curriculum[];
+  skills: Skill[];
 
   /* constructor */
   constructor(public dialog: MatDialog,
               private router: Router,
               private s3Service: S3CredentialService,
               private curriculaService: CurriculaService,
+              private skillService: SkillService,
               private notificationService: NotificationService) { }
 
   ngOnInit() {
     /* grab curricula from server */
-    this.getAll();
+    this.getAllSkills();
+    this.getAllCurricula();
+
   }
 
   /* Functions to services*/
-  getAll() {
+  getAllCurricula() {
     this.curriculaService.getAll()
       .subscribe(data => {
           this.curricula = data;
+          for (const curr of this.curricula){
+            if (curr.skills.length !== 0) {
+              this.skillService.getSkillsByIds(curr.skills)
+                .subscribe(skillData => {
+                  curr.skillObjects = skillData;
+                  // console.log(skillData);
+                }, error => {
+                  console.log('Failed fetching id = ', curr.currId);
+                });
+            }
+          }
           console.log(this.curricula);
         }, error => {
           this.showToast('Failed to fetch Curricula');
         }
       );
+  }
+
+  getAllSkills() {
+    this.skillService.getAll()
+      .subscribe(data => {
+        this.skills = data;
+        console.log(this.skills);
+      }, error => {
+        this.showToast('Failed to fetch Skills');
+        }
+      );
+  }
+
+  getSkillsByIds(ids) {
+    this.skillService.getSkillsByIds(ids)
+      .subscribe(data => {
+        console.log(data);
+      }, error => {
+        console.log('Failed to fetch Skills through IDs');
+      });
   }
 
 
@@ -156,7 +200,8 @@ export class CurriculaCurriculumDialogComponent {
     name: '',
     core: null,
     active: null,
-    skills: null
+    skills: null,
+    skillObjects: null
   };
   skills = new FormControl();
   skillList = [

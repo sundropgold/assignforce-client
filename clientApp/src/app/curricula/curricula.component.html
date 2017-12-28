@@ -28,7 +28,11 @@
                   <mat-list-item>
                       <div>
                         <h3> {{curr.name}}</h3>
-                        <p>Skills: {{curr.skills}}</p>
+                        <p>Skills:
+                          <span class="skill-name-container" *ngFor="let skillObj of curr.skillObjects">
+                            {{skillObj.name}}
+                          </span>
+                        </p>
                       </div>
                       <span class="fill-space"></span>
                       <button mat-icon-button class="button-orange" (click)="editCurr($event,curr)" [hidden]="!isAdmin">
@@ -71,7 +75,11 @@
                     <mat-list-item>
                       <div>
                         <h3> {{curr.name}}</h3>
-                        <p>Skills: {{curr.skills}}</p>
+                        <p>Skills:
+                          <span class="skill-name-container" *ngFor="let skillObj of curr.skillObjects">
+                            {{skillObj.name}}
+                          </span>
+                        </p>
                       </div>
                       <span class="fill-space"></span>
                       <button mat-icon-button class="button-orange" (click)="editCurr($event)" [hidden]="!isAdmin">
@@ -108,9 +116,9 @@
 
             <div class="mat-panel-content">
               <mat-list>
-                <mat-list-item>
-
-                </mat-list-item>
+                  <span class="skill-name-container" *ngFor="let skill of skills">
+                            {{skill.name}}
+                  </span>
               </mat-list>
             </div>
           </mat-expansion-panel>
