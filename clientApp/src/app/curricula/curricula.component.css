@@ -41,3 +41,9 @@
   display: none;
 }
 
+.skill-name-container {
+  background-color: #E0E4E6;
+  border-radius: 2px;
+  margin-left: 8px;
+}
+

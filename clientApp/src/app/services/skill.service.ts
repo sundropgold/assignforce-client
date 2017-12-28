@@ -24,6 +24,10 @@ export class SkillService {
     return this.http.get<Skill[]>(`${this.url}`);
   }
 
+  getSkillsByIds(ids): Observable<Skill[]> {
+    return this.http.post<Skill[]>(`${this.url}`, ids);
+  }
+
   getById(skillId): Observable<Skill> {
     return this.http.get<Skill>(`${this.url}/${skillId}`);
   }
