@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {Skill} from '../domain/skill';
 
 @Injectable()
 export class SkillService {
 
-  url = 'api/v2/skill';
+  url = 'http://localhost:9090/api/v2/skill';
 
   constructor(private http: HttpClient) { }
 

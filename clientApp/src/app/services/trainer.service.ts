@@ -20,18 +20,22 @@ export class TrainerService {
     return this.http.get<Trainer[]>(`${this.url}`);
   }
 
+  //Gets 1 trainer by their ID
   getById(id): Observable<Trainer> {
     return this.http.get<Trainer>(`${this.url}/${id}`);
   }
 
+  //Gets 1 trainer by their first and last name
   getByFirstNameAndLastName(fName, lName): Observable<Trainer> {
     return this.http.get<Trainer>(`${this.url}/${fName}/${lName}`);
   }
 
+  // Adds a new trainer to the database
   create(trainer): Observable<any> {
     return this.http.post<any>(`${this.url}`, trainer);
   }
 
+  //Updates information about a given trainer
   update(trainer): Observable<any> {
     return this.http.put<any>(`${this.url}`, trainer);
   }

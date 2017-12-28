@@ -8,9 +8,18 @@ import {SpringXsrfInterceptor} from './interceptors/springXsrfInterceptor';
 import {MenuBarComponent} from './menu-bar/menu-bar.component';
 import {OverviewComponent} from './overview/overview.component';
 import {BatchesComponent} from './batches/batches.component';
-import {LocationsComponent} from './locations/locations.component';
-import {CurriculaComponent} from './curricula/curricula.component';
-import {TrainersComponent} from './trainers/trainers.component';
+import {
+  LocationAddBuildingDialogComponent,
+  LocationAddLocationDialogComponent, LocationAddRoomDialogComponent, LocationDeleteBuildingDialogComponent,
+  LocationDeleteLocationDialogComponent, LocationDeleteRoomDialogComponent,
+  LocationEditBuildingDialogComponent,
+  LocationEditLocationDialogComponent, LocationEditRoomDialogComponent,
+  LocationsComponent
+} from './locations/locations.component';
+import {CurriculaComponent,
+  CurriculaCreateCurrDialogComponent,
+  CurriculaCreateSkillDialogComponent} from './curricula/curricula.component';
+import {TrainerDialogComponent, TrainersComponent} from './trainers/trainers.component';
 import {ProfileComponent} from './profile/profile.component';
 import {ReportsComponent} from './reports/reports.component';
 import {SettingsComponent} from './settings/settings.component';
@@ -29,7 +38,8 @@ import {
   MatNativeDateModule,
   MatListModule,
   MatMenuModule, MatPaginatorModule, MatProgressBarModule,
-  MatProgressSpinnerModule, MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule, MatSnackBarModule
+  MatProgressSpinnerModule, MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule, MatSnackBarModule,
+  MatDialogModule
 } from '@angular/material';
 import {MatSelectModule} from '@angular/material/select';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -48,13 +58,25 @@ import {OrderModule} from 'ngx-order-pipe';
     OverviewComponent,
     BatchesComponent,
     LocationsComponent,
+    LocationAddLocationDialogComponent,
+    LocationDeleteLocationDialogComponent,
+    LocationEditLocationDialogComponent,
+    LocationAddBuildingDialogComponent,
+    LocationDeleteBuildingDialogComponent,
+    LocationEditBuildingDialogComponent,
+    LocationAddRoomDialogComponent,
+    LocationDeleteRoomDialogComponent,
+    LocationEditRoomDialogComponent,
     CurriculaComponent,
+    CurriculaCreateCurrDialogComponent,
+    CurriculaCreateSkillDialogComponent,
     TrainersComponent,
+    TrainerDialogComponent,
     ProfileComponent,
     ReportsComponent,
     SettingsComponent,
     LoginComponent,
-    TimelineComponent
+    TimelineComponent,
   ],
   imports: [
     HttpClientModule,
@@ -87,7 +109,8 @@ import {OrderModule} from 'ngx-order-pipe';
     MatNativeDateModule,
     MatSnackBarModule,
     OrderModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatDialogModule
   ],
   providers: [
     TrainerService,
@@ -100,6 +123,20 @@ import {OrderModule} from 'ngx-order-pipe';
       useClass: SpringXsrfInterceptor,
       multi: true
     }
+  ],
+  entryComponents: [
+    TrainerDialogComponent,
+    LocationAddLocationDialogComponent,
+    LocationDeleteLocationDialogComponent,
+    LocationEditLocationDialogComponent,
+    LocationAddBuildingDialogComponent,
+    LocationDeleteBuildingDialogComponent,
+    LocationEditBuildingDialogComponent,
+    LocationAddRoomDialogComponent,
+    LocationDeleteRoomDialogComponent,
+    LocationEditRoomDialogComponent,
+    CurriculaCreateCurrDialogComponent,
+    CurriculaCreateSkillDialogComponent
   ],
   bootstrap: [AppComponent]
 })

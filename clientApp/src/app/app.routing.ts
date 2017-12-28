@@ -41,6 +41,10 @@ const appRoutes: Routes = [
     component: ProfileComponent
   },
   {
+    path: 'profile/:id',
+    component: ProfileComponent
+  },
+  {
     path: 'reports',
     component: ReportsComponent
   },

@@ -13,7 +13,11 @@ import {MatIconRegistry} from '@angular/material';
 export class BatchesComponent implements OnInit, AfterViewInit {
 
   // FAKE VALUES FOR THE FIRST TAB
-  datebetween = 0;
+  startDate: Date;
+  endDate: Date;
+  datebetween: any;
+  creating = true;
+  model: any = {};
 
   Curriculums = [
     {value: 'java-0', viewValue: 'JAVA'},
@@ -104,6 +108,37 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   }
 
   SynchronizeBatch() {
+  }
+  isAuthorized() {
+    return false;
+    // get user priviledge and return true if admin , else return false. Result determines if batch creation is available.
+  }
+  isCreating() {
+    return this.creating;
+  }
+  clickTest(evt) {
+    console.log('button clicked');
+    this.creating = !this.creating;
+    evt.stopPropagation();
+  }
+  cancel(evt) {
+    this.creating = !this.creating;
+    evt.stopPropagation();
+  }
+  create(evt) {
+    // createBatch(). send form with data to micro service for batch creation.
+    this.creating = !this.creating;
+    evt.stopPropagation();
+  }
+  setStartDate(evt) {
+    console.log(evt.value)
+    this.startDate = evt.value;
+  }
+  calcDate(evt) {
+    console.log(evt.value);
+    this.endDate = evt.value;
+    console.log(this.endDate.getMonth());
+    this.datebetween = ((this.endDate)as any - ((this.startDate)as any)) / 1000 / 60 / 60 / 24;
   }
 
 }

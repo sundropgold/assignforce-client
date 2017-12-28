@@ -11,60 +11,63 @@ import {MatTab} from '@angular/material';
 })
 export class MenuBarComponent implements OnInit {
 
-    selectedTab = 0;
+  selectedTab = 0;
 
-    tabs = ['overview', 'batches', 'locations', 'curricula', 'trainers', 'profile', 'reports', 'settings', 'logout'];
-    
-    constructor(private router: Router,
-		private route: ActivatedRoute) {}
+  tabs = ['overview', 'batches', 'locations', 'curricula', 'trainers', 'profile', 'reports', 'settings', 'logout'];
 
-    ngOnInit() {
-	this.router.events.subscribe(event => {
-	    if (event instanceof NavigationEnd ) {
-		console.log("current url",event.url.split('/'));
-		this.selectedTab = this.tabs.indexOf(event.url.split('/')[1]);
-	    }
-	});
-    }
-
-
-  selectTab(evt) {
-      //localStorage.setItem('active', evt.index);
-
-      this.router.navigate([(this.tabs[evt.index])]);
-/*
-      switch (evt.index) {
-      case 0: this.toOverview();
-      break;
-
-      case 1: this.toBatches();
-      break;
-
-      case 2: this.toLocations();
-        break;
-
-      case 3: this.toCurricula();
-        break;
-
-      case 4: this.toTrainers();
-        break;
-
-      case 5: this.toProfile();
-        break;
-
-      case 6: this.toReports();
-        break;
-
-      case 7: this.toSettings();
-        break;
-
-      case 8: this.logout();
-        break;
-    }
-*/
+  constructor(private router: Router,
+              private route: ActivatedRoute) {
   }
 
-	/*
+  ngOnInit() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        const urlParts = event.url.split('/');
+        console.log('current url', urlParts);
+        if (!(urlParts.length > 2)) {
+          this.selectedTab = this.tabs.indexOf(urlParts[1]);
+        }
+      }
+    });
+  }
+
+  selectTab(evt) {
+    //localStorage.setItem('active', evt.index);
+    this.router.navigate([this.tabs[evt.index]]);
+
+    /*
+          switch (evt.index) {
+          case 0: this.toOverview();
+          break;
+
+          case 1: this.toBatches();
+          break;
+
+          case 2: this.toLocations();
+            break;
+
+          case 3: this.toCurricula();
+            break;
+
+          case 4: this.toTrainers();
+            break;
+
+          case 5: this.toProfile();
+            break;
+
+          case 6: this.toReports();
+            break;
+
+          case 7: this.toSettings();
+            break;
+
+          case 8: this.logout();
+            break;
+        }
+    */
+  }
+
+  /*
     toOverview() {
     this.router.navigate([('overview')]);
   }
