@@ -7,6 +7,7 @@ import {S3CredentialService} from '../services/s3-credential.service';
 import {CurriculaService} from '../services/curricula.service';
 import {NotificationService} from '../services/notification.service';
 
+
 @Component({
   selector: 'app-curricula',
   templateUrl: './curricula.component.html',
@@ -48,16 +49,24 @@ export class CurriculaComponent implements OnInit {
 
   ngOnInit() {
     /* grab curricula from server */
+    this.getAll();
+  }
+
+  /* Functions to services*/
+  getAll() {
     this.curriculaService.getAll()
       .subscribe(data => {
-        this.curricula = data;
-        console.log(this.curricula);
-      }, error => {
-        this.showToast('Failed to fetch Curricula');
+          this.curricula = data;
+          console.log(this.curricula);
+        }, error => {
+          this.showToast('Failed to fetch Curricula');
         }
       );
   }
 
+
+
+  /* Functions to click events */
 
   clickTest(evt) {
     console.log('button clicked');
@@ -94,11 +103,13 @@ export class CurriculaComponent implements OnInit {
     evt.stopPropagation();
   }
 
-  editCurr(evt): void {
+  editCurr(evt, curriculum): void {
     const dialogRef  = this.dialog.open(CurriculaCurriculumDialogComponent,
       {
-        width: '250px'
+        width: '250px',
+        data: curriculum
       });
+    dialogRef.componentInstance.
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('create-focus dialog closed');
@@ -130,9 +141,6 @@ export class CurriculaComponent implements OnInit {
     evt.stopPropagation();
   }
 
-
-
-
 }
 
 @Component({
@@ -141,6 +149,15 @@ export class CurriculaComponent implements OnInit {
   styleUrls: ['./curricula.component.css']
 })
 export class CurriculaCurriculumDialogComponent {
+
+  /* variables */
+  curriculum: Curriculum = {
+    currId: null,
+    name: '',
+    core: null,
+    active: null,
+    skills: null
+  };
   skills = new FormControl();
   skillList = [
     'AngularJS',
@@ -164,7 +181,15 @@ export class CurriculaCurriculumDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
 
-    onNoClick(): void {
+  ngOnInit() {
+    if (this.data) {
+      console.log(this.data);
+      this.curriculum = this.data;
+    }
+  }
+
+
+  onNoClick(): void {
       this.dialogRef.close();
     }
 }
