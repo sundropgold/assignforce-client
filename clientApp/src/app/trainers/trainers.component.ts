@@ -6,10 +6,10 @@ import {TrainerService} from '../services/trainer.service';
 import {NavigationExtras, Params, Router} from '@angular/router';
 import {S3CredentialService} from '../services/s3-credential.service';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
-import {Locations} from '../model/locations';
-import {int} from 'aws-sdk/clients/datapipeline';
-import {letProto} from 'rxjs/operator/let';
-import {forEach} from '@angular/router/src/utils/collection';
+import {HttpClient} from '@angular/common/http';
+import {PtoService} from '../services/pto.service';
+import * as AWS from 'aws-sdk';
+import {S3Credential} from '../domain/s3-credential';
 
 @Component({
   selector: 'app-trainers',
@@ -19,10 +19,17 @@ import {forEach} from '@angular/router/src/utils/collection';
 export class TrainersComponent implements OnInit {
   trainers: Trainer[];
   isManager: boolean;
+  creds: S3Credential = {
+    ID: 'AKIAIRUM7DHQJEFIKK7A',
+    SecretKey: '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',
+    BucketName: 'jw1010'
+  };
 
   constructor(private notificationService: NotificationService,
               private trainerService: TrainerService,
               private s3Service: S3CredentialService,
+              private ptoService: PtoService,
+              private http: HttpClient,
               public dialog: MatDialog,
               private router: Router) {
   }
@@ -127,7 +134,7 @@ export class TrainersComponent implements OnInit {
   }
 
   //Adds a trainer by popping up a dialog box
-  addTrainer(evt): void {
+  addTrainer(): void {
     const trainer: Trainer = {
       trainerId: null,
       firstName: '',
@@ -195,11 +202,29 @@ export class TrainersComponent implements OnInit {
 
   }
 
+  convertUnavailability(incoming) {
+    return new Date(incoming);
+  }
+
   showCalendar() {
+    this.http.get("/api/v2/google/googleStatus")
+      .subscribe( response => {
+        if(response !== ""){
+          this.ptoService.authorize();
+        } else {
+          this.googleAuth();
+        }
+
+    })
 
   }
 
   hideCalendar() {
+    this.dialog.closeAll()
+
+  }
+
+  showPTODialog() {
 
   }
 
@@ -219,6 +244,31 @@ export class TrainersComponent implements OnInit {
       this.showToast(trainer.firstName + ' ' + trainer.lastName + ' does not have a resume uploaded');
       return;
     }
+
+    const bucket = new AWS.S3({
+      accessKeyId: this.creds.ID,
+      secretAccessKey: this.creds.SecretKey,
+      region: 'us-east-1'
+    });
+
+    //set the parameters needed to get an object from aws s3 bucket
+    const params = {
+      Bucket: this.creds.BucketName,
+      Key: 'Resumes/' + trainer.trainerId + '_' + trainer.resume,
+      Expires: 60 //url expires in 60 seconds with signed urls
+    };
+
+    //grabs a url to the object in the s3 bucket
+    const url = bucket.getSignedUrl('getObject', params);
+
+    //this will create a link, set download and href, and invoke the click action on it
+    // it will download the file
+    const link = document.createElement('a');
+    // link.download = "test.png";
+    link.href = url;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 
     event.stopPropagation();
 

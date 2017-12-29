@@ -50,6 +50,8 @@ import {NotificationService} from './services/notification.service';
 import 'aws-sdk/dist/aws-sdk.min';
 import {LoginComponent} from './login/login.component';
 import {TimelineComponent} from './timeline/timeline.component';
+import { PtoComponent } from './pto/pto.component';
+import {PtoService} from './services/pto.service';
 import {BatchService} from './services/batch.service';
 import {CurriculaService} from './services/curricula.service';
 
@@ -81,6 +83,7 @@ import {CurriculaService} from './services/curricula.service';
     SettingsComponent,
     LoginComponent,
     TimelineComponent,
+    PtoComponent,
   ],
   imports: [
     HttpClientModule,
@@ -123,6 +126,7 @@ import {CurriculaService} from './services/curricula.service';
     S3CredentialService,
     UrlService,
     NotificationService,
+    PtoService,
     CurriculaService,
     {
       provide: HTTP_INTERCEPTORS,

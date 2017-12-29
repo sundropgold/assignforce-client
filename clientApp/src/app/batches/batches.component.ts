@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {MatSort, MatTableDataSource, MatCheckbox} from '@angular/material';
+import {MatSort, MatTableDataSource, MatCheckbox, MatPaginator} from '@angular/material';
 import {Batch} from '../domain/batch';
 import {FormControl} from '@angular/forms';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -86,9 +86,10 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   //  VALUES FOR THE ALL BATCHES TAB
   BatchData: Batch[];
   batchData = new MatTableDataSource(this.BatchData);
-  batchValues = ['Checkbox', 'Name', 'Curriculum', 'Focus', 'Trainer/Co-Trainer', 'Location', 'Building', 'Room', 'StartDate', 'EndDate', 'Icons'];
+  batchValues = ['Checkbox', 'name', 'curriculum', 'focus', 'trainer', 'location', 'building', 'room', 'startDate', 'endDate', 'Icons'];
 
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private batchService: BatchService) {
   }
@@ -98,6 +99,9 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.batchData.sort = this.sort;
+    this.batchData.paginator = this.paginator;
+    this.batchData = new MatTableDataSource(this.BatchData);
   }
 
   EditBatch() {
@@ -151,6 +155,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
       this.BatchData = data;
       this.batchData = new MatTableDataSource(this.BatchData);
       this.batchData.sort = this.sort;
+      this.batchData.paginator = this.paginator;
   });
   }
 

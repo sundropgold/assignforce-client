@@ -15,7 +15,8 @@ export interface Batch {
   batchStatus: BatchStatus;
   batchLocation: BatchLocation;
   skills: number[];
-  id; number;
+  id: number;
+  progress: number;
 }
 
 export interface BatchStatus {
