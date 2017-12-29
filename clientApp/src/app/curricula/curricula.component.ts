@@ -130,9 +130,9 @@ export class CurriculaComponent implements OnInit {
             data: {isCore: true}
       });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(result => { // the result can be specified in close(result) in dialog component.
       console.log('create-core dialog closed');
-      this.getAllCurricula();
+      this.getAllCurricula(); // reload all curriculum (could possibly do get new one, but update could be complicated).
     });
     evt.stopPropagation();
   }
@@ -146,6 +146,7 @@ export class CurriculaComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('create-focus dialog closed');
+      this.getAllCurricula();
     });
     evt.stopPropagation();
   }
@@ -276,7 +277,7 @@ export class CurriculaCurriculumDialogComponent {
     this.curriculaService.create(newCurr)
       .subscribe(retData => {
         console.log(retData);
-        this.showToast('Core: ' + retData.name + ' Created.');
+        this.showToast('Curriculum: ' + retData.name + ' Created.');
       }, error => {
         this.showToast('Failed to create new Core.');
       });
