@@ -38,94 +38,94 @@ export class TrainersComponent implements OnInit {
     this.isManager = true;
     this.getAll();
 
-    this.trainers = [{
-      trainerId: 1,
-      firstName: 'James',
-      lastName: 'Smith',
-      skills: [{
-        skillId: 1,
-        name: 'Java',
-        active: true
-      },
-        {skillId: 2,
-          name: 'Angular',
-          active: true
-        },
-        {
-          skillId: 3,
-          name: 'Spring',
-          active: true
-        }],
-      certifications: 'Certs',
-      active: true,
-      resume: null,
-    },
-      {
-        trainerId: 2,
-        firstName: 'Jane',
-        lastName: 'Doe',
-        skills: [{
-          skillId: 1,
-          name: 'C#',
-          active: true
-        },
-          {skillId: 2,
-            name: 'AngularJs',
-            active: true
-          },
-          {
-            skillId: 3,
-            name: 'Jenkins',
-            active: true
-          }],
-        certifications: 'Certs',
-        active: false,
-        resume: 'Resume',
-      },
-      {
-        trainerId: 3,
-        firstName: 'Jon',
-        lastName: 'Jones',
-        skills: [{
-          skillId: 1,
-          name: 'Java',
-          active: true
-        },
-          {skillId: 2,
-            name: 'Maven',
-            active: true
-          },
-          {
-            skillId: 3,
-            name: 'MongoDB',
-            active: true
-          }],
-        certifications: 'Certs',
-        active: false,
-        resume: 'Resume',
-      },
-      {
-        trainerId: 4,
-        firstName: 'Daniel',
-        lastName: 'Cormier',
-        skills: [{
-          skillId: 1,
-          name: 'C#',
-          active: true
-        },
-          {skillId: 2,
-            name: 'Cloud Foundry',
-            active: true
-          },
-          {
-            skillId: 3,
-            name: 'AWS',
-            active: true
-          }],
-        certifications: 'Certs',
-        active: true,
-        resume: 'Resume',
-      }];
+    // this.trainers = [{
+    //   trainerId: 1,
+    //   firstName: 'James',
+    //   lastName: 'Smith',
+    //   skills: [{
+    //     skillId: 1,
+    //     name: 'Java',
+    //     active: true
+    //   },
+    //     {skillId: 2,
+    //       name: 'Angular',
+    //       active: true
+    //     },
+    //     {
+    //       skillId: 3,
+    //       name: 'Spring',
+    //       active: true
+    //     }],
+    //   certifications: 'Certs',
+    //   active: true,
+    //   resume: null,
+    // },
+    //   {
+    //     trainerId: 2,
+    //     firstName: 'Jane',
+    //     lastName: 'Doe',
+    //     skills: [{
+    //       skillId: 1,
+    //       name: 'C#',
+    //       active: true
+    //     },
+    //       {skillId: 2,
+    //         name: 'AngularJs',
+    //         active: true
+    //       },
+    //       {
+    //         skillId: 3,
+    //         name: 'Jenkins',
+    //         active: true
+    //       }],
+    //     certifications: 'Certs',
+    //     active: false,
+    //     resume: 'Resume',
+    //   },
+    //   {
+    //     trainerId: 3,
+    //     firstName: 'Jon',
+    //     lastName: 'Jones',
+    //     skills: [{
+    //       skillId: 1,
+    //       name: 'Java',
+    //       active: true
+    //     },
+    //       {skillId: 2,
+    //         name: 'Maven',
+    //         active: true
+    //       },
+    //       {
+    //         skillId: 3,
+    //         name: 'MongoDB',
+    //         active: true
+    //       }],
+    //     certifications: 'Certs',
+    //     active: false,
+    //     resume: 'Resume',
+    //   },
+    //   {
+    //     trainerId: 4,
+    //     firstName: 'Daniel',
+    //     lastName: 'Cormier',
+    //     skills: [{
+    //       skillId: 1,
+    //       name: 'C#',
+    //       active: true
+    //     },
+    //       {skillId: 2,
+    //         name: 'Cloud Foundry',
+    //         active: true
+    //       },
+    //       {
+    //         skillId: 3,
+    //         name: 'AWS',
+    //         active: true
+    //       }],
+    //     certifications: 'Certs',
+    //     active: true,
+    //     resume: 'Resume',
+    //   }];
   }
 
   //Displays snackbar message notifications
@@ -139,11 +139,8 @@ export class TrainersComponent implements OnInit {
       trainerId: null,
       firstName: '',
       lastName: '',
-      skills: [{
-        skillId: 1,
-        name: 'Java',
-        active: true
-      }],
+      skills: [],
+      skillsObject: [],
       certifications: '',
       active: true,
       resume: '',
