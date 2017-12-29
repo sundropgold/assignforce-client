@@ -1,8 +1,0 @@
----
-applications:
- - name: assignforce-frontend
-   memory: 1000M
-   host: assignforce-frontend
-   instances: 1
-   buildpack: https://github.com/cloudfoundry/staticfile-buildpack.git
-   path: dist/

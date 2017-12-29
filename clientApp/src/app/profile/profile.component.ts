@@ -76,7 +76,7 @@ export class ProfileComponent implements OnInit {
       this.populateSkillList();
       }, 1000);
 
-    // this.getAllSkills();
+    // this.rePullSkills();
     // data gathering
 
     // id is hard coded for testing. unless you click on a trainer in the trainer page.
@@ -293,7 +293,7 @@ export class ProfileComponent implements OnInit {
   // queries the database for skills. to be called after a change to the skills array
   rePullSkills() {
     this.skillsList = undefined;
-    this.skillService.getAll().subscribe( response => this.skillsList = response.map( a => a.name),
+    this.skillService.getAll().subscribe( response => {this.skills = response; this.skillsList = response.map( a => a.name); },
       () => this.showToast('Could not fetch skills.'));
   }
 
