@@ -42,11 +42,16 @@ export class TimelineComponent implements AfterViewInit, OnDestroy {
           'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
       },
       series: [{
-        name: 'Weeks',
+        name: 'Batch1',
         data: [
-         5, 10, 15
+         1,10
         ]
-      }]
+      },
+      {
+        name: 'Batch2',
+        data: [1,10],
+        allowPointSelect: true
+    }]
         
     };
 
