@@ -1,9 +1,6 @@
 // everything is a string right now for testin.
 // we will change things accordingly when we make the other POJOS
 
-import {Curriculum} from './curriculum';
-import {Trainer} from './trainer';
-
 export interface Batch {
   name: string;
   startDate: Date;
@@ -16,7 +13,12 @@ export interface Batch {
   batchLocation: BatchLocation;
   skills: number[];
   id: number;
+  // Data that is not in the backend
   progress: number;
+  curriculumName: string;
+  focusName: string;
+  trainerName: string;
+  cotrainerName: string;
 }
 
 export interface BatchStatus {
