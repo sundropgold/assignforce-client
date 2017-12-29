@@ -153,7 +153,6 @@ export class CurriculaComponent implements OnInit {
         width: '250px',
         data: curriculum
       });
-    dialogRef.componentInstance.
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('create-focus dialog closed');
