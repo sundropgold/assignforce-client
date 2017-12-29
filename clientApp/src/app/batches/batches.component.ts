@@ -22,7 +22,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   endDate: Date;
   datebetween: any;
   creating = true;
-  model: any = {};
+  batch: Batch[];
 
   Curriculums = [
     {value: 'java-0', viewValue: 'JAVA'},
@@ -130,9 +130,13 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   isCreating() {
     return this.creating;
   }
+  showToast(message) {
+    this.notificationService.openSnackBar(message);
+  }
   clickTest(evt) {
     console.log('button clicked');
     this.creating = !this.creating;
+    this.showToast('Creating new Batch');
     evt.stopPropagation();
   }
   cancel(evt) {
