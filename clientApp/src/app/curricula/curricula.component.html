@@ -82,7 +82,7 @@
                         </p>
                       </div>
                       <span class="fill-space"></span>
-                      <button mat-icon-button class="button-orange" (click)="editCurr($event)" [hidden]="!isAdmin">
+                      <button mat-icon-button class="button-orange" (click)="editCurr($event, curr)" [hidden]="!isAdmin">
                         <mat-icon class="icon-margin-fix" matTooltip="Edit Curriculum">mode_edit</mat-icon>
                       </button>
                       <button mat-icon-button class="button-orange" (click)="removeCurr($event)" [hidden]="!isAdmin">

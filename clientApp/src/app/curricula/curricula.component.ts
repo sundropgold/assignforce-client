@@ -159,7 +159,7 @@ export class CurriculaComponent implements OnInit {
       });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('create-focus dialog closed');
+      console.log('edit-curriculum dialog closed');
     });
     evt.stopPropagation();
   }
@@ -171,7 +171,7 @@ export class CurriculaComponent implements OnInit {
       });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('create-focus dialog closed');
+      console.log('remove-curriculum dialog closed');
     });
     evt.stopPropagation();
   }
@@ -211,6 +211,7 @@ export class CurriculaCurriculumDialogComponent {
   nameFormCtrl = new FormControl('', [
     Validators.required
   ]);
+  // selected;
 
   skillList;
   /*skillList = [
@@ -242,13 +243,14 @@ export class CurriculaCurriculumDialogComponent {
 
   ngOnInit() {
     this.skillService.getAll()
-      .subscribe(data => {
-        this.skillList = data;
+      .subscribe(skillData => {
+        this.skillList = skillData;
         console.log(this.skillList);
       });
     if (this.data) {
       console.log(this.data);
       this.curriculum = this.data;
+      // this.selected = this.curriculum.skillObjects;
     }
   }
 
