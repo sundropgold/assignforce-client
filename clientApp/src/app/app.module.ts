@@ -17,8 +17,9 @@ import {
   LocationsComponent
 } from './locations/locations.component';
 import {CurriculaComponent,
-  CurriculaCreateCurrDialogComponent,
-  CurriculaCreateSkillDialogComponent} from './curricula/curricula.component';
+  CurriculaCurriculumDialogComponent,
+  CurriculaCreateSkillDialogComponent,
+  CurriculaRemovalDialogComponent} from './curricula/curricula.component';
 import {TrainerDialogComponent, TrainersComponent} from './trainers/trainers.component';
 import {ProfileComponent} from './profile/profile.component';
 import {ReportsComponent} from './reports/reports.component';
@@ -51,6 +52,8 @@ import {LoginComponent} from './login/login.component';
 import {TimelineComponent} from './timeline/timeline.component';
 import { PtoComponent } from './pto/pto.component';
 import {PtoService} from './services/pto.service';
+import {BatchService} from './services/batch.service';
+import {CurriculaService} from './services/curricula.service';
 
 
 @NgModule({
@@ -70,8 +73,9 @@ import {PtoService} from './services/pto.service';
     LocationDeleteRoomDialogComponent,
     LocationEditRoomDialogComponent,
     CurriculaComponent,
-    CurriculaCreateCurrDialogComponent,
+    CurriculaCurriculumDialogComponent,
     CurriculaCreateSkillDialogComponent,
+    CurriculaRemovalDialogComponent,
     TrainersComponent,
     TrainerDialogComponent,
     ProfileComponent,
@@ -117,11 +121,13 @@ import {PtoService} from './services/pto.service';
   ],
   providers: [
     TrainerService,
+    BatchService,
     SkillService,
     S3CredentialService,
     UrlService,
     NotificationService,
     PtoService,
+    CurriculaService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,
@@ -139,8 +145,9 @@ import {PtoService} from './services/pto.service';
     LocationAddRoomDialogComponent,
     LocationDeleteRoomDialogComponent,
     LocationEditRoomDialogComponent,
-    CurriculaCreateCurrDialogComponent,
-    CurriculaCreateSkillDialogComponent
+    CurriculaCurriculumDialogComponent,
+    CurriculaCreateSkillDialogComponent,
+    CurriculaRemovalDialogComponent
   ],
   bootstrap: [AppComponent]
 })
