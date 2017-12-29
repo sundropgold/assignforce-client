@@ -127,7 +127,9 @@ export class CurriculaComponent implements OnInit {
     const dialogRef  = this.dialog.open(CurriculaCurriculumDialogComponent,
       {
             width: '250px',
-            data: {isCore: true}
+            data: {
+              isNew: true,
+              isCore: true}
       });
 
     dialogRef.afterClosed().subscribe(result => { // the result can be specified in close(result) in dialog component.
@@ -141,7 +143,9 @@ export class CurriculaComponent implements OnInit {
     const dialogRef  = this.dialog.open(CurriculaCurriculumDialogComponent,
       {
             width: '250px',
-            data: {isCore: false}
+            data: {
+              isNew: true,
+              isCore: false}
       });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -155,7 +159,10 @@ export class CurriculaComponent implements OnInit {
     const dialogRef  = this.dialog.open(CurriculaCurriculumDialogComponent,
       {
         width: '250px',
-        data: curriculum
+        data: {
+          isNew: false,
+          curriculum: curriculum
+        }
       });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -247,9 +254,9 @@ export class CurriculaCurriculumDialogComponent {
         this.skillList = skillData;
         console.log(this.skillList);
       });
-    if (this.data) {
+    if (this.data.isNew === false) {
       console.log(this.data);
-      this.curriculum = this.data;
+      this.curriculum = this.data.curriculum;
       // this.selected = this.curriculum.skillObjects;
     }
   }
@@ -259,7 +266,15 @@ export class CurriculaCurriculumDialogComponent {
       this.dialogRef.close();
   }
 
-  saveCurriculum(evt) {
+  clickSave(evt) {
+    if (this.data.isNew === true) {
+      this.saveCurriculum();
+    } else {
+      this.updateCurriculum();
+    }
+  }
+
+  saveCurriculum() {
     // console.log(this.nameFormCtrl.value);
     // console.log(this.skillFormCtrl.value);
     // console.log(this.data.isCore);
@@ -286,6 +301,11 @@ export class CurriculaCurriculumDialogComponent {
 
     this.dialogRef.close();
     // location.reload();
+  }
+
+  updateCurriculum() {
+    console.log(this.data.curriculum);
+    console.log(this.skillFormCtrl.value);
   }
 
 
