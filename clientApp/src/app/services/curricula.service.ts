@@ -12,7 +12,7 @@ export class CurriculaService {
 
   /* services */
 
-  
+
   // Get all curricula
   getAll(): Observable<Curriculum[]> {
 
