@@ -23,18 +23,22 @@
 
           <div class="mat-panel-content">
             <mat-list>
-              <div class="item-detail" *ngFor="let curr of currData">
+              <div class="item-detail" *ngFor="let curr of curricula">
                 <div *ngIf="curr.active && curr.core">
                   <mat-list-item>
                       <div>
                         <h3> {{curr.name}}</h3>
-                        <p>Skills: {{curr.skills}}</p>
+                        <p>Skills:
+                          <span class="skill-name-container" *ngFor="let skillObj of curr.skillObjects">
+                            {{skillObj.name}}
+                          </span>
+                        </p>
                       </div>
                       <span class="fill-space"></span>
-                      <button mat-icon-button class="button-orange" (click)="clickTest($event)" [hidden]="!isAdmin">
+                      <button mat-icon-button class="button-orange" (click)="editCurr($event,curr)" [hidden]="!isAdmin">
                         <mat-icon class="icon-margin-fix" matTooltip="Edit Curriculum">mode_edit</mat-icon>
                       </button>
-                      <button mat-icon-button class="button-orange" (click)="clickTest($event)" [hidden]="!isAdmin">
+                      <button mat-icon-button class="button-orange" (click)="removeCurr($event)" [hidden]="!isAdmin">
                         <mat-icon class="icon-margin-fix" matTooltip="Remove Core">remove_circle</mat-icon>
                       </button>
                   </mat-list-item>
@@ -66,18 +70,22 @@
 
             <div class="mat-panel-content">
               <mat-list>
-                <div class="item-detail" *ngFor="let curr of currData">
+                <div class="item-detail" *ngFor="let curr of curricula">
                   <div *ngIf="curr.active && !curr.core">
                     <mat-list-item>
                       <div>
                         <h3> {{curr.name}}</h3>
-                        <p>Skills: {{curr.skills}}</p>
+                        <p>Skills:
+                          <span class="skill-name-container" *ngFor="let skillObj of curr.skillObjects">
+                            {{skillObj.name}}
+                          </span>
+                        </p>
                       </div>
                       <span class="fill-space"></span>
-                      <button mat-icon-button class="button-orange" (click)="clickTest($event)" [hidden]="!isAdmin">
+                      <button mat-icon-button class="button-orange" (click)="editCurr($event)" [hidden]="!isAdmin">
                         <mat-icon class="icon-margin-fix" matTooltip="Edit Curriculum">mode_edit</mat-icon>
                       </button>
-                      <button mat-icon-button class="button-orange" (click)="clickTest($event)" [hidden]="!isAdmin">
+                      <button mat-icon-button class="button-orange" (click)="removeCurr($event)" [hidden]="!isAdmin">
                         <mat-icon class="icon-margin-fix" matTooltip="Remove Core">remove_circle</mat-icon>
                       </button>
                     </mat-list-item>
@@ -108,9 +116,9 @@
 
             <div class="mat-panel-content">
               <mat-list>
-                <mat-list-item>
-
-                </mat-list-item>
+                  <span class="skill-name-container" *ngFor="let skill of skills">
+                            {{skill.name}}
+                  </span>
               </mat-list>
             </div>
           </mat-expansion-panel>

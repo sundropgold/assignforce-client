@@ -1,9 +1,11 @@
 import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {MatSort, MatTableDataSource, MatCheckbox} from '@angular/material';
+import {MatSort, MatTableDataSource, MatCheckbox, MatPaginator} from '@angular/material';
 import {Batch} from '../domain/batch';
 import {FormControl} from '@angular/forms';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
+import {BatchService} from '../services/batch.service';
+
 @Component({
   selector: 'app-batches',
   templateUrl: './batches.component.html',
@@ -82,18 +84,24 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   firstTabHeader = 'Create New Batch';
 
   //  VALUES FOR THE ALL BATCHES TAB
-  batchValues = ['Checkbox', 'Name', 'Curriculum', 'Focus', 'Trainer/Co-Trainer', 'Location', 'Building', 'Room', 'StartDate', 'EndDate', 'Icons'];
-  batchData = new MatTableDataSource(BatchData);
+  BatchData: Batch[];
+  batchData = new MatTableDataSource(this.BatchData);
+  batchValues = ['Checkbox', 'name', 'curriculum', 'focus', 'trainer', 'location', 'building', 'room', 'startDate', 'endDate', 'Icons'];
 
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor() {}
+  constructor(private batchService: BatchService) {
+  }
 
   ngOnInit() {
+    this.getAll();
   }
 
   ngAfterViewInit() {
     this.batchData.sort = this.sort;
+    this.batchData.paginator = this.paginator;
+    this.batchData = new MatTableDataSource(this.BatchData);
   }
 
   EditBatch() {
@@ -141,13 +149,15 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     this.datebetween = ((this.endDate)as any - ((this.startDate)as any)) / 1000 / 60 / 60 / 24;
   }
 
+  // Gets all batches and stores them in variable batchData
+  getAll() {
+    this.batchService.getAll().subscribe(data => {
+      this.BatchData = data;
+      this.batchData = new MatTableDataSource(this.BatchData);
+      this.batchData.sort = this.sort;
+      this.batchData.paginator = this.paginator;
+  });
+  }
+
 }
-
-
-const BatchData: Batch[] = [
-  {name: 'batch1', startDate: new Date('February 4, 2017 10:13:00'), endDate: new Date('February 14, 2017 20:24:00'),
-    curriculum: 'Java', focus: 'Microservices', trainer: 'Steve', cotrainer: 'Sarah', location: 'here', building: 'buildo', room: 'roo'},
-  {name: 'batch2', startDate: new Date('February 4, 2017 10:13:00'), endDate: new Date('February 14, 2017 20:24:00'),
-    curriculum: 'Java', focus: 'Microservices', trainer: 'Steve', cotrainer: 'Sarah', location: 'here', building: 'buildo', room: 'roo'}
-];
 
