@@ -6,13 +6,13 @@ import {Observable} from 'rxjs/Observable';
 @Injectable()
 export class BatchService {
 
-  url = 'api/v2/batch';
+  url = 'http://localhost:9092/api/v2/batch';
 
   constructor(private http: HttpClient) { }
 
 
   getAll(): Observable<Batch[]> {
-    return this.http.get<Batch[]>(`http://localhost:9092/${this.url}`);
+    return this.http.get<Batch[]>(`${this.url}`);
   }
 
   getById(id): Observable<Batch> {

@@ -5,6 +5,9 @@ import {FormControl} from '@angular/forms';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
 import {BatchService} from '../services/batch.service';
+import {NotificationService} from '../services/notification.service';
+import {CurriculaService} from '../services/curricula.service';
+import {TrainerService} from '../services/trainer.service';
 
 @Component({
   selector: 'app-batches',
@@ -86,12 +89,15 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   //  VALUES FOR THE ALL BATCHES TAB
   BatchData: Batch[];
   batchData = new MatTableDataSource(this.BatchData);
-  batchValues = ['Checkbox', 'name', 'curriculum', 'focus', 'trainer', 'location', 'building', 'room', 'startDate', 'endDate', 'Icons'];
+  batchValues = ['Checkbox', 'name', 'curriculumName', 'focusName', 'trainerName', 'location', 'building', 'room', 'startDate', 'endDate', 'Icons'];
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private batchService: BatchService) {
+  constructor(private batchService: BatchService,
+              private curriculaService: CurriculaService,
+              private trainerService: TrainerService,
+              private notificationService: NotificationService) {
   }
 
   ngOnInit() {
@@ -117,6 +123,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
 
   SynchronizeBatch() {
   }
+
   isAuthorized() {
     return false;
     // get user priviledge and return true if admin , else return false. Result determines if batch creation is available.
@@ -149,14 +156,47 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     this.datebetween = ((this.endDate)as any - ((this.startDate)as any)) / 1000 / 60 / 60 / 24;
   }
 
+  // error messages
+  showToast(msg) {
+    this.notificationService.openSnackBar(msg);
+  }
+
   // Gets all batches and stores them in variable batchData
   getAll() {
     this.batchService.getAll().subscribe(data => {
       this.BatchData = data;
+      for (let entry of this.BatchData) {
+        this.curriculaService.getById(entry.curriculum)
+          .subscribe(curriculumData => {
+            entry.curriculumName = curriculumData.name;
+          }, error => {
+            this.showToast('Failed to fetch Curricula');
+          });
+        this.curriculaService.getById(entry.focus)
+          .subscribe(focusData => {
+            entry.focusName = focusData.name;
+          }, error => {
+            this.showToast('Failed to fetch Curricula');
+          });
+        this.trainerService.getById(entry.trainer)
+          .subscribe(trainerData => {
+            entry.trainerName = trainerData.firstName + ' ' + trainerData.lastName;
+          }, error => {
+            this.showToast('Failed to fetch Trainers');
+          });
+        this.trainerService.getById(entry.cotrainer)
+          .subscribe(cotrainerData => {
+            entry.cotrainerName = cotrainerData.firstName + ' ' + cotrainerData.lastName;
+          }, error => {
+            this.showToast('Failed to fetch Trainers');
+          });
+      }
       this.batchData = new MatTableDataSource(this.BatchData);
       this.batchData.sort = this.sort;
       this.batchData.paginator = this.paginator;
-  });
+  }, error => {
+      this.showToast('Failed to fetch Batches');
+    });
   }
 
 }

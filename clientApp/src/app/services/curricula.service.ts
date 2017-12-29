@@ -15,12 +15,14 @@ export class CurriculaService {
 
   // Get all curricula
   getAll(): Observable<Curriculum[]> {
-
     return this.http.get<Curriculum[]>(`${this.url}`);
   }
 
   // Get curriculum by id
 
+  getById(id): Observable<Curriculum> {
+    return this.http.get<Curriculum>(`${this.url}/${id}`);
+  }
 
   // Create new curriculum
   create(curriculum: Curriculum): Observable<Curriculum> {

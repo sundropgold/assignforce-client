@@ -37,15 +37,15 @@
           </ng-container>
 
           <!-- Curriculum Column -->
-          <ng-container matColumnDef="curriculum">
+          <ng-container matColumnDef="curriculumName">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Curriculum </mat-header-cell>
-            <mat-cell *matCellDef="let batch"> {{batch.curriculum}} </mat-cell>
+            <mat-cell *matCellDef="let batch"> {{batch.curriculumName}} </mat-cell>
           </ng-container>
 
           <!-- Trainer Column -->
-          <ng-container matColumnDef="trainer">
+          <ng-container matColumnDef="trainerName">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Trainer/Cotrainer </mat-header-cell>
-            <mat-cell *matCellDef="let batch"> {{batch.trainer}} / {{batch.cotrainer}}</mat-cell>
+            <mat-cell *matCellDef="let batch"> {{batch.trainerName}} / {{batch.cotrainerName}}</mat-cell>
           </ng-container>
 
           <!-- Location Column -->
