@@ -123,6 +123,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
 
   SynchronizeBatch() {
   }
+
   isAuthorized() {
     return false;
     // get user priviledge and return true if admin , else return false. Result determines if batch creation is available.
@@ -159,6 +160,11 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     this.datebetween = ((this.endDate)as any - ((this.startDate)as any)) / 1000 / 60 / 60 / 24;
   }
 
+  // error messages
+  showToast(msg) {
+    this.notificationService.openSnackBar(msg);
+  }
+
   // Gets all batches and stores them in variable batchData
   getAll() {
     this.batchService.getAll().subscribe(data => {
@@ -167,24 +173,34 @@ export class BatchesComponent implements OnInit, AfterViewInit {
         this.curriculaService.getById(entry.curriculum)
           .subscribe(curriculumData => {
             entry.curriculumName = curriculumData.name;
+          }, error => {
+            this.showToast('Failed to fetch Curricula');
           });
         this.curriculaService.getById(entry.focus)
           .subscribe(focusData => {
             entry.focusName = focusData.name;
+          }, error => {
+            this.showToast('Failed to fetch Curricula');
           });
         this.trainerService.getById(entry.trainer)
           .subscribe(trainerData => {
             entry.trainerName = trainerData.firstName + ' ' + trainerData.lastName;
+          }, error => {
+            this.showToast('Failed to fetch Trainers');
           });
         this.trainerService.getById(entry.cotrainer)
           .subscribe(cotrainerData => {
             entry.cotrainerName = cotrainerData.firstName + ' ' + cotrainerData.lastName;
+          }, error => {
+            this.showToast('Failed to fetch Trainers');
           });
       }
       this.batchData = new MatTableDataSource(this.BatchData);
       this.batchData.sort = this.sort;
       this.batchData.paginator = this.paginator;
-  });
+  }, error => {
+      this.showToast('Failed to fetch Batches');
+    });
   }
 
 }
