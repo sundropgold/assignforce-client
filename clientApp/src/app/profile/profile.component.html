@@ -38,7 +38,7 @@ The second md-card/ng-show is for other users to look at other trainers profiles
           <div>
             <!--need to figure out accessing the file, as far as permissions go-->
             <label> Current Resume: </label>
-            <label *ngIf="trainer.resume != null">{{trainer.resume}} <button (click)="grabResume()">Grab</button></label>
+            <label *ngIf="trainer.resume != null">{{trainer.resume}}</label>
             <label *ngIf="trainer.resume == null">No resume on file</label> <br>
           </div>
           <div fxLayout="row">
@@ -79,7 +79,7 @@ The second md-card/ng-show is for other users to look at other trainers profiles
         <hr>
         <h2 matSubheader>Current skills:</h2>
         <mat-list>
-          <button mat-button class="md-list-item" *ngFor="let skill of trainer.skills | orderBy: 'name'" (click)="removeSkill(skill)">
+          <button mat-button class="md-list-item" *ngFor="let skill of trainer.skillsObject | orderBy: 'name'" (click)="removeSkill(skill)">
             <mat-icon style="color: #FB8C00">stars</mat-icon>
             <h5>{{skill.name}}</h5>
           </button>
@@ -153,7 +153,7 @@ The second md-card/ng-show is for other users to look at other trainers profiles
       </mat-toolbar-row>
 
       <!--info section-->
-      <mat-card-content *ngIf="trainer != undefined">
+      <mat-card-content *ngIf="trainer != undefined && skills != undefined">
         <div fxLayout="row">
           <div style="padding: 8px">
             <img style="border-radius: 50%;" alt=""
@@ -176,17 +176,17 @@ The second md-card/ng-show is for other users to look at other trainers profiles
       </mat-card-content>
 
       <!--skills section-->
-      <mat-toolbar-row *ngIf="trainer != undefined">
+      <mat-toolbar-row *ngIf="trainer != undefined && skills != undefined">
         <mat-toolbar class="md-toolbar">
           <span>Skills</span>
         </mat-toolbar>
       </mat-toolbar-row>
 
-      <mat-card-content *ngIf="trainer != undefined">
+      <mat-card-content *ngIf="trainer != undefined && skills != undefined">
         <div class="md-padding">
           <h2 matSubheader>Current skills:</h2>
           <mat-list>
-            <button mat-button class="md-list-item" *ngFor="let skill of trainer.skills | orderBy: 'name'">
+            <button mat-button class="md-list-item" *ngFor="let skill of trainer.skillsObject | orderBy: 'name'">
               <mat-icon style="color: #FB8C00">stars</mat-icon>
               <h5>{{skill.name}}</h5>
             </button>
@@ -195,14 +195,14 @@ The second md-card/ng-show is for other users to look at other trainers profiles
       </mat-card-content>
 
       <!--certifications section-->
-      <mat-toolbar-row *ngIf="trainer != undefined">
+      <mat-toolbar-row *ngIf="trainer != undefined && skills != undefined">
         <mat-toolbar class="md-toolbar">
           <span>Certifications</span>
         </mat-toolbar>
       </mat-toolbar-row>
 
         <!--see the list of certifications-->
-        <mat-card-content *ngIf="trainer != undefined">
+        <mat-card-content *ngIf="trainer != undefined && skills != undefined">
           <div class="md-padding" layout="column">
             <mat-divider *ngIf="certFile != undefined"></mat-divider>
             <span *ngIf="trainer.certifications.length == 0">
