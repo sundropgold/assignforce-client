@@ -2,13 +2,13 @@
 <div mat-dialog-content>
   <mat-form-field>
     <p> Curriculum Name </p>
-    <input matInput tabindex="1" value="{{curriculum.name}}">
+    <input matInput tabindex="1" [formControl]="nameFormCtrl" value="{{curriculum.name}}">
   </mat-form-field>
   <br>
   <mat-form-field>
     <p> Skills </p>
-    <mat-select placeholder="Skills" [formControl] = "skills" multiple>
-      <mat-option *ngFor="let skill of skillList" [value]="skill">{{skill}}</mat-option>
+    <mat-select placeholder="Skills" [formControl] = "skillFormCtrl" multiple>
+      <mat-option *ngFor="let skill of skillList" [value]="skill">{{skill.name}}</mat-option>
     </mat-select>
   </mat-form-field>
 
@@ -16,5 +16,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()"> Cancel </button>
-  <button mat-button (click)="clickTest($event)"> Save </button>
+  <button mat-button (click)="saveCurriculum($event)"> Save </button>
 </div>
