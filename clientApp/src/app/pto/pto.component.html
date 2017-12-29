@@ -1,0 +1,27 @@
+<form name="ptoForm" (submit)="ptoCtrl.send(ptoForm.$valid)" novalidate>
+  <div mat-dialog-content>
+    <mat-toolbar layout="columns">
+      <div class="md-toolbar-tools">
+        <span>PTO Request</span>
+      </div>
+    </mat-toolbar>
+
+    <div class="md-padding">
+      <mat-form-field flex="none">
+        <label>Start Date</label>
+        <mat-datepicker ng-model="startDate" startView="year" md-open-on-focus
+                       md-hide-icons="calendar"></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field flex="none">
+        <label>End Date</label>
+        <mat-datepicker ng-model="endDate" startView="year" md-open-on-focus
+                       md-hide-icons="calendar"></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-button class="md-primary" (click)="send(true)">Send</button>
+    <button mat-button class="md-primary" (click)="cancel()">Cancel</button>
+  </div>
+</form>
