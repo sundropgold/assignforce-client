@@ -3,6 +3,11 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Angular2Csv } from 'angular2-csv/Angular2-csv';
 import {BatchService} from '../services/batch.service';
 import {Batch} from '../domain/batch';
+import {NotificationService} from '../services/notification.service';
+import {SkillService} from '../services/skill.service';
+import {CurriculaService} from '../services/curricula.service';
+import {Curriculum} from '../domain/curriculum';
+import {TrainerService} from '../services/trainer.service';
 
 @Component({
   selector: 'app-overview',
@@ -13,7 +18,7 @@ import {Batch} from '../domain/batch';
 export class OverviewComponent implements OnInit, AfterViewInit {
   BatchData: Batch[];
   batchData = new MatTableDataSource(this.BatchData);
-  batchValues = ['name', 'curriculum', 'trainer', 'location', 'building', 'room', 'startDate', 'endDate', 'progress'];
+  batchValues = ['name', 'curriculumName', 'trainerName', 'location', 'building', 'room', 'startDate', 'endDate', 'progress'];
 
   color = 'warn';
   mode = 'determinate';
@@ -23,7 +28,10 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-    constructor(private batchService: BatchService) {
+    constructor(private batchService: BatchService,
+                private curriculaService: CurriculaService,
+                private trainerService: TrainerService,
+                private notificationService: NotificationService) {
     }
 
     ngOnInit() {
@@ -48,11 +56,23 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   getAll() {
     this.batchService.getAll().subscribe(data => {
       this.BatchData = data;
-      this.batchData = new MatTableDataSource(this.BatchData);
       var currentDate = new  Date();
       for (let entry of this.BatchData) {
         entry.progress = (currentDate.valueOf() - entry.startDate.valueOf()) / (entry.endDate.valueOf() - entry.startDate.valueOf()) * 100;
+        this.curriculaService.getById(entry.curriculum)
+          .subscribe(curriculumData => {
+            entry.curriculumName = curriculumData.name;
+          });
+        this.trainerService.getById(entry.trainer)
+          .subscribe(trainerData => {
+            entry.trainerName = trainerData.firstName + ' ' + trainerData.lastName;
+          });
+        this.trainerService.getById(entry.cotrainer)
+          .subscribe(cotrainerData => {
+            entry.cotrainerName = cotrainerData.firstName + ' ' + cotrainerData.lastName;
+          });
       }
+      this.batchData = new MatTableDataSource(this.BatchData);
       this.batchData.sort = this.sort;
       this.batchData.paginator = this.paginator;
     });
