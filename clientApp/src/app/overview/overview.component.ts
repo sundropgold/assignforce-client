@@ -53,6 +53,11 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     evt.stopPropagation();
   }
 
+  // error messages
+  showToast(msg) {
+    this.notificationService.openSnackBar(msg);
+  }
+
   getAll() {
     this.batchService.getAll().subscribe(data => {
       this.BatchData = data;
@@ -62,19 +67,28 @@ export class OverviewComponent implements OnInit, AfterViewInit {
         this.curriculaService.getById(entry.curriculum)
           .subscribe(curriculumData => {
             entry.curriculumName = curriculumData.name;
+          }, error => {
+            this.showToast('Failed to fetch Curricula');
           });
         this.trainerService.getById(entry.trainer)
           .subscribe(trainerData => {
             entry.trainerName = trainerData.firstName + ' ' + trainerData.lastName;
+          }, error => {
+            this.showToast('Failed to fetch Trainers');
           });
         this.trainerService.getById(entry.cotrainer)
           .subscribe(cotrainerData => {
             entry.cotrainerName = cotrainerData.firstName + ' ' + cotrainerData.lastName;
+          }, error => {
+            this.showToast('Failed to fetch Trainers');
           });
       }
       this.batchData = new MatTableDataSource(this.BatchData);
       this.batchData.sort = this.sort;
       this.batchData.paginator = this.paginator;
-    });
+    }, error => {
+        this.showToast('Failed to fetch Batches');
+      }
+    );
   }
 }
