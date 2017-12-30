@@ -1,5 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {TrainersComponent} from '../trainers/trainers.component';
 
 @Component({
   selector: 'app-pto',
