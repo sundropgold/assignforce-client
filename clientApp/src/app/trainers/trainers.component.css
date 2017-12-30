@@ -34,6 +34,11 @@ mat-card-content {
   padding: 16px;
 }
 
+mat-spinner {
+  display: block;
+  margin: auto;
+}
+
 mat-icon {
   margin: 0;
 }

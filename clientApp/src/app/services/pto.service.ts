@@ -1,23 +1,31 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
+import {showWarningOnce} from 'tslint/lib/error';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {CalendarDialogComponent} from '../pto/pto.component';
+
 
 @Injectable()
 export class PtoService {
 
-  constructor(
-    private router: Router
-  ) {
+  constructor(private router: Router,
+              public dialog: MatDialog) {
   }
 
   authorize() {
+    this.showCalendar(); //For testing to make sure the Dialog is actually showing
+    //gapi.load('client:auth2', this.showCalendar());
 
   }
 
-  showCalendar(){
+  showCalendar() {
+    const dialogRef = this.dialog.open(CalendarDialogComponent, {
+      // width: '450px',
 
+    })
   }
 
-  getGoogle(){
+  getGoogle() {
     this.router.navigate(['api/v2/google/google']);
   }
 
