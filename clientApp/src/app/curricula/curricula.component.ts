@@ -167,18 +167,21 @@ export class CurriculaComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('edit-curriculum dialog closed');
+      this.getAllCurricula();
     });
     evt.stopPropagation();
   }
 
-  removeCurr(evt): void {
+  removeCurr(evt, curriculum): void {
     const dialogRef  = this.dialog.open(CurriculaRemovalDialogComponent,
       {
-        width: '400px'
+        width: '400px',
+        data: curriculum
       });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('remove-curriculum dialog closed');
+      this.getAllCurricula();
     });
     evt.stopPropagation();
   }
@@ -306,10 +309,24 @@ export class CurriculaCurriculumDialogComponent {
   }
 
   updateCurriculum() {
+    console.log('Old Curriculum: ');
     console.log(this.data.curriculum);
+    console.log('New Skill List: ');
     console.log(this.skillFormCtrl.value);
+    let updatedCurr = this.data.curriculum;
+    updatedCurr.name = this.nameFormCtrl.value;
+    updatedCurr.skills = this.skillFormCtrl.value;
+    console.log('Updated Curriculum: ');
+    console.log(updatedCurr);
+    this.curriculaService.update(updatedCurr)
+      .subscribe(retData => {
+        console.log(retData);
+        this.showToast('Curriculum: ' + retData.name + ' Modified. ');
+      }, error => {
+        this.showToast('Failed to edit Curriculum.');
+      });
+    this.dialogRef.close();
   }
-
 
   showToast(msg) {
     this.notificationService.openSnackBar(msg);
@@ -341,11 +358,47 @@ export class CurriculaCreateSkillDialogComponent {
   styleUrls: ['./curricula.component.css']
 })
 export class CurriculaRemovalDialogComponent {
+  /* variables */
+  curriculum: Curriculum = {
+    currId: null,
+    name: '',
+    core: null,
+    active: null,
+    skills: null,
+    skillObjects: null
+  };
+
   constructor(
     public dialogRef: MatDialogRef<CurriculaRemovalDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private router: Router,
+    private s3Service: S3CredentialService,
+    private curriculaService: CurriculaService,
+    private skillService: SkillService,
+    private notificationService: NotificationService) { }
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  removeCurriculum() {
+    this.curriculum = this.data;
+    console.log('Curriculum to be deleted: ');
+    console.log(this.curriculum);
+    this.curriculaService.delete(this.curriculum.currId)
+      .subscribe( retData => {
+        if (retData === null) {
+          this.showToast('Curriculum Deleted.');
+        } else {
+          this.showToast('Fail to delete Curriculum.');
+        }
+      }, error => {
+        this.showToast('Fail to delete Curriculum. ');
+      });
+    this.dialogRef.close();
+  }
+
+  showToast(msg) {
+    this.notificationService.openSnackBar(msg);
   }
 }
