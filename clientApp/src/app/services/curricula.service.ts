@@ -29,4 +29,15 @@ export class CurriculaService {
   create(curriculum: Curriculum): Observable<Curriculum> {
     return this.http.post<Curriculum>(`${this.url}`, curriculum);
   }
+
+
+  // Update Curriculum
+  update(curriculum: Curriculum): Observable<Curriculum> {
+    return this.http.put<Curriculum>(`${this.url}`, curriculum);
+  }
+
+  // Delete Curriculum
+  delete(currId): Observable<object> {
+    return this.http.delete<Object>(`${this.url}/${currId}`);
+  }
 }
