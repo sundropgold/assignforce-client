@@ -2,12 +2,12 @@ import {
   Component,
   ElementRef,
   AfterViewInit,
-  OnDestroy,
   ViewChild
 } from '@angular/core';
 
 import { FormControl } from '@angular/forms';
 import 'highcharts/adapters/standalone-framework.src';
+import * as xRange from 'highcharts/modules/xrange.js';
 
 const Highcharts = require('highcharts/highcharts.src');
 
@@ -16,7 +16,7 @@ const Highcharts = require('highcharts/highcharts.src');
   templateUrl: './timeline.component.html',
   styleUrls: ['./timeline.component.css']
 })
-export class TimelineComponent implements AfterViewInit, OnDestroy {
+export class TimelineComponent implements AfterViewInit {
   curriculum = new FormControl();
   focus = new FormControl();
   location = new FormControl();
@@ -27,45 +27,57 @@ export class TimelineComponent implements AfterViewInit, OnDestroy {
   locationList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
   buldingList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
 
-  @ViewChild('chart') public chartEl: ElementRef;
+  @ViewChild("container", { read: ElementRef }) container: ElementRef;
 
-  private _chart: any;
+  private chart: any;
 
-  public ngAfterViewInit() {
-    let opts: any = {
+  ngAfterViewInit() {
+
+    xRange(Highcharts);
+
+    this.chart = Highcharts.chart(this.container.nativeElement, {
+      chart: {
+        type: 'xrange'
+      },
       title: {
-        text: 'Batches',
-        x: -20 //center
+        text: 'Batches'
       },
       xAxis: {
-        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-          'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        type: 'datetime'
+      },
+      yAxis: {
+        title: {
+          text: 'Trainers'
+        },
+        categories: ['Trainer1', 'Trainer2', 'Trainer3'],
+        reversed: true
       },
       series: [{
-        name: 'Batch1',
-        data: [
-         1,10
-        ]
-      },
-      {
-        name: 'Batch2',
-        data: [1,10],
-        allowPointSelect: true
-    }]
-        
-    };
+        name: 'Batch',
+        // pointPadding: 0,
+        // groupPadding: 0,
+        borderColor: 'gray',
+        pointWidth: 20,
+        data: [{
+          x: Date.UTC(2014, 10, 21),
+          x2: Date.UTC(2014, 11, 2),
+          y: 0,
+          partialFill: 0.25
+        },{
+          x: Date.UTC(2014, 11, 9),
+          x2: Date.UTC(2014, 11, 19),
+          y: 1
+        }, {
+          x: Date.UTC(2014, 11, 10),
+          x2: Date.UTC(2014, 11, 23),
+          y: 2
+        }],
+        dataLabels: {
+          enabled: false
 
-    if (this.chartEl && this.chartEl.nativeElement) {
-      opts.chart = {
-        type: 'line',
-        renderTo: this.chartEl.nativeElement
-      };
+        }
+      }]
 
-      this._chart = new Highcharts.Chart(opts);
-    }
-  }
-
-  public ngOnDestroy() {
-    this._chart.destroy();
+    });
   }
 }
