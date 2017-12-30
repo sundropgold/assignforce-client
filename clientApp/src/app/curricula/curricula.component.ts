@@ -218,7 +218,7 @@ export class CurriculaCurriculumDialogComponent {
   nameFormCtrl = new FormControl('', [
     Validators.required
   ]);
-  // selected;
+  selected;
 
   skillList;
   /*skillList = [
@@ -252,12 +252,12 @@ export class CurriculaCurriculumDialogComponent {
     this.skillService.getAll()
       .subscribe(skillData => {
         this.skillList = skillData;
-        console.log(this.skillList);
+        // console.log(this.skillList);
       });
     if (this.data.isNew === false) {
-      console.log(this.data);
+      // console.log(this.data);
       this.curriculum = this.data.curriculum;
-      // this.selected = this.curriculum.skillObjects;
+      this.selected = this.curriculum.skills;
     }
   }
 
