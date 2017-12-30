@@ -7,7 +7,7 @@ import {Curriculum} from '../domain/curriculum';
 export class CurriculaService {
 
   // url = 'http://localhost:9093/api/v2/curriculum';
-  url = 'http://curriculum-service.cfapps.io/api/v2/curriculum';
+  url = 'https://curriculum-service.cfapps.io/api/v2/curriculum';
   // url = 'api/v2/curriculum';
   constructor(private http: HttpClient) { }
 
