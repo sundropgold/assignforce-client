@@ -283,14 +283,16 @@ export class CurriculaCurriculumDialogComponent {
       name: this.nameFormCtrl.value,
       core: this.data.isCore,
       active: true,
-      skills: null,
-      skillObjects: this.skillFormCtrl.value
+      skills: this.skillFormCtrl.value,
+      skillObjects: null
     };
-    let skillIds: number[] = [];
+    console.log(newCurr.skillObjects);
+    // following block is unnecessary since now option value is the id instead of skill object
+    /*let skillIds: number[] = [];
     for (let skill of newCurr.skillObjects) {
       skillIds.push(skill.skillId);
     }
-    newCurr.skills = skillIds;
+    newCurr.skills = skillIds;*/
     this.curriculaService.create(newCurr)
       .subscribe(retData => {
         console.log(retData);
