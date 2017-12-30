@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {Curriculum} from '../domain/curriculum';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
-import {FormControl} from '@angular/forms';
+import {FormControl, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {S3CredentialService} from '../services/s3-credential.service';
 import {CurriculaService} from '../services/curricula.service';
@@ -126,11 +126,15 @@ export class CurriculaComponent implements OnInit {
   createCore(evt): void {
     const dialogRef  = this.dialog.open(CurriculaCurriculumDialogComponent,
       {
-            width: '250px'
+            width: '250px',
+            data: {
+              isNew: true,
+              isCore: true}
       });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(result => { // the result can be specified in close(result) in dialog component.
       console.log('create-core dialog closed');
+      this.getAllCurricula(); // reload all curriculum (could possibly do get new one, but update could be complicated).
     });
     evt.stopPropagation();
   }
@@ -138,11 +142,15 @@ export class CurriculaComponent implements OnInit {
   createFocus(evt): void {
     const dialogRef  = this.dialog.open(CurriculaCurriculumDialogComponent,
       {
-        width: '250px'
+            width: '250px',
+            data: {
+              isNew: true,
+              isCore: false}
       });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('create-focus dialog closed');
+      this.getAllCurricula();
     });
     evt.stopPropagation();
   }
@@ -151,12 +159,14 @@ export class CurriculaComponent implements OnInit {
     const dialogRef  = this.dialog.open(CurriculaCurriculumDialogComponent,
       {
         width: '250px',
-        data: curriculum
+        data: {
+          isNew: false,
+          curriculum: curriculum
+        }
       });
-    dialogRef.componentInstance.
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('create-focus dialog closed');
+      console.log('edit-curriculum dialog closed');
     });
     evt.stopPropagation();
   }
@@ -168,7 +178,7 @@ export class CurriculaComponent implements OnInit {
       });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('create-focus dialog closed');
+      console.log('remove-curriculum dialog closed');
     });
     evt.stopPropagation();
   }
@@ -187,6 +197,7 @@ export class CurriculaComponent implements OnInit {
 
 }
 
+/***************************** Curriculum Dialog ****************************************/
 @Component({
   selector: 'app-curricula-curriculum-dialog',
   templateUrl: 'curricula-curriculum-dialog.component.html',
@@ -203,8 +214,14 @@ export class CurriculaCurriculumDialogComponent {
     skills: null,
     skillObjects: null
   };
-  skills = new FormControl();
-  skillList = [
+  skillFormCtrl = new FormControl();
+  nameFormCtrl = new FormControl('', [
+    Validators.required
+  ]);
+  // selected;
+
+  skillList;
+  /*skillList = [
     'AngularJS',
     'Angular4',
     'ASP.NET MVC',
@@ -219,26 +236,87 @@ export class CurriculaCurriculumDialogComponent {
     'HTML',
     'SQL',
     'Spring'
-  ];
+  ];*/
 
   constructor(
     public dialogRef: MatDialogRef<CurriculaCurriculumDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private router: Router,
+    private s3Service: S3CredentialService,
+    private curriculaService: CurriculaService,
+    private skillService: SkillService,
+    private notificationService: NotificationService) { }
 
 
   ngOnInit() {
-    if (this.data) {
+    this.skillService.getAll()
+      .subscribe(skillData => {
+        this.skillList = skillData;
+        console.log(this.skillList);
+      });
+    if (this.data.isNew === false) {
       console.log(this.data);
-      this.curriculum = this.data;
+      this.curriculum = this.data.curriculum;
+      // this.selected = this.curriculum.skillObjects;
     }
   }
 
 
   onNoClick(): void {
       this.dialogRef.close();
+  }
+
+  clickSave(evt) {
+    if (this.data.isNew === true) {
+      this.saveCurriculum();
+    } else {
+      this.updateCurriculum();
     }
+  }
+
+  saveCurriculum() {
+    // console.log(this.nameFormCtrl.value);
+    // console.log(this.skillFormCtrl.value);
+    // console.log(this.data.isCore);
+    let newCurr: Curriculum = {
+      currId: null,
+      name: this.nameFormCtrl.value,
+      core: this.data.isCore,
+      active: true,
+      skills: null,
+      skillObjects: this.skillFormCtrl.value
+    };
+    let skillIds: number[] = [];
+    for (let skill of newCurr.skillObjects) {
+      skillIds.push(skill.skillId);
+    }
+    newCurr.skills = skillIds;
+    this.curriculaService.create(newCurr)
+      .subscribe(retData => {
+        console.log(retData);
+        this.showToast('Curriculum: ' + retData.name + ' Created.');
+      }, error => {
+        this.showToast('Failed to create new Core.');
+      });
+
+    this.dialogRef.close();
+    // location.reload();
+  }
+
+  updateCurriculum() {
+    console.log(this.data.curriculum);
+    console.log(this.skillFormCtrl.value);
+  }
+
+
+  showToast(msg) {
+    this.notificationService.openSnackBar(msg);
+  }
 }
 
+
+
+/************************* Create Skill Dialog ****************************/
 @Component({
   selector: 'app-curricula-create-skill-dialog',
   templateUrl: 'curricula-create-skill-dialog.component.html',
@@ -254,6 +332,7 @@ export class CurriculaCreateSkillDialogComponent {
   }
 }
 
+/************************* Curriculum Removal Dialog **********************************/
 @Component({
   selector: 'app-curricula-removal-dialog',
   templateUrl: 'curricula-removal-dialog.component.html',

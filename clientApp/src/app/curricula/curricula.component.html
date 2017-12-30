@@ -16,7 +16,7 @@
             <mat-panel-description>
               <span class="fill-space"></span>
               <button mat-icon-button (click)="createCore($event)" [hidden]="!isAdmin">
-                <mat-icon class="icon-margin-fix" matTooltip="Add New Curriculum">add_circle_outline</mat-icon>
+                <mat-icon class="icon-margin-fix" matTooltip="Add New Core">add_circle_outline</mat-icon>
               </button>
             </mat-panel-description>
           </mat-expansion-panel-header>
@@ -82,7 +82,7 @@
                         </p>
                       </div>
                       <span class="fill-space"></span>
-                      <button mat-icon-button class="button-orange" (click)="editCurr($event)" [hidden]="!isAdmin">
+                      <button mat-icon-button class="button-orange" (click)="editCurr($event, curr)" [hidden]="!isAdmin">
                         <mat-icon class="icon-margin-fix" matTooltip="Edit Curriculum">mode_edit</mat-icon>
                       </button>
                       <button mat-icon-button class="button-orange" (click)="removeCurr($event)" [hidden]="!isAdmin">

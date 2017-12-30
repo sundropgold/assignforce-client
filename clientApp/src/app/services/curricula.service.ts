@@ -19,7 +19,13 @@ export class CurriculaService {
   }
 
   // Get curriculum by id
+
   getById(id): Observable<Curriculum> {
     return this.http.get<Curriculum>(`${this.url}/${id}`);
+  }
+
+  // Create new curriculum
+  create(curriculum: Curriculum): Observable<Curriculum> {
+    return this.http.post<Curriculum>(`${this.url}`, curriculum);
   }
 }
