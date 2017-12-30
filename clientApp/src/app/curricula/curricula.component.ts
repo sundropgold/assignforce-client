@@ -189,11 +189,15 @@ export class CurriculaComponent implements OnInit {
   createSkill(evt): void {
     const dialogRef  = this.dialog.open(CurriculaCreateSkillDialogComponent,
       {
-        width: '250px'
+        width: '250px',
+        data: this.skills
       });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('create-skill dialog closed');
+      if (result === true) {
+        this.getAllSkills();
+      }
     });
     evt.stopPropagation();
   }
@@ -342,12 +346,52 @@ export class CurriculaCurriculumDialogComponent {
   styleUrls: ['./curricula.component.css']
 })
 export class CurriculaCreateSkillDialogComponent {
+  /* Variable */
+  skillFormCtrl = new FormControl();
+  newSkill: Skill = {
+    skillId: null,
+    name: null,
+    active: true
+  };
+  skills: Skill[] = this.data;
+  found: boolean = false;
+
   constructor(
     public dialogRef: MatDialogRef<CurriculaCreateSkillDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private router: Router,
+    private s3Service: S3CredentialService,
+    private skillService: SkillService,
+    private notificationService: NotificationService) { }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
+  }
+
+  createSkill() {
+    this.newSkill.name = this.skillFormCtrl.value;
+    console.log('New Skill: ');
+    console.log(this.newSkill);
+    for (let i = 0; i < this.skills.length; i++) {
+      if (this.skills[i].name === this.newSkill.name) {
+        this.found = true;
+        this.showToast('Skill: ' + this.newSkill.name + ' already exist!');
+        this.dialogRef.close(false);
+      }
+    }
+    if (this.found === false) {
+      this.skillService.create(this.newSkill)
+        .subscribe(retData => {
+          this.showToast('Skill: ' + retData.name + ' Created. ');
+        }, error => {
+          this.showToast('Failed to create new Skill. ');
+        });
+      this.dialogRef.close(true);
+    }
+  }
+
+  showToast(msg) {
+    this.notificationService.openSnackBar(msg);
   }
 }
 
