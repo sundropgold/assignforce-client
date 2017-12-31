@@ -50,6 +50,8 @@ import 'aws-sdk/dist/aws-sdk.min';
 import {LoginComponent} from './login/login.component';
 import {TimelineComponent} from './timeline/timeline.component';
 import {OrderModule} from 'ngx-order-pipe';
+import {CalendarDialogComponent, PtoComponent} from './pto/pto.component';
+import {PtoService} from './services/pto.service';
 import {BatchService} from './services/batch.service';
 import {CurriculaService} from './services/curricula.service';
 import {NgPipesModule} from 'ngx-pipes';
@@ -77,11 +79,13 @@ import {NgPipesModule} from 'ngx-pipes';
     CurriculaRemovalDialogComponent,
     TrainersComponent,
     TrainerDialogComponent,
+    CalendarDialogComponent,
     ProfileComponent,
     ReportsComponent,
     SettingsComponent,
     LoginComponent,
     TimelineComponent,
+    PtoComponent,
   ],
   imports: [
     HttpClientModule,
@@ -125,6 +129,7 @@ import {NgPipesModule} from 'ngx-pipes';
     S3CredentialService,
     UrlService,
     NotificationService,
+    PtoService,
     CurriculaService,
     {
       provide: HTTP_INTERCEPTORS,
@@ -145,7 +150,8 @@ import {NgPipesModule} from 'ngx-pipes';
     LocationEditRoomDialogComponent,
     CurriculaCurriculumDialogComponent,
     CurriculaCreateSkillDialogComponent,
-    CurriculaRemovalDialogComponent
+    CurriculaRemovalDialogComponent,
+    CalendarDialogComponent
   ],
   bootstrap: [AppComponent]
 })
