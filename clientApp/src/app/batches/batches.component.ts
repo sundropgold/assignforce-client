@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {MatSort, MatTableDataSource, MatCheckbox, MatPaginator} from '@angular/material';
-import {Batch} from '../domain/batch';
+import {Batch, BatchLocation, BatchStatus} from '../domain/batch';
 import {FormControl} from '@angular/forms';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
@@ -8,6 +8,7 @@ import {BatchService} from '../services/batch.service';
 import {NotificationService} from '../services/notification.service';
 import {CurriculaService} from '../services/curricula.service';
 import {TrainerService} from '../services/trainer.service';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-batches',
@@ -18,16 +19,18 @@ import {TrainerService} from '../services/trainer.service';
 export class BatchesComponent implements OnInit, AfterViewInit {
 
   // FAKE VALUES FOR THE FIRST TAB
-  startDate: Date;
-  endDate: Date;
+  curDate: any;
   datebetween: any;
   creating = true;
-  batch: Batch[];
+  batch: Batch;
+   monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
+    'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+  ];
 
   Curriculums = [
-    {value: 'java-0', viewValue: 'JAVA'},
-    {value: 'c++-1', viewValue: 'C++'},
-    {value: 'angular-2', viewValue: 'ANGULAR 4'}
+    {value: 'java', viewValue: 'JAVA'},
+    {value: 'c++', viewValue: 'C++'},
+    {value: 'angular', viewValue: 'ANGULAR 4'}
   ];
 
   focuses = [
@@ -102,6 +105,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getAll();
+    this.initBatch();
   }
 
   ngAfterViewInit() {
@@ -131,11 +135,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   isCreating() {
     return this.creating;
   }
-  showToast(message) {
-    this.notificationService.openSnackBar(message);
-  }
   clickTest(evt) {
-    console.log('button clicked');
     this.creating = !this.creating;
     this.showToast('Creating new Batch');
     evt.stopPropagation();
@@ -147,17 +147,43 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   create(evt) {
     // createBatch(). send form with data to micro service for batch creation.
     this.creating = !this.creating;
+    console.log(this.batch);
     evt.stopPropagation();
   }
-  setStartDate(evt) {
-    console.log(evt.value)
-    this.startDate = evt.value;
-  }
   calcDate(evt) {
-    console.log(evt.value);
-    this.endDate = evt.value;
-    console.log(this.endDate.getMonth());
-    this.datebetween = ((this.endDate)as any - ((this.startDate)as any)) / 1000 / 60 / 60 / 24;
+    this.curDate = new Date();
+    this.datebetween = ((this.batch.endDate)as any - ((this.batch.startDate)as any)) / 1000 / 60 / 60 / 24;
+    this.batch.name = this.curDate.getYear() % 100 + '' + (this.batch.startDate.getMonth() + 1) + '' + this.monthNames
+      [this.batch.startDate.getMonth()] + '' + (this.batch.startDate.getUTCDate()) + '' + this.batch.curriculum;
+    console.log(this.batch.name);
+  }
+  setCur(evt) {
+    this.batch.curriculum = evt;
+    this.batch.curriculumName = evt.viewValue;
+    console.log(this.batch);
+
+  }
+  initBatch() {
+    this.batch = {
+      name: '' ,
+      startDate: new Date(),
+      endDate: new Date(),
+      curriculum: null,
+      focus: null,
+      trainer: null,
+      cotrainer: null,
+      batchStatus: null,
+      batchLocation: null,
+      skills: [],
+      id: null,
+      // Data that is not in the backend
+      progress: null,
+      curriculumName: null,
+      focusName: null,
+      trainerName: null,
+      cotrainerName: null
+
+    };
   }
 
   // error messages
@@ -169,7 +195,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   getAll() {
     this.batchService.getAll().subscribe(data => {
       this.BatchData = data;
-      for (let entry of this.BatchData) {
+      for (const entry of this.BatchData) {
         this.curriculaService.getById(entry.curriculum)
           .subscribe(curriculumData => {
             entry.curriculumName = curriculumData.name;
