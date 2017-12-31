@@ -52,6 +52,7 @@ import {TimelineComponent} from './timeline/timeline.component';
 import {OrderModule} from 'ngx-order-pipe';
 import {BatchService} from './services/batch.service';
 import {CurriculaService} from './services/curricula.service';
+import {NgPipesModule} from 'ngx-pipes';
 
 
 @NgModule({
@@ -114,7 +115,8 @@ import {CurriculaService} from './services/curricula.service';
     MatSnackBarModule,
     OrderModule,
     FlexLayoutModule,
-    MatDialogModule
+    MatDialogModule,
+    NgPipesModule
   ],
   providers: [
     TrainerService,
