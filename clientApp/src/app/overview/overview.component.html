@@ -13,13 +13,13 @@
             menu
           </mat-icon>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item>
+            <button mat-menu-item (click)="filterByProgress()">
               <span>In Progress</span>
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="filterByTwoWeeksAhead()">
               <span>Beginging within two weeks</span>
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="filterByNone()">
               <span>All</span>
             </button>
           </mat-menu>
