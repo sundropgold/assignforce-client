@@ -117,10 +117,10 @@ import {NgPipesModule} from 'ngx-pipes';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSnackBarModule,
-    OrderModule,
     FlexLayoutModule,
     MatDialogModule,
-    NgPipesModule
+    NgPipesModule,
+    OrderModule
   ],
   providers: [
     TrainerService,
