@@ -203,6 +203,7 @@ export class TrainersComponent implements OnInit {
     return new Date(incoming);
   }
 
+
   showCalendar() {
     this.ptoService.authorize();
     this.http.get("/api/v2/google/googleStatus")
@@ -214,15 +215,6 @@ export class TrainersComponent implements OnInit {
         }
 
     })
-
-  }
-
-  hideCalendar() {
-    this.dialog.closeAll()
-
-  }
-
-  showPTODialog() {
 
   }
 

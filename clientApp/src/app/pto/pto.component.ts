@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {TrainersComponent} from '../trainers/trainers.component';
 
 @Component({
@@ -9,7 +9,8 @@ import {TrainersComponent} from '../trainers/trainers.component';
 })
 export class PtoComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
@@ -23,7 +24,8 @@ export class PtoComponent implements OnInit {
 })
 export class CalendarDialogComponent {
 
-  constructor(public dialogRef: MatDialogRef<CalendarDialogComponent>,
+  constructor(public dialog: MatDialog,
+              public dialogRef: MatDialogRef<CalendarDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
@@ -32,6 +34,33 @@ export class CalendarDialogComponent {
     this.dialogRef.close();
   }
 
+  hideCalendar() {
+    this.dialogRef.close();
 
+  }
+
+  showPTODialog() {
+    const dialogRef = this.dialog.open(PtoDialogComponent, {
+      // width: '450px',
+    });
+
+  }
+
+}
+
+@Component({
+  selector: 'app-pto-dialog',
+  templateUrl: './ptoRequestDialog.component.html',
+})
+export class PtoDialogComponent {
+
+  constructor(public dialogRef: MatDialogRef<PtoDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+  }
+
+  onNoClick(): void {
+    event.stopPropagation();
+    this.dialogRef.close();
+  }
 }
 
