@@ -44,16 +44,17 @@ import {
 } from '@angular/material';
 import {MatSelectModule} from '@angular/material/select';
 import {ReactiveFormsModule} from '@angular/forms';
-import {OrderModule} from 'ngx-order-pipe';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {NotificationService} from './services/notification.service';
 import 'aws-sdk/dist/aws-sdk.min';
 import {LoginComponent} from './login/login.component';
 import {TimelineComponent} from './timeline/timeline.component';
 import {CalendarDialogComponent, PtoComponent, PtoDialogComponent} from './pto/pto.component';
+import {OrderModule} from 'ngx-order-pipe';
 import {PtoService} from './services/pto.service';
 import {BatchService} from './services/batch.service';
 import {CurriculaService} from './services/curricula.service';
+import {NgPipesModule} from 'ngx-pipes';
 
 
 @NgModule({
@@ -117,9 +118,10 @@ import {CurriculaService} from './services/curricula.service';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSnackBarModule,
-    OrderModule,
     FlexLayoutModule,
-    MatDialogModule
+    MatDialogModule,
+    NgPipesModule,
+    OrderModule
   ],
   providers: [
     TrainerService,

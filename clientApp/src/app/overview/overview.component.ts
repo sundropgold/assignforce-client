@@ -18,11 +18,11 @@ import {TrainerService} from '../services/trainer.service';
 export class OverviewComponent implements OnInit, AfterViewInit {
   BatchData: Batch[];
   batchData = new MatTableDataSource(this.BatchData);
+  filteredData: Batch[];
   batchValues = ['name', 'curriculumName', 'trainerName', 'location', 'building', 'room', 'startDate', 'endDate', 'progress'];
 
   color = 'warn';
   mode = 'determinate';
-  value = 50;
   bufferValue = 100;
 
   @ViewChild(MatSort) sort: MatSort;
@@ -61,8 +61,10 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   getAll() {
     this.batchService.getAll().subscribe(data => {
       this.BatchData = data;
-      var currentDate = new  Date();
-      for (let entry of this.BatchData) {
+      this.batchData = new MatTableDataSource(this.BatchData);
+      const currentDate = new  Date();
+      for (const entry of this.BatchData) {
+
         entry.progress = (currentDate.valueOf() - entry.startDate.valueOf()) / (entry.endDate.valueOf() - entry.startDate.valueOf()) * 100;
         this.curriculaService.getById(entry.curriculum)
           .subscribe(curriculumData => {
@@ -90,5 +92,32 @@ export class OverviewComponent implements OnInit, AfterViewInit {
         this.showToast('Failed to fetch Batches');
       }
     );
+  }
+
+  filterByProgress() {
+      this.filteredData = this.BatchData.filter(
+        batch => batch.progress > 0 && batch.progress < 100
+      );
+      this.batchData = new MatTableDataSource(this.filteredData);
+      this.batchData.sort = this.sort;
+      this.batchData.paginator = this.paginator;
+  }
+
+  filterByNone() {
+      this.batchData = new MatTableDataSource(this.BatchData);
+      this.batchData.sort = this.sort;
+      this.batchData.paginator = this.paginator;
+  }
+
+  filterByTwoWeeksAhead() {
+    let days = 14 * 1000 * 3600 * 24;
+
+    this.filteredData = this.BatchData.filter(
+      batch => ((batch.startDate.valueOf() - new Date().valueOf()) >= 0) &&
+                        ((batch.startDate.valueOf() - new Date().valueOf()) <= days)
+    );
+    this.batchData = new MatTableDataSource(this.filteredData);
+    this.batchData.sort = this.sort;
+    this.batchData.paginator = this.paginator;
   }
 }

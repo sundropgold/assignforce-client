@@ -17,7 +17,7 @@ export class LocationsComponent implements OnInit {
   locations = [
     {
       id: '13F',
-      name: 'Revature HQ',
+      name: 'Revature HQ and Cheese',
       city: 'Reaston',
       state: 'VA',
       buildings: [
