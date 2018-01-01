@@ -162,9 +162,8 @@ The second md-card/ng-show is for other users to look at other trainers profiles
                  src="https://app.revature.com/core/resources/download/default/interns/image?t=1486138020884">
           </div>
           <div fxLayout="column" style="padding: 8px">
-            <div fxLayout="row">
-              <h3 style="padding-right: 16px">{{trainer.firstName}}</h3>
-              <h3 style="padding-right: 16px">{{trainer.lastName}}</h3>
+            <div>
+              <h3 matLine>{{trainer.firstName}} {{trainer.lastName}}</h3>
             </div>
             <div>
               <label> Current Resume: </label>
