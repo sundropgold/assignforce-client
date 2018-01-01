@@ -9,6 +9,10 @@ import {NotificationService} from '../services/notification.service';
 import {CurriculaService} from '../services/curricula.service';
 import {TrainerService} from '../services/trainer.service';
 import {DatePipe} from '@angular/common';
+import {Curriculum} from '../domain/curriculum';
+import {Trainer} from '../domain/trainer';
+import {SkillService} from '../services/skill.service';
+import {Skill} from '../domain/skill';
 
 @Component({
   selector: 'app-batches',
@@ -27,26 +31,13 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
   ];
 
-  Curriculums = [
-    {value: 'java', viewValue: 'JAVA'},
-    {value: 'c++', viewValue: 'C++'},
-    {value: 'angular', viewValue: 'ANGULAR 4'}
-  ];
-
-  focuses = [
-    {value: 'microservices-0', viewValue: 'Microservices'},
-    {value: 'focus2-1', viewValue: 'Focus 2'},
-    {value: 'focus3-2', viewValue: 'Focus 3'}
-  ];
+  curriculumForm: Curriculum[];
 
   skills = new FormControl();
 
-  skillsList = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+  skillForm: Skill[];
 
-  trainers =  [
-    {value: 'trainer-0', viewValue: 'August Duet'},
-    {value: 'trainer-1', viewValue: 'Emily Higgins'},
-    {value: 'trainer-2', viewValue: 'Steven Kelsey'} ];
+  trainerForm: Trainer[];
 
   // locations = [
   //   {value: 'location-0', viewValue: 'Revature HQ - Reston,VA'},
@@ -100,6 +91,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   constructor(private batchService: BatchService,
               private curriculaService: CurriculaService,
               private trainerService: TrainerService,
+              private skillService: SkillService,
               private notificationService: NotificationService) {
   }
 
@@ -148,6 +140,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     // createBatch(). send form with data to micro service for batch creation.
     this.creating = !this.creating;
     console.log(this.batch);
+    this.batchService.create(this.batch).subscribe(data => {});
     evt.stopPropagation();
   }
   calcDate(evt) {
@@ -168,21 +161,27 @@ export class BatchesComponent implements OnInit, AfterViewInit {
       name: '' ,
       startDate: new Date(),
       endDate: new Date(),
-      curriculum: null,
-      focus: null,
-      trainer: null,
-      cotrainer: null,
+      curriculum: 1,
+      focus: 1,
+      trainer: 1,
+      cotrainer: 1,
       batchStatus: null,
-      batchLocation: null,
+      batchLocation: {
+        buildingId: null,
+        buildingName: null,
+        roomId: null,
+        roomName: null,
+        locationId: null,
+        locationName: null
+      },
       skills: [],
       id: null,
       // Data that is not in the backend
-      progress: null,
-      curriculumName: null,
-      focusName: null,
-      trainerName: null,
-      cotrainerName: null
-
+      progress: 1,
+      curriculumName: '',
+      focusName: '',
+      trainerName: '',
+      cotrainerName: ''
     };
   }
 
@@ -192,6 +191,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   }
 
   // Gets all batches and stores them in variable batchData
+  // Should also get all trainers and curricula and store them
   getAll() {
     this.batchService.getAll().subscribe(data => {
       this.BatchData = data;
@@ -226,6 +226,24 @@ export class BatchesComponent implements OnInit, AfterViewInit {
       this.batchData.paginator = this.paginator;
   }, error => {
       this.showToast('Failed to fetch Batches');
+    });
+
+    this.trainerService.getAll().subscribe(trainerData => {
+      this.trainerForm = trainerData;
+    }, error => {
+      this.showToast('Failed to fetch Batches');
+    });
+
+    this.curriculaService.getAll().subscribe(curriculaData => {
+      this.curriculumForm = curriculaData;
+    }, error => {
+      this.showToast('Failed to fetch Curricula');
+    });
+
+    this.skillService.getAll().subscribe(skillData => {
+      this.skillForm = skillData;
+    }, error => {
+      this.showToast('Failed to fetch Skill');
     });
   }
 
