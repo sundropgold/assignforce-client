@@ -49,13 +49,20 @@ export class TimelineComponent implements AfterViewInit {
         title: {
           text: 'Trainers'
         },
-        categories: ['Trainer1', 'Trainer2', 'Trainer3'],
+        categories: ['14 Weeks', '10 Weeks', '5 Weeks'],
         reversed: true
       },
+
+      // tooltip: {
+      //   pointFormat: '{series.name}: <b>{point.y}</b>',
+      //   backgroundColor: '#FCFFC5',
+      //   valueSuffix: 'cm',
+      //   borderWidth: 3,
+      //   borderRaduis: 6,
+      //   shared: true
+      // },
       series: [{
-        name: 'Batch',
-        // pointPadding: 0,
-        // groupPadding: 0,
+        name: 'Trainer 1',
         borderColor: 'gray',
         pointWidth: 20,
         data: [{
@@ -63,21 +70,29 @@ export class TimelineComponent implements AfterViewInit {
           x2: Date.UTC(2014, 11, 2),
           y: 0,
           partialFill: 0.25
-        },{
+        }]}, 
+        {
+          name: 'Trainer 2',
+          borderColor: 'gray',
+          pointWidth: 20,
+          data: [{
           x: Date.UTC(2014, 11, 9),
           x2: Date.UTC(2014, 11, 19),
           y: 1
-        }, {
+        }]}, 
+        {
+          name : 'Trainer 3',
+          borderColor: 'gray',
+          pointWidth: 20,
+          data:[{
           x: Date.UTC(2014, 11, 10),
           x2: Date.UTC(2014, 11, 23),
           y: 2
         }],
         dataLabels: {
           enabled: false
-
         }
       }]
-
     });
   }
 }
