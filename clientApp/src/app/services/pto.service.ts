@@ -8,22 +8,9 @@ import {CalendarDialogComponent} from '../pto/pto.component';
 @Injectable()
 export class PtoService {
 
-  constructor(private router: Router,
-              public dialog: MatDialog) {
+  constructor(private router: Router) {
   }
 
-  authorize() {
-    this.showCalendar(); //For testing to make sure the Dialog is actually showing
-    //gapi.load('client:auth2', this.showCalendar());
-
-  }
-
-  showCalendar() {
-    const dialogRef = this.dialog.open(CalendarDialogComponent, {
-      // width: '450px',
-
-    })
-  }
 
   getGoogle() {
     this.router.navigate(['api/v2/google/google']);
@@ -31,6 +18,6 @@ export class PtoService {
 
   addPto(trainer, startDate, endDate) {
 
-
+  console.log("Start: " + startDate + " End: " + endDate);
   }
 }

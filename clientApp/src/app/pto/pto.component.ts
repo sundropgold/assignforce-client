@@ -1,6 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {TrainersComponent} from '../trainers/trainers.component';
+import {Trainer} from '../domain/trainer';
+import {PtoService} from '../services/pto.service';
 
 @Component({
   selector: 'app-pto',
@@ -17,14 +19,15 @@ export class PtoComponent implements OnInit {
 
 }
 
-//Used for the display of new Trainer dialog box
+
 @Component({
   selector: 'app-calendar-dialog',
   templateUrl: './calendar-dialog.component.html',
 })
 export class CalendarDialogComponent {
 
-  constructor(public dialog: MatDialog,
+  constructor(private ptoService: PtoService,
+              public dialog: MatDialog,
               public dialogRef: MatDialogRef<CalendarDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
@@ -40,10 +43,23 @@ export class CalendarDialogComponent {
   }
 
   showPTODialog() {
+    const pto: any = {
+      startDate: null,
+      endDate: null,
+    };
     const dialogRef = this.dialog.open(PtoDialogComponent, {
-      // width: '450px',
+      width: '450px',
+      data: {
+        pto: pto
+      }
     });
 
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        if (result) {
+          this.ptoService.addPto(result, result.startDate, result.endDate);
+        }
+      });
   }
 
 }
@@ -60,6 +76,10 @@ export class PtoDialogComponent {
 
   onNoClick(): void {
     event.stopPropagation();
+    this.dialogRef.close();
+  }
+
+  cancel() {
     this.dialogRef.close();
   }
 }
