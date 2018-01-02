@@ -9,13 +9,18 @@ import {ProfileComponent} from './profile/profile.component';
 import {ReportsComponent} from './reports/reports.component';
 import {SettingsComponent} from './settings/settings.component';
 import {LoginComponent} from './login/login.component';
+import {LoginSuccessComponent} from './login-success/login-success.component';
 
 const appRoutes: Routes = [
-  {
+    {
     path: '',
     component: LoginComponent,
     pathMatch: 'full'
-  },
+    },
+    {
+	path: 'loginsuccess',
+	component: LoginSuccessComponent
+    },
   {
     path: 'overview',
     component: OverviewComponent

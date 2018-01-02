@@ -29,6 +29,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TrainerService} from './services/trainer.service';
 import {SkillService} from './services/skill.service';
 import {S3CredentialService} from './services/s3-credential.service';
+import {AuthService} from './services/auth.service'
 import {UrlService} from './services/url.service';
 import {
   MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatExpansionModule,
@@ -55,6 +56,7 @@ import {PtoService} from './services/pto.service';
 import {BatchService} from './services/batch.service';
 import {CurriculaService} from './services/curricula.service';
 import {NgPipesModule} from 'ngx-pipes';
+import { LoginSuccessComponent } from './login-success/login-success.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +88,7 @@ import {NgPipesModule} from 'ngx-pipes';
     LoginComponent,
     TimelineComponent,
     PtoComponent,
+    LoginSuccessComponent,
   ],
   imports: [
     HttpClientModule,
@@ -130,7 +133,8 @@ import {NgPipesModule} from 'ngx-pipes';
     UrlService,
     NotificationService,
     PtoService,
-    CurriculaService,
+      CurriculaService,
+      AuthService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,
