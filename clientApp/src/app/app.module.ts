@@ -44,19 +44,20 @@ import {
 } from '@angular/material';
 import {MatSelectModule} from '@angular/material/select';
 import {ReactiveFormsModule} from '@angular/forms';
-import {OrderModule} from 'ngx-order-pipe';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {NotificationService} from './services/notification.service';
 import 'aws-sdk/dist/aws-sdk.min';
 import {LoginComponent} from './login/login.component';
 import {TimelineComponent} from './timeline/timeline.component';
-import { PtoComponent } from './pto/pto.component';
+import {CalendarDialogComponent, PtoComponent, PtoDialogComponent} from './pto/pto.component';
+import {OrderModule} from 'ngx-order-pipe';
 import {PtoService} from './services/pto.service';
 import {BatchService} from './services/batch.service';
 import {CurriculaService} from './services/curricula.service';
 import {LocationService} from './services/location.service';
 import {RoomService} from './services/room.service';
 import {BuildingService} from './services/building.service';
+import {NgPipesModule} from 'ngx-pipes';
 
 
 @NgModule({
@@ -81,6 +82,8 @@ import {BuildingService} from './services/building.service';
     CurriculaRemovalDialogComponent,
     TrainersComponent,
     TrainerDialogComponent,
+    CalendarDialogComponent,
+    PtoDialogComponent,
     ProfileComponent,
     ReportsComponent,
     SettingsComponent,
@@ -118,9 +121,10 @@ import {BuildingService} from './services/building.service';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSnackBarModule,
-    OrderModule,
     FlexLayoutModule,
-    MatDialogModule
+    MatDialogModule,
+    NgPipesModule,
+    OrderModule
   ],
   providers: [
     TrainerService,
@@ -153,7 +157,9 @@ import {BuildingService} from './services/building.service';
     LocationEditRoomDialogComponent,
     CurriculaCurriculumDialogComponent,
     CurriculaCreateSkillDialogComponent,
-    CurriculaRemovalDialogComponent
+    CurriculaRemovalDialogComponent,
+    CalendarDialogComponent,
+    PtoDialogComponent
   ],
   bootstrap: [AppComponent]
 })

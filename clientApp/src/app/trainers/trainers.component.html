@@ -24,7 +24,7 @@
       <mat-list-item mat-ripple="#ff0000" *ngIf="trainer.active" (click)="goToTrainer(trainer)">
         <mat-icon matListIcon style="color: #000;" >people</mat-icon>
           <h4 matLine> {{ trainer.firstName }} {{ trainer.lastName }} </h4>
-          <p *ngIf="trainer.skills.length > 0" matLine> Skills: {{ joinObjArrayByName(trainer.skills) }} </p>
+          <p *ngIf="trainer.skills.length > 0" matLine> Skills: {{ joinObjArrayByName(trainer.skillsObject) }} </p>
           <p *ngIf="trainer.skills.length <= 0" matLine> Skills: none </p>
         <span class="md-toolbar-spacer"> </span>
 
@@ -38,11 +38,9 @@
     </mat-list>
   </mat-card-content>
   <!--displays a loading circle if trainers is undefined-->
-  <div *ngIf="trainers == undefined">
-    <div fxFlex="100"> &nbsp;</div>
+  <mat-card-content *ngIf="trainers == undefined" fxLayout="column" fxLayoutWrap fxLayoutAlign="center center">
     <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-    <div fxFlex="100"> &nbsp;</div>
-  </div>
+  </mat-card-content>
 
   <!--toolbar for the inactive trainers-->
   <mat-toolbar fxLayout="column">
@@ -58,7 +56,7 @@
       <mat-list-item class="md-2-line" mat-ripple="#ff0000" *ngIf="trainer.active==false">
         <mat-icon matListIcon style="color: #000;" >people</mat-icon>
           <h4 matLine> {{ trainer.firstName }} {{ trainer.lastName }} </h4>
-          <p *ngIf="trainer.skills.length > 0" matLine> Skills: {{ joinObjArrayByName(trainer.skills) }} </p>
+          <p *ngIf="trainer.skills.length > 0" matLine> Skills: {{ joinObjArrayByName(trainer.skillsObject) }} </p>
           <p *ngIf="trainer.skills.length <= 0" matLine> Skills: none </p>
         <span class="md-toolbar-spacer"> </span>
         <!--button activates a Trainer-->
@@ -69,10 +67,8 @@
     </mat-list>
   </mat-card-content>
   <!--shows a loading circle if trainers is undefined-->
-  <div *ngIf="trainers == undefined" fxLayout="column" fxLayoutWrap fxLayoutAlign="center center">
-    <div fxFlex="100"> &nbsp;</div>
+  <mat-card-content *ngIf="trainers == undefined" fxLayout="column" fxLayoutWrap fxLayoutAlign="center center">
     <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-    <div fxFlex="100"> &nbsp;</div>
-  </div>
+  </mat-card-content>
 </mat-card>
 

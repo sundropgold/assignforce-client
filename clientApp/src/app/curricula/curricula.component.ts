@@ -167,18 +167,21 @@ export class CurriculaComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('edit-curriculum dialog closed');
+      this.getAllCurricula();
     });
     evt.stopPropagation();
   }
 
-  removeCurr(evt): void {
+  removeCurr(evt, curriculum): void {
     const dialogRef  = this.dialog.open(CurriculaRemovalDialogComponent,
       {
-        width: '400px'
+        width: '400px',
+        data: curriculum
       });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('remove-curriculum dialog closed');
+      this.getAllCurricula();
     });
     evt.stopPropagation();
   }
@@ -186,11 +189,15 @@ export class CurriculaComponent implements OnInit {
   createSkill(evt): void {
     const dialogRef  = this.dialog.open(CurriculaCreateSkillDialogComponent,
       {
-        width: '250px'
+        width: '250px',
+        data: this.skills
       });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('create-skill dialog closed');
+      if (result === true) {
+        this.getAllSkills();
+      }
     });
     evt.stopPropagation();
   }
@@ -218,7 +225,7 @@ export class CurriculaCurriculumDialogComponent {
   nameFormCtrl = new FormControl('', [
     Validators.required
   ]);
-  // selected;
+  selected;
 
   skillList;
   /*skillList = [
@@ -252,12 +259,12 @@ export class CurriculaCurriculumDialogComponent {
     this.skillService.getAll()
       .subscribe(skillData => {
         this.skillList = skillData;
-        console.log(this.skillList);
+        // console.log(this.skillList);
       });
     if (this.data.isNew === false) {
-      console.log(this.data);
+      // console.log(this.data);
       this.curriculum = this.data.curriculum;
-      // this.selected = this.curriculum.skillObjects;
+      this.selected = this.curriculum.skills;
     }
   }
 
@@ -283,14 +290,16 @@ export class CurriculaCurriculumDialogComponent {
       name: this.nameFormCtrl.value,
       core: this.data.isCore,
       active: true,
-      skills: null,
-      skillObjects: this.skillFormCtrl.value
+      skills: this.skillFormCtrl.value,
+      skillObjects: null
     };
-    let skillIds: number[] = [];
+    console.log(newCurr.skillObjects);
+    // following block is unnecessary since now option value is the id instead of skill object
+    /*let skillIds: number[] = [];
     for (let skill of newCurr.skillObjects) {
       skillIds.push(skill.skillId);
     }
-    newCurr.skills = skillIds;
+    newCurr.skills = skillIds;*/
     this.curriculaService.create(newCurr)
       .subscribe(retData => {
         console.log(retData);
@@ -304,10 +313,24 @@ export class CurriculaCurriculumDialogComponent {
   }
 
   updateCurriculum() {
+    console.log('Old Curriculum: ');
     console.log(this.data.curriculum);
+    console.log('New Skill List: ');
     console.log(this.skillFormCtrl.value);
+    let updatedCurr = this.data.curriculum;
+    updatedCurr.name = this.nameFormCtrl.value;
+    updatedCurr.skills = this.skillFormCtrl.value;
+    console.log('Updated Curriculum: ');
+    console.log(updatedCurr);
+    this.curriculaService.update(updatedCurr)
+      .subscribe(retData => {
+        console.log(retData);
+        this.showToast('Curriculum: ' + retData.name + ' Modified. ');
+      }, error => {
+        this.showToast('Failed to edit Curriculum.');
+      });
+    this.dialogRef.close();
   }
-
 
   showToast(msg) {
     this.notificationService.openSnackBar(msg);
@@ -323,12 +346,52 @@ export class CurriculaCurriculumDialogComponent {
   styleUrls: ['./curricula.component.css']
 })
 export class CurriculaCreateSkillDialogComponent {
+  /* Variable */
+  skillFormCtrl = new FormControl();
+  newSkill: Skill = {
+    skillId: null,
+    name: null,
+    active: true
+  };
+  skills: Skill[] = this.data;
+  found: boolean = false;
+
   constructor(
     public dialogRef: MatDialogRef<CurriculaCreateSkillDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private router: Router,
+    private s3Service: S3CredentialService,
+    private skillService: SkillService,
+    private notificationService: NotificationService) { }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
+  }
+
+  createSkill() {
+    this.newSkill.name = this.skillFormCtrl.value;
+    console.log('New Skill: ');
+    console.log(this.newSkill);
+    for (let i = 0; i < this.skills.length; i++) {
+      if (this.skills[i].name === this.newSkill.name) {
+        this.found = true;
+        this.showToast('Skill: ' + this.newSkill.name + ' already exist!');
+        this.dialogRef.close(false);
+      }
+    }
+    if (this.found === false) {
+      this.skillService.create(this.newSkill)
+        .subscribe(retData => {
+          this.showToast('Skill: ' + retData.name + ' Created. ');
+        }, error => {
+          this.showToast('Failed to create new Skill. ');
+        });
+      this.dialogRef.close(true);
+    }
+  }
+
+  showToast(msg) {
+    this.notificationService.openSnackBar(msg);
   }
 }
 
@@ -339,11 +402,47 @@ export class CurriculaCreateSkillDialogComponent {
   styleUrls: ['./curricula.component.css']
 })
 export class CurriculaRemovalDialogComponent {
+  /* variables */
+  curriculum: Curriculum = {
+    currId: null,
+    name: '',
+    core: null,
+    active: null,
+    skills: null,
+    skillObjects: null
+  };
+
   constructor(
     public dialogRef: MatDialogRef<CurriculaRemovalDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private router: Router,
+    private s3Service: S3CredentialService,
+    private curriculaService: CurriculaService,
+    private skillService: SkillService,
+    private notificationService: NotificationService) { }
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  removeCurriculum() {
+    this.curriculum = this.data;
+    console.log('Curriculum to be deleted: ');
+    console.log(this.curriculum);
+    this.curriculaService.delete(this.curriculum.currId)
+      .subscribe( retData => {
+        if (retData === null) {
+          this.showToast('Curriculum Deleted.');
+        } else {
+          this.showToast('Fail to delete Curriculum.');
+        }
+      }, error => {
+        this.showToast('Fail to delete Curriculum. ');
+      });
+    this.dialogRef.close();
+  }
+
+  showToast(msg) {
+    this.notificationService.openSnackBar(msg);
   }
 }

@@ -6,8 +6,8 @@ import {Skill} from '../domain/skill';
 @Injectable()
 export class SkillService {
 
-  url = 'http://localhost:9090/api/v2/skill';
-
+  // url = 'http://localhost:9090/api/v2/skill';
+  url = 'https://skill-service.cfapps.io/api/v2/skill';
   constructor(private http: HttpClient) { }
 
   // var Skill = $resource('api/v2/skill/:skillId',{skillId:'@skillId'},{update:{method:'PUT', url:});
@@ -25,7 +25,7 @@ export class SkillService {
   }
 
   getSkillsByIds(ids): Observable<Skill[]> {
-    return this.http.post<Skill[]>(`${this.url}`, ids);
+    return this.http.post<Skill[]>(`${this.url}/ids`, ids);
   }
 
   getById(skillId): Observable<Skill> {

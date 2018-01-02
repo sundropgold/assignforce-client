@@ -10,6 +10,7 @@ import {HttpClient} from '@angular/common/http';
 import {PtoService} from '../services/pto.service';
 import * as AWS from 'aws-sdk';
 import {S3Credential} from '../domain/s3-credential';
+import {SkillService} from '../services/skill.service';
 
 @Component({
   selector: 'app-trainers',
@@ -27,6 +28,7 @@ export class TrainersComponent implements OnInit {
 
   constructor(private notificationService: NotificationService,
               private trainerService: TrainerService,
+              private skillService: SkillService,
               private s3Service: S3CredentialService,
               private ptoService: PtoService,
               private http: HttpClient,
@@ -177,6 +179,8 @@ export class TrainersComponent implements OnInit {
       .subscribe(
         data => {
           this.trainers = data;
+          this.trainers.forEach( trainer => this.skillService.getSkillsByIds(trainer.skills)
+            .subscribe(response => trainer.skillsObject = response));
         },
         error => {
           this.showToast('Could not fetch trainers');
@@ -191,6 +195,8 @@ export class TrainersComponent implements OnInit {
       .subscribe(
         data => {
           this.trainers = data;
+          this.trainers.forEach( trainer => this.skillService.getSkillsByIds(trainer.skills)
+            .subscribe(response => trainer.skillsObject = response));
         },
         error => {
           this.showToast('Could not fetch trainers');
@@ -203,7 +209,9 @@ export class TrainersComponent implements OnInit {
     return new Date(incoming);
   }
 
+
   showCalendar() {
+    this.ptoService.authorize();
     this.http.get("/api/v2/google/googleStatus")
       .subscribe( response => {
         if(response !== ""){
@@ -213,15 +221,6 @@ export class TrainersComponent implements OnInit {
         }
 
     })
-
-  }
-
-  hideCalendar() {
-    this.dialog.closeAll()
-
-  }
-
-  showPTODialog() {
 
   }
 
