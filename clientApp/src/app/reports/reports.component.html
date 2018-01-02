@@ -90,40 +90,49 @@
       <mat-expansion-panel-header>
         <mat-panel-title>Graduate Summary for 2018</mat-panel-title>
         <span fxFlex=""></span>
-        <mat-icon title="Export to CSV" (click)="exportToCSV($event, 'gruduateSummary')">get_app</mat-icon>
+        <button mat-icon-button><mat-icon title="Export to CSV" (click)="exportToCSV($event, 'gruduateSummary')">get_app</mat-icon></button>
         <mat-menu #settingGraduate="matMenu">
-          <button mat-menu-item>Settings</button>
+          <form (click)="openMenu($event)" mat-menu-item>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Year" type="number">
+            </mat-form-field>
+          </form>
+          <form (click)="openMenu($event)" mat-menu-item>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Graduate Per Batch">
+            </mat-form-field>
+          </form>
+
         </mat-menu>
-        <button mat-icon-button [matMenuTriggerFor]="settingGraduate">
+        <button mat-icon-button [matMenuTriggerFor]="settingGraduate" (click)="openMenu($event)">
           <mat-icon>settings</mat-icon>
         </button>
       </mat-expansion-panel-header>
       <mat-card>
         <mat-table #table [dataSource]="dataSource" matSort>
 
-          <!-- Position Column -->
-          <ng-container matColumnDef="position">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+          <ng-container matColumnDef="Curriculum">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Curr. </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.curriculum}} </mat-cell>
           </ng-container>
 
-          <!-- Name Column -->
-          <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-          </ng-container>
+          <!--&lt;!&ndash; Name Column &ndash;&gt;-->
+          <!--<ng-container matColumnDef="Jan.">-->
+            <!--<mat-header-cell *matHeaderCellDef mat-sort-header> Jan. </mat-header-cell>-->
+            <!--<mat-cell *matCellDef="let element"> {{element.jan}} </mat-cell>-->
+          <!--</ng-container>-->
 
-          <!-- Weight Column -->
-          <ng-container matColumnDef="weight">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Weight </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
-          </ng-container>
+          <!--&lt;!&ndash; Weight Column &ndash;&gt;-->
+          <!--<ng-container matColumnDef="weight">-->
+            <!--<mat-header-cell *matHeaderCellDef mat-sort-header> Weight </mat-header-cell>-->
+            <!--<mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>-->
+          <!--</ng-container>-->
 
-          <!-- Symbol Column -->
-          <ng-container matColumnDef="symbol">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
-          </ng-container>
+          <!--&lt;!&ndash; Symbol Column &ndash;&gt;-->
+          <!--<ng-container matColumnDef="symbol">-->
+            <!--<mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </mat-header-cell>-->
+            <!--<mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>-->
+          <!--</ng-container>-->
 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
@@ -143,39 +152,54 @@
       <mat-expansion-panel-header>
         <mat-panel-title>Incoming Trainee Summary for 2018</mat-panel-title>
         <span fxFlex=""></span>
-        <mat-icon title="Export to CSV" (click)="exportToCSV($event, 'incomingSummary')">get_app</mat-icon>
-        <mat-icon>settings</mat-icon>
+        <button mat-icon-button><mat-icon title="Export to CSV" (click)="exportToCSV($event, 'gruduateSummary')">get_app</mat-icon></button>
+        <mat-menu #settingGraduate="matMenu">
+          <form (click)="openMenu($event)" mat-menu-item>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Year" type="number">
+            </mat-form-field>
+          </form>
+          <form (click)="openMenu($event)" mat-menu-item>
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Incoming Trianee">
+            </mat-form-field>
+          </form>
+
+        </mat-menu>
+        <button mat-icon-button [matMenuTriggerFor]="settingGraduate" (click)="openMenu($event)">
+          <mat-icon>settings</mat-icon>
+        </button>
       </mat-expansion-panel-header>
       <mat-card>
-        <mat-table #table [dataSource]="dataSource" matSort>
+        <!--<mat-table #table [dataSource]="dataSource" matSort>-->
 
-          <!-- Position Column -->
-          <ng-container matColumnDef="position">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
-          </ng-container>
+          <!--&lt;!&ndash; Position Column &ndash;&gt;-->
+          <!--<ng-container matColumnDef="position">-->
+            <!--<mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>-->
+            <!--<mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>-->
+          <!--</ng-container>-->
 
-          <!-- Name Column -->
-          <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-          </ng-container>
+          <!--&lt;!&ndash; Name Column &ndash;&gt;-->
+          <!--<ng-container matColumnDef="name">-->
+            <!--<mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>-->
+            <!--<mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>-->
+          <!--</ng-container>-->
 
-          <!-- Weight Column -->
-          <ng-container matColumnDef="weight">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Weight </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
-          </ng-container>
+          <!--&lt;!&ndash; Weight Column &ndash;&gt;-->
+          <!--<ng-container matColumnDef="weight">-->
+            <!--<mat-header-cell *matHeaderCellDef mat-sort-header> Weight </mat-header-cell>-->
+            <!--<mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>-->
+          <!--</ng-container>-->
 
-          <!-- Symbol Column -->
-          <ng-container matColumnDef="symbol">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
-          </ng-container>
+          <!--&lt;!&ndash; Symbol Column &ndash;&gt;-->
+          <!--<ng-container matColumnDef="symbol">-->
+            <!--<mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </mat-header-cell>-->
+            <!--<mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>-->
+          <!--</ng-container>-->
 
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
+          <!--<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>-->
+          <!--<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>-->
+        <!--</mat-table>-->
       </mat-card>
       <mat-card>
         <p>Graph goes here</p>

@@ -11,8 +11,22 @@ import {Angular2Csv} from 'angular2-csv';
 export class ReportsComponent implements OnInit, AfterViewInit {
   // for creating new projection
   cardArr = [];
+  // use for getting the current date, and calculation of the hire date
+  monthList = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.'];
+  year = new Date().getFullYear();
+  today = new Date().getDate();
+  hireDate = new Date();
+  startDate = new Date();
+  // Use to calculate the total number in the card array
+  totalNetBatch = 0;
+  totalSDETBatch = 0;
+  totalJavaBatch = 0;
+  totalSalesforceBatch = 0;
+  totalBigDataBatch = 0;
+  totalCumulativeBatch = 0;
   // for table
-  displayedColumns = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns = ['Curriculum', this.monthList];
+  // displayedColumns = ['Curriculum', 'Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   // for curriculum selection
@@ -53,35 +67,126 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     evt.stopPropagation();
     new Angular2Csv(ELEMENT_DATA, name);
   }
-
+  openMenu(evt) {
+    evt.stopPropagation();
+  }
+  /* FUNCTION - This method will compute the required batch start date, given a required hire date */
+  calcStartDate(requiredDate, index) {
+    const tempDate = new Date(requiredDate);
+    const startDate = (requiredDate === undefined) ? (new Date()) : requiredDate;
+    // startDate.setDate(startDate.getDate() - (7 * batchlength));
+    startDate.setDate(startDate.getDate() - (7 * 11));
+    // push the start date to the closest Monday
+    switch (startDate.getDay()) {
+      case 0 :
+        startDate.setDate(startDate.getDate() + 1);
+        break;
+      case 1 :
+        startDate.setDate(startDate.getDate() + 0);
+        break;
+      case 2 :
+        startDate.setDate(startDate.getDate() - 1);
+        break;
+      case 3 :
+        startDate.setDate(startDate.getDate() - 2);
+        break;
+      case 4 :
+        startDate.setDate(startDate.getDate() - 3);
+        break;
+      case 5 :
+        startDate.setDate(startDate.getDate() - 4);
+        break;
+      case 6 :
+        startDate.setDate(startDate.getDate() - 5);
+        break;
+      default:
+        break;
+    }
+    // format date to 'mm-dd-yyyy' and assign the output for easier user visibility and comprehension
+    const wkDayArr = ['Sun', 'Mon', 'Tue', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'];
+    const formattedDate = this.monthList[startDate.getMonth()] + '-' + startDate.getDate() + '-' + startDate.getFullYear()
+      + '(' + wkDayArr[startDate.getDay()] + ')';
+    // assigns tempDate to the objects 'reqDate'
+    this.cardArr[index].reqDate = tempDate;
+    // this value is used when creating specific batches from the card panel
+    this.cardArr[index].startDate = startDate;
+    // set the 'startdate' within 'cardArr' at the index value to be the formatted date
+    this.cardArr[index].formattedStartDate = formattedDate;
+  }
+  /* FUNCTION - This method will compute the number of batches needed to be made, given the number of required Trainee's. */
+  calcReqBatch(requiredTrainees, index) {
+    // compute the total number of Batches estimated
+    const neededBatches = Math.ceil(requiredTrainees / 15);
+    // calculate the 'requiredBatches' data value in the card array
+    this.cardArr[index].requiedBatches = neededBatches;
+  }
+  /* FUNCTION - This method will generate the sum of all batch types held within the 'cardArr' variable,
+  ultimately displaying them in the 'master card' on the reports tab. */
+  cumulativeBatches() {
+    for (const x in this.cardArr) {
+      if ((this.cardArr[x].batchType)) {
+        const batchVal = this.cardArr[x].batchType.currId;
+        switch (batchVal) {
+          // switch case for JAVA batches
+          case 1 :
+            this.totalJavaBatch += this.cardArr[x].requiredBatches;
+            this.totalCumulativeBatch += this.cardArr[x].requiredBatches;
+            break;
+          // switch case for .Net batches
+          case 2 :
+            this.totalNetBatch += this.cardArr[x].requiredBatches;
+            this.totalCumulativeBatch += this.cardArr[x].requiredBatches;
+            break;
+          // switch case for SDET batches
+          case 3 :
+            this.totalSDETBatch += this.cardArr[x].requiredBatches;
+            this.totalCumulativeBatch += this.cardArr[x].requiredBatches;
+            break;
+          // switch case for Salesforce batches
+          case 150 :
+            this.totalSalesforceBatch += this.cardArr[x].requiredBatches;
+            this.totalCumulativeBatch += this.cardArr[x].requiredBatches;
+            break;
+          // switch case for BigData batches
+          case 164 :
+            this.totalBigDataBatch += this.cardArr[x].requiredBatches;
+            this.totalCumulativeBatch += this.cardArr[x].requiredBatches;
+            break;
+          // switch case for Custom batches
+          case 105 :
+            this.totalCumulativeBatch += this.cardArr[x].requiredBatches;
+            break;
+          default :
+            break;
+        }
+      }
+    }
+  }
 }
 
 export interface Element {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+  curriculum: String;
+  month: Month;
+}
+
+export interface Month {
+  jan: number;
+  feb: number;
+  mar: number;
+  apr: number;
+  may: number;
+  june: number;
+  july: number;
+  aug: number;
+  sept: number;
+  oct: number;
+  nov: number;
+  dec: number;
 }
 
 const ELEMENT_DATA: Element[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na'},
-  {position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg'},
-  {position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al'},
-  {position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si'},
-  {position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P'},
-  {position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S'},
-  {position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl'},
-  {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
-  {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
-  {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
+  {curriculum: 'Java', month: {jan: 0, feb: 0, mar: 0, apr: 0, may: 0, june: 0, july: 0, aug: 0, sept: 0, oct: 0, nov: 0, dec: 0}},
+  {curriculum: 'Microservice', month: {jan: 0, feb: 0, mar: 0, apr: 0, may: 0, june: 0, july: 0, aug: 0, sept: 0, oct: 0, nov: 0, dec: 0}},
+  {curriculum: 'Test', month: {jan: 0, feb: 0, mar: 0, apr: 0, may: 0, june: 0, july: 0, aug: 0, sept: 0, oct: 0, nov: 0, dec: 0}},
+  {curriculum: '.NET', month: {jan: 0, feb: 0, mar: 0, apr: 0, may: 0, june: 0, july: 0, aug: 0, sept: 0, oct: 0, nov: 0, dec: 0}}
 ];
