@@ -249,6 +249,18 @@ export class BatchesComponent implements OnInit, AfterViewInit {
       this.showToast('Failed to fetch Rooms');
     });
   }
+  getCurriculumSkills () {
+    this.curriculaService.getById(this.batch.curriculum).subscribe(data => {
+      this.batch.skills = data.skills;
+    });
+  }
+  getFocusSkills() {
+    this.curriculaService.getById(this.batch.focus).subscribe(data => {
+      console.log(data);
+      this.batch.skills = this.batch.skills.concat(data.skills);
+      console.log(this.batch.skills);
+    });
+  }
 
 }
 

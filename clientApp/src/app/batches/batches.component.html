@@ -28,7 +28,7 @@
           <div>
             <mat-form-field class="third" >
             <mat-select placeholder="Core Curriculum" [(ngModel)]="batch.curriculum" name="curriculum" >
-              <mat-option *ngFor="let curriculum of curriculumForm" [value]="curriculum.currId">
+              <mat-option *ngFor="let curriculum of curriculumForm" [value]="curriculum.currId" (click)="getCurriculumSkills()">
                 {{ curriculum.name }}
               </mat-option>
             </mat-select>
@@ -36,7 +36,7 @@
 
           <mat-form-field class="third">
             <mat-select placeholder="Focus" [(ngModel)]="batch.focus" name="focus">
-              <mat-option *ngFor="let focus of curriculumForm" [value]="focus.currId">
+              <mat-option *ngFor="let focus of curriculumForm" [value]="focus.currId" (click)="getFocusSkills()">
                 {{ focus.name }}
               </mat-option>
             </mat-select>
