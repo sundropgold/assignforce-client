@@ -93,7 +93,7 @@
             <mat-select placeholder="Location">
               <mat-option *ngFor="let location of locationForm" [value]="location.id"
                           [(ngModel)]="batch.batchLocation.locationId" name="location"
-              (click)="getBuildings()">
+                          (click)="getBuildings()">
                 {{ location.name }}
               </mat-option>
             </mat-select>
@@ -112,7 +112,7 @@
 
           <mat-form-field class="third">
             <mat-select placeholder="Room" [(ngModel)]="batch.batchLocation.roomId" name="room">
-              <mat-option *ngFor="let room of roomForm" [value]="room.id"
+              <mat-option *ngFor="let room of roomForm" [value]="room.roomID"
                           [(ngModel)]="batch.batchLocation.roomId" name="room">
                 {{ room.roomName }}
               </mat-option>
