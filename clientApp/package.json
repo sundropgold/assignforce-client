@@ -24,6 +24,7 @@
     "@angular/platform-browser": "^5.1.2",
     "@angular/platform-browser-dynamic": "^5.1.2",
     "@angular/router": "^5.1.2",
+    "angular-oauth2-oidc": "^3.1.4",
     "angular2-csv": "^0.2.5",
     "angular4-datepicker": "^1.0.1",
     "aws-sdk": "^2.174.0",
