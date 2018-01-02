@@ -54,6 +54,9 @@ import { PtoComponent } from './pto/pto.component';
 import {PtoService} from './services/pto.service';
 import {BatchService} from './services/batch.service';
 import {CurriculaService} from './services/curricula.service';
+import {LocationService} from './services/location.service';
+import {RoomService} from './services/room.service';
+import {BuildingService} from './services/building.service';
 
 
 @NgModule({
@@ -128,6 +131,9 @@ import {CurriculaService} from './services/curricula.service';
     NotificationService,
     PtoService,
     CurriculaService,
+    LocationService,
+    BuildingService,
+    RoomService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,
