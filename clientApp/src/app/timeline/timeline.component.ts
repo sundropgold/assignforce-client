@@ -47,7 +47,7 @@ export class TimelineComponent implements AfterViewInit {
       },
       yAxis: {
         title: {
-          text: 'Trainers'
+          text: 'Weeks'
         },
         categories: ['14 Weeks', '10 Weeks', '5 Weeks'],
         reversed: true
