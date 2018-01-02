@@ -88,6 +88,28 @@ export class CurriculaComponent implements OnInit {
       );
   }
 
+  getAllActiveCurricula() {
+    this.curriculaService.getAllActive()
+      .subscribe(data => {
+          this.curricula = data;
+          for (const curr of this.curricula){
+            if (curr.skills.length !== 0) {
+              this.skillService.getSkillsByIds(curr.skills)
+                .subscribe(skillData => {
+                  curr.skillObjects = skillData;
+                  // console.log(skillData);
+                }, error => {
+                  console.log('Failed fetching id = ', curr.currId);
+                });
+            }
+          }
+          console.log(this.curricula);
+        }, error => {
+          this.showToast('Failed to fetch Curricula');
+        }
+      );
+  }
+
   getAllSkills() {
     this.skillService.getAll()
       .subscribe(data => {

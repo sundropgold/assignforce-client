@@ -19,6 +19,11 @@ export class CurriculaService {
     return this.http.get<Curriculum[]>(`${this.url}`);
   }
 
+  // Get all active curricula
+  getAllActive(): Observable<Curriculum[]> {
+    return this.http.get<Curriculum[]>(`${this.url}/active`);
+  }
+
   // Get curriculum by id
 
   getById(id): Observable<Curriculum> {
