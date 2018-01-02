@@ -1,0 +1,12 @@
+<h1 mat-dialog-title> New Skill </h1><hr>
+<div mat-dialog-content>
+  <mat-form-field>
+    <p> Skill Name * </p>
+    <input matInput tabindex="1" [formControl]="skillFormCtrl">
+  </mat-form-field>
+  <br>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()"> Cancel </button>
+  <button mat-button (click)="createSkill()"> Create </button>
+</div>

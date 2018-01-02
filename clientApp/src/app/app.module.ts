@@ -8,8 +8,18 @@ import {SpringXsrfInterceptor} from './interceptors/springXsrfInterceptor';
 import {MenuBarComponent} from './menu-bar/menu-bar.component';
 import {OverviewComponent} from './overview/overview.component';
 import {BatchesComponent} from './batches/batches.component';
-import {LocationsComponent} from './locations/locations.component';
-import {CurriculaComponent} from './curricula/curricula.component';
+import {
+  LocationAddBuildingDialogComponent,
+  LocationAddLocationDialogComponent, LocationAddRoomDialogComponent, LocationDeleteBuildingDialogComponent,
+  LocationDeleteLocationDialogComponent, LocationDeleteRoomDialogComponent,
+  LocationEditBuildingDialogComponent,
+  LocationEditLocationDialogComponent, LocationEditRoomDialogComponent,
+  LocationsComponent
+} from './locations/locations.component';
+import {CurriculaComponent,
+  CurriculaCurriculumDialogComponent,
+  CurriculaCreateSkillDialogComponent,
+  CurriculaRemovalDialogComponent} from './curricula/curricula.component';
 import {TrainerDialogComponent, TrainersComponent} from './trainers/trainers.component';
 import {ProfileComponent} from './profile/profile.component';
 import {ReportsComponent} from './reports/reports.component';
@@ -34,13 +44,17 @@ import {
 } from '@angular/material';
 import {MatSelectModule} from '@angular/material/select';
 import {ReactiveFormsModule} from '@angular/forms';
-import {OrderModule} from 'ngx-order-pipe';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {NotificationService} from './services/notification.service';
 import 'aws-sdk/dist/aws-sdk.min';
 import {LoginComponent} from './login/login.component';
 import {TimelineComponent} from './timeline/timeline.component';
-import { OAuthModule } from 'angular-oauth2-oidc';
+import {CalendarDialogComponent, PtoComponent, PtoDialogComponent} from './pto/pto.component';
+import {OrderModule} from 'ngx-order-pipe';
+import {PtoService} from './services/pto.service';
+import {BatchService} from './services/batch.service';
+import {CurriculaService} from './services/curricula.service';
+import {NgPipesModule} from 'ngx-pipes';
 
 @NgModule({
   declarations: [
@@ -49,14 +63,29 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     OverviewComponent,
     BatchesComponent,
     LocationsComponent,
+    LocationAddLocationDialogComponent,
+    LocationDeleteLocationDialogComponent,
+    LocationEditLocationDialogComponent,
+    LocationAddBuildingDialogComponent,
+    LocationDeleteBuildingDialogComponent,
+    LocationEditBuildingDialogComponent,
+    LocationAddRoomDialogComponent,
+    LocationDeleteRoomDialogComponent,
+    LocationEditRoomDialogComponent,
     CurriculaComponent,
+    CurriculaCurriculumDialogComponent,
+    CurriculaCreateSkillDialogComponent,
+    CurriculaRemovalDialogComponent,
     TrainersComponent,
     TrainerDialogComponent,
+    CalendarDialogComponent,
+    PtoDialogComponent,
     ProfileComponent,
     ReportsComponent,
     SettingsComponent,
     LoginComponent,
     TimelineComponent,
+    PtoComponent,
   ],
   imports: [
     HttpClientModule,
@@ -88,24 +117,43 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSnackBarModule,
-    OrderModule,
     FlexLayoutModule,
-      MatDialogModule,
-      OAuthModule.forRoot()
+    MatDialogModule,
+    NgPipesModule,
+    OrderModule
   ],
   providers: [
     TrainerService,
+    BatchService,
     SkillService,
     S3CredentialService,
     UrlService,
     NotificationService,
+    PtoService,
+    CurriculaService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,
       multi: true
     }
   ],
-  entryComponents: [TrainerDialogComponent],
+  entryComponents: [
+    TrainerDialogComponent,
+    LocationAddLocationDialogComponent,
+    LocationDeleteLocationDialogComponent,
+    LocationEditLocationDialogComponent,
+    LocationAddBuildingDialogComponent,
+    LocationDeleteBuildingDialogComponent,
+    LocationEditBuildingDialogComponent,
+    LocationAddRoomDialogComponent,
+    LocationDeleteRoomDialogComponent,
+    LocationEditRoomDialogComponent,
+    CurriculaCurriculumDialogComponent,
+    CurriculaCreateSkillDialogComponent,
+    CurriculaRemovalDialogComponent,
+    CalendarDialogComponent,
+    PtoDialogComponent
+  ],
   bootstrap: [AppComponent]
 })
 

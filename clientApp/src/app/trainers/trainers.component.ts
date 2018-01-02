@@ -6,10 +6,11 @@ import {TrainerService} from '../services/trainer.service';
 import {NavigationExtras, Params, Router} from '@angular/router';
 import {S3CredentialService} from '../services/s3-credential.service';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
-import {Locations} from '../model/locations';
-import {int} from 'aws-sdk/clients/datapipeline';
-import {letProto} from 'rxjs/operator/let';
-import {forEach} from '@angular/router/src/utils/collection';
+import {HttpClient} from '@angular/common/http';
+import {PtoService} from '../services/pto.service';
+import * as AWS from 'aws-sdk';
+import {S3Credential} from '../domain/s3-credential';
+import {SkillService} from '../services/skill.service';
 
 @Component({
   selector: 'app-trainers',
@@ -19,10 +20,18 @@ import {forEach} from '@angular/router/src/utils/collection';
 export class TrainersComponent implements OnInit {
   trainers: Trainer[];
   isManager: boolean;
+  creds: S3Credential = {
+    ID: 'AKIAIRUM7DHQJEFIKK7A',
+    SecretKey: '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',
+    BucketName: 'jw1010'
+  };
 
   constructor(private notificationService: NotificationService,
               private trainerService: TrainerService,
+              private skillService: SkillService,
               private s3Service: S3CredentialService,
+              private ptoService: PtoService,
+              private http: HttpClient,
               public dialog: MatDialog,
               private router: Router) {
   }
@@ -31,94 +40,94 @@ export class TrainersComponent implements OnInit {
     this.isManager = true;
     this.getAll();
 
-    this.trainers = [{
-      trainerId: 1,
-      firstName: 'James',
-      lastName: 'Smith',
-      skills: [{
-        skillId: 1,
-        name: 'Java',
-        active: true
-      },
-        {skillId: 2,
-          name: 'Angular',
-          active: true
-        },
-        {
-          skillId: 3,
-          name: 'Spring',
-          active: true
-        }],
-      certifications: 'Certs',
-      active: true,
-      resume: null,
-    },
-      {
-        trainerId: 2,
-        firstName: 'Jane',
-        lastName: 'Doe',
-        skills: [{
-          skillId: 1,
-          name: 'C#',
-          active: true
-        },
-          {skillId: 2,
-            name: 'AngularJs',
-            active: true
-          },
-          {
-            skillId: 3,
-            name: 'Jenkins',
-            active: true
-          }],
-        certifications: 'Certs',
-        active: false,
-        resume: 'Resume',
-      },
-      {
-        trainerId: 3,
-        firstName: 'Jon',
-        lastName: 'Jones',
-        skills: [{
-          skillId: 1,
-          name: 'Java',
-          active: true
-        },
-          {skillId: 2,
-            name: 'Maven',
-            active: true
-          },
-          {
-            skillId: 3,
-            name: 'MongoDB',
-            active: true
-          }],
-        certifications: 'Certs',
-        active: false,
-        resume: 'Resume',
-      },
-      {
-        trainerId: 4,
-        firstName: 'Daniel',
-        lastName: 'Cormier',
-        skills: [{
-          skillId: 1,
-          name: 'C#',
-          active: true
-        },
-          {skillId: 2,
-            name: 'Cloud Foundry',
-            active: true
-          },
-          {
-            skillId: 3,
-            name: 'AWS',
-            active: true
-          }],
-        certifications: 'Certs',
-        active: true,
-        resume: 'Resume',
-      }];
+    // this.trainers = [{
+    //   trainerId: 1,
+    //   firstName: 'James',
+    //   lastName: 'Smith',
+    //   skills: [{
+    //     skillId: 1,
+    //     name: 'Java',
+    //     active: true
+    //   },
+    //     {skillId: 2,
+    //       name: 'Angular',
+    //       active: true
+    //     },
+    //     {
+    //       skillId: 3,
+    //       name: 'Spring',
+    //       active: true
+    //     }],
+    //   certifications: 'Certs',
+    //   active: true,
+    //   resume: null,
+    // },
+    //   {
+    //     trainerId: 2,
+    //     firstName: 'Jane',
+    //     lastName: 'Doe',
+    //     skills: [{
+    //       skillId: 1,
+    //       name: 'C#',
+    //       active: true
+    //     },
+    //       {skillId: 2,
+    //         name: 'AngularJs',
+    //         active: true
+    //       },
+    //       {
+    //         skillId: 3,
+    //         name: 'Jenkins',
+    //         active: true
+    //       }],
+    //     certifications: 'Certs',
+    //     active: false,
+    //     resume: 'Resume',
+    //   },
+    //   {
+    //     trainerId: 3,
+    //     firstName: 'Jon',
+    //     lastName: 'Jones',
+    //     skills: [{
+    //       skillId: 1,
+    //       name: 'Java',
+    //       active: true
+    //     },
+    //       {skillId: 2,
+    //         name: 'Maven',
+    //         active: true
+    //       },
+    //       {
+    //         skillId: 3,
+    //         name: 'MongoDB',
+    //         active: true
+    //       }],
+    //     certifications: 'Certs',
+    //     active: false,
+    //     resume: 'Resume',
+    //   },
+    //   {
+    //     trainerId: 4,
+    //     firstName: 'Daniel',
+    //     lastName: 'Cormier',
+    //     skills: [{
+    //       skillId: 1,
+    //       name: 'C#',
+    //       active: true
+    //     },
+    //       {skillId: 2,
+    //         name: 'Cloud Foundry',
+    //         active: true
+    //       },
+    //       {
+    //         skillId: 3,
+    //         name: 'AWS',
+    //         active: true
+    //       }],
+    //     certifications: 'Certs',
+    //     active: true,
+    //     resume: 'Resume',
+    //   }];
   }
 
   //Displays snackbar message notifications
@@ -127,16 +136,13 @@ export class TrainersComponent implements OnInit {
   }
 
   //Adds a trainer by popping up a dialog box
-  addTrainer(evt): void {
+  addTrainer(): void {
     const trainer: Trainer = {
       trainerId: null,
       firstName: '',
       lastName: '',
-      skills: [{
-        skillId: 1,
-        name: 'Java',
-        active: true
-      }],
+      skills: [],
+      skillsObject: [],
       certifications: '',
       active: true,
       resume: '',
@@ -173,6 +179,8 @@ export class TrainersComponent implements OnInit {
       .subscribe(
         data => {
           this.trainers = data;
+          this.trainers.forEach( trainer => this.skillService.getSkillsByIds(trainer.skills)
+            .subscribe(response => trainer.skillsObject = response));
         },
         error => {
           this.showToast('Could not fetch trainers');
@@ -187,6 +195,8 @@ export class TrainersComponent implements OnInit {
       .subscribe(
         data => {
           this.trainers = data;
+          this.trainers.forEach( trainer => this.skillService.getSkillsByIds(trainer.skills)
+            .subscribe(response => trainer.skillsObject = response));
         },
         error => {
           this.showToast('Could not fetch trainers');
@@ -195,11 +205,22 @@ export class TrainersComponent implements OnInit {
 
   }
 
-  showCalendar() {
-
+  convertUnavailability(incoming) {
+    return new Date(incoming);
   }
 
-  hideCalendar() {
+
+  showCalendar() {
+    this.ptoService.authorize();
+    this.http.get("/api/v2/google/googleStatus")
+      .subscribe( response => {
+        if(response !== ""){
+          this.ptoService.authorize();
+        } else {
+          this.googleAuth();
+        }
+
+    })
 
   }
 
@@ -219,6 +240,33 @@ export class TrainersComponent implements OnInit {
       this.showToast(trainer.firstName + ' ' + trainer.lastName + ' does not have a resume uploaded');
       return;
     }
+
+    const bucket = new AWS.S3({
+      accessKeyId: this.creds.ID,
+      secretAccessKey: this.creds.SecretKey,
+      region: 'us-east-1'
+    });
+
+    //set the parameters needed to get an object from aws s3 bucket
+    const params = {
+      Bucket: this.creds.BucketName,
+      Key: 'Resumes/' + trainer.trainerId + '_' + trainer.resume,
+      Expires: 60 //url expires in 60 seconds with signed urls
+    };
+
+    //grabs a url to the object in the s3 bucket
+    const url = bucket.getSignedUrl('getObject', params);
+
+    //this will create a link, set download and href, and invoke the click action on it
+    // it will download the file
+    const link = document.createElement('a');
+    // link.download = "test.png";
+    link.href = url;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    event.stopPropagation();
 
 
   }
