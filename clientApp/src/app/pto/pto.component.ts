@@ -43,9 +43,10 @@ export class CalendarDialogComponent {
   }
 
   showPTODialog() {
+    this.dialogRef.close();
     const pto: any = {
-      startDate: null,
-      endDate: null,
+      startDate: Date,
+      endDate: Date,
     };
     const dialogRef = this.dialog.open(PtoDialogComponent, {
       width: '450px',
@@ -58,6 +59,8 @@ export class CalendarDialogComponent {
       .subscribe(result => {
         if (result) {
           this.ptoService.addPto(result, result.startDate, result.endDate);
+          // this.dialogRef.close();
+          this.dialog.open(CalendarDialogComponent);
         }
       });
   }
