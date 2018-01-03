@@ -24,6 +24,10 @@ export class BatchService {
     return this.http.post<Batch>(`${this.url}`, batch);
   }
 
+  delete(id): Observable<object> {
+    return this.http.delete<Object>(`${this.url}/${id}`);
+  }
+
   update(batch): Observable<Batch> {
     return this.http.put<Batch>(`${this.url}`, batch);
   }
