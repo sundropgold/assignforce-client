@@ -143,9 +143,9 @@ export class TrainersComponent implements OnInit {
       lastName: '',
       skills: [],
       skillsObject: [],
-      certifications: '',
+      certifications: [],
       active: true,
-      resume: '',
+      resume: null,
     };
     const dialogRef = this.dialog.open(TrainerDialogComponent, {
       width: '450px',
