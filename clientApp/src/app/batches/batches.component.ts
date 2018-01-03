@@ -1,9 +1,9 @@
-import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {MatSort, MatTableDataSource, MatCheckbox, MatPaginator} from '@angular/material';
+import {AfterViewInit, Component, Inject, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {MatSort, MatTableDataSource, MatCheckbox, MatPaginator, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Batch, BatchLocation, BatchStatus} from '../domain/batch';
 import {FormControl} from '@angular/forms';
 import {DomSanitizer} from '@angular/platform-browser';
-import {MatIconRegistry} from '@angular/material';
+import {MatIconRegistry, MatDialog} from '@angular/material';
 import {BatchService} from '../services/batch.service';
 import {NotificationService} from '../services/notification.service';
 import {CurriculaService} from '../services/curricula.service';
@@ -88,6 +88,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
               private locationService: LocationService,
               private buildingService: BuildingService,
               private roomService: RoomService,
+              public dialog: MatDialog,
               private notificationService: NotificationService) {
   }
 
@@ -120,10 +121,15 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   }
 
   DeleteBatch(id: number) {
-    this.batchService.delete(id).subscribe(data => {
+    const dialogRef = this.dialog.open(BatchDeleteDialogComponent,
+      {
+        width: '400px',
+        data: id
+      });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('delete batch dialog closed');
       this.getAll();
     });
-    window.location.reload();
   }
 
   SynchronizeBatch() {
@@ -166,17 +172,22 @@ export class BatchesComponent implements OnInit, AfterViewInit {
         this.getAll();
         this.editBatchId = null;
         this.batch.id = this.editBatchId;
-        this.cancel(evt);
+        this.reload(evt);
       });
     } else {
       this.batchService.update(this.batch).subscribe(data => {
-        this.getAll();
-        this.cancel(evt);
+        this.reload(evt);
       });
     }
     this.cancel(evt);
     evt.stopPropagation();
   }
+
+  reload(evt) {
+    this.getAll();
+    this.cancel(evt);
+  }
+
   calcDate(evt) {
     this.curDate = new Date();
     this.datebetween = ((this.batch.endDate)as any - ((this.batch.startDate)as any)) / 1000 / 60 / 60 / 24;
@@ -331,5 +342,35 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     });
   }
 
+}
+
+
+
+/*************************   Batch Delete Dialog **********************************/
+@Component({
+  selector: 'app-batch-delete-dialog',
+  templateUrl: 'batch-delete-dialog.component.html',
+  styleUrls: ['./batches.component.css']
+})
+
+export class BatchDeleteDialogComponent {
+
+  constructor(
+    public dialogRef: MatDialogRef<BatchDeleteDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private batchService: BatchService
+  ) {}
+
+  deleteBatch() {
+    console.log(this.data);
+    this.batchService.delete(this.data).subscribe(batchDeleteData => {
+
+    });
+    this.dialogRef.close();
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }
 
