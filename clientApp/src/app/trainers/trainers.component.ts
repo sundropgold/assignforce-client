@@ -219,11 +219,11 @@ export class TrainersComponent implements OnInit {
 
 
   showCalendar() {
-    this.ptoService.authorize();
+    this.trainerService.authorize();
     this.http.get("/api/v2/google/googleStatus")
       .subscribe( response => {
         if(response !== ""){
-          this.ptoService.authorize();
+          this.trainerService.authorize();
         } else {
           this.googleAuth();
         }

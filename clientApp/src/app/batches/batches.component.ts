@@ -52,6 +52,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   locationForm: Locations[];
 
   buildingForm: Building[];
+  test: Building[];
   roomForm: Room[];
 
 
@@ -145,7 +146,10 @@ export class BatchesComponent implements OnInit, AfterViewInit {
       focus: 1,
       trainer: 1,
       cotrainer: 1,
-      batchStatus: null,
+      batchStatus: {
+        batchStatusID: 1,
+        batchStatusName: 'Scheduled'
+      },
       batchLocation: {
         buildingId: null,
         buildingName: null,
@@ -200,6 +204,30 @@ export class BatchesComponent implements OnInit, AfterViewInit {
           }, error => {
             this.showToast('Failed to fetch Trainers');
           });
+
+        this.locationService.getById(entry.batchLocation.locationId)
+          .subscribe(locationData => {
+            entry.batchLocation.locationId = locationData.id;
+            entry.batchLocation.locationName = locationData.name;
+          }, error => {
+            this.showToast('Failed to fetch Locations');
+          });
+
+        this.buildingService.getById(entry.batchLocation.buildingId)
+          .subscribe(buildingData => {
+            entry.batchLocation.buildingId = buildingData.id;
+            entry.batchLocation.buildingName = buildingData.name;
+          }, error => {
+            this.showToast('Failed to fetch Buildings');
+          });
+
+        this.roomService.getById(entry.batchLocation.roomId)
+          .subscribe(roomData => {
+            entry.batchLocation.roomId = roomData.roomID;
+            entry.batchLocation.roomName = roomData.roomName;
+          }, error => {
+            this.showToast('Failed to fetch Rooms');
+          });
       }
       this.batchData = new MatTableDataSource(this.BatchData);
       this.batchData.sort = this.sort;
@@ -237,6 +265,21 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   getBuildings() {
     this.buildingService.getAll().subscribe(buildingData => {
       this.buildingForm = buildingData;
+      console.log(this.buildingForm[1].location);
+      console.log(this.batch.batchLocation.locationId);
+      console.log(this.buildingForm[1].location === this.batch.batchLocation.locationId);
+      /*this.test = this.buildingForm.filter(
+        sdhksk => {
+          sdhksk.location === this.batch.batchLocation.locationId;
+        }
+      );
+      console.log(this.test);
+      for (const entry of this.buildingForm){
+        if (entry.location = this.batch.batchLocation.locationId) {
+
+        }
+      }*/
+      console.log(this.test);
     }, error => {
       this.showToast('Failed to fetch Buildings');
     });

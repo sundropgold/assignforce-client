@@ -2,13 +2,16 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {Trainer} from '../domain/trainer';
+import {CalendarDialogComponent} from '../pto/pto.component';
+import {MatDialog} from '@angular/material';
 
 @Injectable()
 export class TrainerService {
 
   url = 'https://trainer-service.cfapps.io/api/v2/trainer';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              public dialog: MatDialog) {
   }
 
   // created an empty Trainer
@@ -43,5 +46,17 @@ export class TrainerService {
 
   delete(id): Observable<any> {
     return this.http.delete<any>(`${this.url}/${id}`);
+  }
+
+  authorize() {
+    this.showCalendar(); //For testing to make sure the Dialog is actually showing
+    //gapi.load('client:auth2', this.showCalendar());
+
+  }
+
+  showCalendar() {
+    const dialogRef = this.dialog.open(CalendarDialogComponent, {
+      // width: '450px',
+    })
   }
 }
