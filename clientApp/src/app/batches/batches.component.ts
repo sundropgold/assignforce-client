@@ -13,6 +13,12 @@ import {Curriculum} from '../domain/curriculum';
 import {Trainer} from '../domain/trainer';
 import {SkillService} from '../services/skill.service';
 import {Skill} from '../domain/skill';
+import {BuildingService} from '../services/building.service';
+import {LocationService} from '../services/location.service';
+import {RoomService} from '../services/room.service';
+import {Building} from '../domain/building';
+import {Room} from '../domain/room';
+import {Locations} from '../domain/locations';
 
 @Component({
   selector: 'app-batches',
@@ -43,39 +49,11 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   //   {value: 'location-0', viewValue: 'Revature HQ - Reston,VA'},
   //   {value: 'location-1', viewValue: 'CUNY - SPS,NY'}
   // ];
-  locations: any[] = [
-    {
-      'location': 'Reston HQ - Reston, VA',
-      'building': [
-        {
-          'name': 'Douglas  Pace', 'rooms': [{'name': '101'}]
-        },
-        {
-          'name': 'Mcleod  Mueller'
-        },
-      ]
-    },
-    {
-      'location': 'CUNY - New York, NY',
-      'building': [
-        {
-          'name': 'SPS'
-        },
-        {
-          'name': 'QUEENS COLLEGE'
-        }
-      ]
-    }
-  ];
+  locationForm: Locations[];
 
-  buildings = [
-    {value: 'building-0', viewValue: 'Reston'},
-    {value: 'trainer-1', viewValue: 'CSPS'},
-    {value: 'trainer-2', viewValue: 'Steven Kelsey'}];
-  rooms = [
-    {value: 'room-0', viewValue: '201'},
-    {value: 'room-1', viewValue: '301'},
-  ];
+  buildingForm: Building[];
+  test: Building[];
+  roomForm: Room[];
 
 
   firstTabHeader = 'Create New Batch';
@@ -92,6 +70,9 @@ export class BatchesComponent implements OnInit, AfterViewInit {
               private curriculaService: CurriculaService,
               private trainerService: TrainerService,
               private skillService: SkillService,
+              private locationService: LocationService,
+              private buildingService: BuildingService,
+              private roomService: RoomService,
               private notificationService: NotificationService) {
   }
 
@@ -165,7 +146,10 @@ export class BatchesComponent implements OnInit, AfterViewInit {
       focus: 1,
       trainer: 1,
       cotrainer: 1,
-      batchStatus: null,
+      batchStatus: {
+        batchStatusID: 1,
+        batchStatusName: 'Scheduled'
+      },
       batchLocation: {
         buildingId: null,
         buildingName: null,
@@ -220,6 +204,30 @@ export class BatchesComponent implements OnInit, AfterViewInit {
           }, error => {
             this.showToast('Failed to fetch Trainers');
           });
+
+        this.locationService.getById(entry.batchLocation.locationId)
+          .subscribe(locationData => {
+            entry.batchLocation.locationId = locationData.id;
+            entry.batchLocation.locationName = locationData.name;
+          }, error => {
+            this.showToast('Failed to fetch Locations');
+          });
+
+        this.buildingService.getById(entry.batchLocation.buildingId)
+          .subscribe(buildingData => {
+            entry.batchLocation.buildingId = buildingData.id;
+            entry.batchLocation.buildingName = buildingData.name;
+          }, error => {
+            this.showToast('Failed to fetch Buildings');
+          });
+
+        this.roomService.getById(entry.batchLocation.roomId)
+          .subscribe(roomData => {
+            entry.batchLocation.roomId = roomData.roomID;
+            entry.batchLocation.roomName = roomData.roomName;
+          }, error => {
+            this.showToast('Failed to fetch Rooms');
+          });
       }
       this.batchData = new MatTableDataSource(this.BatchData);
       this.batchData.sort = this.sort;
@@ -244,6 +252,44 @@ export class BatchesComponent implements OnInit, AfterViewInit {
       this.skillForm = skillData;
     }, error => {
       this.showToast('Failed to fetch Skill');
+    });
+
+    this.locationService.getAll().subscribe(locationData => {
+      this.locationForm = locationData;
+    }, error => {
+      this.showToast('Failed to fetch Locations');
+    });
+  }
+
+  // Gets the buildings of the clicked room
+  getBuildings() {
+    this.buildingService.getAll().subscribe(buildingData => {
+      this.buildingForm = buildingData;
+      console.log(this.buildingForm[1].location);
+      console.log(this.batch.batchLocation.locationId);
+      console.log(this.buildingForm[1].location === this.batch.batchLocation.locationId);
+      /*this.test = this.buildingForm.filter(
+        sdhksk => {
+          sdhksk.location === this.batch.batchLocation.locationId;
+        }
+      );
+      console.log(this.test);
+      for (const entry of this.buildingForm){
+        if (entry.location = this.batch.batchLocation.locationId) {
+
+        }
+      }*/
+      console.log(this.test);
+    }, error => {
+      this.showToast('Failed to fetch Buildings');
+    });
+  }
+  // Gets the rooms of the clicked buildings
+  getRooms() {
+    this.roomService.getAll().subscribe(roomData => {
+      this.roomForm = roomData;
+    }, error => {
+      this.showToast('Failed to fetch Rooms');
     });
   }
 

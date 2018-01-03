@@ -179,8 +179,12 @@ export class TrainersComponent implements OnInit {
       .subscribe(
         data => {
           this.trainers = data;
-          this.trainers.forEach( trainer => this.skillService.getSkillsByIds(trainer.skills)
-            .subscribe(response => trainer.skillsObject = response));
+          this.trainers.forEach( trainer => {
+            if (trainer.skills.length !== 0) {
+              this.skillService.getSkillsByIds(trainer.skills)
+                .subscribe(response => trainer.skillsObject = response);
+            }
+          });
         },
         error => {
           this.showToast('Could not fetch trainers');
@@ -195,8 +199,12 @@ export class TrainersComponent implements OnInit {
       .subscribe(
         data => {
           this.trainers = data;
-          this.trainers.forEach( trainer => this.skillService.getSkillsByIds(trainer.skills)
-            .subscribe(response => trainer.skillsObject = response));
+          this.trainers.forEach( trainer => {
+            if (trainer.skills.length !== 0) {
+              this.skillService.getSkillsByIds(trainer.skills)
+                .subscribe(response => trainer.skillsObject = response);
+            }
+          });
         },
         error => {
           this.showToast('Could not fetch trainers');
@@ -301,6 +309,9 @@ export class TrainersComponent implements OnInit {
 
 // Takes array of skills and formats their names into a string
   joinObjArrayByName(Skillz: Skill[]) {
+    if (Skillz === undefined) {
+      return;
+    }
     let skillslist = '';
     for(let i = 0; i < Skillz.length; i++){
       skillslist += Skillz[i].name;

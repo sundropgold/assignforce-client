@@ -52,7 +52,7 @@
           <div>
           <mat-form-field  class="fourth">
             <input matInput [matDatepicker]="picker1" placeholder="Choose a start date" [(ngModel)]="batch.startDate" name="startDate" >
-            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker-toggle matSuffix [for]="picker1" ></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
 
@@ -90,9 +90,11 @@
             </div>
 
           <mat-form-field class="third">
-            <mat-select placeholder="Location">
-              <mat-option *ngFor="let location of locations" [value]="location" [(ngModel)]="batch.batchLocation.locationId" name="location">
-                {{ location.location.toString().valueOf() }}
+            <mat-select placeholder="Location" [(ngModel)]="batch.batchLocation.locationId" name="locations">
+              <mat-option *ngFor="let locations of locationForm" [value]="locations.id"
+                          [(ngModel)]="batch.batchLocation.locationId" name="locations"
+                          (click)="getBuildings()">
+                {{ locations.name }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -100,16 +102,19 @@
 
           <mat-form-field class="third">
             <mat-select placeholder="Building" [(ngModel)]="batch.batchLocation.buildingId" name="building">
-              <mat-option *ngFor="let building of buildings" [value]="building.value">
-                {{ building.viewValue}}
+              <mat-option *ngFor="let building of buildingForm" [value]="building.id"
+                          [(ngModel)]="batch.batchLocation.buildingId" name="building"
+                          (click)="getRooms()">
+                {{ building.name}}
               </mat-option>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field class="third">
-            <mat-select placeholder="Room" [(ngModel)]="batch.batchLocation.roomId" name="roomid">
-              <mat-option *ngFor="let room of rooms" [value]="room.value">
-                {{ room.viewValue }}
+            <mat-select placeholder="Room" [(ngModel)]="batch.batchLocation.roomId" name="room">
+              <mat-option *ngFor="let room of roomForm" [value]="room.roomID"
+                          [(ngModel)]="batch.batchLocation.roomId" name="room">
+                {{ room.roomName }}
               </mat-option>
             </mat-select>
           </mat-form-field>
