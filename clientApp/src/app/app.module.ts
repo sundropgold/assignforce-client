@@ -5,9 +5,9 @@ import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {SpringXsrfInterceptor} from './interceptors/springXsrfInterceptor';
-import { MenuBarComponent } from './menu-bar/menu-bar.component';
-import { OverviewComponent } from './overview/overview.component';
-import { BatchesComponent } from './batches/batches.component';
+import {MenuBarComponent} from './menu-bar/menu-bar.component';
+import {OverviewComponent} from './overview/overview.component';
+import {BatchesComponent} from './batches/batches.component';
 import {
   LocationAddBuildingDialogComponent,
   LocationAddLocationDialogComponent, LocationAddRoomDialogComponent, LocationDeleteBuildingDialogComponent,
@@ -16,11 +16,14 @@ import {
   LocationEditLocationDialogComponent, LocationEditRoomDialogComponent,
   LocationsComponent
 } from './locations/locations.component';
-import { CurriculaComponent } from './curricula/curricula.component';
-import { TrainersComponent } from './trainers/trainers.component';
-import { ProfileComponent } from './profile/profile.component';
-import { ReportsComponent } from './reports/reports.component';
-import { SettingsComponent } from './settings/settings.component';
+import {CurriculaComponent,
+  CurriculaCurriculumDialogComponent,
+  CurriculaCreateSkillDialogComponent,
+  CurriculaRemovalDialogComponent} from './curricula/curricula.component';
+import {TrainerDialogComponent, TrainersComponent} from './trainers/trainers.component';
+import {ProfileComponent} from './profile/profile.component';
+import {ReportsComponent} from './reports/reports.component';
+import {SettingsComponent} from './settings/settings.component';
 import {AppRouting} from './app.routing';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TrainerService} from './services/trainer.service';
@@ -36,16 +39,25 @@ import {
   MatNativeDateModule,
   MatListModule,
   MatMenuModule, MatPaginatorModule, MatProgressBarModule,
-  MatProgressSpinnerModule, MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule, MatDialogModule, MatSnackBarModule
+  MatProgressSpinnerModule, MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule, MatSnackBarModule,
+  MatDialogModule
 } from '@angular/material';
 import {MatSelectModule} from '@angular/material/select';
 import {ReactiveFormsModule} from '@angular/forms';
-import {OrderModule} from 'ngx-order-pipe';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {NotificationService} from './services/notification.service';
 import 'aws-sdk/dist/aws-sdk.min';
 import {LoginComponent} from './login/login.component';
 import {TimelineComponent} from './timeline/timeline.component';
+import {CalendarDialogComponent, PtoComponent, PtoDialogComponent} from './pto/pto.component';
+import {OrderModule} from 'ngx-order-pipe';
+import {PtoService} from './services/pto.service';
+import {BatchService} from './services/batch.service';
+import {CurriculaService} from './services/curricula.service';
+import {LocationService} from './services/location.service';
+import {RoomService} from './services/room.service';
+import {BuildingService} from './services/building.service';
+import {NgPipesModule} from 'ngx-pipes';
 
 
 @NgModule({
@@ -55,11 +67,6 @@ import {TimelineComponent} from './timeline/timeline.component';
     OverviewComponent,
     BatchesComponent,
     LocationsComponent,
-    CurriculaComponent,
-    TrainersComponent,
-    ProfileComponent,
-    ReportsComponent,
-    SettingsComponent,
     LocationAddLocationDialogComponent,
     LocationDeleteLocationDialogComponent,
     LocationEditLocationDialogComponent,
@@ -69,8 +76,20 @@ import {TimelineComponent} from './timeline/timeline.component';
     LocationAddRoomDialogComponent,
     LocationDeleteRoomDialogComponent,
     LocationEditRoomDialogComponent,
+    CurriculaComponent,
+    CurriculaCurriculumDialogComponent,
+    CurriculaCreateSkillDialogComponent,
+    CurriculaRemovalDialogComponent,
+    TrainersComponent,
+    TrainerDialogComponent,
+    CalendarDialogComponent,
+    PtoDialogComponent,
+    ProfileComponent,
+    ReportsComponent,
+    SettingsComponent,
     LoginComponent,
-    TimelineComponent
+    TimelineComponent,
+    PtoComponent,
   ],
   imports: [
     HttpClientModule,
@@ -101,21 +120,32 @@ import {TimelineComponent} from './timeline/timeline.component';
     ReactiveFormsModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatInputModule,
-    MatDialogModule,
     MatSnackBarModule,
-    OrderModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatDialogModule,
+    NgPipesModule,
+    OrderModule
   ],
-  providers: [TrainerService,
+  providers: [
+    TrainerService,
+    BatchService,
     SkillService,
     S3CredentialService,
     UrlService,
-    {provide: HTTP_INTERCEPTORS,
+    NotificationService,
+    PtoService,
+    CurriculaService,
+    LocationService,
+    BuildingService,
+    RoomService,
+    {
+      provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,
-      multi: true}],
-  bootstrap: [AppComponent],
+      multi: true
+    }
+  ],
   entryComponents: [
+    TrainerDialogComponent,
     LocationAddLocationDialogComponent,
     LocationDeleteLocationDialogComponent,
     LocationEditLocationDialogComponent,
@@ -124,8 +154,14 @@ import {TimelineComponent} from './timeline/timeline.component';
     LocationEditBuildingDialogComponent,
     LocationAddRoomDialogComponent,
     LocationDeleteRoomDialogComponent,
-    LocationEditRoomDialogComponent
-  ]
+    LocationEditRoomDialogComponent,
+    CurriculaCurriculumDialogComponent,
+    CurriculaCreateSkillDialogComponent,
+    CurriculaRemovalDialogComponent,
+    CalendarDialogComponent,
+    PtoDialogComponent
+  ],
+  bootstrap: [AppComponent]
 })
 
 export class AppModule {

@@ -48,8 +48,14 @@ mat-card-content {
   padding: 0;
 }
 
+mat-spinner {
+  display: block;
+  margin: auto;
+}
+
 mat-icon {
   margin: 0;
   display: inline-flex;
   vertical-align: middle;
+  color: inherit;
 }

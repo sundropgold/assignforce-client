@@ -6,4 +6,5 @@ export interface Curriculum {
   core: boolean;
   active: boolean;
   skills: any;
+  skillObjects: any;
 }
