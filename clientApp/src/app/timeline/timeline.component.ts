@@ -2,7 +2,8 @@ import {
   Component,
   ElementRef,
   AfterViewInit,
-  ViewChild
+  ViewChild,
+  OnInit
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import 'highcharts/adapters/standalone-framework.src';
@@ -16,7 +17,7 @@ const Highcharts = require('highcharts/highcharts.src');
   styleUrls: ['./timeline.component.css']
 })
 
-export class TimelineComponent implements AfterViewInit {
+export class TimelineComponent implements AfterViewInit, OnInit {
   curriculum = new FormControl();
   focus = new FormControl();
   location = new FormControl();
@@ -30,6 +31,12 @@ export class TimelineComponent implements AfterViewInit {
 
   private chart: any;
 
+  constructor(){}
+
+  ngOnInit(){
+   
+  }
+
   ngAfterViewInit() {
 
     xRange(Highcharts);
@@ -42,7 +49,9 @@ export class TimelineComponent implements AfterViewInit {
         text: 'Batches'
       },
       xAxis: {
-        type: 'datetime'
+        type: 'datetime',
+        // min:,
+        // max:
       },
       yAxis: {
         title: {
