@@ -8,7 +8,8 @@ import {MatDialog} from '@angular/material';
 @Injectable()
 export class TrainerService {
 
-  url = 'https://trainer-service.cfapps.io/api/v2/trainer';
+  // url = 'https://trainer-service.cfapps.io/api/v2/trainer';
+  url = 'http://localhost:9093/api/v2/trainer';
 
   constructor(private http: HttpClient,
               public dialog: MatDialog) {
