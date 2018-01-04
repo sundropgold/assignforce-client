@@ -49,7 +49,7 @@
                 <p>Requested Batches: <span *ngIf="cardArr[i].requiredBatches">{{cardArr[i].requiredBatches}}</span></p>
               </mat-card-content>
               <mat-card-actions>
-                <div fxLayoutAlign="center" class="btn" (click)="createBatch(i)">
+                <div fxLayoutAlign="center" class="btn" (click)="createBatch(cardArr[i], i)">
                   <span>Create Batch</span>
                   <div class="dot"></div>
                 </div>

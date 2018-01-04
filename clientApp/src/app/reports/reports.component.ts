@@ -19,6 +19,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   curricula: Curriculum[] = [];
   batch: Batch[] = [];
   trainer: Trainer[] = [];
+  newBatch: any = {};
   // for creating new projection
   cardArr = [];
   // use for getting the current date, and calculation of the hire date
@@ -272,12 +273,22 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     return canSubmit;
   }
   /* FUNCTION - This method will generate a new 'card' in the cardArr object, which will be displayed to the user on the reports tab. */
-  createBatch(index) {
+  createBatch(batch, index) {
     const canSubmit = this.submissionValidityAssertion(index);
+    // let newBatch: Batch;
     if (canSubmit === 1) {
       this.showToast(this.errMsg);
+    } else if (canSubmit === 0) {     // Create batch with batchService
+      console.log(batch);
+      this.newBatch.name = '-';
+      this.newBatch.startDate = batch.startDate;
+      this.newBatch.endDate = batch.hireDate;
+      this.newBatch.curriculum = batch.batchType.currId;
+      console.log(this.newBatch);
+      // newBatch.batchLocation = 'default location'; //get default location from setting service
+      // this.batchService.create(batch).subscribe(data => console.log('batch created sucessfully'),
+      //     error => console.log('error creating batch'));
     }
-    // Create batch with batchService
   }
 }
 
