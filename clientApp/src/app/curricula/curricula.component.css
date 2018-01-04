@@ -28,7 +28,9 @@
   padding-top: 8px;
 }
 .icon-margin-fix {
-  margin:0px;
+  color: #FB8C00;
+  margin: 5px;
+  cursor: pointer;
 }
 .button-orange {
   background-color: #FB8C00;
