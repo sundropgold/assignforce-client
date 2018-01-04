@@ -8,6 +8,9 @@ import {SkillService} from '../services/skill.service';
 import {CurriculaService} from '../services/curricula.service';
 import {Curriculum} from '../domain/curriculum';
 import {TrainerService} from '../services/trainer.service';
+import {RoomService} from '../services/room.service';
+import {BuildingService} from '../services/building.service';
+import {LocationService} from '../services/location.service';
 
 @Component({
   selector: 'app-overview',
@@ -31,6 +34,9 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     constructor(private batchService: BatchService,
                 private curriculaService: CurriculaService,
                 private trainerService: TrainerService,
+                private locationService: LocationService,
+                private buildingService: BuildingService,
+                private roomService: RoomService,
                 private notificationService: NotificationService) {
     }
 
@@ -83,6 +89,30 @@ export class OverviewComponent implements OnInit, AfterViewInit {
             entry.cotrainerName = cotrainerData.firstName + ' ' + cotrainerData.lastName;
           }, error => {
             this.showToast('Failed to fetch Trainers');
+          });
+
+        this.locationService.getById(entry.batchLocation.locationId)
+          .subscribe(locationData => {
+            entry.batchLocation.locationId = locationData.id;
+            entry.batchLocation.locationName = locationData.name;
+          }, error => {
+            this.showToast('Failed to fetch Locations');
+          });
+
+        this.buildingService.getById(entry.batchLocation.buildingId)
+          .subscribe(buildingData => {
+            entry.batchLocation.buildingId = buildingData.id;
+            entry.batchLocation.buildingName = buildingData.name;
+          }, error => {
+            this.showToast('Failed to fetch Buildings');
+          });
+
+        this.roomService.getById(entry.batchLocation.roomId)
+          .subscribe(roomData => {
+            entry.batchLocation.roomId = roomData.roomID;
+            entry.batchLocation.roomName = roomData.roomName;
+          }, error => {
+            this.showToast('Failed to fetch Rooms');
           });
       }
       this.batchData = new MatTableDataSource(this.BatchData);
