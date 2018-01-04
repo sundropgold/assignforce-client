@@ -35,12 +35,12 @@
                         </p>
                       </div>
                       <span class="fill-space"></span>
-                      <button mat-icon-button class="button-orange" (click)="editCurr($event,curr)" [hidden]="!isAdmin">
-                        <mat-icon class="icon-margin-fix" matTooltip="Edit Curriculum">mode_edit</mat-icon>
-                      </button>
-                      <button mat-icon-button class="button-orange" (click)="removeCurr($event, curr)" [hidden]="!isAdmin">
-                        <mat-icon class="icon-margin-fix" matTooltip="Remove Core">remove_circle</mat-icon>
-                      </button>
+                      <!--<button mat-icon-button class="button-orange"  >-->
+                        <mat-icon class="icon-margin-fix" matTooltip="Edit Curriculum" (click)="editCurr($event,curr)" [hidden]="!isAdmin">edit</mat-icon>
+                      <!--</button>-->
+                      <!--<button mat-icon-button class="button-orange" >-->
+                        <mat-icon class="icon-margin-fix" matTooltip="Remove Core" (click)="removeCurr($event, curr)" [hidden]="!isAdmin" >remove_circle</mat-icon>
+                      <!--</button>-->
                   </mat-list-item>
                   <hr>
                 </div>
@@ -82,12 +82,12 @@
                         </p>
                       </div>
                       <span class="fill-space"></span>
-                      <button mat-icon-button class="button-orange" (click)="editCurr($event, curr)" [hidden]="!isAdmin">
-                        <mat-icon class="icon-margin-fix" matTooltip="Edit Curriculum">mode_edit</mat-icon>
-                      </button>
-                      <button mat-icon-button class="button-orange" (click)="removeCurr($event, curr)" [hidden]="!isAdmin">
-                        <mat-icon class="icon-margin-fix" matTooltip="Remove Focus">remove_circle</mat-icon>
-                      </button>
+                      <!--<button mat-icon-button class="button-orange" >-->
+                        <mat-icon class="icon-margin-fix" matTooltip="Edit Curriculum" (click)="editCurr($event, curr)" [hidden]="!isAdmin">edit</mat-icon>
+                      <!--</button>-->
+                      <!--<button mat-icon-button class="button-orange" >-->
+                        <mat-icon class="icon-margin-fix" matTooltip="Remove Focus" (click)="removeCurr($event, curr)" [hidden]="!isAdmin">remove_circle</mat-icon>
+                      <!--</button>-->
                     </mat-list-item>
                     <hr>
                   </div>
