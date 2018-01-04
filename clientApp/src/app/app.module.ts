@@ -7,7 +7,10 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {SpringXsrfInterceptor} from './interceptors/springXsrfInterceptor';
 import {MenuBarComponent} from './menu-bar/menu-bar.component';
 import {OverviewComponent} from './overview/overview.component';
-import {BatchesComponent} from './batches/batches.component';
+import {
+  BatchesComponent,
+  BatchDeleteDialogComponent
+} from './batches/batches.component';
 import {
   LocationAddBuildingDialogComponent,
   LocationAddLocationDialogComponent, LocationAddRoomDialogComponent, LocationDeleteBuildingDialogComponent,
@@ -66,6 +69,7 @@ import {NgPipesModule} from 'ngx-pipes';
     MenuBarComponent,
     OverviewComponent,
     BatchesComponent,
+    BatchDeleteDialogComponent,
     LocationsComponent,
     LocationAddLocationDialogComponent,
     LocationDeleteLocationDialogComponent,
@@ -146,6 +150,7 @@ import {NgPipesModule} from 'ngx-pipes';
   ],
   entryComponents: [
     TrainerDialogComponent,
+    BatchDeleteDialogComponent,
     LocationAddLocationDialogComponent,
     LocationDeleteLocationDialogComponent,
     LocationEditLocationDialogComponent,

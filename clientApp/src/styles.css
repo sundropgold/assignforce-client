@@ -10,7 +10,6 @@ html {
   overflow-x: hidden;
 }
 
-
 .mat-tooltip {
   font-size: 16px;
   font-weight: bold;
@@ -43,7 +42,7 @@ html {
 }
 
 .panel-font {
-  color: #E0E4E6 ;
+  color: #E0E4E6;
   font-weight: bolder;
 }
 
@@ -52,9 +51,10 @@ html {
 }
 
 .revOrange {
-  color: #f26a25 ;
+  color: #f26a25;
 }
 
 .mat-icon {
-  color: #E0E4E6 ;
+  color: #E0E4E6;
+
 }
