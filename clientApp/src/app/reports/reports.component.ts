@@ -1,14 +1,24 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {MatSort, MatTableDataSource} from '@angular/material';
 import {FormControl, Validators} from '@angular/forms';
 import {Angular2Csv} from 'angular2-csv';
+import {BatchService} from '../services/batch.service';
+import {CurriculaService} from '../services/curricula.service';
+import {NotificationService} from '../services/notification.service';
+import {Curriculum} from '../domain/curriculum';
+import {Batch} from '../domain/batch';
+import {Trainer} from '../domain/trainer';
+import {TrainerService} from '../services/trainer.service';
 
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
   styleUrls: ['./reports.component.css']
 })
-export class ReportsComponent implements OnInit, AfterViewInit {
+export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked {
+  curricula: Curriculum[] = [];
+  batch: Batch[] = [];
+  trainer: Trainer[] = [];
   // for creating new projection
   cardArr = [];
   // use for getting the current date, and calculation of the hire date
@@ -30,18 +40,15 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   // for curriculum selection
-  animalControl = new FormControl('', [Validators.required]);
-
-  animals = [
-    {name: 'Dog', sound: 'Woof!'},
-    {name: 'Cat', sound: 'Meow!'},
-    {name: 'Cow', sound: 'Moo!'},
-    {name: 'Fox', sound: 'Wa-pa-pa-pa-pa-pa-pow!'},
-  ];
+  curriculaControl = new FormControl('', [Validators.required]);
 
   @ViewChild(MatSort) sort: MatSort;
-
-  constructor() { }
+  constructor(private ref: ChangeDetectorRef, private batchService: BatchService, private curriculaService: CurriculaService,
+              private trainerService: TrainerService, private notificationService: NotificationService) {
+    this.getAllCurriculum();
+    this.getAllBatches();
+    this.getAllTrainer();
+  }
 
   ngOnInit() {
   }
@@ -49,16 +56,56 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
+
+  ngAfterViewChecked() {
+    this.ref.detectChanges();
+  }
+  // error message
+  showToast(msg) {
+    this.notificationService.openSnackBar(msg);
+  }
+  // get all batches
+  getAllBatches() {
+    this.batchService.getAll().subscribe(batch => {
+      this.batch = batch;
+      console.log(this.batch);
+    }, err => {
+      console.log(err);
+      this.showToast('Failed to fetch batch');
+      });
+  }
+  // get all curriculum
+  getAllCurriculum() {
+    this.curriculaService.getAll().subscribe(curricula => {
+      this.curricula = curricula;
+      console.log(this.curricula);
+    }, err => {
+      console.log(err);
+      this.showToast('Failed to fetch curricula');
+      });
+  }
+  // get all trainer
+  getAllTrainer() {
+    this.trainerService.getAll().subscribe(trainer => {
+      this.trainer = trainer;
+      console.log(this.trainer);
+    }, err => {
+      console.log(err);
+      this.showToast('Failed to fetch trainer');
+    });
+  }
   genCard(evt) {
     evt.stopPropagation();
     const temp: any = {};
     temp.requiredGrads = 13;
+    temp.requiredBatches = 1;
+    temp.hireDate = this.hireDate;
     // temp.requiredGrads = this.rc.requiredGrads;
-    // temp.reqDate = new Date();
+    // temp.hireDate = new Date();
     // temp.requiredBatches = this.rc.requiredBatches;
     // temp.startDate = this.rc.startDate;
     // temp.formattedStartDate = this.rc.formattedStartDate;
-    // temp.batchType = this.rc.batchType;
+    // temp.batchType = this.batch;
     this.cardArr.push(temp);
     console.log(this.cardArr);
   }
@@ -73,7 +120,7 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   /* FUNCTION - This method will compute the required batch start date, given a required hire date */
   calcStartDate(requiredDate, index) {
     const tempDate = new Date(requiredDate);
-    const startDate = (requiredDate === undefined) ? (new Date()) : requiredDate;
+    const startDate = (requiredDate === undefined) ? (new Date()) : tempDate;
     // startDate.setDate(startDate.getDate() - (7 * batchlength));
     startDate.setDate(startDate.getDate() - (7 * 11));
     // push the start date to the closest Monday
@@ -106,8 +153,10 @@ export class ReportsComponent implements OnInit, AfterViewInit {
     const wkDayArr = ['Sun', 'Mon', 'Tue', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'];
     const formattedDate = this.monthList[startDate.getMonth()] + '-' + startDate.getDate() + '-' + startDate.getFullYear()
       + '(' + wkDayArr[startDate.getDay()] + ')';
-    // assigns tempDate to the objects 'reqDate'
-    this.cardArr[index].reqDate = tempDate;
+    // assigns tempDate to the objects 'hireDate'
+    // console.log(tempDate);
+    // console.log(this.cardArr[index].hireDate);
+    // this.cardArr[index].hireDate = tempDate;
     // this value is used when creating specific batches from the card panel
     this.cardArr[index].startDate = startDate;
     // set the 'startdate' within 'cardArr' at the index value to be the formatted date
@@ -117,15 +166,32 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   calcReqBatch(requiredTrainees, index) {
     // compute the total number of Batches estimated
     const neededBatches = Math.ceil(requiredTrainees / 15);
+
     // calculate the 'requiredBatches' data value in the card array
-    this.cardArr[index].requiedBatches = neededBatches;
+    this.cardArr[index].requiredBatches = neededBatches;
+    // calculate the total number of desired batches
+    this.cumulativeBatches();
+  }
+  /* FUNCTION - This method will assign the particular card objects 'batchType' variable to the selected value. */
+  assignCurr(batchType, index) {
+    this.cardArr[index].batchType = batchType;
+    if (this.cardArr[index].requiredBatches > 0) {
+      this.cumulativeBatches();
+    }
   }
   /* FUNCTION - This method will generate the sum of all batch types held within the 'cardArr' variable,
   ultimately displaying them in the 'master card' on the reports tab. */
   cumulativeBatches() {
+    this.totalJavaBatch = 0;
+    this.totalNetBatch = 0;
+    this.totalSDETBatch = 0;
+    this.totalSalesforceBatch = 0;
+    this.totalBigDataBatch = 0;
+    this.totalCumulativeBatch = 0;
     for (const x in this.cardArr) {
       if ((this.cardArr[x].batchType)) {
         const batchVal = this.cardArr[x].batchType.currId;
+        console.log(batchVal);
         switch (batchVal) {
           // switch case for JAVA batches
           case 1 :
@@ -160,6 +226,15 @@ export class ReportsComponent implements OnInit, AfterViewInit {
             break;
         }
       }
+    }
+    console.log(this.totalCumulativeBatch);
+  }
+  /* FUNCTION - This method will assert that batches have valid credentials for submission */
+  submissionValidityAssertion(index) {
+    let flagArr = [0, 0, 0];
+    let count = 0;
+    if (!(this.cardArr[index].requiredGrads === undefined) && !(this.cardArr[index].reqDate === undefined)) {
+
     }
   }
 }
