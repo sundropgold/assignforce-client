@@ -19,12 +19,12 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   curricula: Curriculum[] = [];
   batch: Batch[] = [];
   trainer: Trainer[] = [];
+  newBatch: any = {};
   // for creating new projection
   cardArr = [];
   // use for getting the current date, and calculation of the hire date
   monthList = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.'];
   year = new Date().getFullYear();
-  today = new Date().getDate();
   hireDate = new Date();
   startDate = new Date();
   // Use to calculate the total number in the card array
@@ -38,6 +38,8 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   displayedColumns = ['Curriculum', this.monthList];
   // displayedColumns = ['Curriculum', 'Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
+
+  errMsg = '';
 
   // for curriculum selection
   curriculaControl = new FormControl('', [Validators.required]);
@@ -100,6 +102,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     temp.requiredGrads = 13;
     temp.requiredBatches = 1;
     temp.hireDate = this.hireDate;
+    // temp.startDate = new Date();
     // temp.requiredGrads = this.rc.requiredGrads;
     // temp.hireDate = new Date();
     // temp.requiredBatches = this.rc.requiredBatches;
@@ -231,10 +234,60 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   }
   /* FUNCTION - This method will assert that batches have valid credentials for submission */
   submissionValidityAssertion(index) {
-    let flagArr = [0, 0, 0];
+    const flagArr = [0, 0, 0];
     let count = 0;
-    if (!(this.cardArr[index].requiredGrads === undefined) && !(this.cardArr[index].reqDate === undefined)) {
+    let canSubmit = 0;
+    const today = new Date();
 
+    console.log(this.cardArr[index].startDate);
+    console.log(today);
+    if (this.cardArr[index].startDate <= today || this.cardArr[index].startDate === undefined) {
+      this.errMsg = 'Invalid Hire Date';
+      flagArr[1] = 1;
+      canSubmit = 1;
+    }
+    if (this.cardArr[index].requiredGrads === null) {
+      this.errMsg = 'Requires Trainee\'s';
+      flagArr[0] = 1;
+      canSubmit = 1;
+    }
+    if (this.cardArr[index].hireDate === '') {
+      this.errMsg = 'Request Hire Date.';
+      flagArr[1] = 1;
+      canSubmit = 1;
+    }
+    if (this.cardArr[index].batchType === undefined) {
+      this.errMsg = 'Invalid Batch Type.';
+      flagArr[2] = 1;
+      canSubmit = 1;
+    }
+    // Check if multiple input are missing
+    for (const x in flagArr) {
+      if (flagArr[x] === 1) {
+        count = count + 1;
+        if (count > 1) {
+          this.errMsg = 'Multiple Input Requires';
+        }
+      }
+    }
+    return canSubmit;
+  }
+  /* FUNCTION - This method will generate a new 'card' in the cardArr object, which will be displayed to the user on the reports tab. */
+  createBatch(batch, index) {
+    const canSubmit = this.submissionValidityAssertion(index);
+    // let newBatch: Batch;
+    if (canSubmit === 1) {
+      this.showToast(this.errMsg);
+    } else if (canSubmit === 0) {     // Create batch with batchService
+      console.log(batch);
+      this.newBatch.name = '-';
+      this.newBatch.startDate = batch.startDate;
+      this.newBatch.endDate = batch.hireDate;
+      this.newBatch.curriculum = batch.batchType.currId;
+      console.log(this.newBatch);
+      // newBatch.batchLocation = 'default location'; //get default location from setting service
+      // this.batchService.create(batch).subscribe(data => console.log('batch created sucessfully'),
+      //     error => console.log('error creating batch'));
     }
   }
 }
