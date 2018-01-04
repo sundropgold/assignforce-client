@@ -21,7 +21,6 @@ mat-toolbar {
 mat-list-item{
   margin-right: 7px;
   transition: background 0.3s linear;
-  cursor: pointer;
 }
 
 mat-list-item:hover{
@@ -32,11 +31,6 @@ mat-list-item:hover{
 mat-card-content {
   margin: 0px;
   padding: 16px;
-}
-
-mat-spinner {
-  display: block;
-  margin: auto;
 }
 
 mat-icon {

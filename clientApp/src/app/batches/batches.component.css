@@ -2,7 +2,7 @@
   max-width: 25px;
 }
 .mat-expansion-panel {
-  background-color: #3D5360;
+  background-color: black;
 }
 
 .mat-expansion-panel-body {
@@ -10,7 +10,7 @@
 }
 
 .mat-expansion-panel-header {
-  background-color: #3D5360;
+  background-color: black;
 }
 
 .mat-expansion-panel-header-title {
@@ -22,35 +22,10 @@
   color: darkorange;
 }
 
-#icons {
-  margin: 4px;
-  color: white;
-}
-
-.fill-space{
-  flex: 1 1 auto;
-}
-
-.third {
-  min-width: 33%;
-}
-
-.fourth {
-  min-width: 22%;
-}
-
-.half {
-  min-width: 40%;
-}
-
 .mat-icon-button {
   line-height: 5.6rem;
   min-width: 0;
   width: 5.6rem;
   height: 5.6rem;
   border-radius: 50%;
-}
-
-.fill-space{
-  flex: 1 1 auto;
 }

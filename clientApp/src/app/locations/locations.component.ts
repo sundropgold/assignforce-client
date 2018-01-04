@@ -2,13 +2,9 @@
 import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatIconRegistry} from '@angular/material';
-import {Locations} from '../domain/locations';
-import {Building} from '../domain/building';
-import {Room} from '../domain/room';
-import {LocationService} from '../services/location.service';
-import {BuildingService} from '../services/building.service';
-import {RoomService} from '../services/room.service';
-import {NotificationService} from '../services/notification.service';
+import {Locations} from '../model/locations';
+import {Building} from '../model/building';
+import {Room} from '../model/room';
 
 @Component({
   selector: 'app-locations',
@@ -18,16 +14,75 @@ import {NotificationService} from '../services/notification.service';
 })
 export class LocationsComponent implements OnInit {
   expanded: boolean[] = [];
-  locations: Locations[] = [];
+  locations = [
+    {
+      id: '13F',
+      name: 'Revature HQ',
+      city: 'Reaston',
+      state: 'VA',
+      buildings: [
+        {
+          name: 'Building 1',
+          rooms: [
+            {
+              name: 'Room 101'
+            },
+            {
+              name: 'Room 102'
+            }
+          ]
+        },
+        {
+          name: 'Building 2',
+          rooms: [
+            {
+              name: 'Room 201'
+            },
+            {
+              name: 'Room 202'
+            }
+          ]
+        }
+      ]
+    },
+    {
+      id: '13E',
+      name: 'CUNY',
+      city: 'New York',
+      state: 'NY',
+      buildings: [
+        {
+          name: 'SPS',
+          rooms: [
+            {
+              name: 'Room 216'
+            },
+            {
+              name: 'Room 220'
+            }
+          ]
+        },
+        {
+          name: 'Queens College',
+          rooms: [
+            {
+              name: 'Room 301'
+            },
+            {
+              name: 'Room 302'
+            }
+          ]
+        }
+      ]
+    }
+  ];
 
   constructor(private iconRegistry: MatIconRegistry,
               private sanitizer: DomSanitizer,
-              private locationService: LocationService,
-              private buildingService: BuildingService,
-              private roomService: RoomService,
-              private notificationService: NotificationService,
               public dialog: MatDialog) {
-    this.getAllLocations();
+    for (const location of this.locations) {
+      this.expanded[location.id] = false;
+    }
 
     iconRegistry.addSvgIcon(
       'location',
@@ -41,141 +96,32 @@ export class LocationsComponent implements OnInit {
   }
   ngOnInit() {
   }
-  // error messages
-  showToast(msg) {
-    this.notificationService.openSnackBar(msg);
-  }
-  collapseAll(id: number) {
+  collapseAll(id: any) {
     this.expanded[id] = !this.expanded[id];
 
-    for (let i = 0; i < this.expanded.length; i++) {
-      if (i !== id) {
-        this.expanded[i] = false;
+    for (const location of this.locations) {
+      if (location.id !== id) {
+        this.expanded[location.id] = false;
       }
     }
   }
-  /* ===================== Locations CRUD =======================*/
-  getAllLocations() {
-    this.locationService.getAll()
-      .subscribe(locations => {
-        this.locations = locations;
-        this.expanded = [];
-        for (const location of this.locations) {
-          if (location.active) {
-            this.expanded.push(false);
-          }
-        }
-      }, err => {
-        console.log(err);
-        this.showToast('Failed to fetch Locations');
-      });
-  }
-  // getLocation(id: number) {
-  //   this.locationService.getById(id)
-  //     .subscribe();
-  // }
   addLocation(location: Locations) {
-    this.locationService.create(location)
-      .subscribe(res => {
-          console.log(res);
-          this.getAllLocations();
-        }, err => {
-        console.log(err);
-        this.showToast('Failed to add Location');
-      });
+    // call service
   }
   updateLocation(location: Locations) {
-    this.locationService.update(location)
-      .subscribe(res => {
-        console.log(res);
-        this.getAllLocations();
-      }, err => {
-        console.log(err);
-        this.showToast('Failed to update Location');
-      });
+    // call service
   }
   deleteLocation(location: Locations) {
-    this.locationService.delete(location)
-      .subscribe(res => {
-        console.log(res);
-        this.getAllLocations();
-      }, err => {
-        console.log(err);
-        this.showToast('Failed to delete Location');
-      });
+    // call service
   }
-  /* ===================== Building CRUD =======================*/
-  addBuilding(building: Building) {
-    this.buildingService.create(building)
-      .subscribe(res => {
-        console.log(res);
-        this.getAllLocations();
-      }, err => {
-        console.log(err);
-        this.showToast('Failed to add Building');
-      });
-  }
-  updateBuilding(building: Building) {
-    this.buildingService.update(building)
-      .subscribe(res => {
-        console.log(res);
-        this.getAllLocations();
-      }, err => {
-        console.log(err);
-        this.showToast('Failed to update Building');
-      });
-  }
-  deleteBuilding(building: Building) {
-    this.buildingService.delete(building)
-      .subscribe(res => {
-        console.log(res);
-        this.getAllLocations();
-      }, err => {
-        console.log(err);
-        this.showToast('Failed to delete Building');
-      });
-  }
-  /* ===================== Room CRUD =======================*/
-  addRoom(room: Room) {
-    this.roomService.create(room)
-      .subscribe(res => {
-        console.log(res);
-        this.getAllLocations();
-      }, err => {
-        console.log(err);
-        this.showToast('Failed to add Room');
-      });
-  }
-  updateRoom(room: Room) {
-    this.roomService.update(room)
-      .subscribe(res => {
-        console.log(res);
-        this.getAllLocations();
-      }, err => {
-        console.log(err);
-        this.showToast('Failed to update Room');
-      });
-  }
-  deleteRoom(room: Room) {
-    this.roomService.delete(room)
-      .subscribe(res => {
-        console.log(res);
-        this.getAllLocations();
-      }, err => {
-        console.log(err);
-        this.showToast('Failed to delete Room');
-      });
-  }
-  /* ===================== Dialog =======================*/
   openAddLocationDialog(evt): void {
     evt.stopPropagation();
     const location: Locations = {
-      id: null,
-      name: null,
-      city: null,
-      state: null,
-      buildings: [],
-      active: true
+      id: '',
+      name: '',
+      city: '',
+      state: '',
+      buildings: []
     };
     const dialogRef = this.dialog.open(LocationAddLocationDialogComponent, {
       width: '450px',
@@ -223,11 +169,8 @@ export class LocationsComponent implements OnInit {
   openAddBuildingDialog(evt, location: Locations): void {
     evt.stopPropagation();
     const building: Building = {
-      id: null,
-      name: null,
-      rooms: [],
-      active: true,
-      location: location.id
+      name: '',
+      rooms: []
     };
     const dialogRef = this.dialog.open(LocationAddBuildingDialogComponent, {
       width: '450px',
@@ -238,11 +181,12 @@ export class LocationsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.addBuilding(result);
+        location.buildings.push(result);
+        this.updateLocation(location);
       }
     });
   }
-  openDeleteBuildingDialog(evt, building: Building): void {
+  openDeleteBuildingDialog(evt, location: Locations, building: Building): void {
     evt.stopPropagation();
     const dialogRef = this.dialog.open(LocationDeleteBuildingDialogComponent, {
       width: '250px',
@@ -253,11 +197,12 @@ export class LocationsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.deleteBuilding(result);
+        location.buildings = location.buildings.filter(e => e !== result);
+        this.updateLocation(location);
       }
     });
   }
-  openEditBuildingDialog(evt, building: Building): void {
+  openEditBuildingDialog(evt, location: Locations, building: Building): void {
     evt.stopPropagation();
     const dialogRef = this.dialog.open(LocationEditBuildingDialogComponent, {
       width: '450px',
@@ -268,17 +213,14 @@ export class LocationsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.updateBuilding(result);
+        this.updateLocation(location);
       }
     });
   }
-  openAddRoomDialog(evt, building: Building): void {
+  openAddRoomDialog(evt, location: Locations, building: Building): void {
     evt.stopPropagation();
     const room: Room = {
-      roomID: null,
-      roomName: null,
-      building: building.id,
-      active: true
+      name: ''
     };
     const dialogRef = this.dialog.open(LocationAddRoomDialogComponent, {
       width: '450px',
@@ -289,11 +231,12 @@ export class LocationsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.addRoom(result);
+        building.rooms.push(result);
+        this.updateLocation(location);
       }
     });
   }
-  openDeleteRoomDialog(evt, room: Room): void {
+  openDeleteRoomDialog(evt, location: Locations, building: Building, room: Room): void {
     evt.stopPropagation();
     const dialogRef = this.dialog.open(LocationDeleteRoomDialogComponent, {
       width: '250px',
@@ -304,11 +247,12 @@ export class LocationsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.deleteRoom(result);
+        building.rooms = building.rooms.filter(e => e !== result);
+        this.updateLocation(location);
       }
     });
   }
-  openEditRoomDialog(evt, room: Room): void {
+  openEditRoomDialog(evt, location: Locations, room: Room): void {
     evt.stopPropagation();
     const dialogRef = this.dialog.open(LocationEditRoomDialogComponent, {
       width: '450px',
@@ -319,13 +263,11 @@ export class LocationsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.updateRoom(result);
+        this.updateLocation(location);
       }
     });
   }
 }
-
-/* ===================== Dialog Components =======================*/
 
 @Component({
   selector: 'app-location-add-location-dialog',

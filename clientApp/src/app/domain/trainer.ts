@@ -4,8 +4,7 @@ export interface Trainer {
   trainerId: number;
   firstName: string;
   lastName: string;
-  skills: number[];
-  skillsObject: Skill[];
+  skills: Skill[];
   certifications: any;
   active: boolean;
   resume: string;

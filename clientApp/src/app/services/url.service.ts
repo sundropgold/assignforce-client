@@ -15,10 +15,10 @@ export class UrlService {
     }
 
     testCors1(): Observable<any> {
-	    return this.http.get(this.url);
+	return this.http.get(this.url);
     }
     testCors2(): Observable<any> {
-	    return this.http.get(this.url + '/auth/userinfo');
+	return this.http.get(this.url + '/auth/userinfo');
     }
 
 }
