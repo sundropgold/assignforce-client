@@ -10,35 +10,25 @@ html {
   overflow-x: hidden;
 }
 
-.mat-tooltip {
-  font-size: 16px;
-  font-weight: bold;
-}
-
-html {
-  width: 100vw;
-  overflow-x: hidden;
-}
-
 .mat-expansion-panel {
-  background-color: #37474F ;
+  background-color: #37474F;
 }
 
 .mat-expansion-panel-body {
-  background-color: #E0E4E6 ;
+  background-color: #E0E4E6;
 }
 
 .mat-expansion-panel-header {
-  background-color: #37474F ;
+  background-color: #37474F;
 }
 
 .mat-expansion-panel-header-title {
-  color: #E0E4E6 ;
+  color: #E0E4E6;
   font-weight: 600;
 }
 
 .mat-expansion-panel-header-description {
-  color: #E0E4E6 ;
+  color: #E0E4E6;
 }
 
 .panel-font {
@@ -47,7 +37,7 @@ html {
 }
 
 .panel-icon-color {
-  color: #E0E4E6 ;
+  color: #E0E4E6;
 }
 
 .revOrange {
@@ -56,5 +46,4 @@ html {
 
 .mat-icon {
   color: #E0E4E6;
-
 }
