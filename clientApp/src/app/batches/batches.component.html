@@ -10,11 +10,11 @@
           {{firstTabHeader}}
           <mat-panel-description>
             <span class="fill-space"></span>
-            <div [hidden]="!isCreating()" (click)="clickTest($event)">
+            <div [hidden]="!isCreating()" (click)="beginCreation($event)">
               <mat-icon id="icons" title="create new batch">add_circle</mat-icon>
             </div>
             <div [hidden]="isCreating()" (click)="create($event)">
-              <mat-icon id="icons" title="finalize creation" >done_white</mat-icon>
+              <mat-icon id="icons" title={{this.finalize}} >done_white</mat-icon>
             </div>
             <div [hidden]="isCreating()" (click)="cancel($event)">
               <mat-icon id="icons" title="cancel" >cancel_white</mat-icon>
@@ -209,13 +209,13 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
             <mat-cell *matCellDef="let batch">
 
-              <button mat-icon-button color (click)="EditBatch()">
+              <button mat-icon-button color (click)="EditBatch(batch.id)">
                 <mat-icon matTooltip="Edit" matTooltipPosition="above">mode_edit</mat-icon>
               </button>
-              <button mat-icon-button color (click)="CloneBatch()">
+              <button mat-icon-button color (click)="CloneBatch(batch.id)">
                 <mat-icon matTooltip="Clone" matTooltipPosition="above">filter_none</mat-icon>
               </button>
-              <button mat-icon-button color>
+              <button mat-icon-button color (click)="DeleteBatch(batch.id)">
                 <mat-icon matTooltip="Delete" matTooltipPosition="above">delete</mat-icon>
               </button>
               <button mat-icon-button color>
@@ -240,7 +240,7 @@
           Batch Timeline
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <timeline></timeline>
+      <app-timeline></app-timeline>
     </mat-expansion-panel>
   </mat-accordion>
 
