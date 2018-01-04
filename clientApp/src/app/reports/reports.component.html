@@ -42,11 +42,14 @@
                   </mat-select>
                   <!--<mat-error *ngIf="curriculaControl.hasError('required')">Please choose an curricula</mat-error>-->
                 </mat-form-field>
-                <p>Start Date: <span *ngIf="cardArr[i].formattedStartDate">{{cardArr[i].formattedStartDate}}</span></p>
+                <p>Start Date:
+                  <span *ngIf="!(cardArr[i].formattedStartDate)">Choose a future hire date</span>
+                  <span *ngIf="cardArr[i].formattedStartDate">{{cardArr[i].formattedStartDate}}</span>
+                </p>
                 <p>Requested Batches: <span *ngIf="cardArr[i].requiredBatches">{{cardArr[i].requiredBatches}}</span></p>
               </mat-card-content>
               <mat-card-actions>
-                <div fxLayoutAlign="center" class="btn">
+                <div fxLayoutAlign="center" class="btn" (click)="createBatch(i)">
                   <span>Create Batch</span>
                   <div class="dot"></div>
                 </div>
