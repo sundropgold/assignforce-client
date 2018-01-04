@@ -5,11 +5,32 @@ export interface Batch {
   name: string;
   startDate: Date;
   endDate: Date;
-  curriculum: string;
-  focus: string;
-  trainer: string;
-  cotrainer: string;
-  location: string;
-  building: string;
-  room: string;
+  curriculum: number;
+  focus: number;
+  trainer: number;
+  cotrainer: number;
+  batchStatus: BatchStatus;
+  batchLocation: BatchLocation;
+  skills: number[];
+  id: number;
+  // Data that is not in the backend
+  progress: number;
+  curriculumName: string;
+  focusName: string;
+  trainerName: string;
+  cotrainerName: string;
+}
+
+export interface BatchStatus {
+  batchStatusID: number;
+  batchStatusName: String;
+}
+
+export interface BatchLocation {
+  locationId: number;
+  locationName: String;
+  buildingId: number;
+  buildingName: String;
+  roomId: number;
+  roomName: String;
 }

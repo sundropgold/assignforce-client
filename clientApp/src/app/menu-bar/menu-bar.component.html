@@ -1,22 +1,19 @@
 
 
-  <mat-tab-group class="tabs col-md-12" (selectedTabChange)="selectTab($event)" [(selectedIndex)]="selectedTab">
-    <mat-tab label="OVERVIEW">
-    </mat-tab>
-    <mat-tab label="BATCHES">
-    </mat-tab>
-    <mat-tab label="LOCATIONS">
-    </mat-tab>
-    <mat-tab label="CURRICULA" >
-    </mat-tab>
-    <mat-tab label="TRAINERS" >
-    </mat-tab>
-    <mat-tab label="PROFILE" >
-    </mat-tab>
-    <mat-tab label="REPORTS" >
-    </mat-tab>
-    <mat-tab label="SETTINGS" >
-    </mat-tab>
-    <mat-tab label="LOGOUT" >
-    </mat-tab>
-  </mat-tab-group>
+  <!--<mat-tab-group class="col-md-12" (selectedTabChange)="selectTab($event)" [(selectedIndex)]="selectedTab">-->
+    <!--<mat-tab *ngFor="let tab of tabs" [label]="tab.toUpperCase()"></mat-tab>-->
+  <!--</mat-tab-group>-->
+
+<nav mat-tab-nav-bar>
+  <span fxFlex></span>
+  <a mat-tab-link
+     *ngFor="let link of tabs"
+     [routerLink]="link"
+     routerLinkActive #rla="routerLinkActive"
+     [active]="rla.isActive"
+  style="text-decoration: none">
+    {{link.toUpperCase()}}
+  </a>
+  <!--<span fxFlexOffset></span>-->
+</nav>
+

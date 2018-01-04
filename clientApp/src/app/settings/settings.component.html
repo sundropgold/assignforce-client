@@ -1,3 +1,127 @@
-<p>
-  settings works!
-</p>
+<div style="margin-top: 5%"></div>
+<mat-card>
+  <mat-toolbar>
+    <mat-toolbar-row>
+      <span> Global Settings </span>
+
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item>
+        <div class="mat-list-item-text">
+          <h3>Timeline Trainers Per Page</h3>
+        </div>
+        <span class="fill-space"></span>
+
+        <mat-form-field>
+          <input matInput type="number"  min="0" step="1" value="13">
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item>
+        <div class="mat-list-item-text">
+          <h3>Reports Outgoing Grads</h3>
+        </div>
+          <span class="fill-space"></span>
+        <mat-form-field>
+          <input matInput type="number"  min="0" step="1" value="13">
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item>
+        <div class="mat-list-item-text">
+          <h3>Reports Candidates Incoming</h3>
+        </div>
+        <span class="fill-space"></span>
+        <mat-form-field>
+          <input matInput type="number"  min="0" step="1" value="13">
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item>
+        <div class="mat-list-item-text">
+          <h3>Default Batch Location</h3>
+        </div>
+        <span class="fill-space"></span>
+        <mat-form-field>
+          <mat-select [(value)]="selectedLocation">
+            <mat-option value= "Default Location"> Default Location</mat-option>
+            <mat-option value="option1">Option 1</mat-option>
+            <mat-option value="option2">Option 2</mat-option>
+            <mat-option value="option3">Option 3</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item>
+        <div class="mat-list-item-text">
+          <h3>Default Batch Building</h3>
+        </div>
+        <span class="fill-space"></span>
+        <mat-form-field>
+          <mat-select [(value)]="selectedBuilding">
+            <mat-option value= "Default Building"> Default Building</mat-option>
+            <mat-option value="option1">Option 1</mat-option>
+            <mat-option value="option2">Option 2</mat-option>
+            <mat-option value="option3">Option 3</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item>
+        <div class="mat-list-item-text">
+          <h3>Minimum Batch Size</h3>
+        </div>
+        <span class="fill-space"></span>
+        <mat-form-field>
+          <input matInput type="number"  min="0" step="1" value="13">
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item>
+        <div class="mat-list-item-text">
+          <h3>Maximum Batch Size</h3>
+        </div>
+        <span class="fill-space"></span>
+        <mat-form-field>
+          <input matInput type="number"  min="0" step="1" value="13">
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item>
+        <div class="mat-list-item-text">
+          <h3>Default Batch Length</h3>
+        </div>
+        <span class="fill-space"></span>
+        <mat-form-field>
+          <input matInput type="number"  min="0" step="1" value="13">
+        </mat-form-field>
+      </mat-list-item>
+
+      <mat-list-item>
+        <div class="mat-list-item-text">
+          <h3>Minimum Day Between Trainer Batches</h3>
+        </div>
+        <span class="fill-space"></span>
+        <mat-form-field>
+          <input matInput type="number"  min="0" step="1" value="13">
+        </mat-form-field>
+      </mat-list-item>
+
+
+      <!--<mat-list-item>-->
+        <!--<div class="mat-list-item-text">-->
+          <!--<h3>Default Batch Name Pattern</h3>-->
+          <!--<span>$c = curriculum name</span><br/>-->
+          <!--<span>$m = month</span><br/>-->
+          <!--<span>$d = day of week</span><br/>-->
+          <!--<span>$y = year</span>-->
+        <!--</div>-->
+        <!--<span flex></span>-->
+      <!--</mat-list-item>-->
+    </mat-list>
+  </mat-card-content>
+</mat-card>
