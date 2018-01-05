@@ -27,11 +27,10 @@ import {Locations} from '../domain/locations';
   encapsulation: ViewEncapsulation.None
 })
 export class BatchesComponent implements OnInit, AfterViewInit {
-
-
   curDate: any;
+  minStartDate = new Date();
+ minEndDate = new Date();
   datebetween: any;
-
   // This boolean changes the buttons in the first tab between cancel/finalize and create
   // true = create
   // false = cancel/finalize
@@ -94,6 +93,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getAll();
+    this.setEndDate();
     this.initBatch();
   }
 
@@ -190,22 +190,22 @@ export class BatchesComponent implements OnInit, AfterViewInit {
 
   calcDate(evt) {
     this.curDate = new Date();
-    this.datebetween = ((this.batch.endDate)as any - ((this.batch.startDate)as any)) / 1000 / 60 / 60 / 24;
-    this.batch.name = this.curDate.getYear() % 100 + '' + (this.batch.startDate.getMonth() + 1) + '' + this.monthNames
-      [this.batch.startDate.getMonth()] + '' + (this.batch.startDate.getUTCDate()) + '' + this.batch.curriculum;
-    console.log(this.batch.name);
+    this.datebetween = Math.round(((this.batch.endDate)as any - ((this.batch.startDate)as any)) / 1000 / 60 / 60 / 24 / 7);
+    this.batch.name = this.curDate.getYear() % 100 + '' + (this.batch.startDate.getMonth() + 1) + ' ' + this.monthNames
+      [this.batch.startDate.getMonth()] + '' + (this.batch.startDate.getUTCDate()) + '' + this.batch.curriculumName;
   }
-  setCur(evt) {
-    this.batch.curriculum = evt;
-    this.batch.curriculumName = evt.viewValue;
-    console.log(this.batch);
-
+  setCurName () {
+    this.curriculaService.getById(this.batch.curriculum).subscribe(data => {
+      this.batch.curriculumName = data.name;
+    }, err => {
+      console.log('failed to fetch curriculum name');
+    } );
   }
   initBatch() {
     this.batch = {
       name: '' ,
       startDate: new Date(),
-      endDate: new Date(),
+      endDate: this.minEndDate,
       curriculum: 1,
       focus: 1,
       trainer: 1,
@@ -351,9 +351,20 @@ export class BatchesComponent implements OnInit, AfterViewInit {
       console.log(data);
       this.batch.skills = this.batch.skills.concat(data.skills);
       console.log(this.batch.skills);
+      this.setCurName();
     });
   }
 
+  // used to remove dates from datepicker,
+  myFilter = (d: Date): boolean => {
+    const day = d.getDay();
+    // Prevent Friday, Saturday and Sunday from being selected for batch start date..
+    return day !== 0 && day !== 6 && day !== 5;
+  }
+
+  setEndDate() {
+    this.minEndDate.setDate(this.minStartDate.getDate() + 70);
+  }
 }
 
 
@@ -384,5 +395,6 @@ export class BatchDeleteDialogComponent {
   onNoClick(): void {
     this.dialogRef.close();
   }
+
 }
 

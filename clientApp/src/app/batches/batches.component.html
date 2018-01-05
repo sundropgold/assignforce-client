@@ -51,19 +51,19 @@
           </div>
           <div>
           <mat-form-field  class="fourth">
-            <input matInput [matDatepicker]="picker1" placeholder="Choose a start date" [(ngModel)]="batch.startDate" name="startDate" >
+            <input matInput [matDatepickerFilter]="myFilter" [min]="minStartDate"[matDatepicker]="picker1" placeholder="Choose a start date" [(ngModel)]="batch.startDate" name="startDate" >
             <mat-datepicker-toggle matSuffix [for]="picker1" ></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field  class="fourth">
-            <input matInput [matDatepicker]="picker2" placeholder="Choose an end date" [(ngModel)]="batch.endDate" name="endDate" (dateChange)="calcDate($event)">
+            <input matInput [matDatepicker]="picker2" [min]="minEndDate" placeholder="Choose an end date" [(ngModel)]="batch.endDate" name="endDate" (dateChange)="calcDate($event)">
             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field  class="fourth">
-            <input matInput placeholder="spans {{datebetween}} days" readonly>
+            <input matInput placeholder="spans {{datebetween}} weeks" readonly>
           </mat-form-field>
 
           <mat-form-field  class="fourth">
