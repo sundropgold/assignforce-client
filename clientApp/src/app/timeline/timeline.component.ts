@@ -8,6 +8,11 @@ import {
 import { FormControl } from '@angular/forms';
 import 'highcharts/adapters/standalone-framework.src';
 import * as xRange from 'highcharts/modules/xrange.js';
+import { Trainer } from '../domain/trainer';
+import { TrainerService } from '../services/trainer.service';
+import { BatchService } from './../services/batch.service';
+import { Batch } from './../domain/batch';
+import { NotificationService } from '../services/notification.service';
 
 const Highcharts = require('highcharts/highcharts.src');
 
@@ -30,11 +35,13 @@ export class TimelineComponent implements AfterViewInit, OnInit {
   @ViewChild("container", { read: ElementRef }) container: ElementRef;
 
   private chart: any;
+  private date: Date;
+  private trainerData: any;
 
-  constructor(){}
+  constructor(private trainerService: TrainerService, private batchService: BatchService, private notificationService: NotificationService) { }
 
-  ngOnInit(){
-   
+  ngOnInit() {
+    // console.log(this.getAllTrainers());
   }
 
   ngAfterViewInit() {
@@ -103,4 +110,18 @@ export class TimelineComponent implements AfterViewInit, OnInit {
       }]
     });
   }
+
+  showToast(msg) {
+    this.notificationService.openSnackBar(msg);
+  }
+
+  getAllTrainers() {
+    return this.trainerService.getAll().subscribe(data => {
+      this.trainerData = data
+    },
+      error => {
+        this.showToast('Failed to fetch Trainers');
+      });
+  }
+
 }
