@@ -121,9 +121,10 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     evt.stopPropagation();
   }
   /* FUNCTION - This method will compute the required batch start date, given a required hire date */
-  calcStartDate(requiredDate, index) {
+  calcStartDate(requiredDate, index, evt) {
     const tempDate = new Date(requiredDate);
     const startDate = (requiredDate === undefined) ? (new Date()) : tempDate;
+    console.log(startDate);
     // startDate.setDate(startDate.getDate() - (7 * batchlength));
     startDate.setDate(startDate.getDate() - (7 * 11));
     // push the start date to the closest Monday
@@ -286,8 +287,8 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
       this.newBatch.curriculum = batch.batchType.currId;
       console.log(this.newBatch);
       // newBatch.batchLocation = 'default location'; //get default location from setting service
-      // this.batchService.create(batch).subscribe(data => console.log('batch created sucessfully'),
-      //     error => console.log('error creating batch'));
+      this.batchService.create(this.newBatch).subscribe(data => console.log('batch created sucessfully'),
+          error => console.log('error creating batch'));
     }
   }
 }
