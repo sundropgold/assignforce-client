@@ -114,7 +114,11 @@ export class BatchesComponent implements OnInit, AfterViewInit {
 
   CloneBatch(id: number) {
     this.batchService.getById(id).subscribe(data => {
+      console.log(data);
+      this.initBatch();
       this.batch = data;
+      this.batch.startDate = new Date(data.startDate);
+      this.batch.endDate = new Date(data.endDate);
       this.getBuildings();
       this.getRooms();
     });
