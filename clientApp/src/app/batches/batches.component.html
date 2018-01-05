@@ -91,31 +91,40 @@
 
           <mat-form-field class="third">
             <mat-select placeholder="Location" [(ngModel)]="batch.batchLocation.locationId" name="locations">
-              <mat-option *ngFor="let locations of locationForm" [value]="locations.id"
+              <div *ngFor="let locations of locationForm">
+              <mat-option [value]="locations.id"
+                          *ngIf="locations.active === true"
                           [(ngModel)]="batch.batchLocation.locationId" name="locations"
                           (click)="getBuildings()">
                 {{ locations.name }}
               </mat-option>
+              </div>
             </mat-select>
           </mat-form-field>
 
 
           <mat-form-field class="third">
             <mat-select placeholder="Building" [(ngModel)]="batch.batchLocation.buildingId" name="building">
-              <mat-option *ngFor="let building of buildingForm" [value]="building.id"
+              <div *ngFor="let building of buildingForm">
+              <mat-option [value]="building.id"
+                          *ngIf="building.active === true"
                           [(ngModel)]="batch.batchLocation.buildingId" name="building"
                           (click)="getRooms()">
                 {{ building.name}}
               </mat-option>
+              </div>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field class="third">
             <mat-select placeholder="Room" [(ngModel)]="batch.batchLocation.roomId" name="room">
-              <mat-option *ngFor="let room of roomForm" [value]="room.roomID"
+              <div *ngFor="let room of roomForm">
+              <mat-option [value]="room.roomID"
+                          *ngIf="room.active === true"
                           [(ngModel)]="batch.batchLocation.roomId" name="room">
                 {{ room.roomName }}
               </mat-option>
+              </div>
             </mat-select>
           </mat-form-field>
 
