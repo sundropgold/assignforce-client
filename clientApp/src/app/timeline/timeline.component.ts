@@ -33,15 +33,20 @@ const Highcharts = require('highcharts/highcharts.src');
 
   batchTimeLine: any;
 
+  date;
+  
+
   @ViewChild('container', { read: ElementRef }) container: ElementRef;
 
   private chart: any;
+ 
 
   constructor(
     private batchService: BatchService
   ) {}
 
   ngOnInit() {
+    this.date = new Date();
   }
 
   ngAfterViewInit() {
@@ -55,10 +60,13 @@ const Highcharts = require('highcharts/highcharts.src');
       title: {
         text: 'Batches'
       },
+      rangeSelector: {
+	    	selected: 1
+	    },
       xAxis: {
         type: 'datetime',
-        // min:,
-        // max:
+          min: this.date.getTime(),
+          
       },
       yAxis: {
         title: {
