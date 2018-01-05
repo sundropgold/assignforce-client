@@ -120,7 +120,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     });
   }
 
-  DeleteBatch(id: number) {
+  DeleteBatch(id: number, evt) {
     const dialogRef = this.dialog.open(BatchDeleteDialogComponent,
       {
         width: '400px',
@@ -128,7 +128,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
       });
     dialogRef.afterClosed().subscribe(result => {
       console.log('delete batch dialog closed');
-      this.getAll();
+      this.reload(evt);
     });
   }
 
@@ -208,8 +208,8 @@ export class BatchesComponent implements OnInit, AfterViewInit {
       endDate: new Date(),
       curriculum: 1,
       focus: 1,
-      trainer: 1,
-      cotrainer: 1,
+      trainer: null,
+      cotrainer: null,
       batchStatus: {
         batchStatusID: 1,
         batchStatusName: 'Scheduled'
@@ -364,7 +364,6 @@ export class BatchDeleteDialogComponent {
   deleteBatch() {
     console.log(this.data);
     this.batchService.delete(this.data).subscribe(batchDeleteData => {
-
     });
     this.dialogRef.close();
   }

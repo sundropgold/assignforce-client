@@ -215,7 +215,7 @@
               <button mat-icon-button color (click)="CloneBatch(batch.id)">
                 <mat-icon matTooltip="Clone" matTooltipPosition="above">filter_none</mat-icon>
               </button>
-              <button mat-icon-button color (click)="DeleteBatch(batch.id)">
+              <button mat-icon-button color (click)="DeleteBatch(batch.id, $event)">
                 <mat-icon matTooltip="Delete" matTooltipPosition="above">delete</mat-icon>
               </button>
               <button mat-icon-button color>
