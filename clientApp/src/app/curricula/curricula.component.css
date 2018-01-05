@@ -27,11 +27,18 @@
 .panel-title-fix {
   padding-top: 8px;
 }
-.icon-margin-fix {
+.icon-margin-fix-header {
+  color: white;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.icon-margin-fix  {
   color: #FB8C00;
   margin: 5px;
   cursor: pointer;
 }
+
 .button-orange {
   background-color: #FB8C00;
   margin: 5px;
