@@ -11,13 +11,13 @@
           <mat-panel-description>
             <span class="fill-space"></span>
             <div [hidden]="!isCreating()" (click)="beginCreation($event)">
-              <mat-icon title="create new batch">add_circle</mat-icon>
+              <mat-icon id="icons" title="create new batch">add_circle</mat-icon>
             </div>
             <div [hidden]="isCreating()" (click)="create($event)">
-              <mat-icon title={{this.finalize}} >done_white</mat-icon>
+              <mat-icon id="icons" title={{this.finalize}} >done_white</mat-icon>
             </div>
             <div [hidden]="isCreating()" (click)="cancel($event)">
-              <mat-icon title="cancel" >cancel_white</mat-icon>
+              <mat-icon id="icons" title="cancel" >cancel_white</mat-icon>
             </div>
           </mat-panel-description>
         </mat-panel-title>
@@ -91,31 +91,40 @@
 
           <mat-form-field class="third">
             <mat-select placeholder="Location" [(ngModel)]="batch.batchLocation.locationId" name="locations">
-              <mat-option *ngFor="let locations of locationForm" [value]="locations.id"
+              <div *ngFor="let locations of locationForm">
+              <mat-option [value]="locations.id"
+                          *ngIf="locations.active === true"
                           [(ngModel)]="batch.batchLocation.locationId" name="locations"
                           (click)="getBuildings()">
                 {{ locations.name }}
               </mat-option>
+              </div>
             </mat-select>
           </mat-form-field>
 
 
           <mat-form-field class="third">
             <mat-select placeholder="Building" [(ngModel)]="batch.batchLocation.buildingId" name="building">
-              <mat-option *ngFor="let building of buildingForm" [value]="building.id"
+              <div *ngFor="let building of buildingForm">
+              <mat-option [value]="building.id"
+                          *ngIf="building.active === true"
                           [(ngModel)]="batch.batchLocation.buildingId" name="building"
                           (click)="getRooms()">
                 {{ building.name}}
               </mat-option>
+              </div>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field class="third">
             <mat-select placeholder="Room" [(ngModel)]="batch.batchLocation.roomId" name="room">
-              <mat-option *ngFor="let room of roomForm" [value]="room.roomID"
+              <div *ngFor="let room of roomForm">
+              <mat-option [value]="room.roomID"
+                          *ngIf="room.active === true"
                           [(ngModel)]="batch.batchLocation.roomId" name="room">
                 {{ room.roomName }}
               </mat-option>
+              </div>
             </mat-select>
           </mat-form-field>
 
@@ -210,16 +219,16 @@
             <mat-cell *matCellDef="let batch">
 
               <button mat-icon-button color (click)="EditBatch(batch.id)">
-                <mat-icon id="buttonIcon" matTooltip="Edit" matTooltipPosition="above">mode_edit</mat-icon>
+                <mat-icon matTooltip="Edit" matTooltipPosition="above">mode_edit</mat-icon>
               </button>
               <button mat-icon-button color (click)="CloneBatch(batch.id)">
-                <mat-icon id="buttonIcon" matTooltip="Clone" matTooltipPosition="above">filter_none</mat-icon>
+                <mat-icon matTooltip="Clone" matTooltipPosition="above">filter_none</mat-icon>
               </button>
               <button mat-icon-button color (click)="DeleteBatch(batch.id, $event)">
-                <mat-icon id="buttonIcon" matTooltip="Delete" matTooltipPosition="above">delete</mat-icon>
+                <mat-icon matTooltip="Delete" matTooltipPosition="above">delete</mat-icon>
               </button>
               <button mat-icon-button color>
-                <mat-icon id="buttonIcon" matTooltip="Synchronize" matTooltipPosition="above">publish</mat-icon>
+                <mat-icon matTooltip="Synchronize" matTooltipPosition="above">publish</mat-icon>
               </button>
             </mat-cell>
           </ng-container>

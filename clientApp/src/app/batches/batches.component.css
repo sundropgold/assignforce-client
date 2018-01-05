@@ -18,8 +18,13 @@
   font-weight: 600;
 }
 
-#buttonIcon {
+.mat-icon {
   color: darkorange;
+}
+
+#icons {
+  margin: 4px;
+  color: white;
 }
 
 .fill-space{
