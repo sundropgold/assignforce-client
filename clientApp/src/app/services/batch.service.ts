@@ -7,7 +7,7 @@ import {Observable} from 'rxjs/Observable';
 export class BatchService {
 
   // url = 'http://localhost:9092/api/v2/batch';
-  url = 'https://batch-service.cfapps.io/api/v2/batch';
+   url = 'https://batch-service.cfapps.io/api/v2/batch';
 
   constructor(private http: HttpClient) { }
 
