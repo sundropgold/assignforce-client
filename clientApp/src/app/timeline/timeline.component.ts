@@ -8,18 +8,18 @@ import {
 import { FormControl } from '@angular/forms';
 import 'highcharts/adapters/standalone-framework.src';
 import * as xRange from 'highcharts/modules/xrange.js';
-import {BatchService} from '../services/batch.service';
-import {Batch} from '../domain/batch';
+import { BatchService } from '../services/batch.service';
+import { Batch } from '../domain/batch';
 
 const Highcharts = require('highcharts/highcharts.src');
 
 @Component({
-    selector: 'app-timeline',
-    templateUrl: './timeline.component.html',
-    styleUrls: ['./timeline.component.css']
-  })
+  selector: 'app-timeline',
+  templateUrl: './timeline.component.html',
+  styleUrls: ['./timeline.component.css']
+})
 
-  export class TimelineComponent implements AfterViewInit, OnInit {
+export class TimelineComponent implements AfterViewInit, OnInit {
   curriculum = new FormControl();
   focus = new FormControl();
   location = new FormControl();
@@ -39,7 +39,7 @@ const Highcharts = require('highcharts/highcharts.src');
 
   constructor(
     private batchService: BatchService
-  ) {}
+  ) { }
 
   ngOnInit() {
   }
@@ -57,14 +57,12 @@ const Highcharts = require('highcharts/highcharts.src');
       },
       xAxis: {
         type: 'datetime',
-         min: new Date().getTime(),
-        // max:
       },
       yAxis: {
         title: {
-          text: 'Weeks'
+          text: ''
         },
-        categories: ['10 Weeks'],
+        categories: [''],
         reversed: true
       },
       // tooltip: {
@@ -116,7 +114,7 @@ const Highcharts = require('highcharts/highcharts.src');
   getAllBatches() {
     this.batchService.getAll().subscribe(batchData => {
       this.batches = batchData;
-      for (const entry of this.batches){
+      for (const entry of this.batches) {
         this.chart.addSeries(
           {
             name: entry.name,
@@ -128,6 +126,48 @@ const Highcharts = require('highcharts/highcharts.src');
               y: 0,
             }]
           });
+      }
+    });
+  }
+
+  getAllConcludedBatches() {
+    this.batchService.getAll().subscribe(batchData => {
+      this.batches = batchData;
+      for (const entry of this.batches) {
+        if (entry.endDate < new Date()) {
+          this.chart.addSeries(
+            {
+              name: entry.name,
+              borderColor: 'gray',
+              pointWidth: 20,
+              data: [{
+                x: entry.startDate,
+                x2: entry.endDate,
+                y: 0,
+              }]
+            });
+        }
+      }
+    });
+  }
+
+  getAllBatchesWithTrainers() {
+    this.batchService.getAll().subscribe(batchData => {
+      this.batches = batchData;
+      for (const entry of this.batches) {
+        if (entry.trainer) {
+          this.chart.addSeries(
+            {
+              name: entry.name,
+              borderColor: 'gray',
+              pointWidth: 20,
+              data: [{
+                x: entry.startDate,
+                x2: entry.endDate,
+                y: 0,
+              }]
+            });
+        }
       }
     });
   }
