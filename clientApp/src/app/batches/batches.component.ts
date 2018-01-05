@@ -1,9 +1,9 @@
-import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {MatSort, MatTableDataSource, MatCheckbox, MatPaginator} from '@angular/material';
+import {AfterViewInit, Component, Inject, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {MatSort, MatTableDataSource, MatCheckbox, MatPaginator, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Batch, BatchLocation, BatchStatus} from '../domain/batch';
 import {FormControl} from '@angular/forms';
 import {DomSanitizer} from '@angular/platform-browser';
-import {MatIconRegistry} from '@angular/material';
+import {MatIconRegistry, MatDialog} from '@angular/material';
 import {BatchService} from '../services/batch.service';
 import {NotificationService} from '../services/notification.service';
 import {CurriculaService} from '../services/curricula.service';
@@ -27,11 +27,10 @@ import {Locations} from '../domain/locations';
   encapsulation: ViewEncapsulation.None
 })
 export class BatchesComponent implements OnInit, AfterViewInit {
-
-
   curDate: any;
+  minStartDate = new Date();
+ minEndDate = new Date();
   datebetween: any;
-
   // This boolean changes the buttons in the first tab between cancel/finalize and create
   // true = create
   // false = cancel/finalize
@@ -88,11 +87,13 @@ export class BatchesComponent implements OnInit, AfterViewInit {
               private locationService: LocationService,
               private buildingService: BuildingService,
               private roomService: RoomService,
+              public dialog: MatDialog,
               private notificationService: NotificationService) {
   }
 
   ngOnInit() {
     this.getAll();
+    this.setEndDate();
     this.initBatch();
   }
 
@@ -113,17 +114,26 @@ export class BatchesComponent implements OnInit, AfterViewInit {
 
   CloneBatch(id: number) {
     this.batchService.getById(id).subscribe(data => {
+      console.log(data);
+      this.initBatch();
       this.batch = data;
+      this.batch.startDate = new Date(data.startDate);
+      this.batch.endDate = new Date(data.endDate);
       this.getBuildings();
       this.getRooms();
     });
   }
 
-  DeleteBatch(id: number) {
-    this.batchService.delete(id).subscribe(data => {
-      this.getAll();
+  DeleteBatch(id: number, evt) {
+    const dialogRef = this.dialog.open(BatchDeleteDialogComponent,
+      {
+        width: '400px',
+        data: id
+      });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('delete batch dialog closed');
+      this.reload(evt);
     });
-    window.location.reload();
   }
 
   SynchronizeBatch() {
@@ -166,39 +176,44 @@ export class BatchesComponent implements OnInit, AfterViewInit {
         this.getAll();
         this.editBatchId = null;
         this.batch.id = this.editBatchId;
-        this.cancel(evt);
+        this.reload(evt);
       });
     } else {
       this.batchService.update(this.batch).subscribe(data => {
-        this.getAll();
-        this.cancel(evt);
+        this.reload(evt);
       });
     }
     this.cancel(evt);
     evt.stopPropagation();
   }
+
+  reload(evt) {
+    this.getAll();
+    this.cancel(evt);
+  }
+
   calcDate(evt) {
     this.curDate = new Date();
-    this.datebetween = ((this.batch.endDate)as any - ((this.batch.startDate)as any)) / 1000 / 60 / 60 / 24;
-    this.batch.name = this.curDate.getYear() % 100 + '' + (this.batch.startDate.getMonth() + 1) + '' + this.monthNames
-      [this.batch.startDate.getMonth()] + '' + (this.batch.startDate.getUTCDate()) + '' + this.batch.curriculum;
-    console.log(this.batch.name);
+    this.datebetween = Math.round(((this.batch.endDate)as any - ((this.batch.startDate)as any)) / 1000 / 60 / 60 / 24 / 7);
+    this.batch.name = this.curDate.getYear() % 100 + '' + (this.batch.startDate.getMonth() + 1) + ' ' + this.monthNames
+      [this.batch.startDate.getMonth()] + '' + (this.batch.startDate.getUTCDate()) + '' + this.batch.curriculumName;
   }
-  setCur(evt) {
-    this.batch.curriculum = evt;
-    this.batch.curriculumName = evt.viewValue;
-    console.log(this.batch);
-
+  setCurName () {
+    this.curriculaService.getById(this.batch.curriculum).subscribe(data => {
+      this.batch.curriculumName = data.name;
+    }, err => {
+      console.log('failed to fetch curriculum name');
+    } );
   }
   initBatch() {
     this.batch = {
       name: '' ,
       startDate: new Date(),
-      endDate: new Date(),
+      endDate: this.minEndDate,
       curriculum: 1,
       focus: 1,
-      trainer: 1,
-      cotrainer: 1,
+      trainer: null,
+      cotrainer: null,
       batchStatus: {
         batchStatusID: 1,
         batchStatusName: 'Scheduled'
@@ -329,6 +344,59 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     }, error => {
       this.showToast('Failed to fetch Rooms');
     });
+  }
+  getCurriculumSkills () {
+    this.curriculaService.getById(this.batch.curriculum).subscribe(data => {
+      this.batch.skills = data.skills;
+    });
+  }
+  getFocusSkills() {
+    this.curriculaService.getById(this.batch.focus).subscribe(data => {
+      console.log(data);
+      this.batch.skills = this.batch.skills.concat(data.skills);
+      console.log(this.batch.skills);
+      this.setCurName();
+    });
+  }
+
+  // used to remove dates from datepicker,
+  myFilter = (d: Date): boolean => {
+    const day = d.getDay();
+    // Prevent Friday, Saturday and Sunday from being selected for batch start date..
+    return day !== 0 && day !== 6 && day !== 5;
+  }
+
+  setEndDate() {
+    this.minEndDate.setDate(this.minStartDate.getDate() + 70);
+  }
+}
+
+
+
+/*************************   Batch Delete Dialog **********************************/
+@Component({
+  selector: 'app-batch-delete-dialog',
+  templateUrl: 'batch-delete-dialog.component.html',
+  styleUrls: ['./batches.component.css']
+})
+
+export class BatchDeleteDialogComponent {
+
+  constructor(
+    public dialogRef: MatDialogRef<BatchDeleteDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private batchService: BatchService
+  ) {}
+
+  deleteBatch() {
+    console.log(this.data);
+    this.batchService.delete(this.data).subscribe(batchDeleteData => {
+    });
+    this.dialogRef.close();
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

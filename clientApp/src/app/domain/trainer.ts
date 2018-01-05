@@ -1,7 +1,7 @@
 import {Skill} from './skill';
 
 export interface Trainer {
-  trainerId: number;
+  trainerId: string;
   firstName: string;
   lastName: string;
   skills: number[];

@@ -13,6 +13,7 @@ import { TrainerService } from '../services/trainer.service';
 import { BatchService } from './../services/batch.service';
 import { Batch } from './../domain/batch';
 import { NotificationService } from '../services/notification.service';
+import { Trainer } from './../domain/trainer';
 
 const Highcharts = require('highcharts/highcharts.src');
 
@@ -36,7 +37,8 @@ export class TimelineComponent implements AfterViewInit, OnInit {
 
   private chart: any;
   private date: Date;
-  private trainerData: any;
+  private trainer: Trainer;
+  private batch: Batch;
 
   constructor(private trainerService: TrainerService, private batchService: BatchService, private notificationService: NotificationService) { }
 
@@ -122,6 +124,10 @@ export class TimelineComponent implements AfterViewInit, OnInit {
       error => {
         this.showToast('Failed to fetch Trainers');
       });
+  }
+
+  getAllBatches() {
+    return this.batchService.getAll.subscribe
   }
 
 }
