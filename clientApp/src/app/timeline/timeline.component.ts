@@ -8,22 +8,18 @@ import {
 import { FormControl } from '@angular/forms';
 import 'highcharts/adapters/standalone-framework.src';
 import * as xRange from 'highcharts/modules/xrange.js';
-import { Trainer } from '../domain/trainer';
-import { TrainerService } from '../services/trainer.service';
-import { BatchService } from './../services/batch.service';
-import { Batch } from './../domain/batch';
-import { NotificationService } from '../services/notification.service';
-import { Trainer } from './../domain/trainer';
+import {BatchService} from '../services/batch.service';
+import {Batch} from '../domain/batch';
 
 const Highcharts = require('highcharts/highcharts.src');
 
 @Component({
-  selector: 'timeline',
-  templateUrl: './timeline.component.html',
-  styleUrls: ['./timeline.component.css']
-})
+    selector: 'app-timeline',
+    templateUrl: './timeline.component.html',
+    styleUrls: ['./timeline.component.css']
+  })
 
-export class TimelineComponent implements AfterViewInit, OnInit {
+  export class TimelineComponent implements AfterViewInit, OnInit {
   curriculum = new FormControl();
   focus = new FormControl();
   location = new FormControl();
@@ -33,17 +29,19 @@ export class TimelineComponent implements AfterViewInit, OnInit {
   locationList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
   buldingList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
 
-  @ViewChild("container", { read: ElementRef }) container: ElementRef;
+  batches: Batch[];
+
+  batchTimeLine: any;
+
+  @ViewChild('container', { read: ElementRef }) container: ElementRef;
 
   private chart: any;
-  private date: Date;
-  private trainer: Trainer;
-  private batch: Batch;
 
-  constructor(private trainerService: TrainerService, private batchService: BatchService, private notificationService: NotificationService) { }
+  constructor(
+    private batchService: BatchService
+  ) {}
 
   ngOnInit() {
-    // console.log(this.getAllTrainers());
   }
 
   ngAfterViewInit() {
@@ -66,7 +64,7 @@ export class TimelineComponent implements AfterViewInit, OnInit {
         title: {
           text: 'Weeks'
         },
-        categories: ['14 Weeks', '10 Weeks', '5 Weeks'],
+        categories: ['10 Weeks'],
         reversed: true
       },
       // tooltip: {
@@ -77,7 +75,8 @@ export class TimelineComponent implements AfterViewInit, OnInit {
       //   borderRaduis: 6,
       //   shared: true
       // },
-      series: [{
+
+      series: [/*{
         name: 'Trainer 1',
         borderColor: 'gray',
         pointWidth: 20,
@@ -106,28 +105,30 @@ export class TimelineComponent implements AfterViewInit, OnInit {
           x2: Date.UTC(2014, 11, 23),
           y: 2,
         }],
-        // dataLabels: {
-        //   enabled: true
-        // }
-      }]
+        dataLabels: {
+          enabled: true
+        }
+      }*/]
     });
-  }
-
-  showToast(msg) {
-    this.notificationService.openSnackBar(msg);
-  }
-
-  getAllTrainers() {
-    return this.trainerService.getAll().subscribe(data => {
-      this.trainerData = data
-    },
-      error => {
-        this.showToast('Failed to fetch Trainers');
-      });
+    this.getAllBatches();
   }
 
   getAllBatches() {
-    return this.batchService.getAll.subscribe
+    this.batchService.getAll().subscribe(batchData => {
+      this.batches = batchData;
+      for (const entry of this.batches){
+        this.chart.addSeries(
+          {
+            name: entry.name,
+            borderColor: 'gray',
+            pointWidth: 20,
+            data: [{
+              x: entry.startDate,
+              x2: entry.endDate,
+              y: 0,
+            }]
+          });
+      }
+    });
   }
-
 }
