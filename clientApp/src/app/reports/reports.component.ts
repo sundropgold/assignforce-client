@@ -9,6 +9,8 @@ import {Curriculum} from '../domain/curriculum';
 import {Batch} from '../domain/batch';
 import {Trainer} from '../domain/trainer';
 import {TrainerService} from '../services/trainer.service';
+import {ReplogicService} from "../replogic.service";
+import {Chart} from "angular-highcharts";
 
 @Component({
   selector: 'app-reports',
@@ -35,9 +37,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   totalBigDataBatch = 0;
   totalCumulativeBatch = 0;
   // for table
-  displayedColumns = ['Curriculum', this.monthList];
-  // displayedColumns = ['Curriculum', 'Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+
 
   errMsg = '';
 
@@ -45,12 +45,108 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   curriculaControl = new FormControl('', [Validators.required]);
 
   @ViewChild(MatSort) sort: MatSort;
-  constructor(private ref: ChangeDetectorRef, private batchService: BatchService, private curriculaService: CurriculaService,
+  constructor(public skills: ReplogicService, private ref: ChangeDetectorRef, private batchService: BatchService, private curriculaService: CurriculaService,
               private trainerService: TrainerService, private notificationService: NotificationService) {
     this.getAllCurriculum();
     this.getAllBatches();
     this.getAllTrainer();
   }
+  displayedColumns = ['Ciriculam', 'jan', 'febuaray', 'march','april','may','june','july','august','september', 'october','november', 'december'];
+  dataSource = new MatTableDataSource(this.skills.getElement());
+  chart = new Chart({
+      chart: {
+        type: 'column',
+        width: 1875,
+        backgroundColor: 'charcoal',
+      },
+      title: {
+        text: 'Graduate Summary'
+      },
+      credits: {
+        enabled: false
+      },
+
+      yAxis: {
+        min: 0,
+        max: 160,
+
+        title: {
+          text: 'Skills',
+        }
+      },
+      xAxis: {
+        crosshair: true,
+        categories: [ 'January' , 'February' , 'March' , 'April' , 'May' , 'June' , 'July' ,
+          'August' , 'September' , 'October' , 'November', 'December']
+
+      },
+      tooltip: {
+        pointFormat: '<span style="color:{series.color}">{series.name}      </span>: <b>\'<td style="text-align-: right"><b><span style="color: whitesmoke">{point.y}</b> <br/>',
+        backgroundColor: 'black',
+        borderWidth: 5,
+        borderColor: 'purple',
+        shared: true,
+
+
+      },
+      plotOptions: {
+        column : {
+          stacking : 'perce',
+          pointWidth: 9,
+          pointPadding: 0.2,
+
+        }},
+      series: this.skills.getList()
+      ,
+    }
+  );
+  Trainer = new Chart({
+      chart: {
+        type: 'column',
+        width: 1875,
+        backgroundColor: 'charcoal',
+      },
+      title: {
+        text: 'Graduate Summary'
+      },
+      credits: {
+        enabled: false
+      },
+
+      yAxis: {
+        min: 0,
+        max: 160,
+
+        title: {
+          text: 'Skills',
+        }
+      },
+      xAxis: {
+        crosshair: true,
+        categories: [ 'January' , 'February' , 'March' , 'April' , 'May' , 'June' , 'July' ,
+          'August' , 'September' , 'October' , 'November', 'December']
+
+      },
+      tooltip: {
+        pointFormat: '<span style="color:{series.color}">{series.name}      </span>: <b>\'<td style="text-align-: right"><b><span style="color: whitesmoke">{point.y}</b> <br/>',
+        backgroundColor: 'black',
+        borderWidth: 5,
+        borderColor: 'purple',
+        shared: true,
+
+
+      },
+      plotOptions: {
+        column : {
+          stacking : 'perce',
+          pointWidth: 9,
+          pointPadding: 0.2,
+
+        }},
+      series: this.skills.getList(),
+    }
+  );
+
 
   ngOnInit() {
   }
@@ -115,7 +211,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
 
   exportToCSV(evt, name) {
     evt.stopPropagation();
-    new Angular2Csv(ELEMENT_DATA, name);
+    new Angular2Csv(this.skills.getElement(), name);
   }
   openMenu(evt) {
     evt.stopPropagation();
@@ -293,29 +389,3 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   }
 }
 
-export interface Element {
-  curriculum: String;
-  month: Month;
-}
-
-export interface Month {
-  jan: number;
-  feb: number;
-  mar: number;
-  apr: number;
-  may: number;
-  june: number;
-  july: number;
-  aug: number;
-  sept: number;
-  oct: number;
-  nov: number;
-  dec: number;
-}
-
-const ELEMENT_DATA: Element[] = [
-  {curriculum: 'Java', month: {jan: 0, feb: 0, mar: 0, apr: 0, may: 0, june: 0, july: 0, aug: 0, sept: 0, oct: 0, nov: 0, dec: 0}},
-  {curriculum: 'Microservice', month: {jan: 0, feb: 0, mar: 0, apr: 0, may: 0, june: 0, july: 0, aug: 0, sept: 0, oct: 0, nov: 0, dec: 0}},
-  {curriculum: 'Test', month: {jan: 0, feb: 0, mar: 0, apr: 0, may: 0, june: 0, july: 0, aug: 0, sept: 0, oct: 0, nov: 0, dec: 0}},
-  {curriculum: '.NET', month: {jan: 0, feb: 0, mar: 0, apr: 0, may: 0, june: 0, july: 0, aug: 0, sept: 0, oct: 0, nov: 0, dec: 0}}
-];

@@ -147,7 +147,7 @@ export class TimelineComponent implements AfterViewInit, OnInit {
     this.batchService.getAll().subscribe(batchData => {
       this.batches = batchData;
       for (const entry of this.batches) {
-        if (entry.endDate > new Date()) {
+        if (entry.endDate < new Date()) {
           this.chart.addSeries(
             {
               name: entry.name,
