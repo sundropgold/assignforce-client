@@ -7,8 +7,8 @@ export interface Batch {
   endDate: Date;
   curriculum: number;
   focus: number;
-  trainer: number;
-  cotrainer: number;
+  trainer: string;
+  cotrainer: string;
   batchStatus: BatchStatus;
   batchLocation: BatchLocation;
   skills: number[];
