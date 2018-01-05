@@ -57,14 +57,12 @@ const Highcharts = require('highcharts/highcharts.src');
       },
       xAxis: {
         type: 'datetime',
-         min: new Date().getTime(),
-        // max:
       },
       yAxis: {
         title: {
-          text: 'Weeks'
+          text: ''
         },
-        categories: ['10 Weeks'],
+        categories: [''],
         reversed: true
       },
       // tooltip: {
@@ -131,4 +129,46 @@ const Highcharts = require('highcharts/highcharts.src');
       }
     });
   }
+
+  getAllConcludedBatches() {
+    this.batchService.getAll().subscribe(batchData => {
+      this.batches = batchData;
+      for (const entry of this.batches) {
+        if (entry.endDate < new Date()) {
+          this.chart.addSeries(
+            {
+              name: entry.name,
+              borderColor: 'gray',
+              pointWidth: 20,
+              data: [{
+                x: entry.startDate,
+                x2: entry.endDate,
+                y: 0,
+              }]
+            });
+        }
+      }
+    });
+  }
+
+  getAllBatchesWithTrainers() {
+    this.batchService.getAll().subscribe(batchData => {
+      this.batches = batchData;
+      for (const entry of this.batches) {
+        if (entry.trainer) {
+          this.chart.addSeries(
+            {
+              name: entry.name,
+              borderColor: 'gray',
+              pointWidth: 20,
+              data: [{
+                x: entry.startDate,
+                x2: entry.endDate,
+                y: 0,
+              }]
+            });
+        }
+      }
+    });
+}
 }
