@@ -217,10 +217,10 @@ export class TrainersComponent implements OnInit {
 
 
   showCalendar() {
-    this.trainerService.authorize();
-    this.http.get("/api/v2/google/googleStatus")
+    // this.trainerService.authorize();
+    this.http.get("https://unavailable-service.cfapps.io/api/v2/google/googleStatus")
       .subscribe( response => {
-        if(response !== ""){
+        if(response !== null){
           this.trainerService.authorize();
         } else {
           this.googleAuth();
@@ -321,7 +321,8 @@ export class TrainersComponent implements OnInit {
   };
 
   googleAuth() {
-    this.router.navigate(['api/v2/google/google']);
+    // this.router.navigate(['api/v2/google/google']);
+    window.location.href = 'https://unavailable-service.cfapps.io/api/v2/google/google';
   }
 
 }

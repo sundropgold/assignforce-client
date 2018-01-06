@@ -58,6 +58,9 @@ export class CalendarDialogComponent {
     dialogRef.afterClosed()
       .subscribe(result => {
         if (result) {
+          if(result.startDate == null || result.endDate == null){
+            return;
+          }
           this.ptoService.addPto(result, result.startDate, result.endDate);
           // this.dialogRef.close();
           this.dialog.open(CalendarDialogComponent);
