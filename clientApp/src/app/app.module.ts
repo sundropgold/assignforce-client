@@ -61,7 +61,8 @@ import {LocationService} from './services/location.service';
 import {RoomService} from './services/room.service';
 import {BuildingService} from './services/building.service';
 import {NgPipesModule} from 'ngx-pipes';
-
+import {ReplogicService} from "./replogic.service";
+import { ChartModule } from 'angular-highcharts';
 
 @NgModule({
   declarations: [
@@ -128,10 +129,12 @@ import {NgPipesModule} from 'ngx-pipes';
     FlexLayoutModule,
     MatDialogModule,
     NgPipesModule,
-    OrderModule
+    OrderModule,
+    ChartModule
   ],
   providers: [
     TrainerService,
+    ReplogicService,
     BatchService,
     SkillService,
     S3CredentialService,
