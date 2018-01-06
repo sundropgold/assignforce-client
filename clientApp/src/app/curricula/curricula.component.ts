@@ -156,8 +156,10 @@ export class CurriculaComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => { // the result can be specified in close(result) in dialog component.
       console.log('create-core dialog closed');
-      this.getAllCurricula(); // reload all curriculum (could possibly do get new one, but update could be complicated).
-    });
+      if (result === true) {
+        this.getAllCurricula(); // reload all curriculum (could possibly do get new one, but update could be complicated).
+      }
+      });
     evt.stopPropagation();
   }
 
@@ -172,7 +174,9 @@ export class CurriculaComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('create-focus dialog closed');
-      this.getAllCurricula();
+      if (result === true) {
+        this.getAllCurricula();
+      }
     });
     evt.stopPropagation();
   }
@@ -203,7 +207,9 @@ export class CurriculaComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('remove-curriculum dialog closed');
+      if (result === true) {
       this.getAllCurricula();
+      }
     });
     evt.stopPropagation();
   }
@@ -292,7 +298,7 @@ export class CurriculaCurriculumDialogComponent {
 
 
   onNoClick(): void {
-      this.dialogRef.close();
+      this.dialogRef.close(false);
   }
 
   clickSave(evt) {
@@ -330,7 +336,7 @@ export class CurriculaCurriculumDialogComponent {
         this.showToast('Failed to create new Core.');
       });
 
-    this.dialogRef.close();
+    this.dialogRef.close(true);
     // location.reload();
   }
 
@@ -351,7 +357,7 @@ export class CurriculaCurriculumDialogComponent {
       }, error => {
         this.showToast('Failed to edit Curriculum.');
       });
-    this.dialogRef.close();
+    this.dialogRef.close(true);
   }
 
   showToast(msg) {
@@ -444,7 +450,7 @@ export class CurriculaRemovalDialogComponent {
     private notificationService: NotificationService) { }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 
   removeCurriculum() {
@@ -461,7 +467,7 @@ export class CurriculaRemovalDialogComponent {
       }, error => {
         this.showToast('Fail to delete Curriculum. ');
       });
-    this.dialogRef.close();
+    this.dialogRef.close(true);
   }
 
   showToast(msg) {

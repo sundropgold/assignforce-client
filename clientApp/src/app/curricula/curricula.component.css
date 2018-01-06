@@ -6,16 +6,18 @@
 }
 .mat-toolbar{
   background-color: #38464E;
-  color: white;
   font-weight: bolder;
   max-height: 50px;
 }
+.mat-toolbar-title {
+  color: white;
+}
+
 
 .mat-expansion-panel-header:hover {
   background-color: #38464E;
   color:#38464E;
 }
-
 
 /* #38464E #3D5360*/
 .mat-expansion-panel-header{
@@ -39,7 +41,7 @@
   margin:0px;
 }
 .button-orange {
-  background-color: #FB8C00;
+  background-color: darkorange;
   margin: 5px;
 }
 .mat-icon{
