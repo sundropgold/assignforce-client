@@ -6,7 +6,7 @@ import {BatchService} from '../services/batch.service';
 import {CurriculaService} from '../services/curricula.service';
 import {NotificationService} from '../services/notification.service';
 import {Curriculum} from '../domain/curriculum';
-import {Batch} from '../domain/batch';
+import {Batch, BatchLocation} from '../domain/batch';
 import {Trainer} from '../domain/trainer';
 import {TrainerService} from '../services/trainer.service';
 import {ReplogicService} from "../replogic.service";
@@ -22,6 +22,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   batch: Batch[] = [];
   trainer: Trainer[] = [];
   newBatch: any = {};
+  defaultLocation: any = {};
   // for creating new projection
   cardArr = [];
   // use for getting the current date, and calculation of the hire date
@@ -377,10 +378,15 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
       this.showToast(this.errMsg);
     } else if (canSubmit === 0) {     // Create batch with batchService
       console.log(batch);
+      this.defaultLocation.buildingId = 1;
+      this.defaultLocation.locationId = 1;
+      this.defaultLocation.roomId = 1;
       this.newBatch.name = '-';
       this.newBatch.startDate = batch.startDate;
       this.newBatch.endDate = batch.hireDate;
       this.newBatch.curriculum = batch.batchType.currId;
+      this.newBatch.batchLocation = this.defaultLocation;
+      this.newBatch.batchStatus = {};
       console.log(this.newBatch);
       // newBatch.batchLocation = 'default location'; //get default location from setting service
       this.batchService.create(this.newBatch).subscribe(data => console.log('batch created sucessfully'),
