@@ -112,6 +112,7 @@ export class TimelineComponent implements AfterViewInit, OnInit {
   }
 
   getAllBatches() {
+    var x = 0;
     this.batchService.getAll().subscribe(batchData => {
       this.batches = batchData;
       for (const entry of this.batches) {
@@ -123,9 +124,10 @@ export class TimelineComponent implements AfterViewInit, OnInit {
             data: [{
               x: entry.startDate,
               x2: entry.endDate,
-              y: 0,
+              y: x,
             }]
           });
+        x++;
       }
     });
   }
