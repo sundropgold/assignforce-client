@@ -9,8 +9,10 @@ import {Curriculum} from '../domain/curriculum';
 import {Batch, BatchLocation} from '../domain/batch';
 import {Trainer} from '../domain/trainer';
 import {TrainerService} from '../services/trainer.service';
-import {ReplogicService} from "../replogic.service";
-import {Chart} from "angular-highcharts";
+import {ReplogicService} from '../replogic.service';
+import {Chart} from 'angular-highcharts';
+import {SettingsService} from '../services/global-settings.service';
+import {GlobalSettings} from '../domain/global-settings';
 
 @Component({
   selector: 'app-reports',
@@ -21,13 +23,19 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   curricula: Curriculum[] = [];
   batch: Batch[] = [];
   trainer: Trainer[] = [];
+  // remove = [];
+  setting: GlobalSettings[] = [];
+  reportGrads = 13;
+  reportIncomingGrads = 18;
+
   newBatch: any = {};
   defaultLocation: any = {};
   // for creating new projection
   cardArr = [];
   // use for getting the current date, and calculation of the hire date
   monthList = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'June', 'July', 'Aug.', 'Sept.', 'Oct.', 'Nov.', 'Dec.'];
-  year = new Date().getFullYear();
+  gradYear = new Date().getFullYear();
+  incomeYear = new Date().getFullYear();
   hireDate = new Date();
   startDate = new Date();
   // Use to calculate the total number in the card array
@@ -46,13 +54,16 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   curriculaControl = new FormControl('', [Validators.required]);
 
   @ViewChild(MatSort) sort: MatSort;
-  constructor(public skills: ReplogicService, private ref: ChangeDetectorRef, private batchService: BatchService, private curriculaService: CurriculaService,
+  constructor(public skills: ReplogicService, private ref: ChangeDetectorRef, private settingService: SettingsService,
+              private batchService: BatchService, private curriculaService: CurriculaService,
               private trainerService: TrainerService, private notificationService: NotificationService) {
     this.getAllCurriculum();
     this.getAllBatches();
     this.getAllTrainer();
+    this.getDefaultSetting();
   }
-  displayedColumns = ['Ciriculam', 'jan', 'febuaray', 'march','april','may','june','july','august','september', 'october','november', 'december'];
+  displayedColumns = ['Ciriculam', 'jan', 'febuaray', 'march', 'april', 'may', 'june',
+    'july', 'august', 'september', 'october', 'november', 'december'];
   dataSource = new MatTableDataSource(this.skills.getElement());
   chart = new Chart({
       chart: {
@@ -82,7 +93,8 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
 
       },
       tooltip: {
-        pointFormat: '<span style="color:{series.color}">{series.name}      </span>: <b>\'<td style="text-align-: right"><b><span style="color: whitesmoke">{point.y}</b> <br/>',
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: ' +
+        '<b>\'<td style="text-align-: right"><b><span style="color: whitesmoke">{point.y}</b> <br/>',
         backgroundColor: 'black',
         borderWidth: 5,
         borderColor: 'purple',
@@ -129,20 +141,18 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
 
       },
       tooltip: {
-        pointFormat: '<span style="color:{series.color}">{series.name}      </span>: <b>\'<td style="text-align-: right"><b><span style="color: whitesmoke">{point.y}</b> <br/>',
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: ' + '' + '' +
+        '<b>\'<td style="text-align-: right"><b><span style="color: whitesmoke">{point.y}</b> <br/>',
         backgroundColor: 'black',
         borderWidth: 5,
         borderColor: 'purple',
         shared: true,
-
-
       },
       plotOptions: {
         column : {
           stacking : 'perce',
           pointWidth: 9,
           pointPadding: 0.2,
-
         }},
       series: this.skills.getList(),
     }
@@ -163,11 +173,31 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   showToast(msg) {
     this.notificationService.openSnackBar(msg);
   }
+  // get default setting
+  getDefaultSetting() {
+    this.settingService.getSettings().subscribe(
+      setting => {
+        this.setting = setting;
+        this.reportIncomingGrads = this.setting[0].reportIncomingGrads;
+        this.reportGrads = this.setting[0].reportGrads;
+        console.log(this.setting);
+      }, err => console.log(err)
+    );
+  }
   // get all batches
   getAllBatches() {
     this.batchService.getAll().subscribe(batch => {
       this.batch = batch;
+      for (const x of Object.keys(this.batch)) {
+        this.batch[x].startDate = new Date(this.batch[x].startDate);
+        this.batch[x].endDate = new Date(this.batch[x].endDate);
+      }
+      // console.log(new Date(this.batch[0].startDate));
       console.log(this.batch);
+      console.log(this.batch[0].startDate.getUTCFullYear(), this.batch[0].endDate.getUTCFullYear());
+      console.log(this.batch[0].startDate.getUTCMonth(), this.batch[0].endDate.getUTCMonth());
+      console.log(this.batch[1].startDate.getUTCMonth(), this.batch[1].endDate.getUTCMonth());
+
     }, err => {
       console.log(err);
       this.showToast('Failed to fetch batch');
@@ -208,6 +238,11 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     // temp.batchType = this.batch;
     this.cardArr.push(temp);
     console.log(this.cardArr);
+  }
+  // Remove a card from the array index
+  removeCard(index) {
+    this.cardArr.splice(index, 1);
+    this.cumulativeBatches();
   }
 
   exportToCSV(evt, name) {
@@ -378,9 +413,8 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
       this.showToast(this.errMsg);
     } else if (canSubmit === 0) {     // Create batch with batchService
       console.log(batch);
-      this.defaultLocation.buildingId = 1;
-      this.defaultLocation.locationId = 1;
-      this.defaultLocation.roomId = 1;
+      this.defaultLocation.buildingId = this.setting[0].defaultBuilding;
+      this.defaultLocation.locationId = this.setting[0].defaultLocation;
       this.newBatch.name = '-';
       this.newBatch.startDate = batch.startDate;
       this.newBatch.endDate = batch.hireDate;
@@ -388,9 +422,26 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
       this.newBatch.batchLocation = this.defaultLocation;
       this.newBatch.batchStatus = {};
       console.log(this.newBatch);
-      // newBatch.batchLocation = 'default location'; //get default location from setting service
-      this.batchService.create(this.newBatch).subscribe(data => console.log('batch created sucessfully'),
-          error => console.log('error creating batch'));
+      this.batchService.create(this.newBatch).subscribe(
+        data => {
+          console.log('batch created sucessfully');
+          this.removeCard(index);
+        },
+        error => console.log('error creating batch')
+        );
+    }
+  }
+  createAllBatch() {
+    const tempCardArr = this.cardArr;
+    for (const x of Object.keys(tempCardArr)) {
+      this.createBatch(tempCardArr[x], x);
+    }
+    // for (const y of Object.keys(this.remove)) {
+    //   console.log(y);
+    //   this.removeCard(this.remove[y]);
+    // }
+    if (this.cardArr.length !== 0) {
+      this.showToast('Error creating some batches');
     }
   }
 }
