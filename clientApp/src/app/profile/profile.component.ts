@@ -25,11 +25,7 @@ export class ProfileComponent implements OnInit {
   // data
   skills: Skill[];
   myFile: FileList;
-  creds: S3Credential = {
-    ID: 'AKIAIRUM7DHQJEFIKK7A',
-    SecretKey: '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',
-    BucketName: 'jw1010'
-  };
+  creds: S3Credential;
   certFile: FileList = null;
   certName: string;
   skillsList: string[] = [];
