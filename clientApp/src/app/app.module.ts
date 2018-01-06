@@ -61,6 +61,7 @@ import {LocationService} from './services/location.service';
 import {RoomService} from './services/room.service';
 import {BuildingService} from './services/building.service';
 import {NgPipesModule} from 'ngx-pipes';
+import {SettingsService} from './services/global-settings.service';
 import {ReplogicService} from "./replogic.service";
 import { ChartModule } from 'angular-highcharts';
 
@@ -145,6 +146,7 @@ import { ChartModule } from 'angular-highcharts';
     LocationService,
     BuildingService,
     RoomService,
+    SettingsService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,

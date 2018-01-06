@@ -10,14 +10,14 @@
 
   <mat-card-content class="spaceBottom">
     <mat-list>
-      <mat-list-item>
+      <mat-list-item >
         <div class="mat-list-item-text">
           <h3>Timeline Trainers Per Page</h3>
         </div>
         <span class="fill-space"></span>
 
-        <mat-form-field>
-          <input matInput type="number"  min="0" step="1" value="13">
+        <mat-form-field *ngIf="settings">
+          <input matInput type="number"  min="0" step="1" [(ngModel)]="trainersPerPage">
         </mat-form-field>
       </mat-list-item>
 
@@ -26,8 +26,8 @@
           <h3>Reports Outgoing Grads</h3>
         </div>
           <span class="fill-space"></span>
-        <mat-form-field>
-          <input matInput type="number"  min="0" step="1" value="13">
+        <mat-form-field *ngIf="settings">
+          <input matInput type="number"  min="0" step="1" [(ngModel)]="reportGrads">
         </mat-form-field>
       </mat-list-item>
 
@@ -36,8 +36,8 @@
           <h3>Reports Candidates Incoming</h3>
         </div>
         <span class="fill-space"></span>
-        <mat-form-field>
-          <input matInput type="number"  min="0" step="1" value="13">
+        <mat-form-field *ngIf="settings">
+          <input matInput type="number"  min="0" step="1" [(ngModel)]="reportIncomingGrads">
         </mat-form-field>
       </mat-list-item>
 
@@ -46,11 +46,15 @@
           <h3>Default Batch Location</h3>
         </div>
         <span class="fill-space"></span>
-        <mat-form-field *ngIf="location">
-          <mat-select [(value)]="selectedLocation" >
-            <mat-option value="{{selectedLocation}}">None</mat-option>
-            <div *ngFor="let locationOption of location" (click)="choosingLocation(locationOption)">
-              <mat-option *ngIf="locationOption.active" value= "{{selectedLocation}}"> {{locationOption.city}}</mat-option>
+        <mat-form-field *ngIf="locations">
+          <mat-select [(ngModel)]="selectedLocation" >
+            <div (click)="resetLocation()">
+              <mat-option value="{{selectedLocation}}"  >{{selectedLocation}}</mat-option>
+            </div>
+            <div *ngFor="let locationOption of locations" (click)="choosingLocation(locationOption)">
+              <mat-option *ngIf="locationOption.active && locationOption.name !== selectedLocation" value= "{{locationOption.name}}">
+                {{locationOption.name}}
+              </mat-option>
             </div>
           </mat-select>
         </mat-form-field>
@@ -62,10 +66,12 @@
         </div>
         <span class="fill-space"></span>
         <mat-form-field>
-          <mat-select [(value)]="selectedBuilding" >
-            <mat-option value="{{selectedBuilding}}">None</mat-option>
-            <div *ngFor="let buildingOption of building">
-              <mat-option *ngIf="buildingOption.active" value= "{{selectedBuilding}}"> {{buildingOption.name}}</mat-option>
+          <mat-select [(ngModel)]="selectedBuilding" >
+              <mat-option value="{{selectedBuilding}}">{{selectedBuilding}}</mat-option>
+            <div *ngFor="let buildingOption of building" (click)="choosingBuilding(buildingOption)">
+              <mat-option *ngIf="buildingOption.active && buildingOption.name !== selectedBuilding" value="{{buildingOption.name}}">
+                {{buildingOption.name}}
+              </mat-option>
             </div>
           </mat-select>
         </mat-form-field>
@@ -76,8 +82,8 @@
           <h3>Minimum Batch Size</h3>
         </div>
         <span class="fill-space"></span>
-        <mat-form-field>
-          <input matInput type="number"  min="0" step="1" value="13">
+        <mat-form-field *ngIf="settings">
+          <input matInput type="number"  min="0" step="1" [(ngModel)]="minBatchSize">
         </mat-form-field>
       </mat-list-item>
 
@@ -86,8 +92,8 @@
           <h3>Maximum Batch Size</h3>
         </div>
         <span class="fill-space"></span>
-        <mat-form-field>
-          <input matInput type="number"  min="0" step="1" value="13">
+        <mat-form-field *ngIf="settings">
+          <input matInput type="number"  min="0" step="1" [(ngModel)]="maxBatchSize">
         </mat-form-field>
       </mat-list-item>
 
@@ -96,8 +102,8 @@
           <h3>Default Batch Length</h3>
         </div>
         <span class="fill-space"></span>
-        <mat-form-field>
-          <input matInput type="number"  min="0" step="1" value="13">
+        <mat-form-field *ngIf="settings">
+          <input matInput type="number"  min="0" step="1" [(ngModel)]="batchLength">
         </mat-form-field>
       </mat-list-item>
 
@@ -106,8 +112,8 @@
           <h3>Minimum Day Between Trainer Batches</h3>
         </div>
         <span class="fill-space"></span>
-        <mat-form-field>
-          <input matInput type="number"  min="0" step="1" value="13">
+        <mat-form-field *ngIf="settings">
+          <input matInput type="number"  min="0" step="1" [(ngModel)]="trainerBreakDays">
         </mat-form-field>
       </mat-list-item>
 
@@ -117,7 +123,7 @@
           <h3>Default Batch Name Pattern</h3>
         </div>
         <span class="fill-space"></span>
-        <span>$y$m $mmm$d $c</span>
+        <span *ngIf="settings">{{settings.defaultNamePattern}}</span>
       </mat-list-item>
       <div style="margin-left: 2%">
         <div>$c = curriculum name</div><br/>
