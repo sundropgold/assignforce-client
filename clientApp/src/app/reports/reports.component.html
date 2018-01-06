@@ -22,11 +22,11 @@
             <mat-card class="example-card">
               <mat-card-title>
                 <span fxFlex=""></span>
-                <mat-icon style="color: #FB8C00">remove_circle</mat-icon>
+                <mat-icon style="color: #FB8C00" (click)="removeCard(i)">remove_circle</mat-icon>
               </mat-card-title>
               <mat-card-content>
                 <mat-form-field>
-                  <input matInput type="number" placeholder="Trainer's Needed: " [(ngModel)]="cardArr[i].requiredGrads" (change)="calcReqBatch(cardArr[i].requiredGrads, i)">
+                  <input matInput type="number" placeholder="Trainee's Needed: " [(ngModel)]="cardArr[i].requiredGrads" (change)="calcReqBatch(cardArr[i].requiredGrads, i)">
                 </mat-form-field>
                 <mat-form-field>
                   <input matInput [matDatepicker]="picker" placeholder="Hire Date: "  [(ngModel)]="cardArr[i].hireDate" (dateChange)="calcStartDate(cardArr[i].hireDate, i, $event)">
@@ -76,7 +76,7 @@
                 <p>Cumulative Number of Batches: {{totalCumulativeBatch}}</p>
               </mat-card-content>
               <mat-card-actions>
-                <div fxLayoutAlign="center" class="btn">
+                <div fxLayoutAlign="center" class="btn" (click)="createAllBatch()">
                   <span>Create All</span>
                   <div class="dot"></div>
                 </div>
@@ -94,18 +94,18 @@
   <mat-accordion>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
-        <mat-panel-title>Graduate Summary for 2018</mat-panel-title>
+        <mat-panel-title>Graduate Summary for {{gradYear}}</mat-panel-title>
         <span fxFlex=""></span>
         <button mat-icon-button><mat-icon title="Export to CSV" (click)="exportToCSV($event, 'gruduateSummary')">get_app</mat-icon></button>
         <mat-menu #settingGraduate="matMenu">
-          <form (click)="openMenu($event)" mat-menu-item>
+          <form mat-menu-item>
             <mat-form-field class="full-width">
-              <input matInput placeholder="Year" type="number">
+              <input matInput placeholder="Year" type="number" [(ngModel)]="gradYear" (click)="$event.stopPropagation()" name="settingGraduate">
             </mat-form-field>
           </form>
-          <form (click)="openMenu($event)" mat-menu-item>
+          <form mat-menu-item>
             <mat-form-field class="full-width">
-              <input matInput placeholder="Graduate Per Batch">
+                <input matInput placeholder="Graduate Per Batch" type="number" [(ngModel)]="reportGrads" (click)="$event.stopPropagation()" name="settingGraduate">
             </mat-form-field>
           </form>
 
@@ -214,23 +214,23 @@
   <mat-accordion>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
-        <mat-panel-title>Incoming Trainee Summary for 2018</mat-panel-title>
+        <mat-panel-title>Incoming Trainee Summary for {{incomeYear}}</mat-panel-title>
         <span fxFlex=""></span>
         <button mat-icon-button><mat-icon title="Export to CSV" (click)="exportToCSV($event, 'gruduateSummary')">get_app</mat-icon></button>
-        <mat-menu #settingGraduate="matMenu">
-          <form (click)="openMenu($event)" mat-menu-item>
+        <mat-menu #settingIncoming="matMenu">
+          <form mat-menu-item>
             <mat-form-field class="full-width">
-              <input matInput placeholder="Year" type="number">
+              <input matInput placeholder="Year" type="number" [(ngModel)]="incomeYear" (click)="$event.stopPropagation()" name="settingIncoming">
             </mat-form-field>
           </form>
-          <form (click)="openMenu($event)" mat-menu-item>
+          <form mat-menu-item>
             <mat-form-field class="full-width">
-              <input matInput placeholder="Incoming Trianee">
+                <input matInput placeholder="Graduate Per Batch" type="number" [(ngModel)]="reportIncomingGrads" (click)="$event.stopPropagation()" name="settingIncoming">
             </mat-form-field>
           </form>
 
         </mat-menu>
-        <button mat-icon-button [matMenuTriggerFor]="settingGraduate" (click)="openMenu($event)">
+        <button mat-icon-button [matMenuTriggerFor]="settingIncoming" (click)="openMenu($event)">
           <mat-icon>settings</mat-icon>
         </button>
       </mat-expansion-panel-header>
