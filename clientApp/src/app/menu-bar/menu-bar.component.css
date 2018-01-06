@@ -18,3 +18,11 @@
 .mat-ink-bar {
   background-color: orangered !important;
 }
+
+.fill-space{
+  flex: 1 1 auto;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
