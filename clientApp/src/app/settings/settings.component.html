@@ -133,9 +133,9 @@
       </div>
     </mat-list>
   </mat-card-content>
-  <div style="padding-bottom: 1%">
+  <div style="padding-bottom: 1%" *ngIf="admin">
     <span style="display: flex;  align-items: center; justify-content: center;">
       <button mat-raised-button color="warn" (click)="update()">Update</button>
-      <button style="margin-left: 1%" (click)="cancel()" mat-raised-button>Cancel </button> </span>
+      <button style="margin-left: 1%" (click)="cancel()" mat-raised-button>Reset</button> </span>
   </div>
 </mat-card>
