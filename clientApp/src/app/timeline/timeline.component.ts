@@ -8,18 +8,18 @@ import {
 import { FormControl } from '@angular/forms';
 import 'highcharts/adapters/standalone-framework.src';
 import * as xRange from 'highcharts/modules/xrange.js';
-import {BatchService} from '../services/batch.service';
-import {Batch} from '../domain/batch';
+import { BatchService } from '../services/batch.service';
+import { Batch } from '../domain/batch';
 
 const Highcharts = require('highcharts/highcharts.src');
 
 @Component({
-    selector: 'app-timeline',
-    templateUrl: './timeline.component.html',
-    styleUrls: ['./timeline.component.css']
-  })
+  selector: 'app-timeline',
+  templateUrl: './timeline.component.html',
+  styleUrls: ['./timeline.component.css']
+})
 
-  export class TimelineComponent implements AfterViewInit, OnInit {
+export class TimelineComponent implements AfterViewInit, OnInit {
   curriculum = new FormControl();
   focus = new FormControl();
   location = new FormControl();
@@ -39,7 +39,7 @@ const Highcharts = require('highcharts/highcharts.src');
 
   constructor(
     private batchService: BatchService
-  ) {}
+  ) { }
 
   ngOnInit() {
   }
@@ -57,12 +57,13 @@ const Highcharts = require('highcharts/highcharts.src');
       },
       xAxis: {
         type: 'datetime',
+        min: new Date().getTime()
       },
       yAxis: {
         title: {
-          text: ''
+          text: 'Trainers'
         },
-        categories: [''],
+        categories: [],
         reversed: true
       },
       // tooltip: {
@@ -112,9 +113,10 @@ const Highcharts = require('highcharts/highcharts.src');
   }
 
   getAllBatches() {
+    var x = 0;
     this.batchService.getAll().subscribe(batchData => {
       this.batches = batchData;
-      for (const entry of this.batches){
+      for (const entry of this.batches) {
         this.chart.addSeries(
           {
             name: entry.name,
@@ -123,9 +125,10 @@ const Highcharts = require('highcharts/highcharts.src');
             data: [{
               x: entry.startDate,
               x2: entry.endDate,
-              y: 0,
+              y: x,
             }]
           });
+          x++;
       }
     });
   }
@@ -170,5 +173,5 @@ const Highcharts = require('highcharts/highcharts.src');
         }
       }
     });
-}
+  }
 }
