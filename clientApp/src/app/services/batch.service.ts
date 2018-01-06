@@ -6,8 +6,8 @@ import {Observable} from 'rxjs/Observable';
 @Injectable()
 export class BatchService {
 
-  url = 'http://localhost:9092/api/v2/batch';
-  // url = 'https://batch-service.cfapps.io/api/v2/batch';
+  // url = 'http://localhost:9092/api/v2/batch';
+   url = 'https://batch-service.cfapps.io/api/v2/batch';
 
   constructor(private http: HttpClient) { }
 
@@ -22,6 +22,10 @@ export class BatchService {
 
   create(batch): Observable<Batch> {
     return this.http.post<Batch>(`${this.url}`, batch);
+  }
+
+  delete(id): Observable<object> {
+    return this.http.delete<Object>(`${this.url}/${id}`);
   }
 
   update(batch): Observable<Batch> {

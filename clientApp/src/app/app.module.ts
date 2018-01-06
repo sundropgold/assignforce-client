@@ -7,7 +7,10 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {SpringXsrfInterceptor} from './interceptors/springXsrfInterceptor';
 import {MenuBarComponent} from './menu-bar/menu-bar.component';
 import {OverviewComponent} from './overview/overview.component';
-import {BatchesComponent} from './batches/batches.component';
+import {
+  BatchesComponent,
+  BatchDeleteDialogComponent
+} from './batches/batches.component';
 import {
   LocationAddBuildingDialogComponent,
   LocationAddLocationDialogComponent, LocationAddRoomDialogComponent, LocationDeleteBuildingDialogComponent,
@@ -58,7 +61,9 @@ import {LocationService} from './services/location.service';
 import {RoomService} from './services/room.service';
 import {BuildingService} from './services/building.service';
 import {NgPipesModule} from 'ngx-pipes';
-
+import {SettingsService} from './services/global-settings.service';
+import {ReplogicService} from "./replogic.service";
+import { ChartModule } from 'angular-highcharts';
 
 @NgModule({
   declarations: [
@@ -66,6 +71,7 @@ import {NgPipesModule} from 'ngx-pipes';
     MenuBarComponent,
     OverviewComponent,
     BatchesComponent,
+    BatchDeleteDialogComponent,
     LocationsComponent,
     LocationAddLocationDialogComponent,
     LocationDeleteLocationDialogComponent,
@@ -124,10 +130,12 @@ import {NgPipesModule} from 'ngx-pipes';
     FlexLayoutModule,
     MatDialogModule,
     NgPipesModule,
-    OrderModule
+    OrderModule,
+    ChartModule
   ],
   providers: [
     TrainerService,
+    ReplogicService,
     BatchService,
     SkillService,
     S3CredentialService,
@@ -138,6 +146,7 @@ import {NgPipesModule} from 'ngx-pipes';
     LocationService,
     BuildingService,
     RoomService,
+    SettingsService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,
@@ -146,6 +155,7 @@ import {NgPipesModule} from 'ngx-pipes';
   ],
   entryComponents: [
     TrainerDialogComponent,
+    BatchDeleteDialogComponent,
     LocationAddLocationDialogComponent,
     LocationDeleteLocationDialogComponent,
     LocationEditLocationDialogComponent,

@@ -20,11 +20,7 @@ import {SkillService} from '../services/skill.service';
 export class TrainersComponent implements OnInit {
   trainers: Trainer[];
   isManager: boolean;
-  creds: S3Credential = {
-    ID: 'AKIAIRUM7DHQJEFIKK7A',
-    SecretKey: '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',
-    BucketName: 'jw1010'
-  };
+  creds: S3Credential;
 
   constructor(private notificationService: NotificationService,
               private trainerService: TrainerService,
@@ -39,6 +35,8 @@ export class TrainersComponent implements OnInit {
   ngOnInit() {
     this.isManager = true;
     this.getAll();
+    this.s3Service.getCreds().subscribe(response => this.creds = response,
+      () => this.showToast('Failed to fetch Credentials'));
 
     // this.trainers = [{
     //   trainerId: 1,
@@ -143,9 +141,9 @@ export class TrainersComponent implements OnInit {
       lastName: '',
       skills: [],
       skillsObject: [],
-      certifications: '',
+      certifications: [],
       active: true,
-      resume: '',
+      resume: null,
     };
     const dialogRef = this.dialog.open(TrainerDialogComponent, {
       width: '450px',
