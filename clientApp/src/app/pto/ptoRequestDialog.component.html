@@ -10,21 +10,23 @@
       <div class="md-padding">
         <mat-form-field flex="none">
           <label>Start Date</label>
-          <input matInput [matDatepicker]="startPick" placeholder="Choose a start date" ngModel="startDate" name="startDate" (dateChange)="setStartDate">
-          <mat-datepicker-toggle matSuffix [for]="startPick"> </mat-datepicker-toggle>
+          <input matInput [matDatepicker]="startPick" [(ngModel)]="data.pto.startDate" name="startDate">
+          <mat-datepicker-toggle matSuffix [for]="startPick"></mat-datepicker-toggle>
           <mat-datepicker #startPick></mat-datepicker>
         </mat-form-field>
 
 
         <mat-form-field flex="none">
           <label>End Date</label>
-          <mat-datepicker ng-model="ptoCtrl.endDate" startView="year" onfocus="this.open()" md-hide-icons="calendar"> </mat-datepicker>
+          <input matInput [matDatepicker]="endPick"  [(ngModel)]="data.pto.endDate" name="endDate">
+          <mat-datepicker-toggle matSuffix [for]="endPick"></mat-datepicker-toggle>
+          <mat-datepicker #endPick></mat-datepicker>
         </mat-form-field>
       </div>
     </div>
 
     <mat-dialog-actions>
-      <button mat-button class="md-primary" (click)="send(true)">Send</button>
+      <button mat-button class="md-primary" [mat-dialog-close]="data.pto">Send</button>
       <button mat-button class="md-primary" (click)="cancel()">Cancel</button>
 
     </mat-dialog-actions>

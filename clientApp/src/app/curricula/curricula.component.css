@@ -37,9 +37,18 @@
   padding-top: 8px;
 }
 
-.icon-margin-fix {
-  margin:0px;
+.icon-margin-fix-header {
+  color: #E0E4E6;
+  margin: 5px;
+  cursor: pointer;
 }
+
+.icon-margin-fix  {
+  color: #FB8C00;
+  margin: 5px;
+  cursor: pointer;
+}
+
 .button-orange {
   background-color: darkorange;
   margin: 5px;

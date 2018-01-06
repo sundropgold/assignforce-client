@@ -21,6 +21,7 @@ export class LocationService {
     return this.http.get<Locations>(`${this.url}/${id}`);
   }
 
+
   // Adds a new Locations to the database
   create(location: Locations): Observable<any> {
     return this.http.post<any>(`${this.url}`, location);

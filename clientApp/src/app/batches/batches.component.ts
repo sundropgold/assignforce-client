@@ -1,9 +1,9 @@
-import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {MatSort, MatTableDataSource, MatCheckbox, MatPaginator} from '@angular/material';
+import {AfterViewInit, Component, Inject, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {MatSort, MatTableDataSource, MatCheckbox, MatPaginator, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Batch, BatchLocation, BatchStatus} from '../domain/batch';
 import {FormControl} from '@angular/forms';
 import {DomSanitizer} from '@angular/platform-browser';
-import {MatIconRegistry} from '@angular/material';
+import {MatIconRegistry, MatDialog} from '@angular/material';
 import {BatchService} from '../services/batch.service';
 import {NotificationService} from '../services/notification.service';
 import {CurriculaService} from '../services/curricula.service';
@@ -27,11 +27,16 @@ import {Locations} from '../domain/locations';
   encapsulation: ViewEncapsulation.None
 })
 export class BatchesComponent implements OnInit, AfterViewInit {
-
-  // FAKE VALUES FOR THE FIRST TAB
   curDate: any;
+  minStartDate = new Date();
+ minEndDate = new Date();
   datebetween: any;
+  // This boolean changes the buttons in the first tab between cancel/finalize and create
+  // true = create
+  // false = cancel/finalize
   creating = true;
+
+  // This is the batch that is being created or edited
   batch: Batch;
    monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
     'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
@@ -45,23 +50,32 @@ export class BatchesComponent implements OnInit, AfterViewInit {
 
   trainerForm: Trainer[];
 
-  // locations = [
-  //   {value: 'location-0', viewValue: 'Revature HQ - Reston,VA'},
-  //   {value: 'location-1', viewValue: 'CUNY - SPS,NY'}
-  // ];
   locationForm: Locations[];
 
   buildingForm: Building[];
   test: Building[];
   roomForm: Room[];
 
+  // This boolean checks if it is editing
+  isEditing = false;
+
+  // This is the id of the batch beign edited
+  editBatchId = null;
+
+  // This is the dialog box for the finalize button;
+  finalize = 'finalize creation';
 
   firstTabHeader = 'Create New Batch';
 
   //  VALUES FOR THE ALL BATCHES TAB
+  // These are the column names for the mat table to make it work
+  // Make sure they are the same variable name as the values in the batch.ts
+  batchValues = ['Checkbox', 'name', 'curriculumName', 'focusName', 'trainerName',
+    'location', 'building', 'room', 'startDate', 'endDate', 'Icons'];
+
+  // Batch data pulled from the database
   BatchData: Batch[];
   batchData = new MatTableDataSource(this.BatchData);
-  batchValues = ['Checkbox', 'name', 'curriculumName', 'focusName', 'trainerName', 'location', 'building', 'room', 'startDate', 'endDate', 'Icons'];
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -73,11 +87,13 @@ export class BatchesComponent implements OnInit, AfterViewInit {
               private locationService: LocationService,
               private buildingService: BuildingService,
               private roomService: RoomService,
+              public dialog: MatDialog,
               private notificationService: NotificationService) {
   }
 
   ngOnInit() {
     this.getAll();
+    this.setEndDate();
     this.initBatch();
   }
 
@@ -87,15 +103,37 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     this.batchData = new MatTableDataSource(this.BatchData);
   }
 
-  EditBatch() {
-    this.firstTabHeader = 'Edit Batch';
+  EditBatch(id: number) {
+    this.firstTabHeader = 'Editing Batch';
+    this.CloneBatch(id);
+    this.creating = false;
+    this.isEditing = true;
+    this.finalize = 'finalize edit';
+    this.editBatchId = id;
   }
 
-  CloneBatch() {
-    this.firstTabHeader = 'Clone Batch';
+  CloneBatch(id: number) {
+    this.batchService.getById(id).subscribe(data => {
+      console.log(data);
+      this.initBatch();
+      this.batch = data;
+      this.batch.startDate = new Date(data.startDate);
+      this.batch.endDate = new Date(data.endDate);
+      this.getBuildings();
+      this.getRooms();
+    });
   }
 
-  DeleteBatch() {
+  DeleteBatch(id: number, evt) {
+    const dialogRef = this.dialog.open(BatchDeleteDialogComponent,
+      {
+        width: '400px',
+        data: id
+      });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('delete batch dialog closed');
+      this.reload(evt);
+    });
   }
 
   SynchronizeBatch() {
@@ -108,44 +146,74 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   isCreating() {
     return this.creating;
   }
-  clickTest(evt) {
+
+  // This opens up the two buttons that say cancel and finalize
+  beginCreation(evt) {
+    this.firstTabHeader = 'Create New Batch';
     this.creating = !this.creating;
     this.showToast('Creating new Batch');
     evt.stopPropagation();
   }
+
+  // cancels a creation
   cancel(evt) {
+    this.firstTabHeader = 'Create New Batch';
     this.creating = !this.creating;
     evt.stopPropagation();
+    this.isEditing = false;
+    this.finalize = 'finalize creation';
+    this.editBatchId = null;
+    this.batch.id = this.editBatchId;
   }
+
+  // finalzies creation
   create(evt) {
     // createBatch(). send form with data to micro service for batch creation.
     this.creating = !this.creating;
     console.log(this.batch);
-    this.batchService.create(this.batch).subscribe(data => {});
+    if (this.isEditing === false) {
+      this.batchService.create(this.batch).subscribe(data => {
+        this.getAll();
+        this.editBatchId = null;
+        this.batch.id = this.editBatchId;
+        this.reload(evt);
+      });
+    } else {
+      this.batchService.update(this.batch).subscribe(data => {
+        this.reload(evt);
+      });
+    }
+    this.cancel(evt);
     evt.stopPropagation();
   }
+
+  reload(evt) {
+    this.getAll();
+    this.cancel(evt);
+  }
+
   calcDate(evt) {
     this.curDate = new Date();
-    this.datebetween = ((this.batch.endDate)as any - ((this.batch.startDate)as any)) / 1000 / 60 / 60 / 24;
-    this.batch.name = this.curDate.getYear() % 100 + '' + (this.batch.startDate.getMonth() + 1) + '' + this.monthNames
-      [this.batch.startDate.getMonth()] + '' + (this.batch.startDate.getUTCDate()) + '' + this.batch.curriculum;
-    console.log(this.batch.name);
+    this.datebetween = Math.round(((this.batch.endDate)as any - ((this.batch.startDate)as any)) / 1000 / 60 / 60 / 24 / 7);
+    this.batch.name = this.curDate.getYear() % 100 + '' + (this.batch.startDate.getMonth() + 1) + ' ' + this.monthNames
+      [this.batch.startDate.getMonth()] + '' + (this.batch.startDate.getUTCDate()) + '' + this.batch.curriculumName;
   }
-  setCur(evt) {
-    this.batch.curriculum = evt;
-    this.batch.curriculumName = evt.viewValue;
-    console.log(this.batch);
-
+  setCurName () {
+    this.curriculaService.getById(this.batch.curriculum).subscribe(data => {
+      this.batch.curriculumName = data.name;
+    }, err => {
+      console.log('failed to fetch curriculum name');
+    } );
   }
   initBatch() {
     this.batch = {
       name: '' ,
       startDate: new Date(),
-      endDate: new Date(),
+      endDate: this.minEndDate,
       curriculum: 1,
       focus: 1,
-      trainer: 1,
-      cotrainer: 1,
+      trainer: null,
+      cotrainer: null,
       batchStatus: {
         batchStatusID: 1,
         batchStatusName: 'Scheduled'
@@ -263,34 +331,72 @@ export class BatchesComponent implements OnInit, AfterViewInit {
 
   // Gets the buildings of the clicked room
   getBuildings() {
-    this.buildingService.getAll().subscribe(buildingData => {
-      this.buildingForm = buildingData;
-      console.log(this.buildingForm[1].location);
-      console.log(this.batch.batchLocation.locationId);
-      console.log(this.buildingForm[1].location === this.batch.batchLocation.locationId);
-      /*this.test = this.buildingForm.filter(
-        sdhksk => {
-          sdhksk.location === this.batch.batchLocation.locationId;
-        }
-      );
-      console.log(this.test);
-      for (const entry of this.buildingForm){
-        if (entry.location = this.batch.batchLocation.locationId) {
-
-        }
-      }*/
-      console.log(this.test);
+    this.locationService.getById(this.batch.batchLocation.locationId).subscribe(buildingData => {
+      this.buildingForm = buildingData.buildings;
     }, error => {
       this.showToast('Failed to fetch Buildings');
     });
   }
   // Gets the rooms of the clicked buildings
   getRooms() {
-    this.roomService.getAll().subscribe(roomData => {
-      this.roomForm = roomData;
+    this.buildingService.getById(this.batch.batchLocation.buildingId).subscribe(roomData => {
+      this.roomForm = roomData.rooms;
     }, error => {
       this.showToast('Failed to fetch Rooms');
     });
+  }
+  getCurriculumSkills () {
+    this.curriculaService.getById(this.batch.curriculum).subscribe(data => {
+      this.batch.skills = data.skills;
+    });
+  }
+  getFocusSkills() {
+    this.curriculaService.getById(this.batch.focus).subscribe(data => {
+      console.log(data);
+      this.batch.skills = this.batch.skills.concat(data.skills);
+      console.log(this.batch.skills);
+      this.setCurName();
+    });
+  }
+
+  // used to remove dates from datepicker,
+  myFilter = (d: Date): boolean => {
+    const day = d.getDay();
+    // Prevent Friday, Saturday and Sunday from being selected for batch start date..
+    return day !== 0 && day !== 6 && day !== 5;
+  }
+
+  setEndDate() {
+    this.minEndDate.setDate(this.minStartDate.getDate() + 70);
+  }
+}
+
+
+
+/*************************   Batch Delete Dialog **********************************/
+@Component({
+  selector: 'app-batch-delete-dialog',
+  templateUrl: 'batch-delete-dialog.component.html',
+  styleUrls: ['./batches.component.css']
+})
+
+export class BatchDeleteDialogComponent {
+
+  constructor(
+    public dialogRef: MatDialogRef<BatchDeleteDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private batchService: BatchService
+  ) {}
+
+  deleteBatch() {
+    console.log(this.data);
+    this.batchService.delete(this.data).subscribe(batchDeleteData => {
+    });
+    this.dialogRef.close();
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 }

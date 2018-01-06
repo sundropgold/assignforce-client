@@ -5,7 +5,7 @@ import {Observable} from 'rxjs/Observable';
 @Injectable()
 export class S3CredentialService {
 
-  url = '/api/v2/s3Creds';
+  url = 'https://trainer-service.cfapps.io/api/v2/s3Creds';
 
   constructor(private http: HttpClient) {}
 
