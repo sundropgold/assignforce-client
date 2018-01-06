@@ -1,10 +1,6 @@
 
 
-  <!--<mat-tab-group class="col-md-12" (selectedTabChange)="selectTab($event)" [(selectedIndex)]="selectedTab">-->
-    <!--<mat-tab *ngFor="let tab of tabs" [label]="tab.toUpperCase()"></mat-tab>-->
-  <!--</mat-tab-group>-->
-
-<nav mat-tab-nav-bar style="overflow: auto;">
+<nav mat-tab-nav-bar style="overflow: auto;" *ngIf="!admin">
   <span fxFlex></span>
 
     <a mat-tab-link
@@ -13,10 +9,21 @@
        routerLinkActive #rla="routerLinkActive"
        [active]="rla.isActive"
     style="text-decoration: none">
-
-      {{link.toUpperCase()}}
-
+        {{link.toUpperCase()}}
     </a>
   <!--<span fxFlexOffset></span>-->
 </nav>
 
+<nav mat-tab-nav-bar style="overflow: auto;" *ngIf="admin">
+  <span fxFlex></span>
+
+  <a mat-tab-link
+     *ngFor="let link of adminTabs"
+     [routerLink]="link"
+     routerLinkActive #rla="routerLinkActive"
+     [active]="rla.isActive"
+     style="text-decoration: none">
+    {{link.toUpperCase()}}
+  </a>
+  <!--<span fxFlexOffset></span>-->
+</nav>
