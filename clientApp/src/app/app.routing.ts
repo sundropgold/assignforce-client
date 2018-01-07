@@ -25,8 +25,7 @@ const appRoutes: Routes = [
     },
   {
     path: 'overview',
-	component: OverviewComponent,
-	canActivate: [AuthGuardService]
+	component: OverviewComponent
   },
   {
     path: 'batches',
