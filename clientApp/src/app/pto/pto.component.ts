@@ -58,12 +58,13 @@ export class CalendarDialogComponent {
     dialogRef.afterClosed()
       .subscribe(result => {
         if (result) {
-          if(result.startDate == null || result.endDate == null){
+          if (result.startDate == null || result.endDate == null || result.startDate == '' || result.endDate == '') {
             return;
+          } else {
+            this.ptoService.addPto(result, result.startDate, result.endDate);
+            // this.dialogRef.close();
+            this.dialog.open(CalendarDialogComponent);
           }
-          this.ptoService.addPto(result, result.startDate, result.endDate);
-          // this.dialogRef.close();
-          this.dialog.open(CalendarDialogComponent);
         }
       });
   }

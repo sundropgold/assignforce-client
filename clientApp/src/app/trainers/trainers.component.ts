@@ -128,16 +128,16 @@ export class TrainersComponent implements OnInit {
 
 
   showCalendar() {
-    // this.trainerService.authorize();
-    this.http.get("https://unavailable-service.cfapps.io/api/v2/google/googleStatus")
-      .subscribe( response => {
-        if(response !== null){
-          this.trainerService.authorize();
-        } else {
-          this.googleAuth();
-        }
-
-    })
+    this.trainerService.authorize();
+    // this.http.get("https://unavailable-service.cfapps.io/api/v2/google/googleStatus")
+    //   .subscribe( response => {
+    //     if(response !== null){
+    //       this.trainerService.authorize();
+    //     } else {
+    //       this.googleAuth();
+    //     }
+    //
+    // }) Comment due to errors in google login coming back from backend
 
   }
 

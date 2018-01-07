@@ -57,7 +57,7 @@ export class PtoService {
       },
         error => {
           console.error("not logged in");
-          window.location.href = 'https://unavailable-service.cfapps.io/api/v2/google/google';
+          // window.location.href = 'https://unavailable-service.cfapps.io/api/v2/google/google';
         })
   }
 }
