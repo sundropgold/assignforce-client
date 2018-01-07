@@ -182,6 +182,7 @@ export class TimelineComponent implements AfterViewInit, OnInit {
 
   }
 
+  // Concluded batches checkbox
   hide() {
     this.isConcluded = !this.isConcluded;
     console.log(this.isConcluded);
