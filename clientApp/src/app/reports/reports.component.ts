@@ -425,6 +425,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
       this.batchService.create(this.newBatch).subscribe(
         data => {
           console.log('batch created sucessfully');
+          index = this.cardArr.indexOf(batch);
           this.removeCard(index);
         },
         error => console.log('error creating batch')
@@ -436,10 +437,6 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     for (const x of Object.keys(tempCardArr)) {
       this.createBatch(tempCardArr[x], x);
     }
-    // for (const y of Object.keys(this.remove)) {
-    //   console.log(y);
-    //   this.removeCard(this.remove[y]);
-    // }
     if (this.cardArr.length !== 0) {
       this.showToast('Error creating some batches');
     }
