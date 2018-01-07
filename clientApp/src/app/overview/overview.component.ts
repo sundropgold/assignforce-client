@@ -12,6 +12,9 @@ import {RoomService} from '../services/room.service';
 import {BuildingService} from '../services/building.service';
 import {LocationService} from '../services/location.service';
 
+import {UrlService} from '../services/url.service';
+
+
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
@@ -41,13 +44,13 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-      this.getAll();
+	this.getAll();
     }
-  ngAfterViewInit() {
-    this.batchData.sort = this.sort;
-    this.batchData.paginator = this.paginator;
-    this.batchData = new MatTableDataSource(this.BatchData);
-  }
+    ngAfterViewInit() {
+	this.batchData.sort = this.sort;
+	this.batchData.paginator = this.paginator;
+	this.batchData = new MatTableDataSource(this.BatchData);
+    }
 
   exportToCSV(evt) {
     evt.stopPropagation();

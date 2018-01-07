@@ -9,16 +9,24 @@ import {ProfileComponent} from './profile/profile.component';
 import {ReportsComponent} from './reports/reports.component';
 import {SettingsComponent} from './settings/settings.component';
 import {LoginComponent} from './login/login.component';
+import {LoginSuccessComponent} from './login-success/login-success.component';
+import {AuthGuardService} from './services/auth-guard.service';
+
 
 const appRoutes: Routes = [
-  {
+    {
     path: '',
     component: LoginComponent,
     pathMatch: 'full'
-  },
+    },
+    {
+	path: 'loginsuccess',
+	component: LoginSuccessComponent
+    },
   {
     path: 'overview',
-    component: OverviewComponent
+	component: OverviewComponent,
+	canActivate: [AuthGuardService]
   },
   {
     path: 'batches',
