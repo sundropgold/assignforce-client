@@ -32,7 +32,10 @@ export class TimelineComponent implements AfterViewInit, OnInit {
   locationList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
   buldingList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
 
+  isConcluded = false;
+
   batches: Batch[];
+  filteredBatches: Batch[];
   trainers: Trainer[];
 
   trainer: Trainer;
@@ -117,7 +120,7 @@ export class TimelineComponent implements AfterViewInit, OnInit {
             data: [{
               x: entry.startDate,
               x2: entry.endDate,
-              y: yAxiPosition, 
+              y: yAxiPosition,
             }]
           });
         // name[yAxiPosition] = entry.trainer;
@@ -179,6 +182,55 @@ export class TimelineComponent implements AfterViewInit, OnInit {
 
   }
 
+  hide() {
+    this.isConcluded = !this.isConcluded;
+    console.log(this.isConcluded);
+    while (this.chart.series.length > 0) {
+      this.chart.series[0].remove(true);
+    }
+    if (this.isConcluded) {
+      console.log(this.batches);
+      this.filteredBatches = this.batches.filter(
+        batch => batch.endDate > new Date()
+      );
+      let yAxiPosition = 0;
+      for (const entry of this.filteredBatches) {
+        this.chart.addSeries(
+          {
+            name: entry.name /*this.getTrainerName(entry.trainer)*/,
+            borderColor: 'gray',
+            pointWidth: 20,
+            data: [{
+              x: entry.startDate,
+              x2: entry.endDate,
+              y: yAxiPosition,
+            }]
+          });
+        // name[yAxiPosition] = entry.trainer;
+        yAxiPosition++;
+      }
+    } else {
+      while (this.chart.series.length > 0) {
+        this.chart.series[0].remove(true);
+      }
+      let yAxiPosition = 0;
+      for (const entry of this.filteredBatches) {
+        this.chart.addSeries(
+          {
+            name: entry.name /*this.getTrainerName(entry.trainer)*/,
+            borderColor: 'gray',
+            pointWidth: 20,
+            data: [{
+              x: entry.startDate,
+              x2: entry.endDate,
+              y: yAxiPosition,
+            }]
+          });
+        // name[yAxiPosition] = entry.trainer;
+        yAxiPosition++;
+      }
+    }
+  }
 
 }
 
