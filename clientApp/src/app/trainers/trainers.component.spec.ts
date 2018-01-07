@@ -48,6 +48,25 @@ describe('TrainersComponent', () => {
     });
   });
 
+  describe('activateTrainerTest', function () {
+    it('Tests to make sure the trainerRM.active is being marked as true', function () {
+      const trainerRM: Trainer = {
+        trainerId: '1',
+        firstName: 'test',
+        lastName: 'test',
+        skills: [],
+        skillsObject: [],
+        resume: null,
+        active: false,
+        certifications: []
+      };
+      component.activateTrainer(trainerRM);
+      const actual = trainerRM.active;
+      const should = true;
+      expect(actual).toBe(should);
+    });
+  });
+
   describe('joinObjArrayByNameTest', function () {
     it('Testing to see if null is returned', function () {
       const elem: Skill[] = [{

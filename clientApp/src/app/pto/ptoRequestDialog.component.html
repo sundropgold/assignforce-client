@@ -1,5 +1,4 @@
-
-  <form name="ptoForm" ng-submit="ptoCtrl.send(ptoForm.$valid)" novalidate>
+ <form name="ptoForm" ng-submit="ptoCtrl.send(ptoForm.$valid)" novalidate>
     <div mat-dialog-content>
       <mat-toolbar layout="columns">
         <div class="md-toolbar-tools">
@@ -10,7 +9,7 @@
       <div class="md-padding">
         <mat-form-field flex="none">
           <label>Start Date</label>
-          <input matInput [matDatepicker]="startPick" [(ngModel)]="data.pto.startDate" name="startDate">
+          <input matInput [matDatepicker]="startPick" [(ngModel)]="data.pto.startDate" name="startDate" required>
           <mat-datepicker-toggle matSuffix [for]="startPick"></mat-datepicker-toggle>
           <mat-datepicker #startPick></mat-datepicker>
         </mat-form-field>
@@ -18,7 +17,7 @@
 
         <mat-form-field flex="none">
           <label>End Date</label>
-          <input matInput [matDatepicker]="endPick"  [(ngModel)]="data.pto.endDate" name="endDate">
+          <input matInput [matDatepicker]="endPick"  [(ngModel)]="data.pto.endDate" name="endDate" required>
           <mat-datepicker-toggle matSuffix [for]="endPick"></mat-datepicker-toggle>
           <mat-datepicker #endPick></mat-datepicker>
         </mat-form-field>
