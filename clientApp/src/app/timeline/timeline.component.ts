@@ -35,6 +35,7 @@ export class TimelineComponent implements AfterViewInit, OnInit {
   curriculums: Curriculum[];
   locations: Locations[];
   buldings: Building[];
+  catagories: string[];
 
 
   curriculumslist: string;
@@ -91,7 +92,7 @@ export class TimelineComponent implements AfterViewInit, OnInit {
         title: {
           text: ''
         },
-        categories: [''],
+        categories: ['Batches'],
         reversed: true
       },
       // tooltip: {
