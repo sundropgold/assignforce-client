@@ -30,7 +30,21 @@ const Highcharts = require('highcharts/highcharts.src');
 })
 
 export class TimelineComponent implements AfterViewInit, OnInit {
+
+  curriculum = new FormControl();
+  focus = new FormControl();
+  location = new FormControl();
+  bulding = new FormControl();
+  curriculumList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
+  focusList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
+  locationList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
+  buldingList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
+
+  isConcluded = false;
+
+
   batches: Batch[];
+  filteredBatches: Batch[];
   trainers: Trainer[];
   curriculums: Curriculum[];
   locations: Locations[];
@@ -43,16 +57,6 @@ export class TimelineComponent implements AfterViewInit, OnInit {
   buildinglist: string;
 
   trainer: Trainer;
-
-  curriculum = new FormControl();
-  focus = new FormControl();
-  location = new FormControl();
-  bulding = new FormControl();
-
-  curriculumList = [];
-  focusList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
-  locationList = [];
-  buldingList = [];
 
   batchTimeLine: any;
 
@@ -132,6 +136,7 @@ export class TimelineComponent implements AfterViewInit, OnInit {
             data: [{
               x: entry.startDate,
               x2: entry.endDate,
+
               y: yAxisPosition,
             }]
           });
@@ -194,6 +199,57 @@ export class TimelineComponent implements AfterViewInit, OnInit {
 
   }
 
+  // Concluded batches checkbox
+  hide() {
+    this.isConcluded = !this.isConcluded;
+    console.log(this.isConcluded);
+    while (this.chart.series.length > 0) {
+      this.chart.series[0].remove(true);
+    }
+    if (this.isConcluded) {
+      console.log(this.batches);
+      this.filteredBatches = this.batches.filter(
+        batch => batch.endDate > new Date()
+      );
+      let yAxiPosition = 0;
+      for (const entry of this.filteredBatches) {
+        this.chart.addSeries(
+          {
+            name: entry.name /*this.getTrainerName(entry.trainer)*/,
+            borderColor: 'gray',
+            pointWidth: 20,
+            data: [{
+              x: entry.startDate,
+              x2: entry.endDate,
+              y: yAxiPosition,
+            }]
+          });
+        // name[yAxiPosition] = entry.trainer;
+        yAxiPosition++;
+      }
+    } else {
+      while (this.chart.series.length > 0) {
+        this.chart.series[0].remove(true);
+      }
+      let yAxiPosition = 0;
+      for (const entry of this.filteredBatches) {
+        this.chart.addSeries(
+          {
+            name: entry.name /*this.getTrainerName(entry.trainer)*/,
+            borderColor: 'gray',
+            pointWidth: 20,
+            data: [{
+              x: entry.startDate,
+              x2: entry.endDate,
+              y: yAxiPosition,
+            }]
+          });
+        // name[yAxiPosition] = entry.trainer;
+        yAxiPosition++;
+      }
+    }
+  }
+  
   setCurriculmList() {
     this.curriculumService.getAll().subscribe(curriculumData => {
       this.curriculums = curriculumData;
@@ -201,7 +257,7 @@ export class TimelineComponent implements AfterViewInit, OnInit {
         this.curriculumslist = entry.name;
         this.curriculumList.push(this.curriculumslist);
       }
-    })
+    });
   }
 
   setLocationList() {
@@ -211,7 +267,7 @@ export class TimelineComponent implements AfterViewInit, OnInit {
         this.locationlist = entry.name;
         this.locationList.push(this.locationlist);
       }
-    })
+    });
   }
 
   setBuldingList() {
@@ -221,7 +277,7 @@ export class TimelineComponent implements AfterViewInit, OnInit {
         this.buildinglist = entry.name;
         this.buldingList.push(this.buildinglist);
       }
-    })
+    });
   }
 }
 

@@ -11,13 +11,13 @@
           <mat-panel-description>
             <span class="fill-space"></span>
             <div [hidden]="!isCreating()" (click)="beginCreation($event)">
-              <mat-icon  title="create new batch">add_circle</mat-icon>
+              <mat-icon  matTooltip="create new batch">add_circle</mat-icon>
             </div>
             <div [hidden]="isCreating()" (click)="create($event)">
-              <mat-icon  title={{this.finalize}} >done_white</mat-icon>
+              <mat-icon  [matTooltip]="this.finalize">done_white</mat-icon>
             </div>
             <div [hidden]="isCreating()" (click)="cancel($event)">
-              <mat-icon title="cancel" >cancel_white</mat-icon>
+              <mat-icon matTooltip="cancel">cancel_white</mat-icon>
             </div>
           </mat-panel-description>
         </mat-panel-title>
@@ -252,5 +252,4 @@
       <app-timeline></app-timeline>
     </mat-expansion-panel>
   </mat-accordion>
-
 </div>
