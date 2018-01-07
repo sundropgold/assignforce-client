@@ -50,14 +50,14 @@ export class PtoService {
 
     const headers = new HttpHeaders({'contentType': 'application/json','data': JSON.stringify(resource) });
     const options = {headers: headers};
-    this.http.post('api/v2/google/addEvent',{}, options)
+    this.http.post('https://unavailable-service.cfapps.io/api/v2/google/addEvent',{}, options)
       .subscribe(data => {
         console.log("Success");
 
       },
         error => {
           console.error("not logged in");
-          //window.location.href = '/api/v2/google/google';
+          // window.location.href = 'https://unavailable-service.cfapps.io/api/v2/google/google';
         })
   }
 }
