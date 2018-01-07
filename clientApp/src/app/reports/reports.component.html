@@ -6,6 +6,7 @@
 <!--</mat-toolbar-row>-->
 <!--</mat-toolbar>-->
 <div style="margin-top: 5%">
+  <ng-container *ngIf="batch.length > 0">
   <!--Future Projection Tab-->
     <mat-accordion>
       <mat-expansion-panel>
@@ -269,4 +270,7 @@
         </mat-card>
       </mat-expansion-panel>
     </mat-accordion>
+  </ng-container>
 </div>
+
+
