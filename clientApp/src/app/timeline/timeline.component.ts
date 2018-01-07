@@ -120,12 +120,8 @@ export class TimelineComponent implements AfterViewInit, OnInit {
               y: yAxiPosition, 
             }]
           });
-<<<<<<< HEAD
-        x++;
-=======
         // name[yAxiPosition] = entry.trainer;
         yAxiPosition++;
->>>>>>> 032877e86d0fccc5f5456e6b2be1ec201d148131
       }
     });
     // console.log(name);
