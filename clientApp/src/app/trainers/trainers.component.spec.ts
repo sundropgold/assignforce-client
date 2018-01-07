@@ -32,7 +32,7 @@ describe('TrainersComponent', () => {
   describe('removeTrainerTest', function () {
     it('Tests to make sure the trainerRM.active is being marked as false', function () {
       const trainerRM: Trainer = {
-        trainerId: 1,
+        trainerId: '1',
         firstName: 'test',
         lastName: 'test',
         skills: [],

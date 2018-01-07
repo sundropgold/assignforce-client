@@ -10,6 +10,16 @@ import 'highcharts/adapters/standalone-framework.src';
 import * as xRange from 'highcharts/modules/xrange.js';
 import { BatchService } from '../services/batch.service';
 import { Batch } from '../domain/batch';
+import { TrainerService } from './../services/trainer.service';
+import { Trainer } from './../domain/trainer';
+import { CurriculaService } from './../services/curricula.service';
+import { Curriculum } from './../domain/curriculum';
+import { LocationService } from './../services/location.service';
+import { Locations } from './../domain/locations';
+import { BuildingService } from './../services/building.service';
+import { Building } from './../domain/building';
+
+
 
 const Highcharts = require('highcharts/highcharts.src');
 
@@ -20,6 +30,7 @@ const Highcharts = require('highcharts/highcharts.src');
 })
 
 export class TimelineComponent implements AfterViewInit, OnInit {
+
   curriculum = new FormControl();
   focus = new FormControl();
   location = new FormControl();
@@ -29,7 +40,22 @@ export class TimelineComponent implements AfterViewInit, OnInit {
   locationList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
   buldingList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
 
+  isConcluded = false;
+
+
   batches: Batch[];
+  filteredBatches: Batch[];
+  trainers: Trainer[];
+  curriculums: Curriculum[];
+  locations: Locations[];
+  buldings: Building[];
+
+
+  curriculumslist: string;
+  locationlist: string;
+  buildinglist: string;
+
+  trainer: Trainer;
 
   batchTimeLine: any;
 
@@ -38,10 +64,17 @@ export class TimelineComponent implements AfterViewInit, OnInit {
   private chart: any;
 
   constructor(
-    private batchService: BatchService
+    private batchService: BatchService,
+    private trainerService: TrainerService,
+    private curriculumService: CurriculaService,
+    private locationService: LocationService,
+    private buildingService: BuildingService
   ) { }
 
   ngOnInit() {
+    this.setCurriculmList();
+    this.setLocationList();
+    this.setBuldingList();
   }
 
   ngAfterViewInit() {
@@ -74,103 +107,178 @@ export class TimelineComponent implements AfterViewInit, OnInit {
       //   shared: true
       // },
 
-      series: [/*{
-        name: 'Trainer 1',
-        borderColor: 'gray',
-        pointWidth: 20,
-        data: [{
-          x: Date.UTC(2014, 10, 21),
-          x2: Date.UTC(2014, 11, 2),
-          y: 0,
-        }]
-      },
-      {
-        name: 'Trainer 2',
-        borderColor: 'gray',
-        pointWidth: 20,
-        data: [{
-          x: Date.UTC(2014, 11, 9),
-          x2: Date.UTC(2014, 11, 19),
-          y: 1,
-        }]
-      },
-      {
-        name: 'Trainer 3',
-        borderColor: 'gray',
-        pointWidth: 20,
-        data: [{
-          x: Date.UTC(2014, 11, 10),
-          x2: Date.UTC(2014, 11, 23),
-          y: 2,
-        }],
-        dataLabels: {
-          enabled: true
-        }
-      }*/]
+      series: []
     });
     this.getAllBatches();
   }
 
   getAllBatches() {
-    var x = 0;
+    let yAxisPosition = 0; //Sets the Y-axis
+    let name = [];
     this.batchService.getAll().subscribe(batchData => {
       this.batches = batchData;
       for (const entry of this.batches) {
+        // this.trainerService.getById(entry.trainer).subscribe(trainerData => {
+        //   this.trainer = trainerData;
+        //   for (const entry of this.trainers) {
+        //     this.trainer.firstName = entry.firstName;
+        //   }
+
+        //   console.log(this.trainer.firstName);
+        //})
+        //this.getTrainerName(entry.trainer);
         this.chart.addSeries(
           {
-            name: entry.name,
+            name: entry.name /*this.getTrainerName(entry.trainer)*/,
             borderColor: 'gray',
             pointWidth: 20,
             data: [{
               x: entry.startDate,
               x2: entry.endDate,
-              y: x,
+
+              y: yAxisPosition,
             }]
           });
-        x++;
+        // name[yAxiPosition] = entry.trainer;
+        yAxisPosition++;
+      }
+    });
+    // console.log(name);
+  }
+
+  // getAllConcludedBatches() {
+  //   this.batchService.getAll().subscribe(batchData => {
+  //     this.batches = batchData;
+  //     for (const entry of this.batches) {
+  //       if (entry.endDate < new Date()) {
+  //         this.chart.addSeries(
+  //           {
+  //             name: entry.name,
+  //             borderColor: 'gray',
+  //             pointWidth: 20,
+  //             data: [{
+  //               x: entry.startDate,
+  //               x2: entry.endDate,
+  //               y: 0,
+  //             }]
+  //           });
+  //       }
+  //       else { }
+  //     }
+  //   });
+  // }
+
+  // getAllBatchesWithTrainers() {
+  //   this.batchService.getAll().subscribe(batchData => {
+  //     this.batches = batchData;
+  //     for (const entry of this.batches) {
+  //       if (entry.trainer) {
+  //         this.chart.addSeries(
+  //           {
+  //             name: entry.name,
+  //             borderColor: 'gray',
+  //             pointWidth: 20,
+  //             data: [{
+  //               x: entry.startDate,
+  //               x2: entry.endDate,
+  //               y: 0,
+  //             }]
+  //           });
+  //       }
+  //     }
+  //   });
+  // }
+
+  //This method gets a trainers name
+  getTrainerName(id: string) {
+    this.trainerService.getById(id).subscribe(trainerData => {
+      this.trainer = trainerData;
+      return this.trainer.firstName;
+    });
+
+  }
+
+  // Concluded batches checkbox
+  hide() {
+    this.isConcluded = !this.isConcluded;
+    console.log(this.isConcluded);
+    while (this.chart.series.length > 0) {
+      this.chart.series[0].remove(true);
+    }
+    if (this.isConcluded) {
+      console.log(this.batches);
+      this.filteredBatches = this.batches.filter(
+        batch => batch.endDate > new Date()
+      );
+      let yAxiPosition = 0;
+      for (const entry of this.filteredBatches) {
+        this.chart.addSeries(
+          {
+            name: entry.name /*this.getTrainerName(entry.trainer)*/,
+            borderColor: 'gray',
+            pointWidth: 20,
+            data: [{
+              x: entry.startDate,
+              x2: entry.endDate,
+              y: yAxiPosition,
+            }]
+          });
+        // name[yAxiPosition] = entry.trainer;
+        yAxiPosition++;
+      }
+    } else {
+      while (this.chart.series.length > 0) {
+        this.chart.series[0].remove(true);
+      }
+      let yAxiPosition = 0;
+      for (const entry of this.filteredBatches) {
+        this.chart.addSeries(
+          {
+            name: entry.name /*this.getTrainerName(entry.trainer)*/,
+            borderColor: 'gray',
+            pointWidth: 20,
+            data: [{
+              x: entry.startDate,
+              x2: entry.endDate,
+              y: yAxiPosition,
+            }]
+          });
+        // name[yAxiPosition] = entry.trainer;
+        yAxiPosition++;
+      }
+    }
+  }
+  
+  setCurriculmList() {
+    this.curriculumService.getAll().subscribe(curriculumData => {
+      this.curriculums = curriculumData;
+      for (const entry of this.curriculums) {
+        this.curriculumslist = entry.name;
+        this.curriculumList.push(this.curriculumslist);
       }
     });
   }
 
-  getAllConcludedBatches() {
-    this.batchService.getAll().subscribe(batchData => {
-      this.batches = batchData;
-      for (const entry of this.batches) {
-        if (entry.endDate < new Date()) {
-          this.chart.addSeries(
-            {
-              name: entry.name,
-              borderColor: 'gray',
-              pointWidth: 20,
-              data: [{
-                x: entry.startDate,
-                x2: entry.endDate,
-                y: 0,
-              }]
-            });
-        }
+  setLocationList() {
+    this.locationService.getAll().subscribe(locationData => {
+      this.locations = locationData;
+      for (const entry of this.locations) {
+        this.locationlist = entry.name;
+        this.locationList.push(this.locationlist);
       }
     });
   }
 
-  getAllBatchesWithTrainers() {
-    this.batchService.getAll().subscribe(batchData => {
-      this.batches = batchData;
-      for (const entry of this.batches) {
-        if (entry.trainer) {
-          this.chart.addSeries(
-            {
-              name: entry.name,
-              borderColor: 'gray',
-              pointWidth: 20,
-              data: [{
-                x: entry.startDate,
-                x2: entry.endDate,
-                y: 0,
-              }]
-            });
-        }
+  setBuldingList() {
+    this.buildingService.getAll().subscribe(buildingData => {
+      this.buldings = buildingData;
+      for (const entry of this.buldings) {
+        this.buildinglist = entry.name;
+        this.buldingList.push(this.buildinglist);
       }
     });
   }
 }
+
+
+

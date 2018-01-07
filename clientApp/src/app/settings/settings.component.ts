@@ -12,6 +12,7 @@ import {SettingsService} from '../services/global-settings.service';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
+  admin = true;
   selectedLocation = 'None';
   selectedBuilding = 'None';
   location: Locations;

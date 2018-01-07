@@ -10,97 +10,17 @@ import {MatTab, MatTabNav} from '@angular/material';
   encapsulation: ViewEncapsulation.None
 })
 export class MenuBarComponent implements OnInit {
-
-  selectedTab = 0;
-
+  admin = false;
   tabs = ['overview', 'batches', 'locations', 'curricula', 'trainers', 'profile', 'reports', 'settings', 'logout'];
+  adminTabs = ['overview', 'batches', 'locations', 'curricula', 'trainers', 'reports', 'settings', 'logout'];
 
   constructor(private router: Router,
               private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    // this.router.events.subscribe(event => {
-    //   if (event instanceof NavigationEnd) {
-    //     const urlParts = event.url.split('/');
-    //     console.log('current url', urlParts);
-    //     if (!(urlParts.length > 2)) {
-    //       this.selectedTab = this.tabs.indexOf(urlParts[1]);
-    //     }
-    //   }
-    // });
   }
 
-  selectTab(evt) {
-    //localStorage.setItem('active', evt.index);
-    // this.router.navigate([this.tabs[evt.index]]);
-
-    /*
-          switch (evt.index) {
-          case 0: this.toOverview();
-          break;
-
-          case 1: this.toBatches();
-          break;
-
-          case 2: this.toLocations();
-            break;
-
-          case 3: this.toCurricula();
-            break;
-
-          case 4: this.toTrainers();
-            break;
-
-          case 5: this.toProfile();
-            break;
-
-          case 6: this.toReports();
-            break;
-
-          case 7: this.toSettings();
-            break;
-
-          case 8: this.logout();
-            break;
-        }
-    */
-  }
-
-  /*
-    toOverview() {
-    this.router.navigate([('overview')]);
-  }
-
-  toBatches() {
-    this.router.navigate([('batches')]);
-  }
-
-  toLocations() {
-    this.router.navigate([('locations')]);
-  }
-
-  toCurricula() {
-    this.router.navigate([('curricula')]);
-  }
-
-  toTrainers() {
-    this.router.navigate([('trainers')]);
-  }
-
-  toProfile() {
-    this.router.navigate([('profile')]);
-  }
-
-  toReports() {
-    this.router.navigate([('reports')]);
-  }
-
-  toSettings() {
-    this.router.navigate([('settings')]);
-  }
-
-*/
   logout() {
     //has to redirect to login page
   }
