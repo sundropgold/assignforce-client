@@ -25,11 +25,7 @@ export class ProfileComponent implements OnInit {
   // data
   skills: Skill[];
   myFile: FileList;
-  creds: S3Credential = {
-    ID: 'AKIAIRUM7DHQJEFIKK7A',
-    SecretKey: '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',
-    BucketName: 'jw1010'
-  };
+  creds: S3Credential;
   certFile: FileList = null;
   certName: string;
   skillsList: string[] = [];
@@ -53,7 +49,10 @@ export class ProfileComponent implements OnInit {
       this.trainerService.getById(this.tId)
         .subscribe(response => {
             this.trainer = response;
-            this.skillService.getSkillsByIds(this.trainer.skills).subscribe(skillsObject => this.trainer.skillsObject = skillsObject);
+            if (this.trainer.skills.length !== 0) {
+              this.trainer.skillsObject = [];
+              this.skillService.getSkillsByIds(this.trainer.skills).subscribe(skillsObject => this.trainer.skillsObject = skillsObject);
+            }
             this.rePullSkills();
           },
           () => this.showToast('Could not fetch trainer.'));
@@ -61,7 +60,10 @@ export class ProfileComponent implements OnInit {
       this.trainerService.getByFirstNameAndLastName(this.fName, this.lName)
         .subscribe(response => {
             this.trainer = response;
-            this.skillService.getSkillsByIds(this.trainer.skills).subscribe(skillsObject => this.trainer.skillsObject = skillsObject);
+            if (this.trainer.skills.length !== 0) {
+              this.trainer.skillsObject = [];
+              this.skillService.getSkillsByIds(this.trainer.skills).subscribe(skillsObject => this.trainer.skillsObject = skillsObject);
+            }
             this.getAllSkills();
           },
           () => this.showToast('Could not fetch trainer.'));
@@ -287,7 +289,14 @@ export class ProfileComponent implements OnInit {
   // queries the database for the trainer. to be called after a change to the trainer's properties
   rePullTrainer() {
     this.trainer = undefined;
-    this.trainerService.getById(this.tId).subscribe(response => this.trainer = response,
+    this.trainerService.getById(this.tId)
+      .subscribe(response => {
+        this.trainer = response;
+        this.trainer.skillsObject = [];
+        if (this.trainer.skills.length !== 0) {
+          this.skillService.getSkillsByIds(this.trainer.skills).subscribe(skillsObject => this.trainer.skillsObject = skillsObject);
+        }
+      },
       () => this.showToast('Could not fetch trainer.'));
   }
 

@@ -10,14 +10,14 @@
           {{firstTabHeader}}
           <mat-panel-description>
             <span class="fill-space"></span>
-            <div [hidden]="!isCreating()" (click)="clickTest($event)">
-              <mat-icon id="icons" title="create new batch">add_circle</mat-icon>
+            <div [hidden]="!isCreating()" (click)="beginCreation($event)">
+              <mat-icon  matTooltip="create new batch">add_circle</mat-icon>
             </div>
             <div [hidden]="isCreating()" (click)="create($event)">
-              <mat-icon id="icons" title="finalize creation" >done_white</mat-icon>
+              <mat-icon  [matTooltip]="this.finalize">done_white</mat-icon>
             </div>
             <div [hidden]="isCreating()" (click)="cancel($event)">
-              <mat-icon id="icons" title="cancel" >cancel_white</mat-icon>
+              <mat-icon matTooltip="cancel">cancel_white</mat-icon>
             </div>
           </mat-panel-description>
         </mat-panel-title>
@@ -28,17 +28,21 @@
           <div>
             <mat-form-field class="third" >
             <mat-select placeholder="Core Curriculum" [(ngModel)]="batch.curriculum" name="curriculum" >
-              <mat-option *ngFor="let curriculum of curriculumForm" [value]="curriculum.currId">
+              <div *ngFor="let curriculum of curriculumForm">
+              <mat-option *ngIf="curriculum.core === true && curriculum.active === true" [value]="curriculum.currId" (click)="getCurriculumSkills()">
                 {{ curriculum.name }}
               </mat-option>
+              </div>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field class="third">
             <mat-select placeholder="Focus" [(ngModel)]="batch.focus" name="focus">
-              <mat-option *ngFor="let focus of curriculumForm" [value]="focus.currId">
+              <div *ngFor="let focus of curriculumForm">
+              <mat-option *ngIf="focus.core===false && focus.active === true" [value]="focus.currId" (click)="getFocusSkills()">
                 {{ focus.name }}
               </mat-option>
+              </div>
             </mat-select>
           </mat-form-field>
 
@@ -51,19 +55,19 @@
           </div>
           <div>
           <mat-form-field  class="fourth">
-            <input matInput [matDatepicker]="picker1" placeholder="Choose a start date" [(ngModel)]="batch.startDate" name="startDate" >
-            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <input matInput [matDatepickerFilter]="myFilter" [min]="minStartDate"[matDatepicker]="picker1" placeholder="Choose a start date" [(ngModel)]="batch.startDate" name="startDate" >
+            <mat-datepicker-toggle matSuffix [for]="picker1" ></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field  class="fourth">
-            <input matInput [matDatepicker]="picker2" placeholder="Choose an end date" [(ngModel)]="batch.endDate" name="endDate" (dateChange)="calcDate($event)">
+            <input matInput [matDatepicker]="picker2" [min]="minEndDate" placeholder="Choose an end date" [(ngModel)]="batch.endDate" name="endDate" (dateChange)="calcDate($event)">
             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field  class="fourth">
-            <input matInput placeholder="spans {{datebetween}} days" readonly>
+            <input matInput placeholder="spans {{datebetween}} weeks" readonly>
           </mat-form-field>
 
           <mat-form-field  class="fourth">
@@ -90,27 +94,38 @@
             </div>
 
           <mat-form-field class="third">
-            <mat-select placeholder="Location">
-              <mat-option *ngFor="let location of locations" [value]="location" [(ngModel)]="batch.batchLocation.locationId" name="location">
-                {{ location.location.toString().valueOf() }}
+            <mat-select placeholder="Location" [(ngModel)]="batch.batchLocation.locationId" name="locations">
+              <div *ngFor="let locations of locationForm">
+              <mat-option [value]="locations.id"
+                          *ngIf="locations.active === true"
+                          (click)="getBuildings()">
+                {{ locations.name }}
               </mat-option>
+              </div>
             </mat-select>
           </mat-form-field>
 
 
           <mat-form-field class="third">
             <mat-select placeholder="Building" [(ngModel)]="batch.batchLocation.buildingId" name="building">
-              <mat-option *ngFor="let building of buildings" [value]="building.value">
-                {{ building.viewValue}}
+              <div *ngFor="let building of buildingForm">
+              <mat-option [value]="building.id"
+                          *ngIf="building.active === true"
+                          (click)="getRooms()">
+                {{ building.name}}
               </mat-option>
+              </div>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field class="third">
-            <mat-select placeholder="Room" [(ngModel)]="batch.batchLocation.roomId" name="roomid">
-              <mat-option *ngFor="let room of rooms" [value]="room.value">
-                {{ room.viewValue }}
+            <mat-select placeholder="Room" [(ngModel)]="batch.batchLocation.roomId" name="room">
+              <div *ngFor="let room of roomForm">
+              <mat-option [value]="room.roomID"
+                          *ngIf="room.active === true">
+                {{ room.roomName }}
               </mat-option>
+              </div>
             </mat-select>
           </mat-form-field>
 
@@ -204,18 +219,18 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
             <mat-cell *matCellDef="let batch">
 
-              <button mat-icon-button color (click)="EditBatch()">
-                <mat-icon matTooltip="Edit" matTooltipPosition="above">mode_edit</mat-icon>
+              <button mat-icon-button color (click)="EditBatch(batch.id)">
+                <mat-icon id="buttonIcon" matTooltip="Edit" matTooltipPosition="above">mode_edit</mat-icon>
               </button>
-              <button mat-icon-button color (click)="CloneBatch()">
-                <mat-icon matTooltip="Clone" matTooltipPosition="above">filter_none</mat-icon>
+              <button mat-icon-button color (click)="CloneBatch(batch.id)">
+                <mat-icon id="buttonIcon" matTooltip="Clone" matTooltipPosition="above">filter_none</mat-icon>
               </button>
-              <button mat-icon-button color>
-                <mat-icon matTooltip="Delete" matTooltipPosition="above">delete</mat-icon>
+              <button mat-icon-button color (click)="DeleteBatch(batch.id, $event)">
+                <mat-icon id="buttonIcon" matTooltip="Delete" matTooltipPosition="above">delete</mat-icon>
               </button>
-              <button mat-icon-button color>
-                <mat-icon matTooltip="Synchronize" matTooltipPosition="above">publish</mat-icon>
-              </button>
+              <!--<button mat-icon-button color (click)="Synchronize()">
+                <mat-icon id="buttonIcon" matTooltip="Synchronize" matTooltipPosition="above">publish</mat-icon>
+              </button>-->
             </mat-cell>
           </ng-container>
 
@@ -235,8 +250,7 @@
           Batch Timeline
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <timeline></timeline>
+      <app-timeline></app-timeline>
     </mat-expansion-panel>
   </mat-accordion>
-
 </div>

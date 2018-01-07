@@ -7,7 +7,10 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthTokenInterceptor} from './interceptors/authTokenInterceptor';
 import {MenuBarComponent} from './menu-bar/menu-bar.component';
 import {OverviewComponent} from './overview/overview.component';
-import {BatchesComponent} from './batches/batches.component';
+import {
+  BatchesComponent,
+  BatchDeleteDialogComponent
+} from './batches/batches.component';
 import {
   LocationAddBuildingDialogComponent,
   LocationAddLocationDialogComponent, LocationAddRoomDialogComponent, LocationDeleteBuildingDialogComponent,
@@ -57,8 +60,15 @@ import {OrderModule} from 'ngx-order-pipe';
 import {PtoService} from './services/pto.service';
 import {BatchService} from './services/batch.service';
 import {CurriculaService} from './services/curricula.service';
+import {LocationService} from './services/location.service';
+import {RoomService} from './services/room.service';
+import {BuildingService} from './services/building.service';
 import {NgPipesModule} from 'ngx-pipes';
 import { LoginSuccessComponent } from './login-success/login-success.component';
+import {SettingsService} from './services/global-settings.service';
+import {ReplogicService} from "./replogic.service";
+import { ChartModule } from 'angular-highcharts';
+
 
 @NgModule({
   declarations: [
@@ -66,6 +76,7 @@ import { LoginSuccessComponent } from './login-success/login-success.component';
     MenuBarComponent,
     OverviewComponent,
     BatchesComponent,
+    BatchDeleteDialogComponent,
     LocationsComponent,
     LocationAddLocationDialogComponent,
     LocationDeleteLocationDialogComponent,
@@ -125,20 +136,27 @@ import { LoginSuccessComponent } from './login-success/login-success.component';
     FlexLayoutModule,
     MatDialogModule,
     NgPipesModule,
-    OrderModule
+    OrderModule,
+    ChartModule
   ],
   providers: [
     TrainerService,
+    ReplogicService,
     BatchService,
     SkillService,
     S3CredentialService,
     UrlService,
     NotificationService,
     PtoService,
-      CurriculaService,
       AuthService,
       AuthGuardService,
       UserInfoService,
+    CurriculaService,
+    LocationService,
+    BuildingService,
+    RoomService,
+    SettingsService,
+
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthTokenInterceptor,
@@ -147,6 +165,7 @@ import { LoginSuccessComponent } from './login-success/login-success.component';
   ],
   entryComponents: [
     TrainerDialogComponent,
+    BatchDeleteDialogComponent,
     LocationAddLocationDialogComponent,
     LocationDeleteLocationDialogComponent,
     LocationEditLocationDialogComponent,

@@ -2,7 +2,7 @@
   max-width: 25px;
 }
 .mat-expansion-panel {
-  background-color: black;
+  background-color: #3D5360;
 }
 
 .mat-expansion-panel-body {
@@ -10,7 +10,7 @@
 }
 
 .mat-expansion-panel-header {
-  background-color: black;
+  background-color: #3D5360;
 }
 
 .mat-expansion-panel-header-title {
@@ -18,13 +18,8 @@
   font-weight: 600;
 }
 
-.mat-icon {
+#buttonIcon {
   color: darkorange;
-}
-
-#icons {
-  margin: 4px;
-  color: white;
 }
 
 .fill-space{

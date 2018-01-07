@@ -8,6 +8,9 @@ import {SkillService} from '../services/skill.service';
 import {CurriculaService} from '../services/curricula.service';
 import {Curriculum} from '../domain/curriculum';
 import {TrainerService} from '../services/trainer.service';
+import {RoomService} from '../services/room.service';
+import {BuildingService} from '../services/building.service';
+import {LocationService} from '../services/location.service';
 
 import {UrlService} from '../services/url.service';
 
@@ -34,8 +37,10 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     constructor(private batchService: BatchService,
                 private curriculaService: CurriculaService,
                 private trainerService: TrainerService,
-                private notificationService: NotificationService,
-		private url: UrlService) {
+                private locationService: LocationService,
+                private buildingService: BuildingService,
+                private roomService: RoomService,
+                private notificationService: NotificationService) {
     }
 
     ngOnInit() {
@@ -70,12 +75,12 @@ export class OverviewComponent implements OnInit, AfterViewInit {
       for (const entry of this.BatchData) {
 
         entry.progress = (currentDate.valueOf() - entry.startDate.valueOf()) / (entry.endDate.valueOf() - entry.startDate.valueOf()) * 100;
-        this.curriculaService.getById(entry.curriculum)
+        /*this.curriculaService.getById(entry.curriculum)
           .subscribe(curriculumData => {
             entry.curriculumName = curriculumData.name;
           }, error => {
             this.showToast('Failed to fetch Curricula');
-          });
+          });*/
         this.trainerService.getById(entry.trainer)
           .subscribe(trainerData => {
             entry.trainerName = trainerData.firstName + ' ' + trainerData.lastName;
@@ -88,6 +93,30 @@ export class OverviewComponent implements OnInit, AfterViewInit {
           }, error => {
             this.showToast('Failed to fetch Trainers');
           });
+
+        this.locationService.getById(entry.batchLocation.locationId)
+          .subscribe(locationData => {
+            entry.batchLocation.locationId = locationData.id;
+            entry.batchLocation.locationName = locationData.name;
+          }, error => {
+            this.showToast('Failed to fetch Locations');
+          });
+
+        this.buildingService.getById(entry.batchLocation.buildingId)
+          .subscribe(buildingData => {
+            entry.batchLocation.buildingId = buildingData.id;
+            entry.batchLocation.buildingName = buildingData.name;
+          }, error => {
+            this.showToast('Failed to fetch Buildings');
+          });
+
+        this.roomService.getById(entry.batchLocation.roomId)
+          .subscribe(roomData => {
+            entry.batchLocation.roomId = roomData.roomID;
+            entry.batchLocation.roomName = roomData.roomName;
+          }, error => {
+            this.showToast('Failed to fetch Rooms');
+          });
       }
       this.batchData = new MatTableDataSource(this.BatchData);
       this.batchData.sort = this.sort;
@@ -96,6 +125,20 @@ export class OverviewComponent implements OnInit, AfterViewInit {
         this.showToast('Failed to fetch Batches');
       }
     );
+    this.curriculaService.getAll().subscribe(curriculaData => {
+      for (const batch of this.BatchData){
+        for (const curricula of curriculaData){
+          if (batch.focus === curricula.currId) {
+            batch.focusName = curricula.name;
+          }
+          if (batch.curriculum === curricula.currId) {
+            batch.curriculumName = curricula.name;
+          }
+        }
+      }
+    }, error => {
+      this.showToast('Failed to fetch Curricula');
+    });
   }
 
   filterByProgress() {

@@ -20,11 +20,7 @@ import {SkillService} from '../services/skill.service';
 export class TrainersComponent implements OnInit {
   trainers: Trainer[];
   isManager: boolean;
-  creds: S3Credential = {
-    ID: 'AKIAIRUM7DHQJEFIKK7A',
-    SecretKey: '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',
-    BucketName: 'jw1010'
-  };
+  creds: S3Credential;
 
   constructor(private notificationService: NotificationService,
               private trainerService: TrainerService,
@@ -39,95 +35,8 @@ export class TrainersComponent implements OnInit {
   ngOnInit() {
     this.isManager = true;
     this.getAll();
-
-    // this.trainers = [{
-    //   trainerId: 1,
-    //   firstName: 'James',
-    //   lastName: 'Smith',
-    //   skills: [{
-    //     skillId: 1,
-    //     name: 'Java',
-    //     active: true
-    //   },
-    //     {skillId: 2,
-    //       name: 'Angular',
-    //       active: true
-    //     },
-    //     {
-    //       skillId: 3,
-    //       name: 'Spring',
-    //       active: true
-    //     }],
-    //   certifications: 'Certs',
-    //   active: true,
-    //   resume: null,
-    // },
-    //   {
-    //     trainerId: 2,
-    //     firstName: 'Jane',
-    //     lastName: 'Doe',
-    //     skills: [{
-    //       skillId: 1,
-    //       name: 'C#',
-    //       active: true
-    //     },
-    //       {skillId: 2,
-    //         name: 'AngularJs',
-    //         active: true
-    //       },
-    //       {
-    //         skillId: 3,
-    //         name: 'Jenkins',
-    //         active: true
-    //       }],
-    //     certifications: 'Certs',
-    //     active: false,
-    //     resume: 'Resume',
-    //   },
-    //   {
-    //     trainerId: 3,
-    //     firstName: 'Jon',
-    //     lastName: 'Jones',
-    //     skills: [{
-    //       skillId: 1,
-    //       name: 'Java',
-    //       active: true
-    //     },
-    //       {skillId: 2,
-    //         name: 'Maven',
-    //         active: true
-    //       },
-    //       {
-    //         skillId: 3,
-    //         name: 'MongoDB',
-    //         active: true
-    //       }],
-    //     certifications: 'Certs',
-    //     active: false,
-    //     resume: 'Resume',
-    //   },
-    //   {
-    //     trainerId: 4,
-    //     firstName: 'Daniel',
-    //     lastName: 'Cormier',
-    //     skills: [{
-    //       skillId: 1,
-    //       name: 'C#',
-    //       active: true
-    //     },
-    //       {skillId: 2,
-    //         name: 'Cloud Foundry',
-    //         active: true
-    //       },
-    //       {
-    //         skillId: 3,
-    //         name: 'AWS',
-    //         active: true
-    //       }],
-    //     certifications: 'Certs',
-    //     active: true,
-    //     resume: 'Resume',
-    //   }];
+    this.s3Service.getCreds().subscribe(response => this.creds = response,
+      () => this.showToast('Failed to fetch Credentials'));
   }
 
   //Displays snackbar message notifications
@@ -143,9 +52,9 @@ export class TrainersComponent implements OnInit {
       lastName: '',
       skills: [],
       skillsObject: [],
-      certifications: '',
+      certifications: [],
       active: true,
-      resume: '',
+      resume: null,
     };
     const dialogRef = this.dialog.open(TrainerDialogComponent, {
       width: '450px',
@@ -179,8 +88,12 @@ export class TrainersComponent implements OnInit {
       .subscribe(
         data => {
           this.trainers = data;
-          this.trainers.forEach( trainer => this.skillService.getSkillsByIds(trainer.skills)
-            .subscribe(response => trainer.skillsObject = response));
+          this.trainers.forEach( trainer => {
+            if (trainer.skills.length !== 0) {
+              this.skillService.getSkillsByIds(trainer.skills)
+                .subscribe(response => trainer.skillsObject = response);
+            }
+          });
         },
         error => {
           this.showToast('Could not fetch trainers');
@@ -195,8 +108,12 @@ export class TrainersComponent implements OnInit {
       .subscribe(
         data => {
           this.trainers = data;
-          this.trainers.forEach( trainer => this.skillService.getSkillsByIds(trainer.skills)
-            .subscribe(response => trainer.skillsObject = response));
+          this.trainers.forEach( trainer => {
+            if (trainer.skills.length !== 0) {
+              this.skillService.getSkillsByIds(trainer.skills)
+                .subscribe(response => trainer.skillsObject = response);
+            }
+          });
         },
         error => {
           this.showToast('Could not fetch trainers');
@@ -211,16 +128,16 @@ export class TrainersComponent implements OnInit {
 
 
   showCalendar() {
-    this.ptoService.authorize();
-    this.http.get("/api/v2/google/googleStatus")
-      .subscribe( response => {
-        if(response !== ""){
-          this.ptoService.authorize();
-        } else {
-          this.googleAuth();
-        }
-
-    })
+    this.trainerService.authorize();
+    // this.http.get("https://unavailable-service.cfapps.io/api/v2/google/googleStatus")
+    //   .subscribe( response => {
+    //     if(response !== null){
+    //       this.trainerService.authorize();
+    //     } else {
+    //       this.googleAuth();
+    //     }
+    //
+    // }) Comment due to errors in google login coming back from backend
 
   }
 
@@ -301,6 +218,9 @@ export class TrainersComponent implements OnInit {
 
 // Takes array of skills and formats their names into a string
   joinObjArrayByName(Skillz: Skill[]) {
+    if (Skillz === undefined) {
+      return;
+    }
     let skillslist = '';
     for(let i = 0; i < Skillz.length; i++){
       skillslist += Skillz[i].name;
@@ -312,7 +232,8 @@ export class TrainersComponent implements OnInit {
   };
 
   googleAuth() {
-    this.router.navigate(['api/v2/google/google']);
+    // this.router.navigate(['api/v2/google/google']);
+    window.location.href = 'https://unavailable-service.cfapps.io/api/v2/google/google';
   }
 
 }

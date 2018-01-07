@@ -9,3 +9,47 @@ html {
   width: 100vw;
   overflow-x: hidden;
 }
+
+.mat-expansion-panel {
+  background-color: #37474F;
+}
+
+.mat-expansion-panel-body {
+  background-color: #E0E4E6;
+}
+
+.mat-expansion-panel-header {
+  background-color: #37474F;
+}
+
+.mat-expansion-panel-header-title {
+  color: #E0E4E6;
+  font-weight: 600;
+}
+
+.mat-expansion-panel-header-description {
+  color: #E0E4E6;
+}
+
+.mat-toolbar {
+  padding: 0px 16px;
+  background-color: #37474F;
+  color: #E0E4E6;
+}
+
+.panel-font {
+  color: #E0E4E6;
+  font-weight: bolder;
+}
+
+.panel-icon-color {
+  color: #E0E4E6;
+}
+
+.revOrange {
+  color: #f26a25;
+}
+
+.mat-icon {
+  color: #E0E4E6;
+}
