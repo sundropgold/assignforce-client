@@ -9,6 +9,9 @@ import {CurriculaService} from '../services/curricula.service';
 import {Curriculum} from '../domain/curriculum';
 import {TrainerService} from '../services/trainer.service';
 
+import {UrlService} from '../services/url.service';
+
+
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
@@ -31,17 +34,18 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     constructor(private batchService: BatchService,
                 private curriculaService: CurriculaService,
                 private trainerService: TrainerService,
-                private notificationService: NotificationService) {
+                private notificationService: NotificationService,
+		private url: UrlService) {
     }
 
     ngOnInit() {
-      this.getAll();
+	this.getAll();
     }
-  ngAfterViewInit() {
-    this.batchData.sort = this.sort;
-    this.batchData.paginator = this.paginator;
-    this.batchData = new MatTableDataSource(this.BatchData);
-  }
+    ngAfterViewInit() {
+	this.batchData.sort = this.sort;
+	this.batchData.paginator = this.paginator;
+	this.batchData = new MatTableDataSource(this.BatchData);
+    }
 
   exportToCSV(evt) {
     evt.stopPropagation();

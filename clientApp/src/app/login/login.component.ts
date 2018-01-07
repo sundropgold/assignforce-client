@@ -8,8 +8,7 @@ import {UrlService} from '../services/url.service';
 })
 export class LoginComponent implements OnInit {
 
-    constructor(private url: UrlService,
-		private oauthService: OAuthService) {
+    constructor(private url: UrlService) {
 
     }
 
