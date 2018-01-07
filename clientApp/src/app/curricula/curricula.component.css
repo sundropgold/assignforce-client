@@ -44,7 +44,7 @@
 }
 
 .icon-margin-fix  {
-  color: #FB8C00;
+  color: darkorange;
   margin: 5px;
   cursor: pointer;
 }
@@ -53,9 +53,9 @@
   background-color: darkorange;
   margin: 5px;
 }
-.mat-icon{
-  color: white;
-}
+/*.mat-icon{*/
+  /*color: white;*/
+/*}*/
 
 .item-detail{
   margin: 2%;
