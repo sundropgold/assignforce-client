@@ -10,6 +10,9 @@ import 'highcharts/adapters/standalone-framework.src';
 import * as xRange from 'highcharts/modules/xrange.js';
 import { BatchService } from '../services/batch.service';
 import { Batch } from '../domain/batch';
+import { TrainerService } from './../services/trainer.service';
+import { Trainer } from './../domain/trainer';
+import { CurriculaService } from './../services/curricula.service';
 
 const Highcharts = require('highcharts/highcharts.src');
 
@@ -30,21 +33,33 @@ export class TimelineComponent implements AfterViewInit, OnInit {
   buldingList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
 
   batches: Batch[];
+  trainers: Trainer[];
+
+  trainer: Trainer;
+
+
+
+
 
   batchTimeLine: any;
+
+
 
   @ViewChild('container', { read: ElementRef }) container: ElementRef;
 
   private chart: any;
 
   constructor(
-    private batchService: BatchService
+    private batchService: BatchService,
+    private trainerService: TrainerService,
+    private curriculumService: CurriculaService
   ) { }
 
   ngOnInit() {
   }
 
   ngAfterViewInit() {
+
 
     xRange(Highcharts);
 
@@ -74,103 +89,98 @@ export class TimelineComponent implements AfterViewInit, OnInit {
       //   shared: true
       // },
 
-      series: [/*{
-        name: 'Trainer 1',
-        borderColor: 'gray',
-        pointWidth: 20,
-        data: [{
-          x: Date.UTC(2014, 10, 21),
-          x2: Date.UTC(2014, 11, 2),
-          y: 0,
-        }]
-      },
-      {
-        name: 'Trainer 2',
-        borderColor: 'gray',
-        pointWidth: 20,
-        data: [{
-          x: Date.UTC(2014, 11, 9),
-          x2: Date.UTC(2014, 11, 19),
-          y: 1,
-        }]
-      },
-      {
-        name: 'Trainer 3',
-        borderColor: 'gray',
-        pointWidth: 20,
-        data: [{
-          x: Date.UTC(2014, 11, 10),
-          x2: Date.UTC(2014, 11, 23),
-          y: 2,
-        }],
-        dataLabels: {
-          enabled: true
-        }
-      }*/]
+      series: []
     });
     this.getAllBatches();
   }
 
   getAllBatches() {
-    var x = 0;
+    let yAxiPosition = 0; //Sets the Y-axis
+    let name = [];
     this.batchService.getAll().subscribe(batchData => {
       this.batches = batchData;
       for (const entry of this.batches) {
+        // this.trainerService.getById(entry.trainer).subscribe(trainerData => {
+        //   this.trainer = trainerData;
+        //   for (const entry of this.trainers) {
+        //     this.trainer.firstName = entry.firstName;
+        //   }
+
+        //   console.log(this.trainer.firstName);
+        //})
+        //this.getTrainerName(entry.trainer);
         this.chart.addSeries(
           {
-            name: entry.name,
+            name: entry.name /*this.getTrainerName(entry.trainer)*/,
             borderColor: 'gray',
             pointWidth: 20,
             data: [{
               x: entry.startDate,
               x2: entry.endDate,
-              y: x,
+              y: yAxiPosition, 
             }]
           });
-        x++;
+        // name[yAxiPosition] = entry.trainer;
+        yAxiPosition++;
       }
     });
+    // console.log(name);
   }
 
-  getAllConcludedBatches() {
-    this.batchService.getAll().subscribe(batchData => {
-      this.batches = batchData;
-      for (const entry of this.batches) {
-        if (entry.endDate < new Date()) {
-          this.chart.addSeries(
-            {
-              name: entry.name,
-              borderColor: 'gray',
-              pointWidth: 20,
-              data: [{
-                x: entry.startDate,
-                x2: entry.endDate,
-                y: 0,
-              }]
-            });
-        }
-      }
+  // getAllConcludedBatches() {
+  //   this.batchService.getAll().subscribe(batchData => {
+  //     this.batches = batchData;
+  //     for (const entry of this.batches) {
+  //       if (entry.endDate < new Date()) {
+  //         this.chart.addSeries(
+  //           {
+  //             name: entry.name,
+  //             borderColor: 'gray',
+  //             pointWidth: 20,
+  //             data: [{
+  //               x: entry.startDate,
+  //               x2: entry.endDate,
+  //               y: 0,
+  //             }]
+  //           });
+  //       }
+  //       else { }
+  //     }
+  //   });
+  // }
+
+  // getAllBatchesWithTrainers() {
+  //   this.batchService.getAll().subscribe(batchData => {
+  //     this.batches = batchData;
+  //     for (const entry of this.batches) {
+  //       if (entry.trainer) {
+  //         this.chart.addSeries(
+  //           {
+  //             name: entry.name,
+  //             borderColor: 'gray',
+  //             pointWidth: 20,
+  //             data: [{
+  //               x: entry.startDate,
+  //               x2: entry.endDate,
+  //               y: 0,
+  //             }]
+  //           });
+  //       }
+  //     }
+  //   });
+  // }
+
+  //This method gets a trainers name
+  getTrainerName(id: string) {
+    this.trainerService.getById(id).subscribe(trainerData => {
+      this.trainer = trainerData;
+      return this.trainer.firstName;
     });
+
   }
 
-  getAllBatchesWithTrainers() {
-    this.batchService.getAll().subscribe(batchData => {
-      this.batches = batchData;
-      for (const entry of this.batches) {
-        if (entry.trainer) {
-          this.chart.addSeries(
-            {
-              name: entry.name,
-              borderColor: 'gray',
-              pointWidth: 20,
-              data: [{
-                x: entry.startDate,
-                x2: entry.endDate,
-                y: 0,
-              }]
-            });
-        }
-      }
-    });
-  }
+
 }
+
+
+
