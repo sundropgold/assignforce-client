@@ -72,12 +72,12 @@ export class OverviewComponent implements OnInit, AfterViewInit {
       for (const entry of this.BatchData) {
 
         entry.progress = (currentDate.valueOf() - entry.startDate.valueOf()) / (entry.endDate.valueOf() - entry.startDate.valueOf()) * 100;
-        this.curriculaService.getById(entry.curriculum)
+        /*this.curriculaService.getById(entry.curriculum)
           .subscribe(curriculumData => {
             entry.curriculumName = curriculumData.name;
           }, error => {
             this.showToast('Failed to fetch Curricula');
-          });
+          });*/
         this.trainerService.getById(entry.trainer)
           .subscribe(trainerData => {
             entry.trainerName = trainerData.firstName + ' ' + trainerData.lastName;
@@ -122,6 +122,20 @@ export class OverviewComponent implements OnInit, AfterViewInit {
         this.showToast('Failed to fetch Batches');
       }
     );
+    this.curriculaService.getAll().subscribe(curriculaData => {
+      for (const batch of this.BatchData){
+        for (const curricula of curriculaData){
+          if (batch.focus === curricula.currId) {
+            batch.focusName = curricula.name;
+          }
+          if (batch.curriculum === curricula.currId) {
+            batch.curriculumName = curricula.name;
+          }
+        }
+      }
+    }, error => {
+      this.showToast('Failed to fetch Curricula');
+    });
   }
 
   filterByProgress() {
