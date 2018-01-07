@@ -13,6 +13,13 @@ import { Batch } from '../domain/batch';
 import { TrainerService } from './../services/trainer.service';
 import { Trainer } from './../domain/trainer';
 import { CurriculaService } from './../services/curricula.service';
+import { Curriculum } from './../domain/curriculum';
+import { LocationService } from './../services/location.service';
+import { Locations } from './../domain/locations';
+import { BuildingService } from './../services/building.service';
+import { Building } from './../domain/building';
+
+
 
 const Highcharts = require('highcharts/highcharts.src');
 
@@ -23,27 +30,30 @@ const Highcharts = require('highcharts/highcharts.src');
 })
 
 export class TimelineComponent implements AfterViewInit, OnInit {
+  batches: Batch[];
+  trainers: Trainer[];
+  curriculums: Curriculum[];
+  locations: Locations[];
+  buldings: Building[];
+
+
+  curriculumslist: string;
+  locationlist: string;
+  buildinglist: string;
+
+  trainer: Trainer;
+
   curriculum = new FormControl();
   focus = new FormControl();
   location = new FormControl();
   bulding = new FormControl();
-  curriculumList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
+
+  curriculumList = [];
   focusList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
-  locationList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
-  buldingList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
-
-  batches: Batch[];
-  trainers: Trainer[];
-
-  trainer: Trainer;
-
-
-
-
+  locationList = [];
+  buldingList = [];
 
   batchTimeLine: any;
-
-
 
   @ViewChild('container', { read: ElementRef }) container: ElementRef;
 
@@ -52,14 +62,18 @@ export class TimelineComponent implements AfterViewInit, OnInit {
   constructor(
     private batchService: BatchService,
     private trainerService: TrainerService,
-    private curriculumService: CurriculaService
+    private curriculumService: CurriculaService,
+    private locationService: LocationService,
+    private buildingService: BuildingService
   ) { }
 
   ngOnInit() {
+    this.setCurriculmList();
+    this.setLocationList();
+    this.setBuldingList();
   }
 
   ngAfterViewInit() {
-
 
     xRange(Highcharts);
 
@@ -95,7 +109,7 @@ export class TimelineComponent implements AfterViewInit, OnInit {
   }
 
   getAllBatches() {
-    let yAxiPosition = 0; //Sets the Y-axis
+    let yAxisPosition = 0; //Sets the Y-axis
     let name = [];
     this.batchService.getAll().subscribe(batchData => {
       this.batches = batchData;
@@ -117,11 +131,11 @@ export class TimelineComponent implements AfterViewInit, OnInit {
             data: [{
               x: entry.startDate,
               x2: entry.endDate,
-              y: yAxiPosition, 
+              y: yAxisPosition,
             }]
           });
         // name[yAxiPosition] = entry.trainer;
-        yAxiPosition++;
+        yAxisPosition++;
       }
     });
     // console.log(name);
@@ -179,7 +193,35 @@ export class TimelineComponent implements AfterViewInit, OnInit {
 
   }
 
+  setCurriculmList() {
+    this.curriculumService.getAll().subscribe(curriculumData => {
+      this.curriculums = curriculumData;
+      for (const entry of this.curriculums) {
+        this.curriculumslist = entry.name;
+        this.curriculumList.push(this.curriculumslist);
+      }
+    })
+  }
 
+  setLocationList() {
+    this.locationService.getAll().subscribe(locationData => {
+      this.locations = locationData;
+      for (const entry of this.locations) {
+        this.locationlist = entry.name;
+        this.locationList.push(this.locationlist);
+      }
+    })
+  }
+
+  setBuldingList() {
+    this.buildingService.getAll().subscribe(buildingData => {
+      this.buldings = buildingData;
+      for (const entry of this.buldings) {
+        this.buildinglist = entry.name;
+        this.buldingList.push(this.buildinglist);
+      }
+    })
+  }
 }
 
 
