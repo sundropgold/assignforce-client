@@ -273,4 +273,6 @@
   </ng-container>
 </div>
 
-
+<div *ngIf="batch.length == 0" fxLayout="column" fxLayoutWrap fxLayoutAlign="center center">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
