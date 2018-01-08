@@ -8,8 +8,8 @@
       <!-- Expandable Content Core Curricula-->
       <mat-card>
       <mat-accordion>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header >
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
             <mat-panel-title>
               <span class="panel-title-fix">Core Curricula</span>
             </mat-panel-title>
@@ -55,7 +55,7 @@
       <!-- Focuses-->
       <mat-card>
         <mat-accordion>
-          <mat-expansion-panel>
+          <mat-expansion-panel [expanded]="true">
             <mat-expansion-panel-header >
               <mat-panel-title>
                 <span class="panel-title-fix">Focuses</span>
@@ -97,11 +97,11 @@
           </mat-expansion-panel>
         </mat-accordion>
       </mat-card>
-
+      
       <!-- Skills -->
       <mat-card>
         <mat-accordion>
-          <mat-expansion-panel>
+          <mat-expansion-panel [expanded]="true">
             <mat-expansion-panel-header >
             <mat-panel-title>
               <span class="panel-title-fix">Skills</span>
