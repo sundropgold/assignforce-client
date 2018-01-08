@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {Locations} from '../domain/locations';
+import {UrlService} from './url.service';
 
 @Injectable()
 export class LocationService {
 
-  url = 'https://location-service.cfapps.io/api/v2/location';
+  url = this.urlService.getUrl() + '/api/location/api/v2/location';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private urlService: UrlService) {
   }
 
   // Gets all Locations in the database

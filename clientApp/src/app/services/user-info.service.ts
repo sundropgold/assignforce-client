@@ -8,7 +8,7 @@ import {Observable} from 'rxjs/Observable';
 export class UserInfoService {
 
     user: User
-    
+
     constructor(private url: UrlService,
 		private http: HttpClient) { }
 
@@ -20,6 +20,6 @@ export class UserInfoService {
 	return this.user;
     }
     setUser(u: User){
-	this.user = u; 
+	this.user = u;
     }
 }

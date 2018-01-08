@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {GlobalSettings} from '../domain/global-settings';
+import {UrlService} from './url.service';
 
 @Injectable()
 export class SettingsService {
 
-  url = 'https://settings-service.cfapps.io/api/v2/setting';
+  url = this.urlService.getUrl() + '/api/settings/api/v2/setting';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private urlService: UrlService) {
   }
 
   // Gets all settings, open up possibilities for future development

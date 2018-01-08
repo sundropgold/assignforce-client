@@ -1,23 +1,19 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {UrlService} from './url.service'
-import {User} from '../domain/user'
+import {Injectable} from '@angular/core';
+import {UrlService} from './url.service';
 
 @Injectable()
 export class AuthService {
 
-    token: string = ''
-    
-    constructor(private url: UrlService) { }
+  token = '';
 
-    getToken(){
-	return this.token;
-    }
+  constructor(private url: UrlService) {
+  }
 
-    setToken(newToken: string){
-	this.token = newToken;
-    }
+  getToken() {
+    return this.token;
+  }
 
-  
-    
+  setToken(newToken: string) {
+    this.token = newToken;
+  }
 }
