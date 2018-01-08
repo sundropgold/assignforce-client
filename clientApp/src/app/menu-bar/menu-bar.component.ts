@@ -45,7 +45,7 @@ export class MenuBarComponent implements OnInit {
         () => {
           this.router.navigateByUrl('');
         });
-    }
 
+    }
   }
 }
