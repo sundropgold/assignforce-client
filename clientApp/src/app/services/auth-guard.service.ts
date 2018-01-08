@@ -8,10 +8,11 @@ export class AuthGuardService {
   constructor(public auth: AuthService, public router: Router) {}
 
   canActivate(): boolean {
-    if (this.auth.getToken() === '') {
+    if (this.auth.getToken()) {
+	return true; 
+    }
       this.router.navigate(['']);
       return false;
-    }
-    return true;
+
   }
 }

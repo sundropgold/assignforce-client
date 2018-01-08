@@ -4,16 +4,15 @@ import {UrlService} from './url.service';
 @Injectable()
 export class AuthService {
 
-  token = '';
-
   constructor(private url: UrlService) {
   }
 
   getToken() {
-    return this.token;
+      return localStorage.getItem("token");;     
   }
 
   setToken(newToken: string) {
-    this.token = newToken;
+ 
+      localStorage.setItem("token", newToken);
   }
 }
