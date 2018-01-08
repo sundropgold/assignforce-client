@@ -32,27 +32,28 @@ export class TimelineComponent implements AfterViewInit, OnInit {
   focus = new FormControl();
   location = new FormControl();
   bulding = new FormControl();
-  curriculumList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
-  focusList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
-  locationList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
-  buldingList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
+  curriculumList = [];
+  focusList = [];
+  locationList = [];
+  buldingList = [];
   nameList = [];
   isConcluded = false;
   batches: Batch[];
   filteredBatches: Batch[];
-  trainers: Trainer[];
+  // trainers: Trainer[];
   curriculums: Curriculum[];
   locations: Locations[];
   buldings: Building[];
-  catagories: string[];
-  trainerNames: string[];
+  // catagories: string[];
+  // trainerNames: string[];
   curriculumslist: string;
   locationlist: string;
   buildinglist: string;
   trainerName: string;
   trainer: Trainer;
-  batchTimeLine: any;
-  
+  startDate = new Date();
+  endDate = new Date();
+
   @ViewChild('container', { read: ElementRef }) container: ElementRef;
   private chart: any;
 
@@ -81,9 +82,14 @@ export class TimelineComponent implements AfterViewInit, OnInit {
       title: {
         text: 'Batches'
       },
-      xAxis: {
+      xAxis: {        
         type: 'datetime',
-      },
+        labels: {
+            formatter: function() {
+                return Highcharts.dateFormat('%b.\%e \'%y' , this.value);
+            }
+        }
+    },
       yAxis: {
         title: {
           text: ''
@@ -141,6 +147,15 @@ export class TimelineComponent implements AfterViewInit, OnInit {
       );
       let yAxiPosition = 0;
       for (const entry of this.filteredBatches) {
+        this.trainerService.getById(entry.trainer).subscribe(trainerData => {
+          this.trainer = trainerData;
+          this.trainerName = (this.trainer.firstName + " " + this.trainer.lastName);
+          this.nameList.push(this.trainerName);
+          console.log(this.nameList);
+          this.chart.yAxis[0].update({
+            categories: this.nameList
+          });
+        })
         this.chart.addSeries(
           {
             name: entry.name,
@@ -160,6 +175,15 @@ export class TimelineComponent implements AfterViewInit, OnInit {
       }
       let yAxiPosition = 0;
       for (const entry of this.filteredBatches) {
+        this.trainerService.getById(entry.trainer).subscribe(trainerData => {
+          this.trainer = trainerData;
+          this.trainerName = (this.trainer.firstName + " " + this.trainer.lastName);
+          this.nameList.push(this.trainerName);
+          console.log(this.nameList);
+          this.chart.yAxis[0].update({
+            categories: this.nameList
+          });
+        })
         this.chart.addSeries(
           {
             name: entry.name,
@@ -204,5 +228,14 @@ export class TimelineComponent implements AfterViewInit, OnInit {
         this.buldingList.push(this.buildinglist);
       }
     });
+  }
+
+  updateTimeline() {
+    console.log("UPDATEING TIMELINE")
+    this.chart.xAxis[0].update({
+      min: this.startDate.getTime(),
+      max: this.endDate.getTime()
+  }); 
+  
   }
 }
