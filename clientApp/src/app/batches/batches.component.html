@@ -47,7 +47,7 @@
           </mat-form-field>
 
           <mat-form-field class="third">
-            <mat-select placeholder="Skills" [(ngModel)]="batch.skills"  name="skills" [formControl]="skills" multiple>
+            <mat-select placeholder="Skills" [(ngModel)]="batch.skills"  name="skills" [formControl]="skills" multiple >
               <mat-option *ngFor="let skill of skillForm" [value]="skill.skillId">{{skill.name}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -78,8 +78,8 @@
           <div>
           <mat-form-field class="half">
             <mat-select placeholder="Trainer" [(ngModel)]="batch.trainer" name="trainer">
-              <mat-option *ngFor="let trainer of trainerForm" [value]="trainer.trainerId">
-                {{ trainer.firstName }} {{trainer.lastName}}
+              <mat-option *ngFor="let trainer of trainerForm" [value]="trainer.trainerId"  >
+                {{ trainer.firstName }} {{trainer.lastName}} {{evalTrainer(trainer.skills)}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -87,11 +87,12 @@
           <mat-form-field class="half">
             <mat-select placeholder="Co-Trainer" [(ngModel)]="batch.cotrainer" name="cotrainer">
               <mat-option *ngFor="let trainer of trainerForm" [value]="trainer.trainerId">
-                {{ trainer.firstName }} {{trainer.lastName}}
+                {{ trainer.firstName }} {{trainer.lastName}}  {{evalTrainer(trainer.skills)}}
               </mat-option>
             </mat-select>
           </mat-form-field>
             </div>
+
 
           <mat-form-field class="third">
             <mat-select placeholder="Location" [(ngModel)]="batch.batchLocation.locationId" name="locations">

@@ -43,10 +43,10 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.user = this.userInfoService.getUser();
-    // if (this.user.role === 'VP of Technology' && this.tId === undefined) {
-    //   this.router.navigate(['/overview']);
-    // }
+    this.user = this.userInfoService.getUser();
+    if (this.user.role === 'VP of Technology' && this.tId === undefined) {
+      this.router.navigate(['/overview']);
+    }
     this.route.params.subscribe(params => this.tId = params.id);
     // data gathering
 
@@ -64,8 +64,8 @@ export class ProfileComponent implements OnInit {
           },
           () => this.showToast('Could not fetch trainer.'));
     } else {
-      // this.trainerService.getByFirstNameAndLastName(this.user.firstname, this.user.lastname)
-      this.trainerService.getByFirstNameAndLastName('Test', 'Trainer')
+      this.trainerService.getByFirstNameAndLastName(this.user.firstname, this.user.lastname)
+      // this.trainerService.getByFirstNameAndLastName('Test', 'Trainer')
         .subscribe(response => {
             this.trainer = response;
             if (this.trainer.skills.length !== 0) {
