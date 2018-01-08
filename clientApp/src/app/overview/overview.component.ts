@@ -52,7 +52,6 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   }
   exportToCSV(evt) {
     evt.stopPropagation();
-   // this.csvService.download(this.dataSource, 'Batches');
     new Angular2Csv(this.BatchData, 'batches');
   }
 
@@ -124,8 +123,8 @@ export class OverviewComponent implements OnInit, AfterViewInit {
       }
     );
     this.curriculaService.getAll().subscribe(curriculaData => {
-      for (const batch of this.BatchData){
-        for (const curricula of curriculaData){
+      for (let batch of this.BatchData){
+        for (let curricula of curriculaData){
           if (batch.focus === curricula.currId) {
             batch.focusName = curricula.name;
           }

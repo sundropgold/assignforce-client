@@ -5,8 +5,7 @@ import {AuthService} from './auth.service';
 @Injectable()
 export class AuthGuardService {
 
-  constructor(public auth: AuthService, public router: Router) {
-  }
+  constructor(public auth: AuthService, public router: Router) {}
 
   canActivate(): boolean {
     if (this.auth.getToken() === '') {
@@ -15,5 +14,4 @@ export class AuthGuardService {
     }
     return true;
   }
-
 }
