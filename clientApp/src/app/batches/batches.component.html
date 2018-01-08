@@ -219,7 +219,7 @@
           <ng-container matColumnDef="Icons">
             <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
             <mat-cell *matCellDef="let batch">
-
+              <div [hidden]="!isAuthorized()">
               <button mat-icon-button color (click)="EditBatch(batch.id)">
                 <mat-icon id="buttonIcon" matTooltip="Edit" matTooltipPosition="above">mode_edit</mat-icon>
               </button>
@@ -229,6 +229,7 @@
               <button mat-icon-button color (click)="DeleteBatch(batch.id, $event)">
                 <mat-icon id="buttonIcon" matTooltip="Delete" matTooltipPosition="above">delete</mat-icon>
               </button>
+              </div>
               <!--<button mat-icon-button color (click)="Synchronize()">
                 <mat-icon id="buttonIcon" matTooltip="Synchronize" matTooltipPosition="above">publish</mat-icon>
               </button>-->
