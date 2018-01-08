@@ -97,6 +97,7 @@
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>Graduate Summary for {{gradYear}}</mat-panel-title>
+          <mat-panel-description>
           <span fxFlex=""></span>
           <button mat-icon-button><mat-icon title="Export to CSV" (click)="exportToCSV($event, 'gruduateSummary')">get_app</mat-icon></button>
           <mat-menu #settingGraduate="matMenu">
@@ -116,6 +117,7 @@
             <mat-icon>settings</mat-icon>
           </button>
           <span fxFlex="1%"></span>
+          </mat-panel-description>
         </mat-expansion-panel-header>
         <mat-card>
 
@@ -216,6 +218,8 @@
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>Incoming Trainee Summary for {{incomeYear}}</mat-panel-title>
+          <mat-panel-description>
+
           <span fxFlex=""></span>
           <button mat-icon-button><mat-icon title="Export to CSV" (click)="exportToCSV($event, 'gruduateSummary')">get_app</mat-icon></button>
           <mat-menu #settingIncoming="matMenu">
@@ -235,7 +239,7 @@
             <mat-icon>settings</mat-icon>
           </button>
           <span fxFlex="1%"></span>
-
+          </mat-panel-description>
         </mat-expansion-panel-header>
         <mat-card>
           <!--<mat-table #table [dataSource]="dataSource" matSort>-->
