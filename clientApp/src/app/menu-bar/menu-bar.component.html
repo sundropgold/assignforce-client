@@ -1,6 +1,6 @@
 
 
-<nav mat-tab-nav-bar style="overflow: auto;" *ngIf="!admin">
+<nav mat-tab-nav-bar style="overflow: auto;" *ngIf="admin !== 'VP of Technology'">
   <span fxFlex></span>
 
     <a mat-tab-link
@@ -13,7 +13,7 @@
     </a>
 </nav>
 
-<nav mat-tab-nav-bar style="overflow: auto;" *ngIf="admin">
+<nav mat-tab-nav-bar style="overflow: auto;" *ngIf="admin === 'VP of Technology'">
   <span fxFlex></span>
 
   <a mat-tab-link

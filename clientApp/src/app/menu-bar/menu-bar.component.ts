@@ -14,23 +14,17 @@ import {NotificationService} from '../services/notification.service';
 })
 export class MenuBarComponent implements OnInit {
   admin = '';
-  tabs = ['overview', 'batches', 'locations', 'curricula', 'trainers', 'profile', 'reports', 'settings', 'logout'];
+  tabs = ['overview', 'batches', 'locations', 'curricula', 'trainers', 'profile', 'reports', 'logout'];
   adminTabs = ['overview', 'batches', 'locations', 'curricula', 'trainers', 'reports', 'settings', 'logout'];
   user: User;
 
 
-  constructor(private userinfo: UserInfoService,
+  constructor(private userInfo: UserInfoService,
               private notificationService: NotificationService) {
   }
 
   ngOnInit() {
-    this.userinfo.loadUser().subscribe((user) => {
-      this.user = user;
-      this.admin = this.user.role;
-      console.log(this.user);
-    }, (error) => {
-      this.showToast('Failed to fetch user info.');
-    });
+    this.user = this.userInfo.getUser();
   }
 
   showToast(msg) {
