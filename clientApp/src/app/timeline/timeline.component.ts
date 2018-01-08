@@ -52,7 +52,7 @@ export class TimelineComponent implements AfterViewInit, OnInit {
   trainerName: string;
   trainer: Trainer;
   batchTimeLine: any;
-  
+
   @ViewChild('container', { read: ElementRef }) container: ElementRef;
   private chart: any;
 
@@ -141,6 +141,15 @@ export class TimelineComponent implements AfterViewInit, OnInit {
       );
       let yAxiPosition = 0;
       for (const entry of this.filteredBatches) {
+        this.trainerService.getById(entry.trainer).subscribe(trainerData => {
+          this.trainer = trainerData;
+          this.trainerName = (this.trainer.firstName + " " + this.trainer.lastName);
+          this.nameList.push(this.trainerName);
+          console.log(this.nameList);
+          this.chart.yAxis[0].update({
+            categories: this.nameList
+          });
+        })
         this.chart.addSeries(
           {
             name: entry.name,
@@ -160,6 +169,15 @@ export class TimelineComponent implements AfterViewInit, OnInit {
       }
       let yAxiPosition = 0;
       for (const entry of this.filteredBatches) {
+        this.trainerService.getById(entry.trainer).subscribe(trainerData => {
+          this.trainer = trainerData;
+          this.trainerName = (this.trainer.firstName + " " + this.trainer.lastName);
+          this.nameList.push(this.trainerName);
+          console.log(this.nameList);
+          this.chart.yAxis[0].update({
+            categories: this.nameList
+          });
+        })
         this.chart.addSeries(
           {
             name: entry.name,
