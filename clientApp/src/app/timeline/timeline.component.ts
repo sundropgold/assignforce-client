@@ -272,12 +272,11 @@ export class TimelineComponent implements AfterViewInit, OnInit {
   }
 
   setRandomDate() {
-    this.startDate = new Date(+this.startDate + Math.random() * (this.endDate.getHours() - this.startDate.getHours()))
-    this.endDate = new Date(+this.startDate + Math.random() * (this.endDate.getHours() - this.startDate.getHours()))
+    // this.startDate = new Date(+this.startDate + Math.random() * (this.endDate.getHours() - this.startDate.getHours()))
+    // this.endDate = new Date(+this.startDate + Math.random() * (this.endDate.getHours() - this.startDate.getHours()))
     this.isConcluded = !this.isConcluded;
     this.chart.xAxis[0].update({
-      min: this.startDate.getTime(),
-      max: this.endDate.getTime()
+      min: new Date().getTime(),
     });
   }
 
