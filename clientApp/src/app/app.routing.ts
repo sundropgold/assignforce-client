@@ -11,6 +11,7 @@ import {SettingsComponent} from './settings/settings.component';
 import {LoginComponent} from './login/login.component';
 import {LoginSuccessComponent} from './login-success/login-success.component';
 import {AuthGuardService} from './services/auth-guard.service';
+import {BeforeLoggedInComponent} from './before-logged-in/before-logged-in.component';
 
 
 const appRoutes: Routes = [
@@ -68,6 +69,11 @@ const appRoutes: Routes = [
     path: 'settings',
     component: SettingsComponent,
     canActivate: [AuthGuardService],
+  },
+  {
+    path: 'loggedIn',
+    component: BeforeLoggedInComponent,
+    canActivate: [AuthGuardService]
   }
 ];
 

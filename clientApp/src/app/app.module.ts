@@ -68,6 +68,7 @@ import { LoginSuccessComponent } from './login-success/login-success.component';
 import {SettingsService} from './services/global-settings.service';
 import {ReplogicService} from "./replogic.service";
 import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
+import { BeforeLoggedInComponent } from './before-logged-in/before-logged-in.component';
 
 
 
@@ -103,6 +104,7 @@ import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
     TimelineComponent,
     PtoComponent,
     LoginSuccessComponent,
+    BeforeLoggedInComponent,
   ],
   imports: [
     HttpClientModule,
