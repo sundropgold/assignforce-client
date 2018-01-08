@@ -108,7 +108,7 @@
             </form>
             <form mat-menu-item>
               <mat-form-field class="full-width">
-                <input matInput placeholder="Graduate Per Batch" type="number" [(ngModel)]="reportGrads" (click)="$event.stopPropagation()" name="settingGraduate">
+                <input matInput placeholder="Graduate Per Batch" type="number" [(ngModel)]="setting[0].reportGrads" (click)="$event.stopPropagation()" name="settingGraduate">
               </mat-form-field>
             </form>
 
@@ -230,7 +230,7 @@
             </form>
             <form mat-menu-item>
               <mat-form-field class="full-width">
-                <input matInput placeholder="Graduate Per Batch" type="number" [(ngModel)]="reportIncomingGrads" (click)="$event.stopPropagation()" name="settingIncoming">
+                <input matInput placeholder="Graduate Per Batch" type="number" [(ngModel)]="setting[0].reportIncomingGrads" (click)="$event.stopPropagation()" name="settingIncoming">
               </mat-form-field>
             </form>
 
