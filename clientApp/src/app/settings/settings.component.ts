@@ -40,7 +40,7 @@ export class SettingsComponent implements OnInit {
     }, (err) => {
       this.showToast('Failed to fetch Locations');
     });
-    this.settings = this.settingsService.getSettings()
+    this.settings = this.settingsService.getSettings();
       this.trainersPerPage = this.settings.trainersPerPage;
       this.reportGrads = this.settings.reportGrads;
       this.batchLength = this.settings.batchLength;
