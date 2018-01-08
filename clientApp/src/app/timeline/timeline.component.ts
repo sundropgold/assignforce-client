@@ -217,6 +217,7 @@ export class TimelineComponent implements AfterViewInit, OnInit {
     }
   }
 
+<<<<<<< HEAD
   // Concluded batches checkbox
   hideBatchlessTrainers() {
     this.isConcluded = !this.isConcluded;
@@ -266,6 +267,8 @@ export class TimelineComponent implements AfterViewInit, OnInit {
     }
   }
 
+=======
+>>>>>>> 100e208f739b67ae0841da0ba91d33da3b915cef
   setCurriculmList() {
     this.curriculumService.getAll().subscribe(curriculumData => {
       this.curriculums = curriculumData;

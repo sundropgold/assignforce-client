@@ -9,6 +9,8 @@ import {LocationService} from '../services/location.service';
 import {BuildingService} from '../services/building.service';
 import {RoomService} from '../services/room.service';
 import {NotificationService} from '../services/notification.service';
+import {User} from '../domain/user';
+import {UserInfoService} from '../services/user-info.service';
 
 @Component({
   selector: 'app-locations',
@@ -19,6 +21,7 @@ import {NotificationService} from '../services/notification.service';
 export class LocationsComponent implements OnInit {
   expanded: boolean[] = [];
   locations: Locations[] = [];
+  userRole = 'VP of Technology';
 
   constructor(private iconRegistry: MatIconRegistry,
               private sanitizer: DomSanitizer,
@@ -26,9 +29,8 @@ export class LocationsComponent implements OnInit {
               private buildingService: BuildingService,
               private roomService: RoomService,
               private notificationService: NotificationService,
+              private userInfoService: UserInfoService,
               public dialog: MatDialog) {
-    this.getAllLocations();
-
     iconRegistry.addSvgIcon(
       'location',
       sanitizer.bypassSecurityTrustResourceUrl('assets/img/ic_location_city_black_48px.svg'));
@@ -40,6 +42,9 @@ export class LocationsComponent implements OnInit {
       sanitizer.bypassSecurityTrustResourceUrl('assets/img/ic_business_black_48px.svg'));
   }
   ngOnInit() {
+    this.getAllLocations();
+    // const user: User = this.userInfoService.getUser();
+    // this.userRole = user.role;
   }
   // error messages
   showToast(msg) {

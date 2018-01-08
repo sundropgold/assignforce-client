@@ -4,7 +4,7 @@ import {AppComponent} from './app.component';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {SpringXsrfInterceptor} from './interceptors/springXsrfInterceptor';
+import {AuthTokenInterceptor} from './interceptors/authTokenInterceptor';
 import {MenuBarComponent} from './menu-bar/menu-bar.component';
 import {OverviewComponent} from './overview/overview.component';
 import {
@@ -32,7 +32,10 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TrainerService} from './services/trainer.service';
 import {SkillService} from './services/skill.service';
 import {S3CredentialService} from './services/s3-credential.service';
+import {AuthService} from './services/auth.service'
+import {AuthGuardService} from './services/auth-guard.service';
 import {UrlService} from './services/url.service';
+import {UserInfoService} from './services/user-info.service';
 import {
   MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatExpansionModule,
   MatFormFieldModule, MatIconModule,
@@ -61,9 +64,11 @@ import {LocationService} from './services/location.service';
 import {RoomService} from './services/room.service';
 import {BuildingService} from './services/building.service';
 import {NgPipesModule} from 'ngx-pipes';
+import { LoginSuccessComponent } from './login-success/login-success.component';
 import {SettingsService} from './services/global-settings.service';
 import {ReplogicService} from "./replogic.service";
 import { ChartModule } from 'angular-highcharts';
+
 
 @NgModule({
   declarations: [
@@ -96,6 +101,7 @@ import { ChartModule } from 'angular-highcharts';
     LoginComponent,
     TimelineComponent,
     PtoComponent,
+    LoginSuccessComponent,
   ],
   imports: [
     HttpClientModule,
@@ -142,14 +148,18 @@ import { ChartModule } from 'angular-highcharts';
     UrlService,
     NotificationService,
     PtoService,
+      AuthService,
+      AuthGuardService,
+      UserInfoService,
     CurriculaService,
     LocationService,
     BuildingService,
     RoomService,
     SettingsService,
+
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: SpringXsrfInterceptor,
+      useClass: AuthTokenInterceptor,
       multi: true
     }
   ],
