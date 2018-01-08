@@ -1,14 +1,13 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 import {UrlService} from './url.service';
-import {User} from '../domain/user';
 
 @Injectable()
 export class AuthService {
 
-  token: string = '';
+  token = '';
 
-  constructor(private url: UrlService) { }
+  constructor(private url: UrlService) {
+  }
 
   getToken() {
     return this.token;
