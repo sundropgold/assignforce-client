@@ -28,6 +28,9 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   reportGrads = 13;
   reportIncomingGrads = 18;
 
+  fail = 0;
+  success = 0;
+
   newBatch: any = {};
   defaultLocation: any = {};
   // for creating new projection
@@ -467,7 +470,9 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
             index = this.cardArr.indexOf(batch);
             this.removeCard(index);
           },
-          error => console.log('error creating batch')
+          error => {
+            console.log('error creating batch');
+          }
         );
       }
     }
