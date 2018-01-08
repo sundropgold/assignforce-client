@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Room} from '../domain/room';
 import {Observable} from 'rxjs/Observable';
+import {UrlService} from './url.service';
 
 @Injectable()
 export class RoomService {
 
-  url = 'https://location-service.cfapps.io/api/v2/room';
+  url = this.urlService.getUrl() + '/api/location/api/v2/room';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private urlService: UrlService) {
   }
 
   // Gets all Room in the database

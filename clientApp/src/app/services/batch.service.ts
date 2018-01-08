@@ -2,14 +2,16 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Batch} from '../domain/batch';
 import {Observable} from 'rxjs/Observable';
+import {UrlService} from './url.service';
 
 @Injectable()
 export class BatchService {
 
    // url = 'http://localhost:9092/api/v2/batch';
-    url = 'https://batch-service.cfapps.io/api/v2/batch';
+    url = this.urlService.getUrl() + '/api/batch/api/v2/batch';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private urlService: UrlService) { }
 
 
   getAll(): Observable<Batch[]> {

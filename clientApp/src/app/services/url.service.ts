@@ -6,7 +6,7 @@ import {Observable} from 'rxjs/Observable';
 @Injectable()
 export class UrlService {
 
-    url = 'https://assignforcebackend.cfapps.io/';
+    url = 'https://assignforceBackEnd.cfapps.io';
 
     constructor() { }
 

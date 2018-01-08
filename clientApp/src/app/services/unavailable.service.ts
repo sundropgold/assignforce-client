@@ -5,14 +5,16 @@ import { Trainer} from '../domain/trainer';
 import { Observable} from 'rxjs/Observable';
 import { UnavailableRoom} from '../domain/unavailable';
 import { UnavailableTrainer} from '../domain/unavailable';
+import {UrlService} from './url.service';
 
 @Injectable()
 export class UnavailableService {
 
   // url = 'https://unavailable-service.cfapps.io/api/v2/unavailable/';
-  url = 'https://unavailable-service.cfapps.io/api/v2/unavailable/';
+  url = this.urlService.getUrl() + '/api/unavailable/api/v2/unavailable/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private urlService: UrlService) { }
 
   createUnavailableRoom( room ): Observable<UnavailableRoom> {
     return this.http.post<UnavailableRoom>(`${this.url}`, room);
