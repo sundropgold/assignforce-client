@@ -37,95 +37,6 @@ export class TrainersComponent implements OnInit {
     this.getAll();
     this.s3Service.getCreds().subscribe(response => this.creds = response,
       () => this.showToast('Failed to fetch Credentials'));
-
-    // this.trainers = [{
-    //   trainerId: 1,
-    //   firstName: 'James',
-    //   lastName: 'Smith',
-    //   skills: [{
-    //     skillId: 1,
-    //     name: 'Java',
-    //     active: true
-    //   },
-    //     {skillId: 2,
-    //       name: 'Angular',
-    //       active: true
-    //     },
-    //     {
-    //       skillId: 3,
-    //       name: 'Spring',
-    //       active: true
-    //     }],
-    //   certifications: 'Certs',
-    //   active: true,
-    //   resume: null,
-    // },
-    //   {
-    //     trainerId: 2,
-    //     firstName: 'Jane',
-    //     lastName: 'Doe',
-    //     skills: [{
-    //       skillId: 1,
-    //       name: 'C#',
-    //       active: true
-    //     },
-    //       {skillId: 2,
-    //         name: 'AngularJs',
-    //         active: true
-    //       },
-    //       {
-    //         skillId: 3,
-    //         name: 'Jenkins',
-    //         active: true
-    //       }],
-    //     certifications: 'Certs',
-    //     active: false,
-    //     resume: 'Resume',
-    //   },
-    //   {
-    //     trainerId: 3,
-    //     firstName: 'Jon',
-    //     lastName: 'Jones',
-    //     skills: [{
-    //       skillId: 1,
-    //       name: 'Java',
-    //       active: true
-    //     },
-    //       {skillId: 2,
-    //         name: 'Maven',
-    //         active: true
-    //       },
-    //       {
-    //         skillId: 3,
-    //         name: 'MongoDB',
-    //         active: true
-    //       }],
-    //     certifications: 'Certs',
-    //     active: false,
-    //     resume: 'Resume',
-    //   },
-    //   {
-    //     trainerId: 4,
-    //     firstName: 'Daniel',
-    //     lastName: 'Cormier',
-    //     skills: [{
-    //       skillId: 1,
-    //       name: 'C#',
-    //       active: true
-    //     },
-    //       {skillId: 2,
-    //         name: 'Cloud Foundry',
-    //         active: true
-    //       },
-    //       {
-    //         skillId: 3,
-    //         name: 'AWS',
-    //         active: true
-    //       }],
-    //     certifications: 'Certs',
-    //     active: true,
-    //     resume: 'Resume',
-    //   }];
   }
 
   //Displays snackbar message notifications
@@ -218,15 +129,15 @@ export class TrainersComponent implements OnInit {
 
   showCalendar() {
     this.trainerService.authorize();
-    this.http.get("/api/v2/google/googleStatus")
-      .subscribe( response => {
-        if(response !== ""){
-          this.trainerService.authorize();
-        } else {
-          this.googleAuth();
-        }
-
-    })
+    // this.http.get("https://unavailable-service.cfapps.io/api/v2/google/googleStatus")
+    //   .subscribe( response => {
+    //     if(response !== null){
+    //       this.trainerService.authorize();
+    //     } else {
+    //       this.googleAuth();
+    //     }
+    //
+    // }) Comment due to errors in google login coming back from backend
 
   }
 
@@ -321,7 +232,8 @@ export class TrainersComponent implements OnInit {
   };
 
   googleAuth() {
-    this.router.navigate(['api/v2/google/google']);
+    // this.router.navigate(['api/v2/google/google']);
+    window.location.href = 'https://unavailable-service.cfapps.io/api/v2/google/google';
   }
 
 }

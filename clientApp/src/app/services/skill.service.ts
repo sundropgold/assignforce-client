@@ -2,13 +2,15 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {Skill} from '../domain/skill';
+import {UrlService} from './url.service';
 
 @Injectable()
 export class SkillService {
 
   // url = 'http://localhost:9090/api/v2/skill';
-  url = 'https://skill-service.cfapps.io/api/v2/skill';
-  constructor(private http: HttpClient) { }
+  url = this.urlService.getUrl() + '/api/skill/api/v2/skill';
+  constructor(private http: HttpClient,
+              private urlService: UrlService) { }
 
   // var Skill = $resource('api/v2/skill/:skillId',{skillId:'@skillId'},{update:{method:'PUT', url:});
 

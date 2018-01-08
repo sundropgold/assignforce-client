@@ -32,7 +32,7 @@ describe('TrainersComponent', () => {
   describe('removeTrainerTest', function () {
     it('Tests to make sure the trainerRM.active is being marked as false', function () {
       const trainerRM: Trainer = {
-        trainerId: 1,
+        trainerId: '1',
         firstName: 'test',
         lastName: 'test',
         skills: [],
@@ -44,6 +44,25 @@ describe('TrainersComponent', () => {
       component.removeTrainer(trainerRM);
       const actual = trainerRM.active;
       const should = false;
+      expect(actual).toBe(should);
+    });
+  });
+
+  describe('activateTrainerTest', function () {
+    it('Tests to make sure the trainerRM.active is being marked as true', function () {
+      const trainerRM: Trainer = {
+        trainerId: '1',
+        firstName: 'test',
+        lastName: 'test',
+        skills: [],
+        skillsObject: [],
+        resume: null,
+        active: false,
+        certifications: []
+      };
+      component.activateTrainer(trainerRM);
+      const actual = trainerRM.active;
+      const should = true;
       expect(actual).toBe(should);
     });
   });

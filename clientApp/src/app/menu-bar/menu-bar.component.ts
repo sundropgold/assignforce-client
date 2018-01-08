@@ -2,6 +2,9 @@ import {AfterContentInit, AfterViewInit, Component, ContentChildren, OnInit, Que
 import {Router, ActivatedRoute, NavigationEnd} from '@angular/router';
 import {Subject} from 'rxjs/Subject';
 import {MatTab, MatTabNav} from '@angular/material';
+import {UserInfoService} from '../services/user-info.service';
+import {User} from '../domain/user';
+import {NotificationService} from '../services/notification.service';
 
 @Component({
   selector: 'app-menu-bar',
@@ -10,15 +13,28 @@ import {MatTab, MatTabNav} from '@angular/material';
   encapsulation: ViewEncapsulation.None
 })
 export class MenuBarComponent implements OnInit {
-  admin = false;
+  admin = '';
   tabs = ['overview', 'batches', 'locations', 'curricula', 'trainers', 'profile', 'reports', 'settings', 'logout'];
   adminTabs = ['overview', 'batches', 'locations', 'curricula', 'trainers', 'reports', 'settings', 'logout'];
+  user: User;
 
-  constructor(private router: Router,
-              private route: ActivatedRoute) {
+
+  constructor(private userinfo: UserInfoService,
+              private notificationService: NotificationService) {
   }
 
   ngOnInit() {
+    this.userinfo.loadUser().subscribe((user) => {
+      this.user = user;
+      this.admin = this.user.role;
+      console.log(this.user);
+    }, (error) => {
+      this.showToast('Failed to fetch user info.');
+    });
+  }
+
+  showToast(msg) {
+    this.notificationService.openSnackBar(msg);
   }
 
   logout() {

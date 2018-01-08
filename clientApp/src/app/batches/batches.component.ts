@@ -53,7 +53,6 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   locationForm: Locations[];
 
   buildingForm: Building[];
-  test: Building[];
   roomForm: Room[];
 
   // This boolean checks if it is editing
@@ -182,9 +181,12 @@ export class BatchesComponent implements OnInit, AfterViewInit {
         this.batch.id = this.editBatchId;
         this.reload(evt);
       });
+      console.log('create');
     } else {
       this.batchService.update(this.batch).subscribe(data => {
         this.reload(evt);
+        console.log(this.batch);
+        console.log('edit');
       });
     }
     this.cancel(evt);
@@ -251,19 +253,19 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   getAll() {
     this.batchService.getAll().subscribe(data => {
       this.BatchData = data;
-      for (const entry of this.BatchData) {
+      for (const entry of this.BatchData) {/*
         this.curriculaService.getById(entry.curriculum)
           .subscribe(curriculumData => {
             entry.curriculumName = curriculumData.name;
           }, error => {
             this.showToast('Failed to fetch Curricula');
-          });
-        this.curriculaService.getById(entry.focus)
+          });*/
+        /*this.curriculaService.getById(entry.focus)
           .subscribe(focusData => {
             entry.focusName = focusData.name;
           }, error => {
             this.showToast('Failed to fetch Curricula');
-          });
+          });*/
         this.trainerService.getById(entry.trainer)
           .subscribe(trainerData => {
             entry.trainerName = trainerData.firstName + ' ' + trainerData.lastName;
@@ -301,35 +303,44 @@ export class BatchesComponent implements OnInit, AfterViewInit {
             this.showToast('Failed to fetch Rooms');
           });
       }
+      this.trainerService.getAll().subscribe(trainerData => {
+        this.trainerForm = trainerData;
+      }, error => {
+        this.showToast('Failed to fetch Trainers');
+      });
+
+      this.curriculaService.getAll().subscribe(curriculaData => {
+        this.curriculumForm = curriculaData;
+        for (const batch of this.BatchData){
+          for (const curricula of curriculaData){
+            if (batch.focus === curricula.currId) {
+              batch.focusName = curricula.name;
+            }
+            if (batch.curriculum === curricula.currId) {
+              batch.curriculumName = curricula.name;
+            }
+          }
+        }
+      }, error => {
+        this.showToast('Failed to fetch Curricula');
+      });
+
+      this.skillService.getAll().subscribe(skillData => {
+        this.skillForm = skillData;
+      }, error => {
+        this.showToast('Failed to fetch Skill');
+      });
+
+      this.locationService.getAll().subscribe(locationData => {
+        this.locationForm = locationData;
+      }, error => {
+        this.showToast('Failed to fetch Locations');
+      });
       this.batchData = new MatTableDataSource(this.BatchData);
       this.batchData.sort = this.sort;
       this.batchData.paginator = this.paginator;
   }, error => {
       this.showToast('Failed to fetch Batches');
-    });
-
-    this.trainerService.getAll().subscribe(trainerData => {
-      this.trainerForm = trainerData;
-    }, error => {
-      this.showToast('Failed to fetch Batches');
-    });
-
-    this.curriculaService.getAll().subscribe(curriculaData => {
-      this.curriculumForm = curriculaData;
-    }, error => {
-      this.showToast('Failed to fetch Curricula');
-    });
-
-    this.skillService.getAll().subscribe(skillData => {
-      this.skillForm = skillData;
-    }, error => {
-      this.showToast('Failed to fetch Skill');
-    });
-
-    this.locationService.getAll().subscribe(locationData => {
-      this.locationForm = locationData;
-    }, error => {
-      this.showToast('Failed to fetch Locations');
     });
   }
 

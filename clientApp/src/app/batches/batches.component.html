@@ -11,13 +11,13 @@
           <mat-panel-description>
             <span class="fill-space"></span>
             <div [hidden]="!isCreating()" (click)="beginCreation($event)">
-              <mat-icon  title="create new batch">add_circle</mat-icon>
+              <mat-icon  matTooltip="create new batch">add_circle</mat-icon>
             </div>
             <div [hidden]="isCreating()" (click)="create($event)">
-              <mat-icon  title={{this.finalize}} >done_white</mat-icon>
+              <mat-icon  [matTooltip]="this.finalize">done_white</mat-icon>
             </div>
             <div [hidden]="isCreating()" (click)="cancel($event)">
-              <mat-icon title="cancel" >cancel_white</mat-icon>
+              <mat-icon matTooltip="cancel">cancel_white</mat-icon>
             </div>
           </mat-panel-description>
         </mat-panel-title>
@@ -28,17 +28,21 @@
           <div>
             <mat-form-field class="third" >
             <mat-select placeholder="Core Curriculum" [(ngModel)]="batch.curriculum" name="curriculum" >
-              <mat-option *ngFor="let curriculum of curriculumForm" [value]="curriculum.currId" (click)="getCurriculumSkills()">
+              <div *ngFor="let curriculum of curriculumForm">
+              <mat-option *ngIf="curriculum.core === true && curriculum.active === true" [value]="curriculum.currId" (click)="getCurriculumSkills()">
                 {{ curriculum.name }}
               </mat-option>
+              </div>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field class="third">
             <mat-select placeholder="Focus" [(ngModel)]="batch.focus" name="focus">
-              <mat-option *ngFor="let focus of curriculumForm" [value]="focus.currId" (click)="getFocusSkills()">
+              <div *ngFor="let focus of curriculumForm">
+              <mat-option *ngIf="focus.core===false && focus.active === true" [value]="focus.currId" (click)="getFocusSkills()">
                 {{ focus.name }}
               </mat-option>
+              </div>
             </mat-select>
           </mat-form-field>
 
@@ -95,7 +99,6 @@
               <div *ngFor="let locations of locationForm">
               <mat-option [value]="locations.id"
                           *ngIf="locations.active === true"
-                          [(ngModel)]="batch.batchLocation.locationId" name="locations"
                           (click)="getBuildings()">
                 {{ locations.name }}
               </mat-option>
@@ -109,7 +112,6 @@
               <div *ngFor="let building of buildingForm">
               <mat-option [value]="building.id"
                           *ngIf="building.active === true"
-                          [(ngModel)]="batch.batchLocation.buildingId" name="building"
                           (click)="getRooms()">
                 {{ building.name}}
               </mat-option>
@@ -121,8 +123,7 @@
             <mat-select placeholder="Room" [(ngModel)]="batch.batchLocation.roomId" name="room">
               <div *ngFor="let room of roomForm">
               <mat-option [value]="room.roomID"
-                          *ngIf="room.active === true"
-                          [(ngModel)]="batch.batchLocation.roomId" name="room">
+                          *ngIf="room.active === true">
                 {{ room.roomName }}
               </mat-option>
               </div>
@@ -228,9 +229,9 @@
               <button mat-icon-button color (click)="DeleteBatch(batch.id, $event)">
                 <mat-icon id="buttonIcon" matTooltip="Delete" matTooltipPosition="above">delete</mat-icon>
               </button>
-              <button mat-icon-button color>
+              <!--<button mat-icon-button color (click)="Synchronize()">
                 <mat-icon id="buttonIcon" matTooltip="Synchronize" matTooltipPosition="above">publish</mat-icon>
-              </button>
+              </button>-->
             </mat-cell>
           </ng-container>
 
@@ -253,5 +254,4 @@
       <app-timeline></app-timeline>
     </mat-expansion-panel>
   </mat-accordion>
-
 </div>
