@@ -265,7 +265,91 @@
           <!--</mat-table>-->
         </mat-card>
         <mat-card>
+          <div class="example-container mat-elevation-z8">
+
+            <mat-table #table [dataSource]="dataSource1">
+
+              <!-- Position Column -->
+              <ng-container matColumnDef="Ciriculam">
+                <mat-header-cell *matHeaderCellDef> Ciriculam</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.Ciriculam}} </mat-cell>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="jan">
+                <mat-header-cell *matHeaderCellDef> jan </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.January}} </mat-cell>
+              </ng-container>
+
+              <!-- Weight Column -->
+              <ng-container matColumnDef="febuaray">
+                <mat-header-cell *matHeaderCellDef> febuaray </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.febuaray}}  </mat-cell>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="march">
+                <mat-header-cell *matHeaderCellDef> march </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.march}} </mat-cell>
+              </ng-container>
+
+
+              <ng-container matColumnDef="april">
+                <mat-header-cell *matHeaderCellDef> april </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.april}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="may">
+                <mat-header-cell *matHeaderCellDef> may </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.may}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="june">
+                <mat-header-cell *matHeaderCellDef> june </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.june}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="july">
+                <mat-header-cell *matHeaderCellDef> july </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.july}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="august">
+                <mat-header-cell *matHeaderCellDef> august </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.august}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="september">
+                <mat-header-cell *matHeaderCellDef> september </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.september}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="october">
+                <mat-header-cell *matHeaderCellDef> october </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.october}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="november">
+                <mat-header-cell *matHeaderCellDef> november </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.november}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="december">
+                <mat-header-cell *matHeaderCellDef> december </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.december}} </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+          </div>
+
+        </mat-card>
+        <mat-card>
           <mat-divider>
+            <div class="example-container ">
+              <div [chart]="chart"></div>
+            </div>
           </mat-divider>
         </mat-card>
       </mat-expansion-panel>
