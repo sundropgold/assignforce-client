@@ -66,6 +66,7 @@ export class TimelineComponent implements AfterViewInit, OnInit {
     this.setCurriculmList();
     this.setLocationList();
     this.setBuldingList();
+    this.setFocusList();
   }
 
   ngAfterViewInit() {
@@ -89,7 +90,7 @@ export class TimelineComponent implements AfterViewInit, OnInit {
       },
       yAxis: {
         title: {
-          text: ''
+          text: 'Trainers'
         },
         categories: [],
         reversed: true
@@ -277,6 +278,18 @@ export class TimelineComponent implements AfterViewInit, OnInit {
     this.isConcluded = !this.isConcluded;
     this.chart.xAxis[0].update({
       min: new Date().getTime(),
+    });
+  }
+
+  setFocusList() {
+    this.curriculumService.getAll().subscribe(curriculumData => {
+      this.curriculums = curriculumData;
+      for (const entry of this.curriculums) {
+        if (entry.core) {
+          this.curriculumslist = entry.name;
+          this.focusList.push(this.curriculumslist);
+        }
+      }
     });
   }
 
