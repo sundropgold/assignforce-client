@@ -63,7 +63,8 @@ import {BuildingService} from './services/building.service';
 import {NgPipesModule} from 'ngx-pipes';
 import {SettingsService} from './services/global-settings.service';
 import {ReplogicService} from "./replogic.service";
-import { ChartModule } from 'angular-highcharts';
+import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
+
 
 @NgModule({
   declarations: [
