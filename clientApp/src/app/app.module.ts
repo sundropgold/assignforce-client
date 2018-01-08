@@ -67,7 +67,8 @@ import {NgPipesModule} from 'ngx-pipes';
 import { LoginSuccessComponent } from './login-success/login-success.component';
 import {SettingsService} from './services/global-settings.service';
 import {ReplogicService} from "./replogic.service";
-import { ChartModule } from 'angular-highcharts';
+import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
+
 
 
 @NgModule({
