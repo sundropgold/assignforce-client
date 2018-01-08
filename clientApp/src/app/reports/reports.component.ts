@@ -75,12 +75,13 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   chart = new Chart({
       chart: {
         type: 'column',
-        width: 1875,
+        renderTo: 'chartcontainer',
         backgroundColor: 'charcoal',
       },
       title: {
         text: 'Graduate Summary'
-      },
+      }
+      ,
       credits: {
         enabled: false
       },
@@ -123,7 +124,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   Trainer = new Chart({
       chart: {
         type: 'column',
-        width: 1875,
+        renderTo: 'TrainerContainer',
         backgroundColor: 'charcoal',
       },
       title: {
