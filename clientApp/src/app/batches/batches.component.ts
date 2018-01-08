@@ -122,6 +122,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
       this.batch = data;
       this.batch.startDate = new Date(data.startDate);
       this.batch.endDate = new Date(data.endDate);
+      this.datebetween = Math.round(((this.batch.endDate)as any - ((this.batch.startDate)as any)) / 1000 / 60 / 60 / 24 / 7);
       this.getBuildings();
       this.getRooms();
     });
