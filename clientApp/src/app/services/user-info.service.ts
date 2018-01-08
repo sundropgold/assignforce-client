@@ -16,9 +16,9 @@ export class UserInfoService {
   }
 
   getUser() {
-      return JSON.parse(localStorage.getItem("user"));
+      return JSON.parse(localStorage.getItem('user'));
   }
   setUser(u: User) {
-      localStorage.setItem("user", JSON.stringify(u));
+      localStorage.setItem('user', JSON.stringify(u));
   }
 }

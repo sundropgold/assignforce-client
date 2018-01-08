@@ -40,8 +40,7 @@ export class SettingsComponent implements OnInit {
     }, (err) => {
       this.showToast('Failed to fetch Locations');
     });
-    this.settingsService.getSettings().subscribe((settings) => {
-      this.settings = settings[0];
+    this.settings = this.settingsService.getSettings()
       this.trainersPerPage = this.settings.trainersPerPage;
       this.reportGrads = this.settings.reportGrads;
       this.batchLength = this.settings.batchLength;
@@ -51,20 +50,41 @@ export class SettingsComponent implements OnInit {
       this.trainerBreakDays = this.settings.trainerBreakDays;
       this.defaultBuilding = this.settings.defaultBuilding;
       this.defaultLocation = this.settings.defaultLocation;
-      // console.log(this.settings);
       this.locationService.getById(this.defaultLocation).subscribe((location) => {
-        this.selectedLocation = location.name;
-        this.location = location;
-        this.building = location.buildings;
-        let buildingOption = location.buildings.find(
-          building => building.id === this.defaultBuilding);
-        this.selectedBuilding = buildingOption.name;
-      }, () => {
-        this.showToast('Failed to fetch the location');
-      });
-    }, (err) => {
-      this.showToast('Failed to fetch Settings.');
-    });
+          this.selectedLocation = location.name;
+          this.location = location;
+          this.building = location.buildings;
+          let buildingOption = location.buildings.find(
+            building => building.id === this.defaultBuilding);
+          this.selectedBuilding = buildingOption.name;
+        }, () => {
+          this.showToast('Failed to fetch the location');
+        });
+    // this.settingsService.getSettings().subscribe((settings) => {
+    //   this.settings = settings[0];
+    //   this.trainersPerPage = this.settings.trainersPerPage;
+    //   this.reportGrads = this.settings.reportGrads;
+    //   this.batchLength = this.settings.batchLength;
+    //   this.reportIncomingGrads = this.settings.reportIncomingGrads;
+    //   this.minBatchSize = this.settings.minBatchSize;
+    //   this.maxBatchSize = this.settings.maxBatchSize;
+    //   this.trainerBreakDays = this.settings.trainerBreakDays;
+    //   this.defaultBuilding = this.settings.defaultBuilding;
+    //   this.defaultLocation = this.settings.defaultLocation;
+    //   // console.log(this.settings);
+    //   this.locationService.getById(this.defaultLocation).subscribe((location) => {
+    //     this.selectedLocation = location.name;
+    //     this.location = location;
+    //     this.building = location.buildings;
+    //     let buildingOption = location.buildings.find(
+    //       building => building.id === this.defaultBuilding);
+    //     this.selectedBuilding = buildingOption.name;
+    //   }, () => {
+    //     this.showToast('Failed to fetch the location');
+    //   });
+    // }, (err) => {
+    //   this.showToast('Failed to fetch Settings.');
+    // });
   }
 
   showToast(msg) {
@@ -87,11 +107,11 @@ export class SettingsComponent implements OnInit {
   }
 
   saveSettings() {
-    this.settingsService.saveSettings(this.settings).subscribe(() => {
-      this.showToast('settings updated.');
-    }, (err) => {
-      this.showToast('Failed to update settings.');
-    });
+    // this.settingsService.saveSettings(this.settings).subscribe(() => {
+    //   this.showToast('settings updated.');
+    // }, (err) => {
+    //   this.showToast('Failed to update settings.');
+    // });
   }
 
   resetLocation() {
