@@ -6,7 +6,7 @@
 <!--</mat-toolbar-row>-->
 <!--</mat-toolbar>-->
 <div style="margin-top: 5%">
-  <ng-container class="showContent" *ngIf="batch.length > 0">
+  <ng-container *ngIf="batch.length > 0">
   <!--Future Projection Tab-->
     <mat-accordion>
       <mat-expansion-panel>
@@ -273,6 +273,6 @@
   </ng-container>
 </div>
 
-<div class="showContent" *ngIf="batch.length == 0" fxLayout="column" fxLayoutWrap fxLayoutAlign="center center">
+<div *ngIf="batch.length == 0" fxLayout="column" fxLayoutWrap fxLayoutAlign="center center">
   <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 </div>
