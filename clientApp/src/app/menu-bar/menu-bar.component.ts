@@ -20,7 +20,8 @@ export class MenuBarComponent implements OnInit {
 
 
   constructor(private userInfo: UserInfoService,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,
+	      private router: Router) {
   }
 
   ngOnInit() {
@@ -33,7 +34,7 @@ export class MenuBarComponent implements OnInit {
 
   logout() {
       localStorage.clear();
-      this.userInfo.logout().subscribe(data => {});
+      this.userInfo.logout().subscribe(data => {this.router.navigateByUrl('')});
       
   }
 }
