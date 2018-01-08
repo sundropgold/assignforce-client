@@ -102,6 +102,10 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     this.batchData.paginator = this.paginator;
     this.batchData = new MatTableDataSource(this.BatchData);
   }
+  evalTrainer( skills ) {
+   const res = skills.filter( function(n) { return !this.has(n); }, new Set(this.batch.skills) );
+   return Math.round((res.length / this.batch.skills.length) * 10) + '%';
+  }
 
   EditBatch(id: number) {
     this.firstTabHeader = 'Editing Batch';
