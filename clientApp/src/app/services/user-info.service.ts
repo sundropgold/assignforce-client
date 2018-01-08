@@ -7,7 +7,6 @@ import {Observable} from 'rxjs/Observable';
 @Injectable()
 export class UserInfoService {
 
-  user: User;
 
   constructor(private url: UrlService,
               private http: HttpClient) { }
@@ -20,6 +19,6 @@ export class UserInfoService {
       return JSON.parse(localStorage.getItem("user"));
   }
   setUser(u: User) {
-      localStorage.setItem("user", JSON.stringify(this.user));
+      localStorage.setItem("user", JSON.stringify(u));
   }
 }
