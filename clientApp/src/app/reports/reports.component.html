@@ -38,7 +38,7 @@
                     <mat-select placeholder="Curriculum: " [(ngModel)]="cardArr[i].batchType" (change)="assignCurr(cardArr[i].batchType, i)" required>
                       <mat-option>--</mat-option>
                       <ng-container *ngFor="let x of curricula">
-                        <mat-option *ngIf="x.core" [value]="x">
+                        <mat-option *ngIf="x.core && x.active == true" [value]="x">
                           {{x.name}}
                         </mat-option>
                       </ng-container>
