@@ -40,12 +40,9 @@ export class TimelineComponent implements AfterViewInit, OnInit {
   isConcluded = false;
   batches: Batch[];
   filteredBatches: Batch[];
-  // trainers: Trainer[];
   curriculums: Curriculum[];
   locations: Locations[];
   buldings: Building[];
-  // catagories: string[];
-  // trainerNames: string[];
   curriculumslist: string;
   locationlist: string;
   buildinglist: string;
@@ -82,14 +79,14 @@ export class TimelineComponent implements AfterViewInit, OnInit {
       title: {
         text: 'Batches'
       },
-      xAxis: {        
+      xAxis: {
         type: 'datetime',
         labels: {
-            formatter: function() {
-                return Highcharts.dateFormat('%b.\%e \'%y' , this.value);
-            }
+          formatter: function () {
+            return Highcharts.dateFormat('%b.\%e \'%y', this.value);
+          }
         }
-    },
+      },
       yAxis: {
         title: {
           text: ''
@@ -200,6 +197,82 @@ export class TimelineComponent implements AfterViewInit, OnInit {
     }
   }
 
+  hideBatchlessTrainers() {
+    this.isConcluded = !this.isConcluded;
+    console.log(this.isConcluded);
+    while (this.chart.series.length > 0) {
+      this.chart.series[0].remove(true);
+    }
+    if (this.isConcluded) {
+      console.log(this.batches);
+      this.filteredBatches = this.batches.filter(
+        batch => batch.trainer
+      );
+      let yAxiPosition = 0;
+      for (const entry of this.filteredBatches) {
+        this.trainerService.getById(entry.trainer).subscribe(trainerData => {
+          this.trainer = trainerData;
+          this.trainerName = (this.trainer.firstName + " " + this.trainer.lastName);
+          this.nameList.push(this.trainerName);
+          console.log(this.nameList);
+          this.chart.yAxis[0].update({
+            categories: this.nameList
+          });
+        })
+        this.chart.addSeries(
+          {
+            name: entry.name,
+            borderColor: 'gray',
+            pointWidth: 20,
+            data: [{
+              x: entry.startDate,
+              x2: entry.endDate,
+              y: yAxiPosition,
+            }]
+          });
+        yAxiPosition++;
+      }
+    } else {
+      while (this.chart.series.length > 0) {
+        this.chart.series[0].remove(true);
+      }
+      let yAxiPosition = 0;
+      for (const entry of this.filteredBatches) {
+        this.trainerService.getById(entry.trainer).subscribe(trainerData => {
+          this.trainer = trainerData;
+          this.trainerName = (this.trainer.firstName + " " + this.trainer.lastName);
+          this.nameList.push(this.trainerName);
+          console.log(this.nameList);
+          this.chart.yAxis[0].update({
+            categories: this.nameList
+          });
+        })
+        this.chart.addSeries(
+          {
+            name: entry.name,
+            borderColor: 'gray',
+            pointWidth: 20,
+            data: [{
+              x: entry.startDate,
+              x2: entry.endDate,
+              y: yAxiPosition,
+            }]
+          });
+        yAxiPosition++;
+      }
+    }
+  }
+
+  setRandomDate() {
+    this.startDate = new Date(+this.startDate + Math.random() * (this.endDate.getHours() - this.startDate.getHours()))
+    this.endDate = new Date(+this.startDate + Math.random() * (this.endDate.getHours() - this.startDate.getHours()))
+    this.isConcluded = !this.isConcluded;
+    this.chart.xAxis[0].update({
+      min: this.startDate.getTime(),
+      max: this.endDate.getTime()
+    });
+  }
+
   setCurriculmList() {
     this.curriculumService.getAll().subscribe(curriculumData => {
       this.curriculums = curriculumData;
@@ -235,7 +308,7 @@ export class TimelineComponent implements AfterViewInit, OnInit {
     this.chart.xAxis[0].update({
       min: this.startDate.getTime(),
       max: this.endDate.getTime()
-  }); 
-  
+    });
+
   }
 }
