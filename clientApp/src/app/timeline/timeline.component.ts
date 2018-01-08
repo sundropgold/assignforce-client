@@ -249,7 +249,7 @@ export class TimelineComponent implements AfterViewInit, OnInit {
       }
     }
   }
-  
+
   setCurriculmList() {
     this.curriculumService.getAll().subscribe(curriculumData => {
       this.curriculums = curriculumData;
