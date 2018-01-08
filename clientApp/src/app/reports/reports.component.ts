@@ -63,10 +63,15 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     this.getAllBatches();
     this.getAllTrainer();
     this.getDefaultSetting();
+    this.skills.getList();
+    this.skills.getTrainerList();
   }
   displayedColumns = ['Ciriculam', 'jan', 'febuaray', 'march', 'april', 'may', 'june',
     'july', 'august', 'september', 'october', 'november', 'december'];
   dataSource = new MatTableDataSource(this.skills.getElement());
+  dataSource1 = new MatTableDataSource(this.skills.getTrainerElement());
+
+
   chart = new Chart({
       chart: {
         type: 'column',
@@ -122,7 +127,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
         backgroundColor: 'charcoal',
       },
       title: {
-        text: 'Graduate Summary'
+        text: 'Incoming Batches of 2018'
       },
       credits: {
         enabled: false
@@ -156,12 +161,14 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
           pointWidth: 9,
           pointPadding: 0.2,
         }},
-      series: this.skills.getList(),
+      series: this.skills.getTrainerList(),
     }
   );
 
 
   ngOnInit() {
+    this.skills.getTrainerList();
+    this.skills.getList();
   }
 
   ngAfterViewInit() {
@@ -198,10 +205,6 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
         this.batch[x].endDate = new Date(this.batch[x].endDate);
       }
       // console.log(new Date(this.batch[0].startDate));
-      console.log(this.batch);
-      console.log(this.batch[0].startDate.getUTCFullYear(), this.batch[0].endDate.getUTCFullYear());
-      console.log(this.batch[0].startDate.getUTCMonth(), this.batch[0].endDate.getUTCMonth());
-      console.log(this.batch[1].startDate.getUTCMonth(), this.batch[1].endDate.getUTCMonth());
 
     }, err => {
       console.log(err);
@@ -436,7 +439,6 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     if (canSubmit === 1) {
       this.showToast(this.errMsg);
     } else if (canSubmit === 0) {     // Create batch with batchService
-      console.log(batch);
       this.defaultLocation.buildingId = this.setting[0].defaultBuilding;
       this.defaultLocation.locationId = this.setting[0].defaultLocation;
       this.newBatch.name = '-';

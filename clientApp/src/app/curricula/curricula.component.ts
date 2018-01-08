@@ -8,6 +8,7 @@ import {CurriculaService} from '../services/curricula.service';
 import {NotificationService} from '../services/notification.service';
 import {Skill} from '../domain/skill';
 import {SkillService} from '../services/skill.service';
+import {UserInfoService} from '../services/user-info.service';
 
 
 @Component({
@@ -56,9 +57,14 @@ export class CurriculaComponent implements OnInit {
               private s3Service: S3CredentialService,
               private curriculaService: CurriculaService,
               private skillService: SkillService,
-              private notificationService: NotificationService) { }
+              private notificationService: NotificationService,
+              private userInfoService: UserInfoService) { }
 
   ngOnInit() {
+    this.isAdmin = false;
+    if (this.userInfoService.getUser().role == 'VP of Technology') {
+      this.isAdmin = true;
+    }
     /* grab curricula from server */
     this.getAllSkills();
     this.getAllCurricula();
