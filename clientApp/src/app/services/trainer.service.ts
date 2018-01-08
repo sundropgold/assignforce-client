@@ -4,16 +4,17 @@ import {Observable} from 'rxjs/Observable';
 import {Trainer} from '../domain/trainer';
 import {CalendarDialogComponent} from '../pto/pto.component';
 import {MatDialog} from '@angular/material';
+import {UrlService} from './url.service';
 
 @Injectable()
 export class TrainerService {
 
-  url = 'https://trainer-service.cfapps.io/api/v2/trainer';
-//  url = 'https://trainer-service.cfapps.io/api/v2/trainer';
+  url = this.urlService.getUrl() + '/api/trainer/api/v2/trainer';
   // url = 'http://localhost:9093/api/v2/trainer';
 
   constructor(private http: HttpClient,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private urlService: UrlService) {
   }
 
   // created an empty Trainer

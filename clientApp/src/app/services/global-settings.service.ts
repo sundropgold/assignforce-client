@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {GlobalSettings} from '../domain/global-settings';
-import {UrlService} from "./url.service";
+import {UrlService} from './url.service';
 
 @Injectable()
 export class SettingsService {
