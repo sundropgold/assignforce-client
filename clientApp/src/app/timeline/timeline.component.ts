@@ -19,8 +19,6 @@ import { Locations } from './../domain/locations';
 import { BuildingService } from './../services/building.service';
 import { Building } from './../domain/building';
 
-
-
 const Highcharts = require('highcharts/highcharts.src');
 
 @Component({
@@ -30,7 +28,6 @@ const Highcharts = require('highcharts/highcharts.src');
 })
 
 export class TimelineComponent implements AfterViewInit, OnInit {
-
   curriculum = new FormControl();
   focus = new FormControl();
   location = new FormControl();
@@ -39,10 +36,8 @@ export class TimelineComponent implements AfterViewInit, OnInit {
   focusList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
   locationList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
   buldingList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
-
+  nameList = [];
   isConcluded = false;
-
-
   batches: Batch[];
   filteredBatches: Batch[];
   trainers: Trainer[];
@@ -50,18 +45,15 @@ export class TimelineComponent implements AfterViewInit, OnInit {
   locations: Locations[];
   buldings: Building[];
   catagories: string[];
-
-
+  trainerNames: string[];
   curriculumslist: string;
   locationlist: string;
   buildinglist: string;
-
+  trainerName: string;
   trainer: Trainer;
-
   batchTimeLine: any;
-
+  
   @ViewChild('container', { read: ElementRef }) container: ElementRef;
-
   private chart: any;
 
   constructor(
@@ -96,18 +88,9 @@ export class TimelineComponent implements AfterViewInit, OnInit {
         title: {
           text: ''
         },
-        categories: ['Batches'],
+        categories: [],
         reversed: true
       },
-      // tooltip: {
-      //   pointFormat: '{series.name}: <b>{point.y}</b>',
-      //   backgroundColor: '#FCFFC5',
-      //   valueSuffix: 'cm',
-      //   borderWidth: 3,
-      //   borderRaduis: 6,
-      //   shared: true
-      // },
-
       series: []
     });
     this.getAllBatches();
@@ -119,84 +102,29 @@ export class TimelineComponent implements AfterViewInit, OnInit {
     this.batchService.getAll().subscribe(batchData => {
       this.batches = batchData;
       for (const entry of this.batches) {
-        // this.trainerService.getById(entry.trainer).subscribe(trainerData => {
-        //   this.trainer = trainerData;
-        //   for (const entry of this.trainers) {
-        //     this.trainer.firstName = entry.firstName;
-        //   }
-
-        //   console.log(this.trainer.firstName);
-        //})
-        //this.getTrainerName(entry.trainer);
+        this.trainerService.getById(entry.trainer).subscribe(trainerData => {
+          this.trainer = trainerData;
+          this.trainerName = (this.trainer.firstName + " " + this.trainer.lastName);
+          this.nameList.push(this.trainerName);
+          console.log(this.nameList);
+          this.chart.yAxis[0].update({
+            categories: this.nameList
+          });
+        })
         this.chart.addSeries(
           {
-            name: entry.name /*this.getTrainerName(entry.trainer)*/,
+            name: entry.name,
             borderColor: 'gray',
             pointWidth: 20,
             data: [{
               x: entry.startDate,
               x2: entry.endDate,
-
               y: yAxisPosition,
             }]
           });
-        // name[yAxiPosition] = entry.trainer;
         yAxisPosition++;
       }
     });
-    // console.log(name);
-  }
-
-  // getAllConcludedBatches() {
-  //   this.batchService.getAll().subscribe(batchData => {
-  //     this.batches = batchData;
-  //     for (const entry of this.batches) {
-  //       if (entry.endDate < new Date()) {
-  //         this.chart.addSeries(
-  //           {
-  //             name: entry.name,
-  //             borderColor: 'gray',
-  //             pointWidth: 20,
-  //             data: [{
-  //               x: entry.startDate,
-  //               x2: entry.endDate,
-  //               y: 0,
-  //             }]
-  //           });
-  //       }
-  //       else { }
-  //     }
-  //   });
-  // }
-
-  // getAllBatchesWithTrainers() {
-  //   this.batchService.getAll().subscribe(batchData => {
-  //     this.batches = batchData;
-  //     for (const entry of this.batches) {
-  //       if (entry.trainer) {
-  //         this.chart.addSeries(
-  //           {
-  //             name: entry.name,
-  //             borderColor: 'gray',
-  //             pointWidth: 20,
-  //             data: [{
-  //               x: entry.startDate,
-  //               x2: entry.endDate,
-  //               y: 0,
-  //             }]
-  //           });
-  //       }
-  //     }
-  //   });
-  // }
-
-  //This method gets a trainers name
-  getTrainerName(id: string) {
-    this.trainerService.getById(id).subscribe(trainerData => {
-      this.trainer = trainerData;
-      return this.trainer.firstName;
-    });
-
   }
 
   // Concluded batches checkbox
@@ -215,7 +143,7 @@ export class TimelineComponent implements AfterViewInit, OnInit {
       for (const entry of this.filteredBatches) {
         this.chart.addSeries(
           {
-            name: entry.name /*this.getTrainerName(entry.trainer)*/,
+            name: entry.name,
             borderColor: 'gray',
             pointWidth: 20,
             data: [{
@@ -224,7 +152,6 @@ export class TimelineComponent implements AfterViewInit, OnInit {
               y: yAxiPosition,
             }]
           });
-        // name[yAxiPosition] = entry.trainer;
         yAxiPosition++;
       }
     } else {
@@ -235,7 +162,7 @@ export class TimelineComponent implements AfterViewInit, OnInit {
       for (const entry of this.filteredBatches) {
         this.chart.addSeries(
           {
-            name: entry.name /*this.getTrainerName(entry.trainer)*/,
+            name: entry.name,
             borderColor: 'gray',
             pointWidth: 20,
             data: [{
@@ -244,7 +171,6 @@ export class TimelineComponent implements AfterViewInit, OnInit {
               y: yAxiPosition,
             }]
           });
-        // name[yAxiPosition] = entry.trainer;
         yAxiPosition++;
       }
     }
@@ -280,6 +206,3 @@ export class TimelineComponent implements AfterViewInit, OnInit {
     });
   }
 }
-
-
-
