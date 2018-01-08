@@ -34,24 +34,22 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-    constructor(private batchService: BatchService,
+  constructor(private batchService: BatchService,
                 private curriculaService: CurriculaService,
                 private trainerService: TrainerService,
                 private locationService: LocationService,
                 private buildingService: BuildingService,
                 private roomService: RoomService,
-                private notificationService: NotificationService) {
-    }
+                private notificationService: NotificationService) {}
 
-    ngOnInit() {
-	this.getAll();
-    }
-    ngAfterViewInit() {
-	this.batchData.sort = this.sort;
-	this.batchData.paginator = this.paginator;
-	this.batchData = new MatTableDataSource(this.BatchData);
-    }
-
+  ngOnInit() {
+    this.getAll();
+  }
+  ngAfterViewInit() {
+    this.batchData.sort = this.sort;
+    this.batchData.paginator = this.paginator;
+    this.batchData = new MatTableDataSource(this.BatchData);
+  }
   exportToCSV(evt) {
     evt.stopPropagation();
    // this.csvService.download(this.dataSource, 'Batches');
