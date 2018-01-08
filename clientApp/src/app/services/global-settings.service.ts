@@ -7,7 +7,7 @@ import {UrlService} from './url.service';
 @Injectable()
 export class SettingsService {
 
-  url = '/api/v2/setting/api/v2/setting';
+  url = this.urlService + '/api/settings/api/v2/setting';
 
   constructor(private http: HttpClient,
               private urlService: UrlService) { }
