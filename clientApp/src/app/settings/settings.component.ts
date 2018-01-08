@@ -18,7 +18,7 @@ export class SettingsComponent implements OnInit {
   location: Locations;
   locations: Locations [];
   building: Building [];
-  settings: GlobalSettings;
+  settings: any;
   trainersPerPage: number;
   reportGrads: number;
   batchLength: number;
@@ -40,7 +40,9 @@ export class SettingsComponent implements OnInit {
     }, (err) => {
       this.showToast('Failed to fetch Locations');
     });
+
       this.settings = this.settingsService.getSettings();
+      console.log(this.settings);
       this.trainersPerPage = this.settings.trainersPerPage;
       this.reportGrads = this.settings.reportGrads;
       this.batchLength = this.settings.batchLength;
