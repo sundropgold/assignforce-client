@@ -130,6 +130,14 @@ export class TimelineComponent implements AfterViewInit, OnInit {
     });
   }
 
+  updateTimeline() {
+    console.log("UPDATEING TIMELINE")
+    this.chart.xAxis[0].update({
+      min: this.startDate.getTime(),
+      max: this.endDate.getTime()
+    });
+  }
+
   // Concluded batches checkbox
   hide() {
     this.isConcluded = !this.isConcluded;
@@ -301,14 +309,5 @@ export class TimelineComponent implements AfterViewInit, OnInit {
         this.buldingList.push(this.buildinglist);
       }
     });
-  }
-
-  updateTimeline() {
-    console.log("UPDATEING TIMELINE")
-    this.chart.xAxis[0].update({
-      min: this.startDate.getTime(),
-      max: this.endDate.getTime()
-    });
-
   }
 }
