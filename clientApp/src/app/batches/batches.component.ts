@@ -19,6 +19,7 @@ import {RoomService} from '../services/room.service';
 import {Building} from '../domain/building';
 import {Room} from '../domain/room';
 import {Locations} from '../domain/locations';
+import {UserInfoService} from '../services/user-info.service';
 
 @Component({
   selector: 'app-batches',
@@ -31,6 +32,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   minStartDate = new Date();
  minEndDate = new Date();
   datebetween: any;
+  isManager = false;
   // This boolean changes the buttons in the first tab between cancel/finalize and create
   // true = create
   // false = cancel/finalize
@@ -87,7 +89,8 @@ export class BatchesComponent implements OnInit, AfterViewInit {
               private buildingService: BuildingService,
               private roomService: RoomService,
               public dialog: MatDialog,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,
+              private userInfoService: UserInfoService) {
   }
 
   ngOnInit() {
@@ -142,10 +145,14 @@ export class BatchesComponent implements OnInit, AfterViewInit {
 
   SynchronizeBatch() {
   }
-
+  // get user priviledge and return true if admin , else return false. Result determines if batch creation is available.
   isAuthorized() {
-    return false;
-    // get user priviledge and return true if admin , else return false. Result determines if batch creation is available.
+    if (this.userInfoService.getUser().role === 'VP of Technology') {
+      this.isManager = true;
+    } else {
+      this.isManager = false;
+    }
+    return this.isManager;
   }
   isCreating() {
     return this.creating;
@@ -168,6 +175,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     this.finalize = 'finalize creation';
     this.editBatchId = null;
     this.batch.id = this.editBatchId;
+    this.initBatch();
   }
 
   // finalzies creation
