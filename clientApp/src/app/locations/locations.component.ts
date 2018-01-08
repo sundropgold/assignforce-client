@@ -43,8 +43,8 @@ export class LocationsComponent implements OnInit {
   }
   ngOnInit() {
     this.getAllLocations();
-    const user: User = this.userInfoService.getUser();
-    this.userRole = user.role;
+    // const user: User = this.userInfoService.getUser();
+    // this.userRole = user.role;
   }
   // error messages
   showToast(msg) {
