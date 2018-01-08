@@ -22,13 +22,12 @@ export class ReplogicService {
   i: number;
   circula: Curriculum[];
   batch: Batch[];
-  setting: GlobalSettings[] = [];
+
   date_parer: string;
   reportGrads = 13;
   reportIncomingGrads = 18;
-  constructor(private circ: CurriculaService , private batchservice: BatchService , private settingvice: SettingsService) {
+  constructor(private circ: CurriculaService , private batchservice: BatchService ) {
     this.getAllBatches();
-    this.getDefaultSetting();
     this.months = [{
       name: 'Joe',
       data: [0,0,0,0,0,0,0,0,0,0,0,0],
@@ -209,13 +208,6 @@ export class ReplogicService {
       this.circula = circula;
       this.batchservice.getAll().subscribe(batch => {
         this.batch = batch;
-        this.settingvice.getSettings().subscribe(
-          setting => {
-            this.setting = setting;
-            this.reportIncomingGrads = this.setting[0].reportIncomingGrads;
-            this.reportGrads = this.setting[0].reportGrads;
-
-
             for (const x of Object.keys(this.batch)) {
               this.batch[x].startDate = new Date(this.batch[x].startDate).getMonth();
               this.batch[x].endDate = new Date(this.batch[x].endDate);
@@ -233,52 +225,52 @@ export class ReplogicService {
                      for ( let td =0 ; td<batch.length ; td++) {
                        if ( this.batch[td].endDate.getUTCMonth()== 0) {
                          count ++;
-                         this.ELEMENT_DATA[mt].January = this.setting[0].reportIncomingGrads * count;
+                         this.ELEMENT_DATA[mt].January = 5;;
                        }
                        if ( this.batch[td].endDate.getUTCMonth()== 1) {
                          count ++;
-                         this.ELEMENT_DATA[mt].febuaray = this.setting[0].reportIncomingGrads* count;
+                         this.ELEMENT_DATA[mt].febuaray =5;;
                        }
                        if ( this.batch[td].endDate.getUTCMonth()== 2) {
                          count ++;
-                         this.ELEMENT_DATA[mt].march = this.setting[0].reportIncomingGrads * count;
+                         this.ELEMENT_DATA[mt].march = 5;
                        }
                        if ( this.batch[td].endDate.getUTCMonth()== 3) {
                          count ++;
-                         this.ELEMENT_DATA[mt].april = this.setting[0].reportIncomingGrads * count;
+                         this.ELEMENT_DATA[mt].april = 5;;
                        }
                        if ( this.batch[td].endDate.getUTCMonth()== 4) {
                          count ++;
-                         this.ELEMENT_DATA[mt].may = this.setting[0].reportIncomingGrads * count;
+                         this.ELEMENT_DATA[mt].may = 5;
                        }if ( this.batch[td].endDate.getUTCMonth()== 5) {
                          count ++;
-                         this.ELEMENT_DATA[y].june = this.setting[0].reportIncomingGrads * count;
+                         this.ELEMENT_DATA[y].june = 5;
                        }if ( this.batch[td].endDate.getUTCMonth()== 6) {
                          count ++;
-                         this.ELEMENT_DATA[mt].july = this.setting[0].reportIncomingGrads * count;
+                         this.ELEMENT_DATA[mt].july = 5;
                        }if ( this.batch[td].endDate.getUTCMonth()== 7) {
                          count ++;
-                         this.ELEMENT_DATA[mt].august = this.setting[0].reportIncomingGrads* count;
+                         this.ELEMENT_DATA[mt].august = 5;
                        }if ( this.batch[td].endDate.getUTCMonth()== 8) {
                          count ++;
-                         this.ELEMENT_DATA[mt].september = this.setting[0].reportIncomingGrads* count;
+                         this.ELEMENT_DATA[mt].september = 5;
                        }
                        if ( this.batch[td].endDate.getUTCMonth()== 9) {
                          count ++;
-                         this.ELEMENT_DATA[mt].october = this.setting[0].reportIncomingGrads* count;
+                         this.ELEMENT_DATA[mt].october = 5;
                        }
                        if ( this.batch[td].endDate.getUTCMonth()== 10) {
                          count ++;
-                         this.ELEMENT_DATA[mt].november = this.setting[0].reportIncomingGrads* count;
+                         this.ELEMENT_DATA[mt].november = 5;
                        }
                        if ( this.batch[td].endDate.getUTCMonth()== 11) {
                          count ++;
-                         this.ELEMENT_DATA[mt].december = this.setting[0].reportIncomingGrads * count;
+                         this.ELEMENT_DATA[mt].december = 5;
                        }
                      }
                     }
                   }
-                }}}); } ); } );
+                }}}); ; } );
     return this.ELEMENT_DATA;
   }
 
@@ -369,13 +361,6 @@ export class ReplogicService {
       this.circula = circula;
       this.batchservice.getAll().subscribe(batch => {
         this.batch = batch;
-        this.settingvice.getSettings().subscribe(
-          setting => {
-            this.setting = setting;
-            this.reportIncomingGrads = this.setting[0].reportIncomingGrads;
-            this.reportGrads = this.setting[0].reportGrads;
-
-
             for (const x of Object.keys(this.batch)) {
               this.batch[x].startDate = new Date(this.batch[x].startDate).getMonth();
               this.batch[x].endDate = new Date(this.batch[x].endDate);
@@ -407,7 +392,7 @@ export class ReplogicService {
                       console.log('This Zainab');
                       if ( this.batch[z].endDate.getUTCMonth()==this.batch[td].endDate.getUTCMonth()&&this.batch[td].endDate.getUTCMonth()== 0) {
                         jan=+1;
-                        this.Trainer_Element[mt].January = this.setting[0].reportIncomingGrads * jan;
+                        this.Trainer_Element[mt].January = 5;
                         console.log('shahak1');
                         console.log(count);
                         console.log(this.Trainer_Element[mt].January);
@@ -415,51 +400,51 @@ export class ReplogicService {
                       }
                       if ( this.batch[z].endDate.getUTCMonth()== 1) {
                         feb=+1;
-                        this.Trainer_Element[mt].febuaray = this.setting[0].reportIncomingGrads * feb;
+                        this.Trainer_Element[mt].febuaray = 5;
                       }
                       if ( this.batch[z].endDate.getUTCMonth()== 2) {
                         march=+1;
-                        this.Trainer_Element[mt].march = this.setting[0].reportIncomingGrads * march;
+                        this.Trainer_Element[mt].march = 5;
                       }
                       if ( this.batch[z].endDate.getUTCMonth()== 3) {
                         april=+1;
-                        this.Trainer_Element[mt].april = this.setting[0].reportIncomingGrads*april;
+                        this.Trainer_Element[mt].april = 5;
                       }
                       if ( this.batch[z].endDate.getUTCMonth()==this.batch[td].endDate.getUTCMonth()&&this.batch[td].endDate.getUTCMonth()==4) {
                         may=+1;
-                        this.Trainer_Element[mt].may = this.setting[0].reportIncomingGrads *(may+may);
+                        this.Trainer_Element[mt].may = 5;
                         console.log('gajini');
                         console.log(td);
                         console.log('ek tha tiger');
                       }if ( this.batch[z].endDate.getUTCMonth()== 5) {
                         june=+1;
-                        this.Trainer_Element[mt].june = this.setting[0].reportIncomingGrads * june;
+                        this.Trainer_Element[mt].june = 5;
                       }if ( this.batch[z].endDate.getUTCMonth()== 6) {
                         jully=+1;
-                        this.Trainer_Element[mt].july = this.setting[0].reportIncomingGrads* jully;
+                        this.Trainer_Element[mt].july = 5;
                       }if ( this.batch[z].endDate.getUTCMonth()== 7) {
                         august=+1;
-                        this.Trainer_Element[mt].august = this.setting[0].reportIncomingGrads* august;
+                        this.Trainer_Element[mt].august = 5;
                       }if ( this.batch[z].endDate.getUTCMonth()== 8) {
                         september=+1;
-                        this.Trainer_Element[mt].september = this.setting[0].reportIncomingGrads * september;
+                        this.Trainer_Element[mt].september = 5;
                       }
                       if ( this.batch[z].endDate.getUTCMonth()== 9) {
                         october=+1;
-                        this.Trainer_Element[mt].october = this.setting[0].reportIncomingGrads* october;
+                        this.Trainer_Element[mt].october = 5;
                       }
                       if ( this.batch[z].endDate.getUTCMonth()== 10) {
                         november=+1;
-                        this.Trainer_Element[mt].november = this.setting[0].reportIncomingGrads* november;
+                        this.Trainer_Element[mt].november = 5;
                       }
                       if ( this.batch[z].endDate.getUTCMonth()== 11) {
                         december=+1;
-                        this.Trainer_Element[mt].december = this.setting[0].reportIncomingGrads* december;
+                        this.Trainer_Element[mt].december = 5;
                       }
                     }
                   }
                 }
-              }}}); } ); } );
+              }}}); } );
     return this.Trainer_Element;
   }
 
@@ -557,16 +542,7 @@ export class ReplogicService {
       console.log(this.batch[1].startDate.getUTCMonth(), this.batch[1].endDate.getUTCMonth());});
   }
 
-  getDefaultSetting() {
-    this.settingvice.getSettings().subscribe(
-      setting => {
-        this.setting = setting;
-        this.reportIncomingGrads = this.setting[0].reportIncomingGrads;
-        this.reportGrads = this.setting[0].reportGrads;
 
-      }, err => console.log(err)
-    );
-  }
 
 
 
