@@ -17,7 +17,7 @@ const appRoutes: Routes = [
   {
     path: '',
     component: LoginComponent,
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'loginsuccess',
@@ -26,39 +26,48 @@ const appRoutes: Routes = [
   {
     path: 'overview',
     component: OverviewComponent,
+    canActivate: [AuthGuardService],
 
   },
   {
     path: 'batches',
-    component: BatchesComponent
+    component: BatchesComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: 'locations',
-    component: LocationsComponent
+    component: LocationsComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: 'curricula',
-    component: CurriculaComponent
+    component: CurriculaComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: 'trainers',
-    component: TrainersComponent
+    component: TrainersComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: 'profile',
-    component: ProfileComponent
+    component: ProfileComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: 'profile/:id',
-    component: ProfileComponent
+    component: ProfileComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: 'reports',
-    component: ReportsComponent
+    component: ReportsComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: 'settings',
-    component: SettingsComponent
+    component: SettingsComponent,
+    canActivate: [AuthGuardService],
   }
 ];
 
