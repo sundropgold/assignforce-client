@@ -6,7 +6,7 @@ import {Observable} from 'rxjs/Observable';
 @Injectable()
 export class BuildingService {
 
-  url = 'https://location-service.cfapps.io/api/v2/building';
+  url = 'https://location-service.cfapps.io/api/v2/building/';
 
   constructor(private http: HttpClient) {
   }
