@@ -225,11 +225,11 @@ export class ReplogicService {
                      for ( let td =0 ; td<batch.length ; td++) {
                        if ( this.batch[td].endDate.getUTCMonth()== 0) {
                          count ++;
-                         this.ELEMENT_DATA[mt].January = 5;;
+                         this.ELEMENT_DATA[mt].January = 38;
                        }
                        if ( this.batch[td].endDate.getUTCMonth()== 1) {
                          count ++;
-                         this.ELEMENT_DATA[mt].febuaray =5;;
+                         this.ELEMENT_DATA[mt].febuaray =30;
                        }
                        if ( this.batch[td].endDate.getUTCMonth()== 2) {
                          count ++;
@@ -237,35 +237,35 @@ export class ReplogicService {
                        }
                        if ( this.batch[td].endDate.getUTCMonth()== 3) {
                          count ++;
-                         this.ELEMENT_DATA[mt].april = 5;;
+                         this.ELEMENT_DATA[mt].april = 50;;
                        }
                        if ( this.batch[td].endDate.getUTCMonth()== 4) {
                          count ++;
                          this.ELEMENT_DATA[mt].may = 5;
                        }if ( this.batch[td].endDate.getUTCMonth()== 5) {
                          count ++;
-                         this.ELEMENT_DATA[y].june = 5;
+                         this.ELEMENT_DATA[y].june = 20;
                        }if ( this.batch[td].endDate.getUTCMonth()== 6) {
                          count ++;
-                         this.ELEMENT_DATA[mt].july = 5;
+                         this.ELEMENT_DATA[mt].july = 50;
                        }if ( this.batch[td].endDate.getUTCMonth()== 7) {
                          count ++;
-                         this.ELEMENT_DATA[mt].august = 5;
+                         this.ELEMENT_DATA[mt].august = 50;
                        }if ( this.batch[td].endDate.getUTCMonth()== 8) {
                          count ++;
-                         this.ELEMENT_DATA[mt].september = 5;
+                         this.ELEMENT_DATA[mt].september = 60;
                        }
                        if ( this.batch[td].endDate.getUTCMonth()== 9) {
                          count ++;
-                         this.ELEMENT_DATA[mt].october = 5;
+                         this.ELEMENT_DATA[mt].october = 55;
                        }
                        if ( this.batch[td].endDate.getUTCMonth()== 10) {
                          count ++;
-                         this.ELEMENT_DATA[mt].november = 5;
+                         this.ELEMENT_DATA[mt].november = 45;
                        }
                        if ( this.batch[td].endDate.getUTCMonth()== 11) {
                          count ++;
-                         this.ELEMENT_DATA[mt].december = 5;
+                         this.ELEMENT_DATA[mt].december = 50;
                        }
                      }
                     }
@@ -392,7 +392,7 @@ export class ReplogicService {
                       console.log('This Zainab');
                       if ( this.batch[z].endDate.getUTCMonth()==this.batch[td].endDate.getUTCMonth()&&this.batch[td].endDate.getUTCMonth()== 0) {
                         jan=+1;
-                        this.Trainer_Element[mt].January = 5;
+                        this.Trainer_Element[mt].January = 50;
                         console.log('shahak1');
                         console.log(count);
                         console.log(this.Trainer_Element[mt].January);
@@ -400,38 +400,38 @@ export class ReplogicService {
                       }
                       if ( this.batch[z].endDate.getUTCMonth()== 1) {
                         feb=+1;
-                        this.Trainer_Element[mt].febuaray = 5;
+                        this.Trainer_Element[mt].febuaray = 50;
                       }
                       if ( this.batch[z].endDate.getUTCMonth()== 2) {
                         march=+1;
-                        this.Trainer_Element[mt].march = 5;
+                        this.Trainer_Element[mt].march = 50;
                       }
                       if ( this.batch[z].endDate.getUTCMonth()== 3) {
                         april=+1;
-                        this.Trainer_Element[mt].april = 5;
+                        this.Trainer_Element[mt].april = 20;
                       }
                       if ( this.batch[z].endDate.getUTCMonth()==this.batch[td].endDate.getUTCMonth()&&this.batch[td].endDate.getUTCMonth()==4) {
                         may=+1;
-                        this.Trainer_Element[mt].may = 5;
+                        this.Trainer_Element[mt].may = 50;
                         console.log('gajini');
                         console.log(td);
                         console.log('ek tha tiger');
                       }if ( this.batch[z].endDate.getUTCMonth()== 5) {
                         june=+1;
-                        this.Trainer_Element[mt].june = 5;
+                        this.Trainer_Element[mt].june = 50;
                       }if ( this.batch[z].endDate.getUTCMonth()== 6) {
                         jully=+1;
-                        this.Trainer_Element[mt].july = 5;
+                        this.Trainer_Element[mt].july = 50;
                       }if ( this.batch[z].endDate.getUTCMonth()== 7) {
                         august=+1;
-                        this.Trainer_Element[mt].august = 5;
+                        this.Trainer_Element[mt].august = 30;
                       }if ( this.batch[z].endDate.getUTCMonth()== 8) {
                         september=+1;
-                        this.Trainer_Element[mt].september = 5;
+                        this.Trainer_Element[mt].september = 35;
                       }
                       if ( this.batch[z].endDate.getUTCMonth()== 9) {
                         october=+1;
-                        this.Trainer_Element[mt].october = 5;
+                        this.Trainer_Element[mt].october = 30;
                       }
                       if ( this.batch[z].endDate.getUTCMonth()== 10) {
                         november=+1;
@@ -439,7 +439,7 @@ export class ReplogicService {
                       }
                       if ( this.batch[z].endDate.getUTCMonth()== 11) {
                         december=+1;
-                        this.Trainer_Element[mt].december = 5;
+                        this.Trainer_Element[mt].december = 70;
                       }
                     }
                   }
