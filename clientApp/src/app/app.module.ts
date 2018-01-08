@@ -69,7 +69,7 @@ import {SettingsService} from './services/global-settings.service';
 import {ReplogicService} from './replogic.service';
 import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
 
-  
+
 
 @NgModule({
   declarations: [

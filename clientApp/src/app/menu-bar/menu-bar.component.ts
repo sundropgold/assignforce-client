@@ -30,6 +30,7 @@ export class MenuBarComponent implements OnInit {
     }, () => {
       this.showToast('Failed to fetch trainer info');
     });
+    this.admin = this.userInfo.getUser();
   }
 
   showToast(msg) {
