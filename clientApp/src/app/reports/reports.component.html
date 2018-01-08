@@ -6,7 +6,7 @@
 <!--</mat-toolbar-row>-->
 <!--</mat-toolbar>-->
 <div style="margin-top: 5%">
-  <ng-container *ngIf="batch.length > 0">
+  <ng-container class="showContent" *ngIf="batch.length > 0">
   <!--Future Projection Tab-->
     <mat-accordion>
       <mat-expansion-panel>
@@ -38,7 +38,7 @@
                     <mat-select placeholder="Curriculum: " [(ngModel)]="cardArr[i].batchType" (change)="assignCurr(cardArr[i].batchType, i)" required>
                       <mat-option>--</mat-option>
                       <ng-container *ngFor="let x of curricula">
-                        <mat-option *ngIf="x.core" [value]="x">
+                        <mat-option *ngIf="x.core && x.active == true" [value]="x">
                           {{x.name}}
                         </mat-option>
                       </ng-container>
@@ -273,6 +273,6 @@
   </ng-container>
 </div>
 
-<div *ngIf="batch.length == 0" fxLayout="column" fxLayoutWrap fxLayoutAlign="center center">
+<div class="showContent" *ngIf="batch.length == 0" fxLayout="column" fxLayoutWrap fxLayoutAlign="center center">
   <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 </div>
