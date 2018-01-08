@@ -32,9 +32,11 @@ export class MenuBarComponent implements OnInit {
     this.notificationService.openSnackBar(msg);
   }
 
-  logout() {
-      localStorage.clear();
-      this.userInfo.logout().subscribe(data => {this.router.navigateByUrl('')});
+    logout(link) {
+	if(link === 'LOGOUT'){
+	    localStorage.clear();
+	    this.userInfo.logout().subscribe(always => {this.router.navigateByUrl('')}, always => {this.router.navigateByUrl('')}, () => {this.router.navigateByUrl('')});
+	}
       
-  }
+    }
 }
