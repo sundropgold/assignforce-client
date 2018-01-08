@@ -9,7 +9,9 @@
        routerLinkActive #rla="routerLinkActive"
        [active]="rla.isActive"
     style="text-decoration: none">
-        {{link.toUpperCase()}}
+      <div (click)="logout(link.toUpperCase())">
+	{{link.toUpperCase()}}
+      </div>
     </a>
 </nav>
 
@@ -22,7 +24,9 @@
      routerLinkActive #rla="routerLinkActive"
      [active]="rla.isActive"
      style="text-decoration: none">
-    {{link.toUpperCase()}}
+    <div (click)="logout(link.toUpperCase())">
+      {{link.toUpperCase()}}
+    </div>
   </a>
   <!--<span fxFlexOffset></span>-->
 </nav>

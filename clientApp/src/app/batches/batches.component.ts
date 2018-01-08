@@ -175,7 +175,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     this.finalize = 'finalize creation';
     this.editBatchId = null;
     this.batch.id = this.editBatchId;
-   // this.initBatch();
+    this.initBatch();
   }
 
   // finalzies creation

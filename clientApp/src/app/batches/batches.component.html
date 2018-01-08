@@ -3,7 +3,7 @@
   <!--------Create New Batch ------->
   <!-- Only Appears if they are admin ------>
   <mat-accordion>
-    <div id="auth" [hidden]="isAuthorized()">
+    <div id="auth" [hidden]="!isAuthorized()">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>

@@ -6,7 +6,7 @@
 <!--</mat-toolbar-row>-->
 <!--</mat-toolbar>-->
 <div style="margin-top: 5%">
-  <ng-container *ngIf="batch.length > 0">
+  <ng-container *ngIf="batch.length > 0 && curricula.length > 0">
   <!--Future Projection Tab-->
     <mat-accordion>
       <mat-expansion-panel>
@@ -202,7 +202,7 @@
         </mat-card>
         <mat-card>
           <mat-divider>
-            <div [chart]="chart"></div>
+            <div  [chart]="chart" id="chartcontainer"></div>
           </mat-divider>
         </mat-card>
       </mat-expansion-panel>
@@ -347,9 +347,7 @@
         </mat-card>
         <mat-card>
           <mat-divider>
-            <div class="example-container ">
-              <div [chart]="chart"></div>
-            </div>
+            <div  [chart]="Trainer" id="TrainerContainer"></div>
           </mat-divider>
         </mat-card>
       </mat-expansion-panel>
@@ -357,6 +355,6 @@
   </ng-container>
 </div>
 
-<div *ngIf="batch.length == 0" fxLayout="column" fxLayoutWrap fxLayoutAlign="center center">
+<div *ngIf="batch.length == 0 || curricula.length == 0" fxLayout="column" fxLayoutWrap fxLayoutAlign="center center">
   <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 </div>
