@@ -66,11 +66,10 @@ import {BuildingService} from './services/building.service';
 import {NgPipesModule} from 'ngx-pipes';
 import { LoginSuccessComponent } from './login-success/login-success.component';
 import {SettingsService} from './services/global-settings.service';
-import {ReplogicService} from "./replogic.service";
+import {ReplogicService} from './replogic.service';
 import { ChartModule, HIGHCHARTS_MODULES } from 'angular-highcharts';
-import { BeforeLoggedInComponent } from './before-logged-in/before-logged-in.component';
 
-
+  
 
 @NgModule({
   declarations: [
@@ -104,7 +103,6 @@ import { BeforeLoggedInComponent } from './before-logged-in/before-logged-in.com
     TimelineComponent,
     PtoComponent,
     LoginSuccessComponent,
-    BeforeLoggedInComponent,
   ],
   imports: [
     HttpClientModule,

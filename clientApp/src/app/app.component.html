@@ -6,5 +6,7 @@
       <!--<app-menu-bar></app-menu-bar>-->
     <!--</div>-->
 <!--</div>-->
-<app-before-logged-in></app-before-logged-in>
-
+<div class="container-fluid col-lg-12" *ngIf="user">
+  <app-menu-bar></app-menu-bar>
+</div>
+<router-outlet></router-outlet>

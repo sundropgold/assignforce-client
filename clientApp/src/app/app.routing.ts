@@ -69,11 +69,6 @@ const appRoutes: Routes = [
     path: 'settings',
     component: SettingsComponent,
     canActivate: [AuthGuardService],
-  },
-  {
-    path: 'loggedIn',
-    component: BeforeLoggedInComponent,
-    canActivate: [AuthGuardService]
   }
 ];
 
