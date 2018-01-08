@@ -2,14 +2,16 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {Curriculum} from '../domain/curriculum';
+import {UrlService} from './url.service';
 
 @Injectable()
 export class CurriculaService {
 
   // url = 'http://localhost:9093/api/v2/curriculum';
-  url = 'https://curriculum-service.cfapps.io/api/v2/curriculum';
+  url = this.urlService.getUrl() + '/api/curriculum/api/v2/curriculum';
   // url = 'api/v2/curriculum';
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private urlService: UrlService) { }
 
   /* services */
 
