@@ -24,7 +24,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   batch: Batch[] = [];
   trainer: Trainer[] = [];
   // remove = [];
-  setting: GlobalSettings[] = [];
+  // setting: GlobalSettings[] = [];
   reportGrads = 13;
   reportIncomingGrads = 18;
 
@@ -62,7 +62,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     this.getAllCurriculum();
     this.getAllBatches();
     this.getAllTrainer();
-    this.getDefaultSetting();
+    // this.getDefaultSetting();
     this.skills.getList();
     this.skills.getTrainerList();
   }
@@ -75,12 +75,13 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   chart = new Chart({
       chart: {
         type: 'column',
-        width: 1875,
+        renderTo: 'chartcontainer',
         backgroundColor: 'charcoal',
       },
       title: {
         text: 'Graduate Summary'
-      },
+      }
+      ,
       credits: {
         enabled: false
       },
@@ -123,7 +124,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   Trainer = new Chart({
       chart: {
         type: 'column',
-        width: 1875,
+        renderTo: 'TrainerContainer',
         backgroundColor: 'charcoal',
       },
       title: {
@@ -183,19 +184,28 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     this.notificationService.openSnackBar(msg);
   }
   // get default setting
-  getDefaultSetting() {
-    this.settingService.getSettings().subscribe(
-      setting => {
+  // getDefaultSetting() {
+  //   this.settingService.getSettings().subscribe(
+  //     setting => {
+  //       this.setting = setting;
+  //       this.reportIncomingGrads = this.setting[0].reportIncomingGrads;
+  //       this.reportGrads = this.setting[0].reportGrads;
+  //       console.log(this.setting);
+  //     }, err => {
+  //       console.log(err);
+  //       this.showToast('Failed to fetch Setting');
+  //     }
+  //   );
+  // }
+  /*getDefaultSetting() {
+    this.settingService.getSettings()(
         this.setting = setting;
         this.reportIncomingGrads = this.setting[0].reportIncomingGrads;
         this.reportGrads = this.setting[0].reportGrads;
         console.log(this.setting);
-      }, err => {
-        console.log(err);
-        this.showToast('Failed to fetch Setting');
-      }
+
     );
-  }
+  }*/
   // get all batches
   getAllBatches() {
     this.batchService.getAll().subscribe(batch => {
@@ -268,8 +278,8 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     const tempDate = new Date(requiredDate);
     const startDate = (requiredDate === undefined) ? (new Date()) : tempDate;
     console.log(startDate);
-    startDate.setDate(startDate.getDate() - (7 * this.setting[0].batchLength));
-    // startDate.setDate(startDate.getDate() - (7 * 11));
+    // startDate.setDate(startDate.getDate() - (7 * this.setting[0].batchLength));
+    startDate.setDate(startDate.getDate() - (7 * 11));
     // push the start date to the closest Monday
     switch (startDate.getDay()) {
       case 0 :
@@ -439,8 +449,10 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     if (canSubmit === 1) {
       this.showToast(this.errMsg);
     } else if (canSubmit === 0) {     // Create batch with batchService
-      this.defaultLocation.buildingId = this.setting[0].defaultBuilding;
-      this.defaultLocation.locationId = this.setting[0].defaultLocation;
+      // this.defaultLocation.buildingId = this.setting[0].defaultBuilding;
+      // this.defaultLocation.locationId = this.setting[0].defaultLocation;
+      this.defaultLocation.buildingId = 1;
+      this.defaultLocation.locationId = 1;
       this.newBatch.name = '-';
       this.newBatch.startDate = batch.startDate;
       this.newBatch.endDate = batch.hireDate;

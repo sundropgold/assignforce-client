@@ -20,18 +20,32 @@ export class MenuBarComponent implements OnInit {
 
 
   constructor(private userInfo: UserInfoService,
-              private notificationService: NotificationService) {
+              private notificationService: NotificationService,
+              private router: Router) {
   }
 
   ngOnInit() {
     this.user = this.userInfo.getUser();
+    this.admin = this.user.role;
   }
 
   showToast(msg) {
     this.notificationService.openSnackBar(msg);
   }
 
-  logout() {
-    //has to redirect to login page
+  logout(link) {
+    if (link === 'LOGOUT') {
+      localStorage.clear();
+      this.userInfo.logout().subscribe(always => {
+          this.router.navigateByUrl('');
+        },
+        always => {
+          this.router.navigateByUrl('');
+        },
+        () => {
+          this.router.navigateByUrl('');
+        });
+    }
+
   }
 }
