@@ -44,9 +44,9 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.userInfoService.getUser();
-    if (this.user.role === 'VP of Technology' && this.tId === undefined) {
-      this.router.navigate(['/overview']);
-    }
+//    if (this.user.role === 'VP of Technology' && this.tId === undefined) {
+//      this.router.navigate(['/overview']);
+//    }
     this.route.params.subscribe(params => this.tId = params.id);
     // data gathering
 
