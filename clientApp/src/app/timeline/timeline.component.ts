@@ -18,9 +18,6 @@ import { LocationService } from './../services/location.service';
 import { Locations } from './../domain/locations';
 import { BuildingService } from './../services/building.service';
 import { Building } from './../domain/building';
-import { ENAMETOOLONG } from 'constants';
-
-
 
 const Highcharts = require('highcharts/highcharts.src');
 
@@ -31,7 +28,6 @@ const Highcharts = require('highcharts/highcharts.src');
 })
 
 export class TimelineComponent implements AfterViewInit, OnInit {
-
   curriculum = new FormControl();
   focus = new FormControl();
   location = new FormControl();
@@ -41,9 +37,7 @@ export class TimelineComponent implements AfterViewInit, OnInit {
   locationList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
   buldingList = ['Java', '.NET', 'SDET', 'HIBERNATE', 'SPRING', 'BIG DATA'];
   nameList = [];
-
   isConcluded = false;
-
   batches: Batch[];
   filteredBatches: Batch[];
   trainers: Trainer[];
@@ -52,19 +46,14 @@ export class TimelineComponent implements AfterViewInit, OnInit {
   buldings: Building[];
   catagories: string[];
   trainerNames: string[];
-
-
   curriculumslist: string;
   locationlist: string;
   buildinglist: string;
   trainerName: string;
-
   trainer: Trainer;
-
   batchTimeLine: any;
-
+  
   @ViewChild('container', { read: ElementRef }) container: ElementRef;
-
   private chart: any;
 
   constructor(
@@ -102,15 +91,6 @@ export class TimelineComponent implements AfterViewInit, OnInit {
         categories: [],
         reversed: true
       },
-      // tooltip: {
-      //   pointFormat: '{series.name}: <b>{point.y}</b>',
-      //   backgroundColor: '#FCFFC5',
-      //   valueSuffix: 'cm',
-      //   borderWidth: 3,
-      //   borderRaduis: 6,
-      //   shared: true
-      // },
-
       series: []
     });
     this.getAllBatches();
@@ -146,27 +126,6 @@ export class TimelineComponent implements AfterViewInit, OnInit {
       }
     });
   }
-  
-  // getAllBatchesWithTrainers() {
-  //   this.batchService.getAll().subscribe(batchData => {
-  //     this.batches = batchData;
-  //     for (const entry of this.batches) {
-  //       if (entry.trainer) {
-  //         this.chart.addSeries(
-  //           {
-  //             name: entry.name,
-  //             borderColor: 'gray',
-  //             pointWidth: 20,
-  //             data: [{
-  //               x: entry.startDate,
-  //               x2: entry.endDate,
-  //               y: 0,
-  //             }]
-  //           });
-  //       }
-  //     }
-  //   });
-  // }
 
   // Concluded batches checkbox
   hide() {
@@ -217,58 +176,6 @@ export class TimelineComponent implements AfterViewInit, OnInit {
     }
   }
 
-<<<<<<< HEAD
-  // Concluded batches checkbox
-  hideBatchlessTrainers() {
-    this.isConcluded = !this.isConcluded;
-    console.log(this.isConcluded);
-    while (this.chart.series.length > 0) {
-      this.chart.series[0].remove(true);
-    }
-    if (this.isConcluded) {
-      console.log(this.batches);
-      this.filteredBatches = this.batches.filter(
-        batch => batch.trainer
-      );
-      let yAxiPosition = 0;
-      for (const entry of this.filteredBatches) {
-        this.chart.addSeries(
-          {
-            name: entry.name,
-            borderColor: 'gray',
-            pointWidth: 20,
-            data: [{
-              x: entry.startDate,
-              x2: entry.endDate,
-              y: yAxiPosition,
-            }]
-          });
-        yAxiPosition++;
-      }
-    } else {
-      while (this.chart.series.length > 0) {
-        this.chart.series[0].remove(true);
-      }
-      let yAxiPosition = 0;
-      for (const entry of this.filteredBatches) {
-        this.chart.addSeries(
-          {
-            name: entry.name,
-            borderColor: 'gray',
-            pointWidth: 20,
-            data: [{
-              x: entry.startDate,
-              x2: entry.endDate,
-              y: yAxiPosition,
-            }]
-          });
-        yAxiPosition++;
-      }
-    }
-  }
-
-=======
->>>>>>> 100e208f739b67ae0841da0ba91d33da3b915cef
   setCurriculmList() {
     this.curriculumService.getAll().subscribe(curriculumData => {
       this.curriculums = curriculumData;
@@ -298,16 +205,4 @@ export class TimelineComponent implements AfterViewInit, OnInit {
       }
     });
   }
-
-  //This method gets a trainers name
-  // getTrainerName(id: string): string {
-  //   let tname = "";
-  //   this.trainerService.getById(id).subscribe(trainerData => {
-  //     this.trainer = trainerData;
-  //     tname = this.trainer.firstName;
-  //     //  console.log(tname);
-  //   });
-  //    console.log(tname.);
-  //   return tname;
-  // }
 }
