@@ -4,13 +4,14 @@ import {showWarningOnce} from 'tslint/lib/error';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {CalendarDialogComponent} from '../pto/pto.component';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-
+import {UrlService} from './url.service'
 
 @Injectable()
 export class PtoService {
 
   constructor(private http: HttpClient,
-              private router: Router) {
+              private router: Router,
+	      private url: UrlService) {
   }
 
 
@@ -50,7 +51,7 @@ export class PtoService {
 
     const headers = new HttpHeaders({'contentType': 'application/json','data': JSON.stringify(resource) });
     const options = {headers: headers};
-    this.http.post('https://unavailable-service.cfapps.io/api/v2/google/addEvent',{}, options)
+      this.http.post(this.url.getUrl() + '/api/uavailable' + '/api/v2/google/addEvent',{}, options)
       .subscribe(data => {
         console.log("Success");
 

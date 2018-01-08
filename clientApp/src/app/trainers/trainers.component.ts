@@ -47,7 +47,8 @@ export class TrainersComponent implements OnInit {
   //Adds a trainer by popping up a dialog box
   addTrainer(): void {
     const trainer: Trainer = {
-      trainerId: null,
+	trainerId: null,
+	username: '',
       firstName: '',
       lastName: '',
       skills: [],
