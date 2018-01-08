@@ -11,6 +11,7 @@ import {PtoService} from '../services/pto.service';
 import * as AWS from 'aws-sdk';
 import {S3Credential} from '../domain/s3-credential';
 import {SkillService} from '../services/skill.service';
+import {UserInfoService} from '../services/user-info.service';
 
 @Component({
   selector: 'app-trainers',
@@ -27,13 +28,18 @@ export class TrainersComponent implements OnInit {
               private skillService: SkillService,
               private s3Service: S3CredentialService,
               private ptoService: PtoService,
+              private userInfoService: UserInfoService,
               private http: HttpClient,
               public dialog: MatDialog,
               private router: Router) {
   }
 
   ngOnInit() {
-    this.isManager = true;
+    this.isManager = false;
+    if(this.userInfoService.getUser().role == "VP of Technology"){
+      this.isManager = true;
+    }
+
     this.getAll();
     this.s3Service.getCreds().subscribe(response => this.creds = response,
       () => this.showToast('Failed to fetch Credentials'));
@@ -47,7 +53,8 @@ export class TrainersComponent implements OnInit {
   //Adds a trainer by popping up a dialog box
   addTrainer(): void {
     const trainer: Trainer = {
-      trainerId: null,
+	trainerId: null,
+	username: '',
       firstName: '',
       lastName: '',
       skills: [],

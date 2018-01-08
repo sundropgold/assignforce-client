@@ -101,6 +101,10 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     this.batchData.paginator = this.paginator;
     this.batchData = new MatTableDataSource(this.BatchData);
   }
+  evalTrainer( skills ) {
+   const res = skills.filter( function(n) { return !this.has(n); }, new Set(this.batch.skills) );
+   return Math.round((res.length / this.batch.skills.length) * 10) + '%';
+  }
 
   EditBatch(id: number) {
     this.firstTabHeader = 'Editing Batch';
@@ -118,6 +122,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
       this.batch = data;
       this.batch.startDate = new Date(data.startDate);
       this.batch.endDate = new Date(data.endDate);
+      this.datebetween = Math.round(((this.batch.endDate)as any - ((this.batch.startDate)as any)) / 1000 / 60 / 60 / 24 / 7);
       this.getBuildings();
       this.getRooms();
     });

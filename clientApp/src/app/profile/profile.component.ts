@@ -7,8 +7,10 @@ import {Skill} from '../domain/skill';
 import {NotificationService} from '../services/notification.service';
 import {S3Credential} from '../domain/s3-credential';
 import * as AWS from 'aws-sdk';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
+import {UserInfoService} from '../services/user-info.service';
+import {User} from '../domain/user';
 
 @Component({
   selector: 'app-profile',
@@ -17,8 +19,7 @@ import {Location} from '@angular/common';
 })
 export class ProfileComponent implements OnInit {
 
-  @Input() fName = 'Joseph';
-  @Input() lName = 'Wong';
+  user: User;
   tId: number;
   lockProfile: boolean;
 
@@ -35,11 +36,17 @@ export class ProfileComponent implements OnInit {
               private skillService: SkillService,
               private s3Service: S3CredentialService,
               private notificationService: NotificationService,
+              private userInfoService: UserInfoService,
               private route: ActivatedRoute,
+              private router: Router,
               private location: Location) {
   }
 
   ngOnInit() {
+    this.user = this.userInfoService.getUser();
+    if (this.user.role === 'VP of Technology' && this.tId === undefined) {
+      this.router.navigate(['/overview']);
+    }
     this.route.params.subscribe(params => this.tId = params.id);
     // data gathering
 
@@ -57,7 +64,8 @@ export class ProfileComponent implements OnInit {
           },
           () => this.showToast('Could not fetch trainer.'));
     } else {
-      this.trainerService.getByFirstNameAndLastName(this.fName, this.lName)
+      this.trainerService.getByFirstNameAndLastName(this.user.firstname, this.user.lastname)
+      // this.trainerService.getByFirstNameAndLastName('Test', 'Trainer')
         .subscribe(response => {
             this.trainer = response;
             if (this.trainer.skills.length !== 0) {

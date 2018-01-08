@@ -8,8 +8,8 @@
       <!-- Expandable Content Core Curricula-->
       <mat-card>
       <mat-accordion>
-        <mat-expansion-panel>
-          <mat-expansion-panel-header >
+        <mat-expansion-panel [expanded]="true">
+          <mat-expansion-panel-header>
             <mat-panel-title>
               <span class="panel-title-fix">Core Curricula</span>
             </mat-panel-title>
@@ -55,7 +55,7 @@
       <!-- Focuses-->
       <mat-card>
         <mat-accordion>
-          <mat-expansion-panel>
+          <mat-expansion-panel [expanded]="true">
             <mat-expansion-panel-header >
               <mat-panel-title>
                 <span class="panel-title-fix">Focuses</span>
@@ -101,14 +101,14 @@
       <!-- Skills -->
       <mat-card>
         <mat-accordion>
-          <mat-expansion-panel>
+          <mat-expansion-panel [expanded]="true">
             <mat-expansion-panel-header >
             <mat-panel-title>
               <span class="panel-title-fix">Skills</span>
             </mat-panel-title>
             <mat-panel-description>
               <span class="fill-space"></span>
-              <button mat-icon-button (click)="createSkill($event)">
+              <button mat-icon-button (click)="createSkill($event)" [hidden]="!isAdmin">
                 <mat-icon class="icon-margin-fix-header" matTooltip="Add New Skill">add_circle_outline</mat-icon>
               </button>
             </mat-panel-description>
