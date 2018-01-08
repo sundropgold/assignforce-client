@@ -62,9 +62,9 @@ export class CurriculaComponent implements OnInit {
 
   ngOnInit() {
     this.isAdmin = false;
-    // if (this.userInfoService.getUser().role == 'VP of Technology') {
+    if (this.userInfoService.getUser().role == 'VP of Technology') {
       this.isAdmin = true;
-    // }
+    }
     /* grab curricula from server */
     this.getAllSkills();
     this.getAllCurricula();
