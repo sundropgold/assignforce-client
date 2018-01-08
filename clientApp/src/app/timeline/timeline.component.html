@@ -1,6 +1,6 @@
 <div>
   <mat-form-field>
-    <input matInput [matDatepicker]="start"  [(ngModel)]="date" placeholder="Start date">
+    <input matInput [matDatepicker]="start" [(ngModel)]="startDate" name="startDate" placeholder="Start date">
     <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
     <mat-datepicker #start></mat-datepicker>
   </mat-form-field>
@@ -35,10 +35,11 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-checkbox
-  MatCheckboxClickAction >Hide Concluded Batches</mat-checkbox>
-  <mat-checkbox>Hide Batchless Trainers</mat-checkbox>
-  <mat-checkbox>Select Dates Automatically</mat-checkbox>
+  <button mat-button (click)="updateTimeline()">Update</button>
+  <mat-checkbox (click)="hide()">Hide Concluded Batches</mat-checkbox>
+  <mat-checkbox (click)="hideBatchlessTrainers()">Hide Batchless Trainers</mat-checkbox>
+  <mat-checkbox (click)="setRandomDate()">Select Dates Automatically</mat-checkbox>
+  
 
 </div>
 

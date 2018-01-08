@@ -39,6 +39,8 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   hireDate = new Date();
   startDate = new Date();
   // Use to calculate the total number in the card array
+  // totalBatch: any = {};
+  // batchType = [];
   totalNetBatch = 0;
   totalSDETBatch = 0;
   totalJavaBatch = 0;
@@ -188,7 +190,10 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
         this.reportIncomingGrads = this.setting[0].reportIncomingGrads;
         this.reportGrads = this.setting[0].reportGrads;
         console.log(this.setting);
-      }, err => console.log(err)
+      }, err => {
+        console.log(err);
+        this.showToast('Failed to fetch Setting');
+      }
     );
   }
   // get all batches
@@ -210,6 +215,9 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   getAllCurriculum() {
     this.curriculaService.getAll().subscribe(curricula => {
       this.curricula = curricula;
+      // for (const x of Object.keys(this.curricula)) {
+      //
+      // }
       console.log(this.curricula);
     }, err => {
       console.log(err);
@@ -260,8 +268,8 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     const tempDate = new Date(requiredDate);
     const startDate = (requiredDate === undefined) ? (new Date()) : tempDate;
     console.log(startDate);
-    // startDate.setDate(startDate.getDate() - (7 * batchlength));
-    startDate.setDate(startDate.getDate() - (7 * 11));
+    startDate.setDate(startDate.getDate() - (7 * this.setting[0].batchLength));
+    // startDate.setDate(startDate.getDate() - (7 * 11));
     // push the start date to the closest Monday
     switch (startDate.getDay()) {
       case 0 :
@@ -368,13 +376,28 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     }
     console.log(this.totalCumulativeBatch);
   }
+
+  // cumulativeBatchesF() {
+  //   this.totalCumulativeBatch = 0;
+  //   for (const x in this.cardArr) {
+  //     if ((this.cardArr[x].batchType)) {
+  //       const batchVal = this.cardArr[x].batchType.currId;
+  //       console.log(batchVal);
+  //       console.log(this.batchType);
+  //       for (const y in this.batchType) {
+  //         if (this.batchType[y] === this.cardArr[x].batchType.currId) {
+  //         }
+  //       };
+  //     }
+  //   }
+  //   console.log(this.totalCumulativeBatch);
+  // }
   /* FUNCTION - This method will assert that batches have valid credentials for submission */
   submissionValidityAssertion(index) {
     const flagArr = [0, 0, 0];
     let count = 0;
     let canSubmit = 0;
     const today = new Date();
-
     console.log(this.cardArr[index].startDate);
     console.log(today);
     if (this.cardArr[index].startDate <= today || this.cardArr[index].startDate === undefined) {
@@ -411,6 +434,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   /* FUNCTION - This method will generate a new 'card' in the cardArr object, which will be displayed to the user on the reports tab. */
   createBatch(batch, index) {
     const canSubmit = this.submissionValidityAssertion(index);
+    let i = 1;
     // let newBatch: Batch;
     if (canSubmit === 1) {
       this.showToast(this.errMsg);
@@ -424,13 +448,16 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
       this.newBatch.batchLocation = this.defaultLocation;
       this.newBatch.batchStatus = {};
       console.log(this.newBatch);
-      this.batchService.create(this.newBatch).subscribe(
-        data => {
-          console.log('batch created sucessfully');
-          this.removeCard(index);
-        },
-        error => console.log('error creating batch')
+      for (i; i  <= batch.requiredBatches; i++) {
+        this.batchService.create(this.newBatch).subscribe(
+          data => {
+            console.log('batch created sucessfully');
+            index = this.cardArr.indexOf(batch);
+            this.removeCard(index);
+          },
+          error => console.log('error creating batch')
         );
+      }
     }
   }
   createAllBatch() {
@@ -438,10 +465,6 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     for (const x of Object.keys(tempCardArr)) {
       this.createBatch(tempCardArr[x], x);
     }
-    // for (const y of Object.keys(this.remove)) {
-    //   console.log(y);
-    //   this.removeCard(this.remove[y]);
-    // }
     if (this.cardArr.length !== 0) {
       this.showToast('Error creating some batches');
     }

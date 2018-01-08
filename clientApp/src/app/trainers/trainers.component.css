@@ -11,11 +11,11 @@ mat-card {
   padding: 0;
 }
 
-mat-toolbar {
-  padding: 0px 16px;
-  background-color: #37474F;
-  color: #E0E4E6;
-}
+/*mat-toolbar {*/
+  /*padding: 0px 16px;*/
+  /*background-color: #37474F;*/
+  /*color: #E0E4E6;*/
+/*}*/
 
 
 mat-list-item{
