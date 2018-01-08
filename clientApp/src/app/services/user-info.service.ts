@@ -15,10 +15,16 @@ export class UserInfoService {
     return this.http.get<User>(this.url.getUrl() + '/auth/userinfo');
   }
 
+    logout(): Observable<any>{
+	return this.http.post(this.url.getUrl() + '/revokelogout', {});
+    }
+    
   getUser() {
       return JSON.parse(localStorage.getItem("user"));
   }
   setUser(u: User) {
       localStorage.setItem("user", JSON.stringify(u));
   }
+
+  
 }

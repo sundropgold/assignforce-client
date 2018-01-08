@@ -32,6 +32,8 @@ export class MenuBarComponent implements OnInit {
   }
 
   logout() {
-    //has to redirect to login page
+      localStorage.clear();
+      this.userInfo.logout().subscribe(data => {});
+      
   }
 }
