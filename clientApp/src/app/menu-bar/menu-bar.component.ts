@@ -34,7 +34,6 @@ export class MenuBarComponent implements OnInit {
 
   logout(link) {
     if (link === 'LOGOUT') {
-      localStorage.clear();
       this.userInfo.logout().subscribe(always => {
           this.router.navigateByUrl('');
         },
@@ -44,6 +43,7 @@ export class MenuBarComponent implements OnInit {
         () => {
           this.router.navigateByUrl('');
         });
+	localStorage.clear();
 
     }
   }
