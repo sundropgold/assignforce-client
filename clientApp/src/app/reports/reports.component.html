@@ -9,16 +9,17 @@
   <ng-container *ngIf="batch.length > 0 && curricula.length > 0">
   <!--Future Projection Tab-->
     <mat-accordion>
+<<<<<<< HEAD
+      <mat-expansion-panel>
+=======
       <div [hidden]="!isAdmin">
       <mat-expansion-panel [expanded]="true">
+>>>>>>> 20a96e33698629f8c803a15f9bb337cf37ae13bd
         <mat-expansion-panel-header>
           <mat-panel-title>Batch Projection</mat-panel-title>
-          <mat-panel-description>
           <span fxFlex=""></span>
-          <mat-icon (click)="genCard($event)">add</mat-icon>
+          <button mat-icon-button><mat-icon (click)="genCard($event)">add</mat-icon></button>
           <span fxFlex="1%"></span>
-          </mat-panel-description>
-
         </mat-expansion-panel-header>
         <mat-card-content>
           <div fxFlex="70%" fxLayout="row" layoutXs="column" style="overflow: auto">
@@ -99,9 +100,8 @@
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>Graduate Summary for {{gradYear}}</mat-panel-title>
-          <mat-panel-description>
           <span fxFlex=""></span>
-          <mat-icon title="Export to CSV" (click)="exportToCSV($event, 'gruduateSummary')">get_app</mat-icon>
+          <button mat-icon-button><mat-icon title="Export to CSV" (click)="exportToCSV($event, 'gruduateSummary')">get_app</mat-icon></button>
           <mat-menu #settingGraduate="matMenu">
             <form mat-menu-item>
               <mat-form-field class="full-width">
@@ -119,7 +119,6 @@
             <mat-icon>settings</mat-icon>
           </button>
           <span fxFlex="1%"></span>
-          </mat-panel-description>
         </mat-expansion-panel-header>
         <mat-card>
 
@@ -222,10 +221,8 @@
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>Incoming Trainee Summary for {{incomeYear}}</mat-panel-title>
-          <mat-panel-description>
-
           <span fxFlex=""></span>
-          <mat-icon title="Export to CSV" (click)="exportToCSV($event, 'gruduateSummary')">get_app</mat-icon>
+          <button mat-icon-button><mat-icon title="Export to CSV" (click)="exportToCSV($event, 'gruduateSummary')">get_app</mat-icon></button>
           <mat-menu #settingIncoming="matMenu">
             <form mat-menu-item>
               <mat-form-field class="full-width">
@@ -243,7 +240,7 @@
             <mat-icon>settings</mat-icon>
           </button>
           <span fxFlex="1%"></span>
-          </mat-panel-description>
+
         </mat-expansion-panel-header>
         <mat-card>
           <!--<mat-table #table [dataSource]="dataSource" matSort>-->

@@ -15,7 +15,6 @@ import {SettingsService} from '../services/global-settings.service';
 import {GlobalSettings} from '../domain/global-settings';
 import {UserInfoService} from '../services/user-info.service';
 
-
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
@@ -26,14 +25,17 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   batch: Batch[] = [];
   trainer: Trainer[] = [];
   // remove = [];
-  setting: GlobalSettings[] = [];
+  // setting: GlobalSettings[] = [];
   reportGrads = 13;
   reportIncomingGrads = 18;
 
+<<<<<<< HEAD
+=======
   fail = 0;
   success = 0;
   isAdmin = true;
 
+>>>>>>> 20a96e33698629f8c803a15f9bb337cf37ae13bd
   newBatch: any = {};
   defaultLocation: any = {};
   // for creating new projection
@@ -69,7 +71,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     this.getAllCurriculum();
     this.getAllBatches();
     this.getAllTrainer();
-    this.getDefaultSetting();
+    // this.getDefaultSetting();
     this.skills.getList();
     this.skills.getTrainerList();
   }
@@ -175,6 +177,8 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
 
 
   ngOnInit() {
+<<<<<<< HEAD
+=======
     this.isAdmin = false;
     if (this.userInfoService.getUser().role === 'VP of Technology') {
       this.isAdmin = true;
@@ -182,9 +186,9 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.skills.getElement();
+>>>>>>> 20a96e33698629f8c803a15f9bb337cf37ae13bd
     this.skills.getTrainerList();
     this.skills.getList();
-
   }
 
   ngAfterViewInit() {
@@ -200,18 +204,19 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     this.notificationService.openSnackBar(msg);
   }
   // get default setting
-  getDefaultSetting() {
-    this.settingService.getSettings().subscribe(
-	setting => {
-        this.setting = setting;
-        this.reportIncomingGrads = this.setting[0].reportIncomingGrads;
-        this.reportGrads = this.setting[0].reportGrads;
-        console.log(this.setting);
-      }, err => {
-        console.log(err);
-        this.showToast('Failed to fetch Setting');
-      });
-  }
+  // getDefaultSetting() {
+  //   this.settingService.getSettings().subscribe(
+  //     setting => {
+  //       this.setting = setting;
+  //       this.reportIncomingGrads = this.setting[0].reportIncomingGrads;
+  //       this.reportGrads = this.setting[0].reportGrads;
+  //       console.log(this.setting);
+  //     }, err => {
+  //       console.log(err);
+  //       this.showToast('Failed to fetch Setting');
+  //     }
+  //   );
+  // }
   /*getDefaultSetting() {
     this.settingService.getSettings()(
         this.setting = setting;
@@ -494,9 +499,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
               this.success += 1;
             }
           },
-          error => {
-            console.log('error creating batch');
-          }
+          error => console.log('error creating batch')
         );
       }
     }
