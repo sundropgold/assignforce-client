@@ -268,7 +268,6 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     this.cardArr.splice(index, 1);
     this.cumulativeBatches();
   }
-
   exportToCSV(evt, name) {
     evt.stopPropagation();
     new Angular2Csv(this.skills.getElement(), name);
@@ -469,9 +468,11 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
             console.log('batch created sucessfully');
             index = this.cardArr.indexOf(batch);
             this.removeCard(index);
+            this.success += 1;
           },
           error => {
             console.log('error creating batch');
+            this.fail += 1;
           }
         );
       }
@@ -482,9 +483,12 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     for (const x of Object.keys(tempCardArr)) {
       this.createBatch(tempCardArr[x], x);
     }
-    if (this.cardArr.length !== 0) {
-      this.showToast('Error creating some batches');
-    }
+    setTimeout(() => {
+      if (this.cardArr.length !== 0) {
+        this.showToast('Successfully creating' + this.success + 'batches. Error creating' + this.fail + 'batches');
+      } else {
+        this.showToast('Successfully creating all batch');
+      }}, 1000);
   }
 }
 
