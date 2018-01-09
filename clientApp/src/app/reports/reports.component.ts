@@ -14,7 +14,6 @@ import {Chart} from 'angular-highcharts';
 import {SettingsService} from '../services/global-settings.service';
 import {GlobalSettings} from '../domain/global-settings';
 
-
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
@@ -25,12 +24,9 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   batch: Batch[] = [];
   trainer: Trainer[] = [];
   // remove = [];
-  setting: GlobalSettings[] = [];
+  // setting: GlobalSettings[] = [];
   reportGrads = 13;
   reportIncomingGrads = 18;
-
-  fail = 0;
-  success = 0;
 
   newBatch: any = {};
   defaultLocation: any = {};
@@ -66,7 +62,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     this.getAllCurriculum();
     this.getAllBatches();
     this.getAllTrainer();
-    this.getDefaultSetting();
+    // this.getDefaultSetting();
     this.skills.getList();
     this.skills.getTrainerList();
   }
@@ -172,10 +168,8 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
 
 
   ngOnInit() {
-    this.skills.getElement();
     this.skills.getTrainerList();
     this.skills.getList();
-
   }
 
   ngAfterViewInit() {
@@ -190,18 +184,19 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     this.notificationService.openSnackBar(msg);
   }
   // get default setting
-  getDefaultSetting() {
-    this.settingService.getSettings().subscribe(
-	setting => {
-        this.setting = setting;
-        this.reportIncomingGrads = this.setting[0].reportIncomingGrads;
-        this.reportGrads = this.setting[0].reportGrads;
-        console.log(this.setting);
-      }, err => {
-        console.log(err);
-        this.showToast('Failed to fetch Setting');
-      });
-  }
+  // getDefaultSetting() {
+  //   this.settingService.getSettings().subscribe(
+  //     setting => {
+  //       this.setting = setting;
+  //       this.reportIncomingGrads = this.setting[0].reportIncomingGrads;
+  //       this.reportGrads = this.setting[0].reportGrads;
+  //       console.log(this.setting);
+  //     }, err => {
+  //       console.log(err);
+  //       this.showToast('Failed to fetch Setting');
+  //     }
+  //   );
+  // }
   /*getDefaultSetting() {
     this.settingService.getSettings()(
         this.setting = setting;
@@ -472,9 +467,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
             index = this.cardArr.indexOf(batch);
             this.removeCard(index);
           },
-          error => {
-            console.log('error creating batch');
-          }
+          error => console.log('error creating batch')
         );
       }
     }

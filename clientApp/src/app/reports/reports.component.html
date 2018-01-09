@@ -9,15 +9,12 @@
   <ng-container *ngIf="batch.length > 0 && curricula.length > 0">
   <!--Future Projection Tab-->
     <mat-accordion>
-      <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>Batch Projection</mat-panel-title>
-          <mat-panel-description>
           <span fxFlex=""></span>
-          <mat-icon (click)="genCard($event)">add</mat-icon>
+          <button mat-icon-button><mat-icon (click)="genCard($event)">add</mat-icon></button>
           <span fxFlex="1%"></span>
-          </mat-panel-description>
-
         </mat-expansion-panel-header>
         <mat-card-content>
           <div fxFlex="70%" fxLayout="row" layoutXs="column" style="overflow: auto">
@@ -97,9 +94,8 @@
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>Graduate Summary for {{gradYear}}</mat-panel-title>
-          <mat-panel-description>
           <span fxFlex=""></span>
-          <mat-icon title="Export to CSV" (click)="exportToCSV($event, 'gruduateSummary')">get_app</mat-icon>
+          <button mat-icon-button><mat-icon title="Export to CSV" (click)="exportToCSV($event, 'gruduateSummary')">get_app</mat-icon></button>
           <mat-menu #settingGraduate="matMenu">
             <form mat-menu-item>
               <mat-form-field class="full-width">
@@ -108,7 +104,7 @@
             </form>
             <form mat-menu-item>
               <mat-form-field class="full-width">
-                <input matInput placeholder="Graduate Per Batch" type="number" [(ngModel)]="setting[0].reportGrads" (click)="$event.stopPropagation()" name="settingGraduate">
+                <input matInput placeholder="Graduate Per Batch" type="number" [(ngModel)]="reportGrads" (click)="$event.stopPropagation()" name="settingGraduate">
               </mat-form-field>
             </form>
 
@@ -117,7 +113,6 @@
             <mat-icon>settings</mat-icon>
           </button>
           <span fxFlex="1%"></span>
-          </mat-panel-description>
         </mat-expansion-panel-header>
         <mat-card>
 
@@ -218,10 +213,8 @@
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>Incoming Trainee Summary for {{incomeYear}}</mat-panel-title>
-          <mat-panel-description>
-
           <span fxFlex=""></span>
-          <mat-icon title="Export to CSV" (click)="exportToCSV($event, 'gruduateSummary')">get_app</mat-icon>
+          <button mat-icon-button><mat-icon title="Export to CSV" (click)="exportToCSV($event, 'gruduateSummary')">get_app</mat-icon></button>
           <mat-menu #settingIncoming="matMenu">
             <form mat-menu-item>
               <mat-form-field class="full-width">
@@ -230,7 +223,7 @@
             </form>
             <form mat-menu-item>
               <mat-form-field class="full-width">
-                <input matInput placeholder="Graduate Per Batch" type="number" [(ngModel)]="setting[0].reportIncomingGrads" (click)="$event.stopPropagation()" name="settingIncoming">
+                <input matInput placeholder="Graduate Per Batch" type="number" [(ngModel)]="reportIncomingGrads" (click)="$event.stopPropagation()" name="settingIncoming">
               </mat-form-field>
             </form>
 
@@ -239,7 +232,7 @@
             <mat-icon>settings</mat-icon>
           </button>
           <span fxFlex="1%"></span>
-          </mat-panel-description>
+
         </mat-expansion-panel-header>
         <mat-card>
           <!--<mat-table #table [dataSource]="dataSource" matSort>-->
