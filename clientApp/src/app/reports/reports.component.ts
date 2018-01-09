@@ -474,6 +474,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
         this.batchService.create(this.newBatch).subscribe(
           data => {
             console.log('batch created sucessfully');
+            this.showToast('batch created sucessfully');
             index = this.cardArr.indexOf(batch);
             this.removeCard(index);
             this.success += 1;
