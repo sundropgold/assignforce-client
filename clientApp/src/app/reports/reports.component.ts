@@ -473,6 +473,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
       this.newBatch.name = '-';
       this.newBatch.startDate = batch.startDate;
       this.newBatch.endDate = batch.hireDate;
+      this.newBatch.trainerId = '5a4d436b2090e703f0da24cd';
       this.newBatch.curriculum = batch.batchType.currId;
       this.newBatch.batchLocation = this.defaultLocation;
       this.newBatch.batchStatus = {};
