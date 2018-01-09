@@ -13,6 +13,7 @@ import {ReplogicService} from '../replogic.service';
 import {Chart} from 'angular-highcharts';
 import {SettingsService} from '../services/global-settings.service';
 import {GlobalSettings} from '../domain/global-settings';
+import {UserInfoService} from '../services/user-info.service';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
 
   fail = 0;
   success = 0;
+  isAdmin = true;
 
   newBatch: any = {};
   defaultLocation: any = {};
@@ -61,7 +63,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
 
   @ViewChild(MatSort) sort: MatSort;
   constructor(public skills: ReplogicService, private ref: ChangeDetectorRef, private settingService: SettingsService,
-              private batchService: BatchService, private curriculaService: CurriculaService,
+              private batchService: BatchService, private curriculaService: CurriculaService, private userInfoService: UserInfoService,
               private trainerService: TrainerService, private notificationService: NotificationService) {
     this.getAllCurriculum();
     this.getAllBatches();
@@ -172,6 +174,10 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
 
 
   ngOnInit() {
+    this.isAdmin = false;
+    if (this.userInfoService.getUser().role === 'VP of Technology') {
+      this.isAdmin = true;
+    }
     this.skills.getTrainerList();
     this.skills.getList();
   }
