@@ -5,6 +5,7 @@ import {NotificationService} from '../services/notification.service';
 import {Building} from '../domain/building';
 import {GlobalSettings} from '../domain/global-settings';
 import {SettingsService} from '../services/global-settings.service';
+import {UserInfoService} from "../services/user-info.service";
 
 @Component({
   selector: 'app-settings',
@@ -30,7 +31,8 @@ export class SettingsComponent implements OnInit {
 
   constructor(private locationService: LocationService,
               private notificationService: NotificationService,
-              private settingsService: SettingsService) {}
+              private settingsService: SettingsService,
+              private userInfo: UserInfoService) {}
 
 
   ngOnInit() {

@@ -25,13 +25,7 @@ export class MenuBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('Im navbar');
-    this.userInfo.loadUser().subscribe((user) => {
-      this.admin = user.role;
-    }, () => {
-      this.showToast('Failed to fetch trainer info');
-    });
-    this.admin = this.userInfo.getUser();
+    // this.admin = this.userInfo.getUser();
   }
 
   showToast(msg) {

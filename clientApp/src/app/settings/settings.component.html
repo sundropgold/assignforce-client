@@ -1,5 +1,5 @@
 <div style="margin-top: 5%"></div>
-<mat-card style="margin-bottom: 1%">
+<mat-card style="margin-bottom: 1%" *ngIf="userInfo.getUser().role === 'VP of Technology'">
   <mat-toolbar>
     <mat-toolbar-row>
       <span> Global Settings </span>
