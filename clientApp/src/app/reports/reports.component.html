@@ -9,7 +9,12 @@
   <ng-container *ngIf="batch.length > 0 && curricula.length > 0">
   <!--Future Projection Tab-->
     <mat-accordion>
+<<<<<<< HEAD
       <mat-expansion-panel>
+=======
+      <div [hidden]="!isAdmin">
+      <mat-expansion-panel [expanded]="true">
+>>>>>>> 20a96e33698629f8c803a15f9bb337cf37ae13bd
         <mat-expansion-panel-header>
           <mat-panel-title>Batch Projection</mat-panel-title>
           <span fxFlex=""></span>
@@ -52,7 +57,7 @@
                   <p>Requested Batches: <span *ngIf="cardArr[i].requiredBatches">{{cardArr[i].requiredBatches}}</span></p>
                 </mat-card-content>
                 <mat-card-actions>
-                  <div fxLayoutAlign="center" class="btn" (click)="createBatch(cardArr[i], i)">
+                  <div fxLayoutAlign="center" class="btn" (click)="createBatch(cardArr[i], i, false)">
                     <span>Create Batch</span>
                     <div class="dot"></div>
                   </div>
@@ -87,6 +92,7 @@
           </div>
         </mat-card-content>
       </mat-expansion-panel>
+      </div>
     </mat-accordion>
   <!--Graduates Table and Graph Accordion-->
   <!--Incoming Trianee Table and Graph Accordion-->

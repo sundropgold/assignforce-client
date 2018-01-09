@@ -13,6 +13,7 @@ import {ReplogicService} from '../replogic.service';
 import {Chart} from 'angular-highcharts';
 import {SettingsService} from '../services/global-settings.service';
 import {GlobalSettings} from '../domain/global-settings';
+import {UserInfoService} from '../services/user-info.service';
 
 @Component({
   selector: 'app-reports',
@@ -28,6 +29,13 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   reportGrads = 13;
   reportIncomingGrads = 18;
 
+<<<<<<< HEAD
+=======
+  fail = 0;
+  success = 0;
+  isAdmin = true;
+
+>>>>>>> 20a96e33698629f8c803a15f9bb337cf37ae13bd
   newBatch: any = {};
   defaultLocation: any = {};
   // for creating new projection
@@ -57,7 +65,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
 
   @ViewChild(MatSort) sort: MatSort;
   constructor(public skills: ReplogicService, private ref: ChangeDetectorRef, private settingService: SettingsService,
-              private batchService: BatchService, private curriculaService: CurriculaService,
+              private batchService: BatchService, private curriculaService: CurriculaService, private userInfoService: UserInfoService,
               private trainerService: TrainerService, private notificationService: NotificationService) {
     this.getAllCurriculum();
     this.getAllBatches();
@@ -168,6 +176,14 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
 
 
   ngOnInit() {
+<<<<<<< HEAD
+=======
+    this.isAdmin = false;
+    if (this.userInfoService.getUser().role === 'VP of Technology') {
+      this.isAdmin = true;
+    }
+    this.skills.getElement();
+>>>>>>> 20a96e33698629f8c803a15f9bb337cf37ae13bd
     this.skills.getTrainerList();
     this.skills.getList();
   }
@@ -265,7 +281,6 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     this.cardArr.splice(index, 1);
     this.cumulativeBatches();
   }
-
   exportToCSV(evt, name) {
     evt.stopPropagation();
     new Angular2Csv(this.skills.getElement(), name);
@@ -403,29 +418,29 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   //   console.log(this.totalCumulativeBatch);
   // }
   /* FUNCTION - This method will assert that batches have valid credentials for submission */
-  submissionValidityAssertion(index) {
+  submissionValidityAssertion(batch) {
     const flagArr = [0, 0, 0];
     let count = 0;
     let canSubmit = 0;
     const today = new Date();
-    console.log(this.cardArr[index].startDate);
+    console.log(batch.startDate);
     console.log(today);
-    if (this.cardArr[index].startDate <= today || this.cardArr[index].startDate === undefined) {
+    if (batch.startDate <= today || batch.startDate === undefined) {
       this.errMsg = 'Invalid Hire Date';
       flagArr[1] = 1;
       canSubmit = 1;
     }
-    if (this.cardArr[index].requiredGrads === null) {
+    if (batch.requiredGrads === null) {
       this.errMsg = 'Requires Trainee\'s';
       flagArr[0] = 1;
       canSubmit = 1;
     }
-    if (this.cardArr[index].hireDate === '') {
+    if (batch.hireDate === '') {
       this.errMsg = 'Request Hire Date.';
       flagArr[1] = 1;
       canSubmit = 1;
     }
-    if (this.cardArr[index].batchType === undefined) {
+    if (batch.batchType === undefined) {
       this.errMsg = 'Invalid Batch Type.';
       flagArr[2] = 1;
       canSubmit = 1;
@@ -442,17 +457,20 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     return canSubmit;
   }
   /* FUNCTION - This method will generate a new 'card' in the cardArr object, which will be displayed to the user on the reports tab. */
-  createBatch(batch, index) {
-    const canSubmit = this.submissionValidityAssertion(index);
+  createBatch(batch, index, multiple) {
+    const canSubmit = this.submissionValidityAssertion(batch);
     let i = 1;
     // let newBatch: Batch;
     if (canSubmit === 1) {
       this.showToast(this.errMsg);
+      if (multiple) {
+        this.fail += 1;
+      }
     } else if (canSubmit === 0) {     // Create batch with batchService
-      // this.defaultLocation.buildingId = this.setting[0].defaultBuilding;
-      // this.defaultLocation.locationId = this.setting[0].defaultLocation;
-      this.defaultLocation.buildingId = 1;
-      this.defaultLocation.locationId = 1;
+      this.defaultLocation.buildingId = this.setting[0].defaultBuilding;
+      this.defaultLocation.locationId = this.setting[0].defaultLocation;
+      // this.defaultLocation.buildingId = 1;
+      // this.defaultLocation.locationId = 1;
       this.newBatch.name = '-';
       this.newBatch.startDate = batch.startDate;
       this.newBatch.endDate = batch.hireDate;
@@ -464,8 +482,12 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
         this.batchService.create(this.newBatch).subscribe(
           data => {
             console.log('batch created sucessfully');
+            this.showToast('batch created sucessfully');
             index = this.cardArr.indexOf(batch);
             this.removeCard(index);
+            if (multiple) {
+              this.success += 1;
+            }
           },
           error => console.log('error creating batch')
         );
@@ -475,11 +497,17 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   createAllBatch() {
     const tempCardArr = this.cardArr;
     for (const x of Object.keys(tempCardArr)) {
-      this.createBatch(tempCardArr[x], x);
+      this.createBatch(tempCardArr[x], x, true);
     }
-    if (this.cardArr.length !== 0) {
-      this.showToast('Error creating some batches');
-    }
+    setTimeout(() => {
+      if (this.cardArr.length !== 0) {
+        this.showToast('Successfully creating ' + this.success + ' batches. Error creating ' + this.fail + ' batches');
+      } else {
+        this.showToast('Successfully creating all batch');
+      }
+      this.success = 0;
+      this.fail = 0;
+      }, 1000);
   }
 }
 
