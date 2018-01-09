@@ -178,8 +178,10 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     if (this.userInfoService.getUser().role === 'VP of Technology') {
       this.isAdmin = true;
     }
+    this.skills.getElement();
     this.skills.getTrainerList();
     this.skills.getList();
+
   }
 
   ngAfterViewInit() {
