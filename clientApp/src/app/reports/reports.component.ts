@@ -413,29 +413,29 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   //   console.log(this.totalCumulativeBatch);
   // }
   /* FUNCTION - This method will assert that batches have valid credentials for submission */
-  submissionValidityAssertion(index) {
+  submissionValidityAssertion(batch) {
     const flagArr = [0, 0, 0];
     let count = 0;
     let canSubmit = 0;
     const today = new Date();
-    console.log(this.cardArr[index].startDate);
+    console.log(batch.startDate);
     console.log(today);
-    if (this.cardArr[index].startDate <= today || this.cardArr[index].startDate === undefined) {
+    if (batch.startDate <= today || batch.startDate === undefined) {
       this.errMsg = 'Invalid Hire Date';
       flagArr[1] = 1;
       canSubmit = 1;
     }
-    if (this.cardArr[index].requiredGrads === null) {
+    if (batch.requiredGrads === null) {
       this.errMsg = 'Requires Trainee\'s';
       flagArr[0] = 1;
       canSubmit = 1;
     }
-    if (this.cardArr[index].hireDate === '') {
+    if (batch.hireDate === '') {
       this.errMsg = 'Request Hire Date.';
       flagArr[1] = 1;
       canSubmit = 1;
     }
-    if (this.cardArr[index].batchType === undefined) {
+    if (batch.batchType === undefined) {
       this.errMsg = 'Invalid Batch Type.';
       flagArr[2] = 1;
       canSubmit = 1;
@@ -453,7 +453,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   }
   /* FUNCTION - This method will generate a new 'card' in the cardArr object, which will be displayed to the user on the reports tab. */
   createBatch(batch, index, multiple) {
-    const canSubmit = this.submissionValidityAssertion(index);
+    const canSubmit = this.submissionValidityAssertion(batch);
     let i = 1;
     // let newBatch: Batch;
     if (canSubmit === 1) {
