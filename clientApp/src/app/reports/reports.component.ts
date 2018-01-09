@@ -178,8 +178,10 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     if (this.userInfoService.getUser().role === 'VP of Technology') {
       this.isAdmin = true;
     }
+    this.skills.getElement();
     this.skills.getTrainerList();
     this.skills.getList();
+
   }
 
   ngAfterViewInit() {
@@ -460,10 +462,10 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
         this.fail += 1;
       }
     } else if (canSubmit === 0) {     // Create batch with batchService
-      // this.defaultLocation.buildingId = this.setting[0].defaultBuilding;
-      // this.defaultLocation.locationId = this.setting[0].defaultLocation;
-      this.defaultLocation.buildingId = 1;
-      this.defaultLocation.locationId = 1;
+      this.defaultLocation.buildingId = this.setting[0].defaultBuilding;
+      this.defaultLocation.locationId = this.setting[0].defaultLocation;
+      // this.defaultLocation.buildingId = 1;
+      // this.defaultLocation.locationId = 1;
       this.newBatch.name = '-';
       this.newBatch.startDate = batch.startDate;
       this.newBatch.endDate = batch.hireDate;
@@ -475,7 +477,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
         this.batchService.create(this.newBatch).subscribe(
           data => {
             console.log('batch created sucessfully');
-            this.showToast('batch created sucessfully')
+            this.showToast('batch created sucessfully');
             index = this.cardArr.indexOf(batch);
             this.removeCard(index);
             if (multiple) {
