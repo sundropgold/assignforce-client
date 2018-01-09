@@ -458,7 +458,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   /* FUNCTION - This method will generate a new 'card' in the cardArr object, which will be displayed to the user on the reports tab. */
   createBatch(batch, index, multiple) {
     const canSubmit = this.submissionValidityAssertion(batch);
-    let i = 1;
+    let i = 0;
     // let newBatch: Batch;
     if (canSubmit === 1) {
       this.showToast(this.errMsg);
@@ -473,11 +473,13 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
       this.newBatch.name = '-';
       this.newBatch.startDate = batch.startDate;
       this.newBatch.endDate = batch.hireDate;
+      this.newBatch.trainerId = '5a4d436b2090e703f0da24cd';
       this.newBatch.curriculum = batch.batchType.currId;
       this.newBatch.batchLocation = this.defaultLocation;
       this.newBatch.batchStatus = {};
       console.log(this.newBatch);
-      for (i; i  <= batch.requiredBatches; i++) {
+      console.log(i);
+      for (i; i  < batch.requiredBatches; i++) {
         this.batchService.create(this.newBatch).subscribe(
           data => {
             console.log('batch created sucessfully');
