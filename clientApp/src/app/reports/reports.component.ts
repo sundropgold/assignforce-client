@@ -172,8 +172,10 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
 
 
   ngOnInit() {
+    this.skills.getElement();
     this.skills.getTrainerList();
     this.skills.getList();
+
   }
 
   ngAfterViewInit() {
