@@ -179,6 +179,8 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     if (this.userInfoService.getUser().role === 'VP of Technology') {
       this.isAdmin = true;
     }
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
     this.skills.getElement();
     this.skills.getTrainerList();
     this.skills.getList();
@@ -187,6 +189,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   ngAfterViewChecked() {
@@ -480,7 +483,9 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
             console.log('batch created sucessfully');
             this.showToast('batch created sucessfully');
             index = this.cardArr.indexOf(batch);
+            console.log(i)
             if (i === 1) {
+              console.log('loading')
               this.removeCard(index);
             }
             if (multiple) {
