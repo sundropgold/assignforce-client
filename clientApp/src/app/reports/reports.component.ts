@@ -452,17 +452,20 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     return canSubmit;
   }
   /* FUNCTION - This method will generate a new 'card' in the cardArr object, which will be displayed to the user on the reports tab. */
-  createBatch(batch, index) {
+  createBatch(batch, index, multiple) {
     const canSubmit = this.submissionValidityAssertion(index);
     let i = 1;
     // let newBatch: Batch;
     if (canSubmit === 1) {
       this.showToast(this.errMsg);
+      if (multiple) {
+        this.fail += 1;
+      }
     } else if (canSubmit === 0) {     // Create batch with batchService
-      // this.defaultLocation.buildingId = this.setting[0].defaultBuilding;
-      // this.defaultLocation.locationId = this.setting[0].defaultLocation;
-      this.defaultLocation.buildingId = 1;
-      this.defaultLocation.locationId = 1;
+      this.defaultLocation.buildingId = this.setting[0].defaultBuilding;
+      this.defaultLocation.locationId = this.setting[0].defaultLocation;
+      // this.defaultLocation.buildingId = 1;
+      // this.defaultLocation.locationId = 1;
       this.newBatch.name = '-';
       this.newBatch.startDate = batch.startDate;
       this.newBatch.endDate = batch.hireDate;
@@ -477,11 +480,12 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
             this.showToast('batch created sucessfully');
             index = this.cardArr.indexOf(batch);
             this.removeCard(index);
-            this.success += 1;
+            if (multiple) {
+              this.success += 1;
+            }
           },
           error => {
             console.log('error creating batch');
-            this.fail += 1;
           }
         );
       }
@@ -490,14 +494,17 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   createAllBatch() {
     const tempCardArr = this.cardArr;
     for (const x of Object.keys(tempCardArr)) {
-      this.createBatch(tempCardArr[x], x);
+      this.createBatch(tempCardArr[x], x, true);
     }
     setTimeout(() => {
       if (this.cardArr.length !== 0) {
-        this.showToast('Successfully creating' + this.success + 'batches. Error creating' + this.fail + 'batches');
+        this.showToast('Successfully creating ' + this.success + ' batches. Error creating ' + this.fail + ' batches');
       } else {
         this.showToast('Successfully creating all batch');
-      }}, 1000);
+      }
+      this.success = 0;
+      this.fail = 0;
+      }, 1000);
   }
 }
 

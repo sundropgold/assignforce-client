@@ -56,7 +56,7 @@
                   <p>Requested Batches: <span *ngIf="cardArr[i].requiredBatches">{{cardArr[i].requiredBatches}}</span></p>
                 </mat-card-content>
                 <mat-card-actions>
-                  <div fxLayoutAlign="center" class="btn" (click)="createBatch(cardArr[i], i)">
+                  <div fxLayoutAlign="center" class="btn" (click)="createBatch(cardArr[i], i, false)">
                     <span>Create Batch</span>
                     <div class="dot"></div>
                   </div>
@@ -110,7 +110,7 @@
             </form>
             <form mat-menu-item>
               <mat-form-field class="full-width">
-                <input matInput placeholder="Graduate Per Batch" type="number" [(ngModel)]="setting[0].reportGrads" (click)="$event.stopPropagation()" name="settingGraduate">
+                <input matInput placeholder="Graduate Per Batch" type="number" [(ngModel)]="reportGrads" (click)="$event.stopPropagation()" name="settingGraduate">
               </mat-form-field>
             </form>
 
@@ -232,7 +232,7 @@
             </form>
             <form mat-menu-item>
               <mat-form-field class="full-width">
-                <input matInput placeholder="Graduate Per Batch" type="number" [(ngModel)]="setting[0].reportIncomingGrads" (click)="$event.stopPropagation()" name="settingIncoming">
+                <input matInput placeholder="Graduate Per Batch" type="number" [(ngModel)]="reportIncomingGrads" (click)="$event.stopPropagation()" name="settingIncoming">
               </mat-form-field>
             </form>
 
