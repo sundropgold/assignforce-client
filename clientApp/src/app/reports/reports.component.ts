@@ -24,7 +24,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   batch: Batch[] = [];
   trainer: Trainer[] = [];
   // remove = [];
-  // setting: GlobalSettings[] = [];
+  setting: GlobalSettings[] = [];
   reportGrads = 13;
   reportIncomingGrads = 18;
 
@@ -65,7 +65,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     this.getAllCurriculum();
     this.getAllBatches();
     this.getAllTrainer();
-    // this.getDefaultSetting();
+    this.getDefaultSetting();
     this.skills.getList();
     this.skills.getTrainerList();
   }
@@ -187,19 +187,18 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     this.notificationService.openSnackBar(msg);
   }
   // get default setting
-  // getDefaultSetting() {
-  //   this.settingService.getSettings().subscribe(
-  //     setting => {
-  //       this.setting = setting;
-  //       this.reportIncomingGrads = this.setting[0].reportIncomingGrads;
-  //       this.reportGrads = this.setting[0].reportGrads;
-  //       console.log(this.setting);
-  //     }, err => {
-  //       console.log(err);
-  //       this.showToast('Failed to fetch Setting');
-  //     }
-  //   );
-  // }
+  getDefaultSetting() {
+    this.settingService.getSettings().subscribe(
+	setting => {
+        this.setting = setting;
+        this.reportIncomingGrads = this.setting[0].reportIncomingGrads;
+        this.reportGrads = this.setting[0].reportGrads;
+        console.log(this.setting);
+      }, err => {
+        console.log(err);
+        this.showToast('Failed to fetch Setting');
+      });
+  }
   /*getDefaultSetting() {
     this.settingService.getSettings()(
         this.setting = setting;
