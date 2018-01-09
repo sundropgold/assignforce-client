@@ -13,6 +13,7 @@ import {ReplogicService} from '../replogic.service';
 import {Chart} from 'angular-highcharts';
 import {SettingsService} from '../services/global-settings.service';
 import {GlobalSettings} from '../domain/global-settings';
+import {UserInfoService} from '../services/user-info.service';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
 
   fail = 0;
   success = 0;
+  isAdmin = true;
 
   newBatch: any = {};
   defaultLocation: any = {};
@@ -61,7 +63,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
 
   @ViewChild(MatSort) sort: MatSort;
   constructor(public skills: ReplogicService, private ref: ChangeDetectorRef, private settingService: SettingsService,
-              private batchService: BatchService, private curriculaService: CurriculaService,
+              private batchService: BatchService, private curriculaService: CurriculaService, private userInfoService: UserInfoService,
               private trainerService: TrainerService, private notificationService: NotificationService) {
     this.getAllCurriculum();
     this.getAllBatches();
@@ -172,6 +174,10 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
 
 
   ngOnInit() {
+    this.isAdmin = false;
+    if (this.userInfoService.getUser().role === 'VP of Technology') {
+      this.isAdmin = true;
+    }
     this.skills.getElement();
     this.skills.getTrainerList();
     this.skills.getList();
@@ -270,7 +276,6 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     this.cardArr.splice(index, 1);
     this.cumulativeBatches();
   }
-
   exportToCSV(evt, name) {
     evt.stopPropagation();
     new Angular2Csv(this.skills.getElement(), name);
@@ -471,9 +476,11 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
             console.log('batch created sucessfully');
             index = this.cardArr.indexOf(batch);
             this.removeCard(index);
+            this.success += 1;
           },
           error => {
             console.log('error creating batch');
+            this.fail += 1;
           }
         );
       }
@@ -484,9 +491,12 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     for (const x of Object.keys(tempCardArr)) {
       this.createBatch(tempCardArr[x], x);
     }
-    if (this.cardArr.length !== 0) {
-      this.showToast('Error creating some batches');
-    }
+    setTimeout(() => {
+      if (this.cardArr.length !== 0) {
+        this.showToast('Successfully creating' + this.success + 'batches. Error creating' + this.fail + 'batches');
+      } else {
+        this.showToast('Successfully creating all batch');
+      }}, 1000);
   }
 }
 
