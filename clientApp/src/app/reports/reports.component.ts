@@ -14,6 +14,7 @@ import {Chart} from 'angular-highcharts';
 import {SettingsService} from '../services/global-settings.service';
 import {GlobalSettings} from '../domain/global-settings';
 
+
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',

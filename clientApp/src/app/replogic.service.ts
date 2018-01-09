@@ -29,7 +29,8 @@ export class ReplogicService {
   constructor(private circ: CurriculaService , private batchservice: BatchService , private settingvice: SettingsService) {
     this.getAllBatches();
     this.getDefaultSetting();
-    this.months = [{
+    this.getElement()
+    this.months = [ {
       name: 'Joe',
       data: [0,0,0,0,0,0,0,0,0,0,0,0],
     },
