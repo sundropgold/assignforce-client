@@ -29,13 +29,10 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   reportGrads = 13;
   reportIncomingGrads = 18;
 
-<<<<<<< HEAD
-=======
   fail = 0;
   success = 0;
   isAdmin = true;
 
->>>>>>> 20a96e33698629f8c803a15f9bb337cf37ae13bd
   newBatch: any = {};
   defaultLocation: any = {};
   // for creating new projection
@@ -177,8 +174,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
 
 
   ngOnInit() {
-<<<<<<< HEAD
-=======
+
     this.isAdmin = false;
     if (this.userInfoService.getUser().role === 'VP of Technology') {
       this.isAdmin = true;
@@ -186,7 +182,6 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.skills.getElement();
->>>>>>> 20a96e33698629f8c803a15f9bb337cf37ae13bd
     this.skills.getTrainerList();
     this.skills.getList();
   }
@@ -477,8 +472,8 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
       this.newBatch.name = '-';
       this.newBatch.startDate = batch.startDate;
       this.newBatch.endDate = batch.hireDate;
-      this.newBatch.trainer = '5a4d436b2090e703f0da24cd';
-      this.newBatch.cotrainer = '5a4d436b2090e703f0da24cd'
+      this.newBatch.trainer = '1';
+      this.newBatch.cotrainer = '1'
       this.newBatch.curriculum = batch.batchType.currId;
       this.newBatch.batchLocation = this.defaultLocation;
       this.newBatch.batchStatus = {};
