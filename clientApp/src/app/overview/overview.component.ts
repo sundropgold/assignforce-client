@@ -82,13 +82,13 @@ export class OverviewComponent implements OnInit, AfterViewInit {
           .subscribe(trainerData => {
             entry.trainerName = trainerData.firstName + ' ' + trainerData.lastName;
           }, error => {
-            this.showToast('Failed to fetch Trainers');
+           // this.showToast('Failed to fetch Trainers');
           });
         this.trainerService.getById(entry.cotrainer)
           .subscribe(cotrainerData => {
             entry.cotrainerName = cotrainerData.firstName + ' ' + cotrainerData.lastName;
           }, error => {
-            this.showToast('Failed to fetch Trainers');
+           // this.showToast('Failed to fetch Trainers');
           });
 
         this.locationService.getById(entry.batchLocation.locationId)
