@@ -1,5 +1,5 @@
 import {AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
-import {MatSort, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {FormControl, Validators} from '@angular/forms';
 import {Angular2Csv} from 'angular2-csv';
 import {BatchService} from '../services/batch.service';
@@ -62,6 +62,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   curriculaControl = new FormControl('', [Validators.required]);
 
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(public skills: ReplogicService, private ref: ChangeDetectorRef, private settingService: SettingsService,
               private batchService: BatchService, private curriculaService: CurriculaService, private userInfoService: UserInfoService,
               private trainerService: TrainerService, private notificationService: NotificationService) {
@@ -479,7 +480,9 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
             console.log('batch created sucessfully');
             this.showToast('batch created sucessfully');
             index = this.cardArr.indexOf(batch);
-            this.removeCard(index);
+            if (i === 1) {
+              this.removeCard(index);
+            }
             if (multiple) {
               this.success += 1;
             }
