@@ -25,7 +25,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   batch: Batch[] = [];
   trainer: Trainer[] = [];
   // remove = [];
-  // setting: GlobalSettings[] = [];
+  setting: GlobalSettings[] = [];
   reportGrads = 13;
   reportIncomingGrads = 18;
 
