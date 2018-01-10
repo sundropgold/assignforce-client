@@ -8,11 +8,11 @@ export class AuthService {
   }
 
   getToken() {
-      return localStorage.getItem("token");;     
+      return localStorage.getItem("token");
   }
 
   setToken(newToken: string) {
- 
+
       localStorage.setItem("token", newToken);
   }
 }

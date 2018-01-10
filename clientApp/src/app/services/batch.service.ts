@@ -7,7 +7,7 @@ import {UrlService} from './url.service';
 @Injectable()
 export class BatchService {
 
-   // url = 'http://localhost:9092/api/v2/batch';
+    //url = 'http://localhost:9092/api/v2/batch';
     url = this.urlService.getUrl() + '/api/batch/api/v2/batch';
 
   constructor(private http: HttpClient,
