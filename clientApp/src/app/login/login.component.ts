@@ -11,7 +11,7 @@ export class LoginComponent implements OnInit {
   constructor(private url: UrlService) { }
 
   ngOnInit() {
-    window.location.href = this.url.getUrl();
+    //window.location.href = this.url.getUrl();
   }
 
 }

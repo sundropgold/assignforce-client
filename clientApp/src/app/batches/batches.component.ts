@@ -1,9 +1,10 @@
 import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {MatSort, MatTableDataSource, MatCheckbox} from '@angular/material';
+import {MatSort, MatTableDataSource, MatCheckbox, MatSelect} from '@angular/material';
 import {Batch} from '../domain/batch';
-import {FormControl} from '@angular/forms';
+import {FormControl,ReactiveFormsModule} from '@angular/forms';
 import {DomSanitizer} from '@angular/platform-browser';
 import {MatIconRegistry} from '@angular/material';
+
 @Component({
   selector: 'app-batches',
   templateUrl: './batches.component.html',
