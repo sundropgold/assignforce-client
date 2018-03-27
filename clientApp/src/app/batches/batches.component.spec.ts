@@ -15,7 +15,7 @@ describe('BatchesComponent', () => {
       imports:[AppMaterialModule, ReactiveFormsModule, FormsModule, HttpClientTestingModule, BrowserAnimationsModule],
       declarations: [ BatchesComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

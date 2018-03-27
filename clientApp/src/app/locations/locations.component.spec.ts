@@ -14,7 +14,7 @@ describe('LocationsComponent', () => {
       imports: [ AppMaterialModule, HttpClientTestingModule, BrowserAnimationsModule ],
       declarations: [ LocationsComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

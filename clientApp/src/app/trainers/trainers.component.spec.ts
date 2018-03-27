@@ -12,7 +12,7 @@ describe('TrainersComponent', () => {
       imports: [ AppMaterialModule ],
       declarations: [ TrainersComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

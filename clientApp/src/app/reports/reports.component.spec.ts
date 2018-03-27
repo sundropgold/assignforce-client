@@ -13,7 +13,7 @@ describe('ReportsComponent', () => {
       imports:[AppMaterialModule, BrowserAnimationsModule],
       declarations: [ ReportsComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

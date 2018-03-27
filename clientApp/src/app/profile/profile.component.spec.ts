@@ -19,7 +19,7 @@ describe('ProfileComponent', () => {
       declarations: [ ProfileComponent ],
       providers: [TrainerService, SkillService, S3CredentialService]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

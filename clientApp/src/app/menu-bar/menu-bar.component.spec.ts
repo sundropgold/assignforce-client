@@ -39,7 +39,7 @@ describe('MenuBarComponent', () => {
       declarations: [ MenuBarComponent ],
       providers:[ { provide:ActivatedRoute, useValue:activeRoute}]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

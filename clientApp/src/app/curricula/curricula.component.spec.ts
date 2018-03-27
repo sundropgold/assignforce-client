@@ -13,7 +13,7 @@ describe('CurriculaComponent', () => {
       imports: [ AppMaterialModule, BrowserAnimationsModule ],
       declarations: [ CurriculaComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

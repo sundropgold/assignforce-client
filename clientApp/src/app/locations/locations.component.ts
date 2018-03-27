@@ -1,10 +1,10 @@
 ///<reference path="../../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
-import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
-import {DomSanitizer} from '@angular/platform-browser';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatIconRegistry} from '@angular/material';
-import {Locations} from '../model/locations';
-import {Building} from '../model/building';
-import {Room} from '../model/room';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatIconRegistry } from '@angular/material';
+import { Locations } from '../model/locations';
+import { Building } from '../model/building';
+import { Room } from '../model/room';
 
 @Component({
   selector: 'app-locations',
@@ -78,8 +78,8 @@ export class LocationsComponent implements OnInit {
   ];
 
   constructor(private iconRegistry: MatIconRegistry,
-              private sanitizer: DomSanitizer,
-              public dialog: MatDialog) {
+    private sanitizer: DomSanitizer,
+    public dialog: MatDialog) {
     for (const location of this.locations) {
       this.expanded[location.id] = false;
     }

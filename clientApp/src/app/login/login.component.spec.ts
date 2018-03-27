@@ -14,7 +14,7 @@ describe('LoginComponent', () => {
       declarations: [ LoginComponent ],
       providers: [UrlService]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
