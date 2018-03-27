@@ -1,30 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8234c1fc-f741-40ac-8fc9-2c91ee00e08f" name="Default" comment="All Tests Pass">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+    <list default="true" id="8234c1fc-f741-40ac-8fc9-2c91ee00e08f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/clientApp/package-lock.json" afterPath="$PROJECT_DIR$/clientApp/package-lock.json" />
-      <change beforePath="$PROJECT_DIR$/clientApp/package.json" afterPath="$PROJECT_DIR$/clientApp/package.json" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/app.component.spec.ts" afterPath="$PROJECT_DIR$/clientApp/src/app/app.component.spec.ts" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/app.module.ts" afterPath="$PROJECT_DIR$/clientApp/src/app/app.module.ts" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/batches/batches.component.spec.ts" afterPath="$PROJECT_DIR$/clientApp/src/app/batches/batches.component.spec.ts" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/batches/batches.component.ts" afterPath="$PROJECT_DIR$/clientApp/src/app/batches/batches.component.ts" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/curricula/curricula.component.spec.ts" afterPath="$PROJECT_DIR$/clientApp/src/app/curricula/curricula.component.spec.ts" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/curricula/curricula.component.ts" afterPath="$PROJECT_DIR$/clientApp/src/app/curricula/curricula.component.ts" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/locations/locations.component.spec.ts" afterPath="$PROJECT_DIR$/clientApp/src/app/locations/locations.component.spec.ts" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/login/login.component.spec.ts" afterPath="$PROJECT_DIR$/clientApp/src/app/login/login.component.spec.ts" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/login/login.component.ts" afterPath="$PROJECT_DIR$/clientApp/src/app/login/login.component.ts" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/menu-bar/menu-bar.component.spec.ts" afterPath="$PROJECT_DIR$/clientApp/src/app/menu-bar/menu-bar.component.spec.ts" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/overview/overview.component.spec.ts" afterPath="$PROJECT_DIR$/clientApp/src/app/overview/overview.component.spec.ts" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/profile/profile.component.spec.ts" afterPath="$PROJECT_DIR$/clientApp/src/app/profile/profile.component.spec.ts" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/reports/reports.component.spec.ts" afterPath="$PROJECT_DIR$/clientApp/src/app/reports/reports.component.spec.ts" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/services/s3-credential.service.spec.ts" afterPath="$PROJECT_DIR$/clientApp/src/app/services/s3-credential.service.spec.ts" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/services/skill.service.spec.ts" afterPath="$PROJECT_DIR$/clientApp/src/app/services/skill.service.spec.ts" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/services/trainer.service.spec.ts" afterPath="$PROJECT_DIR$/clientApp/src/app/services/trainer.service.spec.ts" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/services/url.service.spec.ts" afterPath="$PROJECT_DIR$/clientApp/src/app/services/url.service.spec.ts" />
-      <change beforePath="$PROJECT_DIR$/clientApp/src/app/trainers/trainers.component.spec.ts" afterPath="$PROJECT_DIR$/clientApp/src/app/trainers/trainers.component.spec.ts" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" afterPath="$PROJECT_DIR$/package-lock.json" />
     </list>
     <ignored path="$PROJECT_DIR$/clientApp/dist/" />
     <ignored path="$PROJECT_DIR$/clientApp/tmp/" />
@@ -95,6 +73,11 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="development" />
+      </map>
+    </option>
   </component>
   <component name="GradleLocalSettings">
     <option name="externalProjectsViewState">
@@ -313,12 +296,20 @@
       <option name="presentableId" value="Default" />
       <updated>1522162386754</updated>
       <workItem from="1522162388587" duration="526000" />
-      <workItem from="1522162944690" duration="10866000" />
+      <workItem from="1522162944690" duration="10905000" />
     </task>
+    <task id="LOCAL-00001" summary="All Tests Pass">
+      <created>1522180807352</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1522180807352</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11392000" />
+    <option name="totallyTimeSpent" value="11431000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1873" height="1096" extended-state="6" />
@@ -358,6 +349,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="All Tests Pass" />
+    <option name="LAST_COMMIT_MESSAGE" value="All Tests Pass" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
