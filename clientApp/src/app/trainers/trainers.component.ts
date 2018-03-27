@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {Trainer} from '../domain/trainer';
-import {Skill} from "../domain/skill";
+import { Component, OnInit } from '@angular/core';
+import { Trainer } from '../domain/trainer';
+import { Skill } from "../domain/skill";
 
 @Component({
   selector: 'app-trainers',
@@ -30,33 +30,33 @@ export class TrainersComponent implements OnInit {
       active: true,
       resume: 'Resume',
     },
-      {
-        trainerId: 2,
-        firstName: 'Jane',
-        lastName: 'Doe',
-        skills: Skillz,
-        certifications: 'Certs',
-        active: false,
-        resume: 'Resume',
-      },
-      {
-        trainerId: 3,
-        firstName: 'Jon',
-        lastName: 'Jones',
-        skills: Skillz,
-        certifications: 'Certs',
-        active: false,
-        resume: 'Resume',
-      },
-      {
-        trainerId: 4,
-        firstName: 'Daniel',
-        lastName: 'Cormier',
-        skills: Skillz,
-        certifications: 'Certs',
-        active: true,
-        resume: 'Resume',
-      }];
+    {
+      trainerId: 2,
+      firstName: 'Jane',
+      lastName: 'Doe',
+      skills: Skillz,
+      certifications: 'Certs',
+      active: false,
+      resume: 'Resume',
+    },
+    {
+      trainerId: 3,
+      firstName: 'Jon',
+      lastName: 'Jones',
+      skills: Skillz,
+      certifications: 'Certs',
+      active: false,
+      resume: 'Resume',
+    },
+    {
+      trainerId: 4,
+      firstName: 'Daniel',
+      lastName: 'Cormier',
+      skills: Skillz,
+      certifications: 'Certs',
+      active: true,
+      resume: 'Resume',
+    }];
   }
 
   addTrainer() {

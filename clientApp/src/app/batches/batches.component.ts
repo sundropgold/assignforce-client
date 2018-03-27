@@ -1,9 +1,9 @@
-import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {MatSort, MatTableDataSource, MatCheckbox} from '@angular/material';
-import {Batch} from '../domain/batch';
-import {FormControl} from '@angular/forms';
-import {DomSanitizer} from '@angular/platform-browser';
-import {MatIconRegistry} from '@angular/material';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatSort, MatTableDataSource, MatCheckbox } from '@angular/material';
+import { Batch } from '../domain/batch';
+import { FormControl } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconRegistry } from '@angular/material';
 @Component({
   selector: 'app-batches',
   templateUrl: './batches.component.html',
@@ -16,25 +16,25 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   datebetween = 0;
 
   Curriculums = [
-    {value: 'java-0', viewValue: 'JAVA'},
-    {value: 'c++-1', viewValue: 'C++'},
-    {value: 'angular-2', viewValue: 'ANGULAR 4'}
+    { value: 'java-0', viewValue: 'JAVA' },
+    { value: 'c++-1', viewValue: 'C++' },
+    { value: 'angular-2', viewValue: 'ANGULAR 4' }
   ];
 
   focuses = [
-    {value: 'microservices-0', viewValue: 'Microservices'},
-    {value: 'focus2-1', viewValue: 'Focus 2'},
-    {value: 'focus3-2', viewValue: 'Focus 3'}
+    { value: 'microservices-0', viewValue: 'Microservices' },
+    { value: 'focus2-1', viewValue: 'Focus 2' },
+    { value: 'focus3-2', viewValue: 'Focus 3' }
   ];
 
   skills = new FormControl();
 
   skillsList = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
 
-  trainers =  [
-    {value: 'trainer-0', viewValue: 'August Duet'},
-    {value: 'trainer-1', viewValue: 'Emily Higgins'},
-    {value: 'trainer-2', viewValue: 'Steven Kelsey'} ];
+  trainers = [
+    { value: 'trainer-0', viewValue: 'August Duet' },
+    { value: 'trainer-1', viewValue: 'Emily Higgins' },
+    { value: 'trainer-2', viewValue: 'Steven Kelsey' }];
 
   // locations = [
   //   {value: 'location-0', viewValue: 'Revature HQ - Reston,VA'},
@@ -46,7 +46,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
       'location': 'Reston HQ - Reston, VA',
       'building': [
         {
-          'name': 'Douglas  Pace', 'rooms': [{'name': '101'}]
+          'name': 'Douglas  Pace', 'rooms': [{ 'name': '101' }]
         },
         {
           'name': 'Mcleod  Mueller'
@@ -67,15 +67,15 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   ];
 
   buildings = [
-      {value: 'building-0', viewValue: 'Reston'},
-      {value: 'trainer-1', viewValue: 'CSPS'},
-      {value: 'trainer-2', viewValue: 'Steven Kelsey'}];
+    { value: 'building-0', viewValue: 'Reston' },
+    { value: 'trainer-1', viewValue: 'CSPS' },
+    { value: 'trainer-2', viewValue: 'Steven Kelsey' }];
   rooms = [
-    {value: 'room-0', viewValue: '201'},
-    {value: 'room-1', viewValue: '301'},
+    { value: 'room-0', viewValue: '201' },
+    { value: 'room-1', viewValue: '301' },
   ]
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-      iconRegistry.addSvgIcon(
+    iconRegistry.addSvgIcon(
       'thumbs-up',
       sanitizer.bypassSecurityTrustResourceUrl('assets/img/examples/thumbup-icon.svg'));
   }
@@ -118,9 +118,13 @@ export class BatchesComponent implements OnInit, AfterViewInit {
 
 
 const BatchData: Batch[] = [
-  {name: 'batch1', startDate: new Date('February 4, 2017 10:13:00'), endDate: new Date('February 14, 2017 20:24:00'),
-    curriculum: 'Java', focus: 'Microservices', trainer: 'Steve', cotrainer: 'Sarah', location: 'here', building: 'buildo', room: 'roo'},
-  {name: 'batch2', startDate: new Date('February 4, 2017 10:13:00'), endDate: new Date('February 14, 2017 20:24:00'),
-    curriculum: 'Java', focus: 'Microservices', trainer: 'Steve', cotrainer: 'Sarah', location: 'here', building: 'buildo', room: 'roo'}
+  {
+    name: 'batch1', startDate: new Date('February 4, 2017 10:13:00'), endDate: new Date('February 14, 2017 20:24:00'),
+    curriculum: 'Java', focus: 'Microservices', trainer: 'Steve', cotrainer: 'Sarah', location: 'here', building: 'buildo', room: 'roo'
+  },
+  {
+    name: 'batch2', startDate: new Date('February 4, 2017 10:13:00'), endDate: new Date('February 14, 2017 20:24:00'),
+    curriculum: 'Java', focus: 'Microservices', trainer: 'Steve', cotrainer: 'Sarah', location: 'here', building: 'buildo', room: 'roo'
+  }
 ];
 
