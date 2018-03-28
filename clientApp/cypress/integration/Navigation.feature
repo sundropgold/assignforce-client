@@ -7,3 +7,7 @@ Feature: Navigation
     When I click on the "BATCHES" tab
     Then The URL is "/batches"
       And I can see "Create New Batch"
+
+  Scenario: True is true
+    Given I am on the batches page
+    Then true should be 24
