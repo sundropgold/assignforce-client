@@ -24,13 +24,22 @@ function check_upstream_exists() {
   else
     echo "adding upstream to your remotes"
     git remote add upstream https://github.com/revaturelabs/assignforce-client.git
-    sync
   fi
 }
 
+function stash() {
+  echo "stashing uncommitted changes"
+  git stash
+}
+
+function unstash() {
+  echo "retrieving stashed changes"
+  git stash pop
+}
+
 function checkout_branch() {
-  "switching to $branch branch"
-  git checkout $branch
+  echo "switching to $branch branch"
+  git checkout ${branch}
 }
 
 function sync() {
@@ -38,12 +47,14 @@ function sync() {
   fetch_upstream
   checkout_staging
   merge_upstream
-  checkout_branch
+}
+
+function push_to_fork() {
+  echo "pushing changes to origin on GitHub"
+  git commit -am "sync with upstream"
 }
 
 function merge() {
-  echo "syncing and merging upstream with origin"
-  sync
   echo "merging origin/staging with $branch"
   git merge staging
 }
@@ -52,19 +63,31 @@ option="${1}"
 case ${option} in
   "init")
     check_upstream_exists
+    stash
+    sync
+    checkout_branch
+    unstash
     ;;
   "sync")
+    stash
     sync
+    checkout_branch
+    unstash
     ;;
   "merge")
+    stash
+    sync
+    push_to_fork
+    checkout_branch
     merge
+    unstash
     ;;
   *)
     echo "Invalid command...Options:"
     echo "--------------------------"
-    echo "sh f-sync init    --> initialize upstream and sync"
-    echo "sh f-sync sync    --> sync with upstream"
-    echo "sh f-sync merge   --> sync with upstream and merge with current branch"
+    echo "sh fsync init    --> initialize upstream and sync"
+    echo "sh fsync sync    --> sync with upstream"
+    echo "sh fsync merge   --> sync with upstream, push and merge with current branch (use with caution)"
     ;;
 esac
 
