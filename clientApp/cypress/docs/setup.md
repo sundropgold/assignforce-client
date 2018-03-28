@@ -2,6 +2,12 @@
 
 ## Install
 
+Change into the `clientApp` directory.
+
+```bash
+cd clientApp
+```
+
 ```bash
 npm install
 ```
