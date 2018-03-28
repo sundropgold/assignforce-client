@@ -47,6 +47,7 @@
     "codelyzer": "~3.2.0",
     "husky": "^0.14.3",
     "cypress": "^2.1.0",
+    "cypress-cucumber-preprocessor": "^0.3.0",
     "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.1.0",
     "karma": "~1.7.0",
