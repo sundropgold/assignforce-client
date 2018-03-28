@@ -3,6 +3,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CurriculaComponent } from './curricula.component';
 import { AppMaterialModule } from '../../app-material/app-material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CoreComponent } from '../core/core.component';
+import { FociComponent } from '../foci/foci.component';
+import { SkillsComponent } from '../skills/skills.component';
 
 describe('CurriculaComponent', () => {
   let component: CurriculaComponent;
@@ -12,7 +15,7 @@ describe('CurriculaComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [AppMaterialModule, BrowserAnimationsModule],
-        declarations: [CurriculaComponent]
+        declarations: [CurriculaComponent, CoreComponent, FociComponent, SkillsComponent]
       }).compileComponents();
     })
   );
@@ -25,5 +28,20 @@ describe('CurriculaComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should contain core curriculum', () => {
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('app-core')).toBeTruthy();
+  });
+
+  it('should contain focuses', () => {
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('app-foci')).toBeTruthy();
+  });
+
+  it('should contain skills', () => {
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('app-skills')).toBeTruthy();
   });
 });

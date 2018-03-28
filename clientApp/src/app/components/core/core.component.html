@@ -1,3 +1,21 @@
-<p>
-  core works!
-</p>
+<mat-card>
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header class="toolbar-curricula-sub">
+        <mat-panel-title>
+          <span class="panel-title-fix">Core Curricula</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="mat-panel-content">
+        <mat-list>
+          <mat-list-item class="item-detail" *ngFor="let core of coreData">
+            <div>
+              <h3 class="core-name">{{core.name}}</h3>
+              <p class="core-skills">Skills: {{core.skills}}</p>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</mat-card>
