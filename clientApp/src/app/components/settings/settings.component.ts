@@ -23,7 +23,12 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {}
 
-  onclick() {
+  onSubmit() {
     console.log(this.trainerPerPage);
+  }
+
+  reset(e) {
+    e.preventDefault();
+    console.log('resetting your mum');
   }
 }

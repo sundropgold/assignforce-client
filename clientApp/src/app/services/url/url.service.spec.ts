@@ -30,6 +30,11 @@ describe('UrlService', () => {
     expect(urlService.getLoginUrl()).toBe(environment.appRoutes.login);
   });
 
+  it('should return overview url when getOverviewUrl is called', () => {
+    urlService = new UrlService();
+    expect(urlService.getOverviewUrl()).toBe(environment.appRoutes.overview);
+  });
+
   it('should return batches url when getBatchesUrl is called', () => {
     urlService = new UrlService();
     expect(urlService.getBatchesUrl()).toBe(environment.appRoutes.batches);
