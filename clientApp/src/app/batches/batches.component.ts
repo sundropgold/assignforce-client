@@ -1,9 +1,36 @@
-import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {MatSort, MatTableDataSource, MatCheckbox, MatSelect} from '@angular/material';
-import {Batch} from '../domain/batch';
-import {FormControl,ReactiveFormsModule} from '@angular/forms';
-import {DomSanitizer} from '@angular/platform-browser';
-import {MatIconRegistry} from '@angular/material';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatSort, MatTableDataSource, MatCheckbox, MatSelect } from '@angular/material';
+import { Batch } from '../domain/batch';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconRegistry } from '@angular/material';
+
+const BatchData: Batch[] = [
+  {
+    name: 'batch1',
+    startDate: new Date('February 4, 2017 10:13:00'),
+    endDate: new Date('February 14, 2017 20:24:00'),
+    curriculum: 'Java',
+    focus: 'Microservices',
+    trainer: 'Steve',
+    cotrainer: 'Sarah',
+    location: 'here',
+    building: 'buildo',
+    room: 'roo'
+  },
+  {
+    name: 'batch2',
+    startDate: new Date('February 4, 2017 10:13:00'),
+    endDate: new Date('February 14, 2017 20:24:00'),
+    curriculum: 'Java',
+    focus: 'Microservices',
+    trainer: 'Steve',
+    cotrainer: 'Sarah',
+    location: 'here',
+    building: 'buildo',
+    room: 'roo'
+  }
+];
 
 @Component({
   selector: 'app-batches',
@@ -12,7 +39,6 @@ import {MatIconRegistry} from '@angular/material';
   encapsulation: ViewEncapsulation.None
 })
 export class BatchesComponent implements OnInit, AfterViewInit {
-
   // FAKE VALUES FOR THE FIRST TAB
   datebetween = 0;
 
@@ -35,7 +61,8 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   trainers = [
     { value: 'trainer-0', viewValue: 'August Duet' },
     { value: 'trainer-1', viewValue: 'Emily Higgins' },
-    { value: 'trainer-2', viewValue: 'Steven Kelsey' }];
+    { value: 'trainer-2', viewValue: 'Steven Kelsey' }
+  ];
 
   // locations = [
   //   {value: 'location-0', viewValue: 'Revature HQ - Reston,VA'},
@@ -44,24 +71,25 @@ export class BatchesComponent implements OnInit, AfterViewInit {
 
   locations: any[] = [
     {
-      'location': 'Reston HQ - Reston, VA',
-      'building': [
+      location: 'Reston HQ - Reston, VA',
+      building: [
         {
-          'name': 'Douglas  Pace', 'rooms': [{ 'name': '101' }]
+          name: 'Douglas  Pace',
+          rooms: [{ name: '101' }]
         },
         {
-          'name': 'Mcleod  Mueller'
-        },
+          name: 'Mcleod  Mueller'
+        }
       ]
     },
     {
-      'location': 'CUNY - New York, NY',
-      'building': [
+      location: 'CUNY - New York, NY',
+      building: [
         {
-          'name': 'SPS'
+          name: 'SPS'
         },
         {
-          'name': 'QUEENS COLLEGE'
+          name: 'QUEENS COLLEGE'
         }
       ]
     }
@@ -70,32 +98,37 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   buildings = [
     { value: 'building-0', viewValue: 'Reston' },
     { value: 'trainer-1', viewValue: 'CSPS' },
-    { value: 'trainer-2', viewValue: 'Steven Kelsey' }];
-  rooms = [
-    { value: 'room-0', viewValue: '201' },
-    { value: 'room-1', viewValue: '301' },
-  ]
+    { value: 'trainer-2', viewValue: 'Steven Kelsey' }
+  ];
+  rooms = [{ value: 'room-0', viewValue: '201' }, { value: 'room-1', viewValue: '301' }];
   constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     iconRegistry.addSvgIcon(
       'thumbs-up',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/img/examples/thumbup-icon.svg'));
+      sanitizer.bypassSecurityTrustResourceUrl('assets/img/examples/thumbup-icon.svg')
+    );
   }
-
 
   firstTabHeader = 'Create New Batch';
 
   //  VALUES FOR THE ALL BATCHES TAB
-  batchValues = ['Checkbox', 'Name', 'Curriculum', 'Focus', 'Trainer/Co-Trainer', 'Location', 'Building', 'Room', 'StartDate', 'EndDate', 'Icons'];
+  batchValues = [
+    'Checkbox',
+    'Name',
+    'Curriculum',
+    'Focus',
+    'Trainer/Co-Trainer',
+    'Location',
+    'Building',
+    'Room',
+    'StartDate',
+    'EndDate',
+    'Icons'
+  ];
   batchData = new MatTableDataSource(BatchData);
 
   @ViewChild(MatSort) sort: MatSort;
 
-
-
-
-
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngAfterViewInit() {
     this.batchData.sort = this.sort;
@@ -109,23 +142,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     this.firstTabHeader = 'Clone Batch';
   }
 
-  DeleteBatch() {
-  }
+  DeleteBatch() {}
 
-  SynchronizeBatch() {
-  }
-
+  SynchronizeBatch() {}
 }
-
-
-const BatchData: Batch[] = [
-  {
-    name: 'batch1', startDate: new Date('February 4, 2017 10:13:00'), endDate: new Date('February 14, 2017 20:24:00'),
-    curriculum: 'Java', focus: 'Microservices', trainer: 'Steve', cotrainer: 'Sarah', location: 'here', building: 'buildo', room: 'roo'
-  },
-  {
-    name: 'batch2', startDate: new Date('February 4, 2017 10:13:00'), endDate: new Date('February 14, 2017 20:24:00'),
-    curriculum: 'Java', focus: 'Microservices', trainer: 'Steve', cotrainer: 'Sarah', location: 'here', building: 'buildo', room: 'roo'
-  }
-];
-
