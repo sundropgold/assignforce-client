@@ -1,7 +1,5 @@
 # Cypress Setup with Cucumber and Gherkin
 
-> The `cypress/integration/example_spec.js` file is provided by cypress by default. It can be a good resource for examples of how to write various assertions.
-
 ## Install
 
 ```bash
@@ -25,6 +23,8 @@ npm run e2e
 ```
 
 ## Write Cypress Tests
+
+> The `cypress/integration/example_spec.js` file is provided by cypress by default. It can be a good resource for examples of how to write various assertions.
 
 > Cypress specific tests go in the `cypress/integration` directory
 
