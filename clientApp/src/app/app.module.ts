@@ -11,7 +11,6 @@ import { MenuBarComponent } from './components/menu-bar/menu-bar.component';
 import { OverviewComponent } from './components/overview/overview.component';
 import { BatchesComponent } from './components/batches/batches.component';
 import {
-
   // LocationAddBuildingDialogComponent,
   LocationAddLocationDialogComponent,
   LocationAddRoomDialogComponent,
@@ -39,7 +38,7 @@ import { UrlService } from './services/url/url.service';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
-import { AppMaterialModule } from './app-material/app-material.module';
+import { AppMaterialModule } from './material.module';
 
 @NgModule({
   declarations: [
