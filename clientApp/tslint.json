@@ -36,7 +36,7 @@
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
-    "prefer-const": false,
+    "prefer-const": true,
     "radix": true,
     "triple-equals": [true, "allow-null-check"],
     "typeof-compare": true,
