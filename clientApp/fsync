@@ -14,7 +14,9 @@ function checkout_staging() {
 
 function merge_upstream() {
   echo "merging from upstream"
-  git merge upstream/master
+  git merge upstream/staging
+  git commit -am "updating from upstream"
+  git push
 }
 
 function check_upstream_exists() {

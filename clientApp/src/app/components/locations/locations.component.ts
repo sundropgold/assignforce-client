@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatIconRegistry } from '@angu
 import { Locations } from '../../model/locations';
 import { Building } from '../../model/building';
 import { Room } from '../../model/room';
+import { LocationAddDialogComponent } from './add-dialog/location-add-dialog.component';
 
 @Component({
   selector: 'app-location-delete-location-dialog',
@@ -50,20 +51,20 @@ export class LocationEditLocationDialogComponent {
   }
 }
 
-@Component({
-  selector: 'app-location-add-building-dialog',
-  templateUrl: './location-add-building-dialog.component.html'
-})
-export class LocationAddBuildingDialogComponent {
-  constructor(
-    public dialogRef: MatDialogRef<LocationAddBuildingDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+// @Component({
+//   selector: 'app-location-add-building-dialog',
+//   templateUrl: './location-add-building-dialog.component.html'
+// })
+// export class LocationAddBuildingDialogComponent {
+//   constructor(
+//     public dialogRef: MatDialogRef<LocationAddBuildingDialogComponent>,
+//     @Inject(MAT_DIALOG_DATA) public data: any
+//   ) {}
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-}
+//   onNoClick(): void {
+//     this.dialogRef.close();
+//   }
+// }
 
 @Component({
   selector: 'app-location-delete-building-dialog',
@@ -254,9 +255,10 @@ export class LocationsComponent implements OnInit {
       state: '',
       buildings: []
     };
-    const dialogRef = this.dialog.open(LocationAddLocationDialogComponent, {
+    const dialogRef = this.dialog.open(LocationAddDialogComponent, {
       width: '450px',
       data: {
+        addType: 'location',
         location: location
       }
     });
@@ -303,9 +305,11 @@ export class LocationsComponent implements OnInit {
       name: '',
       rooms: []
     };
-    const dialogRef = this.dialog.open(LocationAddBuildingDialogComponent, {
+    // const dialogRef = this.dialog.open(LocationAddBuildingDialogComponent, {
+    const dialogRef = this.dialog.open(LocationAddDialogComponent, {
       width: '450px',
       data: {
+        addType: 'building',
         building: building
       }
     });
@@ -353,9 +357,10 @@ export class LocationsComponent implements OnInit {
     const room: Room = {
       name: ''
     };
-    const dialogRef = this.dialog.open(LocationAddRoomDialogComponent, {
+    const dialogRef = this.dialog.open(LocationAddDialogComponent, {
       width: '450px',
       data: {
+        addType: 'room',
         room: room
       }
     });
