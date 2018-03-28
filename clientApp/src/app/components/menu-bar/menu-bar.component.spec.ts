@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MenuBarComponent } from './menu-bar.component';
-import { AppMaterialModule } from '../app-material/app-material.module';
+import { AppMaterialModule } from '../../app-material/app-material.module';
 import { ActivatedRoute, Data, Params, Router } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
