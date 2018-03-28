@@ -1,6 +1,6 @@
 import { Skill } from './skill';
 
-export interface Trainer {
+export class Trainer {
   trainerId: number;
   firstName: string;
   lastName: string;

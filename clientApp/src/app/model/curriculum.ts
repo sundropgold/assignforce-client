@@ -1,6 +1,4 @@
-import { Skill } from './skill';
-
-export interface Curriculum {
+export class Curriculum {
   currId: number;
   name: string;
   core: boolean;

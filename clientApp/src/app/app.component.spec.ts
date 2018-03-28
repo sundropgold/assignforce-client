@@ -1,6 +1,6 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import {MenuBarComponent} from "./menu-bar/menu-bar.component";
+import {MenuBarComponent} from "./components/menu-bar/menu-bar.component";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AppMaterialModule} from "./app-material/app-material.module";
 import {ReactiveFormsModule} from "@angular/forms";

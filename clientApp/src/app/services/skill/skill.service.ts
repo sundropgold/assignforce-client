@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { Skill } from '../domain/skill';
+import { Skill } from '../../model/skill';
 
 @Injectable()
 export class SkillService {

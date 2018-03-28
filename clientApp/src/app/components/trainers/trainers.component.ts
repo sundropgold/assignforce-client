@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Trainer } from '../domain/trainer';
-import { Skill } from "../domain/skill";
+import { Trainer } from '../../model/trainer';
+import { Skill } from "../../model/skill";
 
 @Component({
   selector: 'app-trainers',

@@ -1,7 +1,4 @@
-// everything is a string right now for testin.
-// we will change things accordingly when we make the other POJOS
-
-export interface Batch {
+export class Batch {
   name: string;
   startDate: Date;
   endDate: Date;

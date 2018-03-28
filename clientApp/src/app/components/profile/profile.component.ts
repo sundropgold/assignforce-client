@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { SkillService } from '../services/skill.service';
-import { TrainerService } from '../services/trainer.service';
-import { S3CredentialService } from '../services/s3-credential.service';
-import { Trainer } from '../domain/trainer';
-import { Skill } from '../domain/skill';
+import { SkillService } from '../../services/skill/skill.service';
+import { TrainerService } from '../../services/trainer/trainer.service';
+import { S3CredentialService } from '../../services/s3-credential/s3-credential.service';
+import { Trainer } from '../../model/trainer';
+import { Skill } from '../../model/skill';
 
 @Component({
   selector: 'app-profile',

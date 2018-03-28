@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import {Curriculum} from '../domain/curriculum';
+import {Curriculum} from '../../model/curriculum';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @Component({

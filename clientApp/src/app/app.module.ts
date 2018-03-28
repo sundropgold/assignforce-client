@@ -7,9 +7,9 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SpringXsrfInterceptor } from './interceptors/springXsrfInterceptor';
-import { MenuBarComponent } from './menu-bar/menu-bar.component';
-import { OverviewComponent } from './overview/overview.component';
-import { BatchesComponent } from './batches/batches.component';
+import { MenuBarComponent } from './components/menu-bar/menu-bar.component';
+import { OverviewComponent } from './components/overview/overview.component';
+import { BatchesComponent } from './components/batches/batches.component';
 import {
   LocationAddBuildingDialogComponent,
   LocationAddLocationDialogComponent, LocationAddRoomDialogComponent, LocationDeleteBuildingDialogComponent,
@@ -17,18 +17,18 @@ import {
   LocationEditBuildingDialogComponent,
   LocationEditLocationDialogComponent, LocationEditRoomDialogComponent,
   LocationsComponent
-} from './locations/locations.component';
-import { CurriculaComponent } from './curricula/curricula.component';
-import { TrainersComponent } from './trainers/trainers.component';
-import { ProfileComponent } from './profile/profile.component';
-import { ReportsComponent } from './reports/reports.component';
-import { SettingsComponent } from './settings/settings.component';
+} from './components/locations/locations.component';
+import { CurriculaComponent } from './components/curricula/curricula.component';
+import { TrainersComponent } from './components/trainers/trainers.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { ReportsComponent } from './components/reports/reports.component';
+import { SettingsComponent } from './components/settings/settings.component';
 import { AppRouting } from './app.routing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TrainerService } from './services/trainer.service';
-import { SkillService } from './services/skill.service';
-import { S3CredentialService } from './services/s3-credential.service';
-import { UrlService } from './services/url.service';
+import { TrainerService } from './services/trainer/trainer.service';
+import { SkillService } from './services/skill/skill.service';
+import { S3CredentialService } from './services/s3-credential/s3-credential.service';
+import { UrlService } from './services/url/url.service';
 import {
   MatButtonModule, MatCardModule, MatCheckbox, MatCheckboxModule, MatChipsModule, MatExpansionModule,
   MatFormFieldModule, MatIconModule,
@@ -42,7 +42,7 @@ import {
 } from '@angular/material';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './components/login/login.component';
 
 
 

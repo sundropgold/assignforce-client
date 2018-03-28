@@ -3,10 +3,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProfileComponent } from './profile.component';
 import {AppMaterialModule} from "../app-material/app-material.module";
 import {FormsModule} from "@angular/forms";
-import {TrainerService} from "../services/trainer.service";
+import {TrainerService} from "../../services/trainer/trainer.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import {SkillService} from "../services/skill.service";
-import {S3CredentialService} from "../services/s3-credential.service";
+import {SkillService} from "../../services/skill/skill.service";
+import {S3CredentialService} from "../../services/s3-credential/s3-credential.service";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 describe('ProfileComponent', () => {

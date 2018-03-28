@@ -1,6 +1,6 @@
 import { Room } from './room';
 
-export interface Building {
+export class Building {
   name: string;
   rooms: Room[];
 }

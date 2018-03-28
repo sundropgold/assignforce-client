@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
-import {UrlService} from "../services/url.service";
+import {UrlService} from "../../services/url/url.service";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 describe('LoginComponent', () => {

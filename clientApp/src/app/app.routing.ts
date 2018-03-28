@@ -1,14 +1,14 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { OverviewComponent } from './overview/overview.component';
-import { BatchesComponent } from './batches/batches.component';
-import { LocationsComponent } from './locations/locations.component';
-import { CurriculaComponent } from './curricula/curricula.component';
-import { TrainersComponent } from './trainers/trainers.component';
-import { ProfileComponent } from './profile/profile.component';
-import { ReportsComponent } from './reports/reports.component';
-import { SettingsComponent } from './settings/settings.component';
-import { LoginComponent } from './login/login.component';
+import { OverviewComponent } from './components/overview/overview.component';
+import { BatchesComponent } from './components/batches/batches.component';
+import { LocationsComponent } from './components/locations/locations.component';
+import { CurriculaComponent } from './components/curricula/curricula.component';
+import { TrainersComponent } from './components/trainers/trainers.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { ReportsComponent } from './components/reports/reports.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { LoginComponent } from './components/login/login.component';
 
 const appRoutes: Routes = [
   {
