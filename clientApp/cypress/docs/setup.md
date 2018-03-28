@@ -42,7 +42,7 @@ Feature: The Google
 
 > Spec routines go in the `cypress/support/step_definitions` directory
 
-```gherkin
+```javascript
 // -> google.js
 const url = 'https://google.com';
 
