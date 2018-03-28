@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
 
 
 @Injectable()
@@ -11,14 +11,14 @@ export class UrlService {
     constructor(private http: HttpClient) { }
 
     getUrl() {
-      return this.url;
+        return this.url;
     }
 
     testCors1(): Observable<any> {
-	return this.http.get(this.url);
+        return this.http.get(this.url);
     }
     testCors2(): Observable<any> {
-	return this.http.get(this.url + '/auth/userinfo');
+        return this.http.get(this.url + '/auth/userinfo');
     }
 
 }

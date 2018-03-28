@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CurriculaComponent } from './curricula.component';
+import {AppMaterialModule} from "../app-material/app-material.module";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 describe('CurriculaComponent', () => {
   let component: CurriculaComponent;
@@ -8,9 +10,10 @@ describe('CurriculaComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ AppMaterialModule, BrowserAnimationsModule ],
       declarations: [ CurriculaComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

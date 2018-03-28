@@ -1,9 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SkillService} from '../services/skill.service';
-import {TrainerService} from '../services/trainer.service';
-import {S3CredentialService} from '../services/s3-credential.service';
-import {Trainer} from '../domain/trainer';
-import {Skill} from '../domain/skill';
+import { Component, Input, OnInit } from '@angular/core';
+import { SkillService } from '../services/skill.service';
+import { TrainerService } from '../services/trainer.service';
+import { S3CredentialService } from '../services/s3-credential.service';
+import { Trainer } from '../domain/trainer';
+import { Skill } from '../domain/skill';
 
 @Component({
   selector: 'app-profile',
@@ -18,14 +18,14 @@ export class ProfileComponent implements OnInit {
   lockProfile: true;
 
   // data
-  skills: Skill[] = [{skillId: 1, name: 'Java', active: true}, {skillId: 2, name: 'SQL', active: true}, {skillId: 3, name: 'Angular', active: true}, {skillId: 4, name: 'C++', active: true}];
+  skills: Skill[] = [{ skillId: 1, name: 'Java', active: true }, { skillId: 2, name: 'SQL', active: true }, { skillId: 3, name: 'Angular', active: true }, { skillId: 4, name: 'C++', active: true }];
   myFile: FileList;
   creds: any;
   certFile: FileList = null;
   certName: string;
   skillsList: string[] = [];
   hidden: true;
-  trainer: Trainer = {trainerId: 1, firstName: 'Joseph', lastName: 'Wong', skills: [], resume: null, certifications: [], active: true};
+  trainer: Trainer = { trainerId: 1, firstName: 'Joseph', lastName: 'Wong', skills: [], resume: null, certifications: [], active: true };
 
   constructor(private trainerService: TrainerService, private skillService: SkillService, private s3Service: S3CredentialService) { }
 
@@ -62,48 +62,48 @@ export class ProfileComponent implements OnInit {
   }
 
   uploadResume() {
-  //   const path = 'Resumes/' + this.trainer.trainerId + '_' + this.myFile.name;
-  //
-  //   // This initializes a bucket with the keys obtained from Creds rest controller
-  //   const bucket = new AWS.S3({
-  //     apiVersion: '2006-03-01',
-  //     accessKeyId: this.creds.ID,
-  //     secretAccessKey: this.creds.SecretKey,
-  //     region: 'us-east-1',
-  //     httpOptions: {
-  //       proxy: 'http://dev.assignforce.revature.pro/'
-  //     }
-  //   });
-  //
-  //   // set the parameters needed to put an object in the aws s3 bucket
-  //   const params = {
-  //     Bucket: this.creds.BucketName,
-  //     Key: path,
-  //     Body: this.myFile
-  //   };
-  //
-  //   // putting an object in the s3 bucket
-  //   bucket.putObject(params, function (err) {
-  //     if (err) {
-  //       this.showToast('could not upload file.');
-  //       return;
-  //     }
-  //   });
-  //
+    //   const path = 'Resumes/' + this.trainer.trainerId + '_' + this.myFile.name;
+    //
+    //   // This initializes a bucket with the keys obtained from Creds rest controller
+    //   const bucket = new AWS.S3({
+    //     apiVersion: '2006-03-01',
+    //     accessKeyId: this.creds.ID,
+    //     secretAccessKey: this.creds.SecretKey,
+    //     region: 'us-east-1',
+    //     httpOptions: {
+    //       proxy: 'http://dev.assignforce.revature.pro/'
+    //     }
+    //   });
+    //
+    //   // set the parameters needed to put an object in the aws s3 bucket
+    //   const params = {
+    //     Bucket: this.creds.BucketName,
+    //     Key: path,
+    //     Body: this.myFile
+    //   };
+    //
+    //   // putting an object in the s3 bucket
+    //   bucket.putObject(params, function (err) {
+    //     if (err) {
+    //       this.showToast('could not upload file.');
+    //       return;
+    //     }
+    //   });
+    //
     this.trainer.resume = this.myFile[0].name; // set the trainer resume to the file name(s3 file key to grab that object)
-  //
-  //   // save the modified trainer resume field
-  //   this.trainerService.update(this.trainer).subscribe( () => {},
-  //     () => this.showToast('Failed to upload resume'),
-  //     () => this.showToast('Resume upload finished'));
-  //
-  //   // set my file to undefined so that update and label will be hidden in the html
+    //
+    //   // save the modified trainer resume field
+    //   this.trainerService.update(this.trainer).subscribe( () => {},
+    //     () => this.showToast('Failed to upload resume'),
+    //     () => this.showToast('Resume upload finished'));
+    //
+    //   // set my file to undefined so that update and label will be hidden in the html
     this.myFile = undefined;
   }
 
   // called to save the current state of the trainers skills
   saveTSkills() {
-    this.trainerService.update(this.trainer).subscribe( () => {},
+    this.trainerService.update(this.trainer).subscribe(() => { },
       () => this.showToast('Could not save your skills.'),
       () => this.showToast('Skills have been saved!'));
   }
@@ -145,47 +145,47 @@ export class ProfileComponent implements OnInit {
   uploadCertification() {
     // set the path to certifications folder and use trainer id with the file name
     const path = 'Certifications/' + this.trainer.trainerId + '_' + this.certFile[0].name;
-  //
-  //   // create a certification object to save in the database
+    //
+    //   // create a certification object to save in the database
     const certification = {
       file: path,
       name: this.certName,
       trainer: this.trainer.trainerId
     };
-  //
+    //
     this.trainer.certifications.push(certification); // add the certification to the trainer
-  //
-  //   // update trainer
-  //   this.trainerService.update(this.trainer).subscribe( () => {},
-  //     () => this.showToast('Failed saving Certification.'),
-  //     () => this.showToast('Certification has been saved.'));
-  //
-  //   // create a aws s3 bucket
-  //   const bucket = new AWS.S3({
-  //     apiVersion: '2006-03-01',
-  //     accessKeyId: this.creds.ID,
-  //     secretAccessKey: this.creds.SecretKey,
-  //     region: 'us-east-1',
-  //     sslEnabled: false,
-  //     httpOptions: {
-  //       proxy: 'http://dev.assignforce.revature.pro/'
-  //     }
-  //   });
-  //
-  //   // set the parameters needed to put an object in the aws s3 bucket
-  //   const params = {
-  //     Bucket: this.creds.BucketName,
-  //     Key: path,
-  //     Body: this.certFile
-  //   };
-  //
-  //   // putting an object in the s3 bucket
-  //   bucket.putObject(params, function (err) {
-  //     if (err) {
-  //       this.showToast('File could not be uploaded.');
-  //     }
-  //   });
-  //
+    //
+    //   // update trainer
+    //   this.trainerService.update(this.trainer).subscribe( () => {},
+    //     () => this.showToast('Failed saving Certification.'),
+    //     () => this.showToast('Certification has been saved.'));
+    //
+    //   // create a aws s3 bucket
+    //   const bucket = new AWS.S3({
+    //     apiVersion: '2006-03-01',
+    //     accessKeyId: this.creds.ID,
+    //     secretAccessKey: this.creds.SecretKey,
+    //     region: 'us-east-1',
+    //     sslEnabled: false,
+    //     httpOptions: {
+    //       proxy: 'http://dev.assignforce.revature.pro/'
+    //     }
+    //   });
+    //
+    //   // set the parameters needed to put an object in the aws s3 bucket
+    //   const params = {
+    //     Bucket: this.creds.BucketName,
+    //     Key: path,
+    //     Body: this.certFile
+    //   };
+    //
+    //   // putting an object in the s3 bucket
+    //   bucket.putObject(params, function (err) {
+    //     if (err) {
+    //       this.showToast('File could not be uploaded.');
+    //     }
+    //   });
+    //
     this.certFile = undefined;
     this.certName = undefined;
   }
@@ -198,8 +198,8 @@ export class ProfileComponent implements OnInit {
       }
     }
 
-    this.trainerService.update(this.trainer).subscribe( () => {},
-      err => this.showToast(err) ,
+    this.trainerService.update(this.trainer).subscribe(() => { },
+      err => this.showToast(err),
       () => this.showToast('Removed Certification Successfully'));
   }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {UrlService} from '../services/url.service'
+import { UrlService } from '../services/url.service'
 
 @Component({
   selector: 'app-login',
@@ -11,7 +11,7 @@ export class LoginComponent implements OnInit {
   constructor(private url: UrlService) { }
 
   ngOnInit() {
-    window.location.href = this.url.getUrl();
+    //window.location.href = this.url.getUrl();
   }
 
 }
