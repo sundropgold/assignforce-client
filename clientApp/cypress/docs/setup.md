@@ -52,7 +52,7 @@ Feature: The Google
 
 ## Write Feature Spec Test Routines
 
-> Spec routines go in the `cypress/support/step_definitions` directory
+> Feature spec routines go in the `cypress/support/step_definitions` directory
 
 ```javascript
 // -> google.js
