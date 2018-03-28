@@ -27,7 +27,7 @@ export class MockActivatedRoute {
 describe('MenuBarComponent', () => {
   let component: MenuBarComponent;
   let fixture: ComponentFixture<MenuBarComponent>;
-  const activeRoute: MockActivatedRoute;
+  let activeRoute: MockActivatedRoute;
 
   class MockRouter {
     navigate = jasmine.createSpy('navigate');
