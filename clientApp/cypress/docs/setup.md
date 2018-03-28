@@ -8,7 +8,17 @@ npm install
 
 ## Run Tests
 
+In order to successfully run the tests, a dev server has to be running.
+
+1. Start dev server
+
+```bash
+npm run start
 ```
+
+2. Open a new terminal tab and run the end-to-end tests.
+
+```bash
 npm run e2e
 ```
 
