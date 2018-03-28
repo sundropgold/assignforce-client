@@ -7,6 +7,141 @@ import { Building } from '../model/building';
 import { Room } from '../model/room';
 
 @Component({
+  selector: 'app-location-delete-location-dialog',
+  templateUrl: './location-delete-location-dialog.component.html'
+})
+export class LocationDeleteLocationDialogComponent {
+  constructor(
+    public dialogRef: MatDialogRef<LocationDeleteLocationDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'app-location-add-location-dialog',
+  templateUrl: './location-add-location-dialog.component.html'
+})
+export class LocationAddLocationDialogComponent {
+  constructor(
+    public dialogRef: MatDialogRef<LocationAddLocationDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'app-location-edit-location-dialog',
+  templateUrl: './location-edit-location-dialog.component.html'
+})
+export class LocationEditLocationDialogComponent {
+  constructor(
+    public dialogRef: MatDialogRef<LocationEditLocationDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'app-location-add-building-dialog',
+  templateUrl: './location-add-building-dialog.component.html'
+})
+export class LocationAddBuildingDialogComponent {
+  constructor(
+    public dialogRef: MatDialogRef<LocationAddBuildingDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'app-location-delete-building-dialog',
+  templateUrl: './location-delete-building-dialog.component.html'
+})
+export class LocationDeleteBuildingDialogComponent {
+  constructor(
+    public dialogRef: MatDialogRef<LocationDeleteBuildingDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'app-location-edit-building-dialog',
+  templateUrl: './location-edit-building-dialog.component.html'
+})
+export class LocationEditBuildingDialogComponent {
+  constructor(
+    public dialogRef: MatDialogRef<LocationEditBuildingDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'app-location-add-room-dialog',
+  templateUrl: './location-add-room-dialog.component.html'
+})
+export class LocationAddRoomDialogComponent {
+  constructor(
+    public dialogRef: MatDialogRef<LocationAddRoomDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'app-location-delete-room-dialog',
+  templateUrl: './location-delete-room-dialog.component.html'
+})
+export class LocationDeleteRoomDialogComponent {
+  constructor(
+    public dialogRef: MatDialogRef<LocationDeleteRoomDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
+  selector: 'app-location-edit-room-dialog',
+  templateUrl: './location-edit-room-dialog.component.html'
+})
+export class LocationEditRoomDialogComponent {
+  constructor(
+    public dialogRef: MatDialogRef<LocationEditRoomDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+@Component({
   selector: 'app-locations',
   templateUrl: './locations.component.html',
   styleUrls: ['./locations.component.css'],
@@ -77,25 +212,22 @@ export class LocationsComponent implements OnInit {
     }
   ];
 
-  constructor(private iconRegistry: MatIconRegistry,
-    private sanitizer: DomSanitizer,
-    public dialog: MatDialog) {
+  constructor(private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer, public dialog: MatDialog) {
     for (const location of this.locations) {
       this.expanded[location.id] = false;
     }
 
     iconRegistry.addSvgIcon(
       'location',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/img/ic_location_city_black_48px.svg'));
+      sanitizer.bypassSecurityTrustResourceUrl('assets/img/ic_location_city_black_48px.svg')
+    );
     iconRegistry.addSvgIcon(
       'building',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/img/ic_business_black_48px.svg'));
-    iconRegistry.addSvgIcon(
-      'room',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/img/ic_business_black_48px.svg'));
+      sanitizer.bypassSecurityTrustResourceUrl('assets/img/ic_business_black_48px.svg')
+    );
+    iconRegistry.addSvgIcon('room', sanitizer.bypassSecurityTrustResourceUrl('assets/img/ic_business_black_48px.svg'));
   }
-  ngOnInit() {
-  }
+  ngOnInit() {}
   collapseAll(id: any) {
     this.expanded[id] = !this.expanded[id];
 
@@ -266,140 +398,5 @@ export class LocationsComponent implements OnInit {
         this.updateLocation(location);
       }
     });
-  }
-}
-
-@Component({
-  selector: 'app-location-add-location-dialog',
-  templateUrl: './location-add-location-dialog.component.html',
-})
-export class LocationAddLocationDialogComponent {
-
-  constructor(
-    public dialogRef: MatDialogRef<LocationAddLocationDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-}
-
-@Component({
-  selector: 'app-location-delete-location-dialog',
-  templateUrl: './location-delete-location-dialog.component.html',
-})
-export class LocationDeleteLocationDialogComponent {
-
-  constructor(
-    public dialogRef: MatDialogRef<LocationDeleteLocationDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-}
-
-@Component({
-  selector: 'app-location-edit-location-dialog',
-  templateUrl: './location-edit-location-dialog.component.html',
-})
-export class LocationEditLocationDialogComponent {
-
-  constructor(
-    public dialogRef: MatDialogRef<LocationEditLocationDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-}
-
-@Component({
-  selector: 'app-location-add-building-dialog',
-  templateUrl: './location-add-building-dialog.component.html',
-})
-export class LocationAddBuildingDialogComponent {
-
-  constructor(
-    public dialogRef: MatDialogRef<LocationAddBuildingDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-}
-
-@Component({
-  selector: 'app-location-delete-building-dialog',
-  templateUrl: './location-delete-building-dialog.component.html',
-})
-export class LocationDeleteBuildingDialogComponent {
-
-  constructor(
-    public dialogRef: MatDialogRef<LocationDeleteBuildingDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-}
-
-@Component({
-  selector: 'app-location-edit-building-dialog',
-  templateUrl: './location-edit-building-dialog.component.html',
-})
-export class LocationEditBuildingDialogComponent {
-
-  constructor(
-    public dialogRef: MatDialogRef<LocationEditBuildingDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-}
-
-@Component({
-  selector: 'app-location-add-room-dialog',
-  templateUrl: './location-add-room-dialog.component.html',
-})
-export class LocationAddRoomDialogComponent {
-
-  constructor(
-    public dialogRef: MatDialogRef<LocationAddRoomDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-}
-
-@Component({
-  selector: 'app-location-delete-room-dialog',
-  templateUrl: './location-delete-room-dialog.component.html',
-})
-export class LocationDeleteRoomDialogComponent {
-
-  constructor(
-    public dialogRef: MatDialogRef<LocationDeleteRoomDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-}
-
-@Component({
-  selector: 'app-location-edit-room-dialog',
-  templateUrl: './location-edit-room-dialog.component.html',
-})
-export class LocationEditRoomDialogComponent {
-
-  constructor(
-    public dialogRef: MatDialogRef<LocationEditRoomDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
   }
 }
