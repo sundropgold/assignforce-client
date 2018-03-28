@@ -61,6 +61,7 @@ import {
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
+import { ApiService } from './services/api/api.service';
 
 @NgModule({
   declarations: [
@@ -127,6 +128,7 @@ import { LoginComponent } from './components/login/login.component';
     S3CredentialService,
     HttpClient,
     UrlService,
+    ApiService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,
