@@ -1,5 +1,5 @@
 # IDEs and editors
-/.idea
+.idea/
 .project
 .classpath
 .c9/
@@ -21,3 +21,24 @@ Thumbs.db
 # emacs backup files
 *~
 \#*\#
+
+# compiled output
+dist/
+tmp/
+out-tsc/
+
+# dependencies
+node_modules/
+
+# misc
+.sass-cache/
+connect.lock
+coverage/
+libpeerconnection.log
+npm-debug.log
+testem.log
+typings/
+
+# e2e
+e2e/*.js
+e2e/*.map
