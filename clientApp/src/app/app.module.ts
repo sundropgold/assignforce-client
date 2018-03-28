@@ -43,6 +43,8 @@ import {
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
+import { TrainersAddComponent } from './components/trainers/trainers-add/trainers-add.component';
+import { TrainerItemComponent } from './components/trainers/trainer-item/trainer-item.component';
 
 
 
@@ -67,7 +69,9 @@ import { LoginComponent } from './components/login/login.component';
     LocationAddRoomDialogComponent,
     LocationDeleteRoomDialogComponent,
     LocationEditRoomDialogComponent,
-    LoginComponent
+    LoginComponent,
+    TrainersAddComponent,
+    TrainerItemComponent
   ],
   imports: [
     HttpClientModule,
@@ -127,7 +131,8 @@ import { LoginComponent } from './components/login/login.component';
     LocationEditBuildingDialogComponent,
     LocationAddRoomDialogComponent,
     LocationDeleteRoomDialogComponent,
-    LocationEditRoomDialogComponent
+    LocationEditRoomDialogComponent,
+    TrainersAddComponent
   ]
 })
 

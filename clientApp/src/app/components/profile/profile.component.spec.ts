@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProfileComponent } from './profile.component';
-import {AppMaterialModule} from "../app-material/app-material.module";
+import {AppMaterialModule} from "../../app-material/app-material.module";
 import {FormsModule} from "@angular/forms";
 import {TrainerService} from "../../services/trainer/trainer.service";
 import { HttpClientTestingModule } from "@angular/common/http/testing";

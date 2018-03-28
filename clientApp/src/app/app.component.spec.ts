@@ -27,7 +27,7 @@ describe('AppComponent', () => {
   class MockRouter {
     navigate = jasmine.createSpy('navigate');
   }
-  const activeRoute: MockActivatedRoute;
+  let activeRoute: MockActivatedRoute;
 
   beforeEach(
     async(() => {
