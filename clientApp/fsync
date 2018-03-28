@@ -1,0 +1,69 @@
+#!/bin/sh
+
+branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
+
+function fetch_upstream() {
+  echo "fetching from upstream..."
+  git fetch upstream
+}
+
+function checkout_staging() {
+  echo "checking out staging branch"
+  git checkout staging
+}
+
+function merge_upstream() {
+  echo "merging from upstream"
+  git merge upstream/master
+}
+
+function check_upstream_exists() {
+  echo "checking to see if upstream exists"
+  if git config remote.upstream.url > /dev/null;  then
+    echo "upstream exists...syncing now"
+  else
+    echo "adding upstream to your remotes"
+    git remote add upstream https://github.com/revaturelabs/assignforce-client.git
+  fi
+}
+
+function checkout_branch() {
+  "switching to $branch branch"
+  git checkout $branch
+}
+
+function sync() {
+  echo "syncing upstream with origin"
+  fetch_upstream()
+  checkout_staging()
+  merge_upstream()
+  checkout_branch()
+}
+
+function merge() {
+  echo "syncing and merging upstream with origin"
+  sync()
+  echo "merging origin/staging with $branch"
+  git merge staging
+}
+
+option="${1}"
+case ${option} in
+  "init")
+    check_upstream_exists()
+    ;;
+  "sync")
+    sync()
+    ;;
+  "merge")
+    merge()
+    ;;
+  *)
+    echo "Invalid command...Options:"
+    echo "--------------------------"
+    echo "sh f-sync init    --> initialize upstream and sync"
+    echo "sh f-sync sync    --> sync with upstream"
+    echo "sh f-sync merge   --> sync with upstream and merge with current branch"
+    ;;
+esac
+
