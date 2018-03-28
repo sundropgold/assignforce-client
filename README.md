@@ -28,6 +28,7 @@ Use this option each time aftwards.
 sh fsync sync
 ```
 This option will _not_ push the new changes to GitHub... Use option 5 for that.
+
 5. `fsync merge`
 If you're feeling confident, this command will fetch from upstream, commit to the forked repository, switch to the branch you were working on, and merge staging into your branch. (use carefully)
 ```bash
