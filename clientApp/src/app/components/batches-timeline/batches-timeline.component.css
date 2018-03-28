@@ -1,6 +1,6 @@
 .trainer-names {
   position: sticky;
-  top: 0%;
+  top: 0px;
   word-wrap: break-word;
-  width: 30px;
+  text-align: center;
 }

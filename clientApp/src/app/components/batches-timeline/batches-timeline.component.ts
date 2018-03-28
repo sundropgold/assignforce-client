@@ -14,18 +14,18 @@ export class BatchesTimelineComponent implements OnInit {
     // test data
     {
       name: 'Feb02-18',
-      cirriculum: 'Java',
+      core: 'Java',
       focus: 'none',
       start_date: new Date(2018, 2, 5),
       end_date: new Date(2018, 4, 29),
-      trainer: 'August',
+      trainer: 'August Duet',
       location: 'Viginia',
       building: '1',
       room: '101'
     },
     {
       name: 'Feb02-18',
-      cirriculum: 'Java',
+      core: 'Java',
       focus: 'none',
       start_date: new Date(2016, 2, 5),
       end_date: new Date(2016, 4, 29),
@@ -36,18 +36,18 @@ export class BatchesTimelineComponent implements OnInit {
     },
     {
       name: 'Feb02-18',
-      cirriculum: 'Java',
+      core: 'Java',
       focus: 'none',
       start_date: new Date(2017, 2, 5),
       end_date: new Date(2017, 4, 29),
-      trainer: 'August',
+      trainer: 'Emily',
       location: 'Viginia',
       building: '1',
       room: '101'
     },
     {
       name: 'Feb02-18',
-      cirriculum: 'Java',
+      core: 'Java',
       focus: 'none',
       start_date: new Date(2018, 6, 5),
       end_date: new Date(2018, 8, 29),
@@ -62,6 +62,7 @@ export class BatchesTimelineComponent implements OnInit {
   column_width = 50;
   swimlane_x_ofs = 50;
   swimlane_y_ofs = 20;
+  months = [];
 
   // editable data
   start_date: Date;
@@ -85,15 +86,42 @@ export class BatchesTimelineComponent implements OnInit {
         this.trainers.push(trainer);
       }
     }
+    // set start date to 3 months ago
+    const today = new Date(Date.now());
+    this.start_date = new Date(today);
+    this.start_date.setMonth(this.start_date.getMonth() - 3);
+    // set end date to 6 months ago
+    this.end_date = new Date(today);
+    this.end_date.setMonth(this.end_date.getMonth() + 6);
+  }
+
+  getColorForCore(type) {
+    return '#ffaa44';
   }
 
   getBatchesRectangles() {
     const rects = [];
     for (let i = 0; i < this.batches.length; i++) {
       const batch = this.batches[i];
-      // let duration =
-      rects.push({ x: 0 + i * this.column_width, y: 10, w: 20, h: 100, dur: 8, color: '#ffaa44' });
+      let duration = batch.end_date.valueOf() - batch.start_date.valueOf();
+      // ms to weeks
+      duration = duration / (1000 * 60 * 60 * 24 * 7);
+      const h = duration * 10;
+      // const y = (this.end_date.valueOf()-this.start_date.valueOf());
+      const y = 10;
+      const color = this.getColorForCore(batch.core);
+      rects.push({ x: this.swimlane_x_ofs + i * this.column_width, y: y, w: 20, h: h, dur: duration, color: color });
     }
     return rects;
+  }
+
+  getSwimlanes() {
+    const lines = [];
+    for (let i = 0; i < this.trainers.length + 1; i++) {
+      // let duration =
+      const xpos = this.swimlane_x_ofs + i * this.column_width;
+      lines.push({ x1: xpos, y1: this.swimlane_y_ofs, x2: xpos, y2: this.height - this.swimlane_y_ofs });
+    }
+    return lines;
   }
 }
