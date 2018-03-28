@@ -1,35 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, MatTableDataSource } from '@angular/material';
 
-@Component({
-  selector: 'app-reports',
-  templateUrl: './reports.component.html',
-  styleUrls: ['./reports.component.css']
-})
-export class ReportsComponent implements OnInit, AfterViewInit {
-  displayedColumns = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
-
-  @ViewChild(MatSort) sort: MatSort;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-  }
-
-}
-
-export interface Element {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
 const ELEMENT_DATA: Element[] = [
   { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
   { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
@@ -50,5 +21,32 @@ const ELEMENT_DATA: Element[] = [
   { position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl' },
   { position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar' },
   { position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K' },
-  { position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca' },
+  { position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca' }
 ];
+
+@Component({
+  selector: 'app-reports',
+  templateUrl: './reports.component.html',
+  styleUrls: ['./reports.component.css']
+})
+export class ReportsComponent implements OnInit, AfterViewInit {
+  displayedColumns = ['position', 'name', 'weight', 'symbol'];
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
+
+  @ViewChild(MatSort) sort: MatSort;
+
+  constructor() {}
+
+  ngOnInit() {}
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
+}
+
+export interface Element {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
+}
