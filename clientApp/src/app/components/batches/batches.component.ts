@@ -1,9 +1,9 @@
-import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {MatSort, MatTableDataSource, MatCheckbox, MatSelect} from '@angular/material';
-import {Batch} from '../../model/batch';
-import {FormControl,ReactiveFormsModule} from '@angular/forms';
-import {DomSanitizer} from '@angular/platform-browser';
-import {MatIconRegistry} from '@angular/material';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatSort, MatTableDataSource, MatCheckbox, MatSelect } from '@angular/material';
+import { Batch } from '../../model/batch';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconRegistry } from '@angular/material';
 
 @Component({
   selector: 'app-batches',
@@ -97,7 +97,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     'EndDate',
     'Icons'
   ];
-  batchData = new MatTableDataSource(BatchData);
+  batchData = new MatTableDataSource([]);
 
   @ViewChild(MatSort) sort: MatSort;
 
