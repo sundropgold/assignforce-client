@@ -2,8 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 
-import {FormsModule} from '@angular/forms';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SpringXsrfInterceptor } from './interceptors/springXsrfInterceptor';
@@ -12,10 +12,14 @@ import { OverviewComponent } from './components/overview/overview.component';
 import { BatchesComponent } from './components/batches/batches.component';
 import {
   LocationAddBuildingDialogComponent,
-  LocationAddLocationDialogComponent, LocationAddRoomDialogComponent, LocationDeleteBuildingDialogComponent,
-  LocationDeleteLocationDialogComponent, LocationDeleteRoomDialogComponent,
+  LocationAddLocationDialogComponent,
+  LocationAddRoomDialogComponent,
+  LocationDeleteBuildingDialogComponent,
+  LocationDeleteLocationDialogComponent,
+  LocationDeleteRoomDialogComponent,
   LocationEditBuildingDialogComponent,
-  LocationEditLocationDialogComponent, LocationEditRoomDialogComponent,
+  LocationEditLocationDialogComponent,
+  LocationEditRoomDialogComponent,
   LocationsComponent
 } from './components/locations/locations.component';
 import { CurriculaComponent } from './components/curricula/curricula.component';
@@ -29,22 +33,10 @@ import { TrainerService } from './services/trainer/trainer.service';
 import { SkillService } from './services/skill/skill.service';
 import { S3CredentialService } from './services/s3-credential/s3-credential.service';
 import { UrlService } from './services/url/url.service';
-import {
-  MatButtonModule, MatCardModule, MatCheckbox, MatCheckboxModule, MatChipsModule, MatExpansionModule,
-  MatFormFieldModule, MatIconModule,
-  MatInputModule,
-  MatDatepickerModule,
-  MatOptionModule,
-  MatNativeDateModule,
-  MatListModule,
-  MatMenuModule, MatPaginatorModule, MatProgressBarModule,
-  MatProgressSpinnerModule, MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule, MatDialogModule
-} from '@angular/material';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
-
-
+import { AppMaterialModule } from './app-material/app-material.module';
 
 @NgModule({
   declarations: [
@@ -69,43 +61,9 @@ import { LoginComponent } from './components/login/login.component';
     LocationEditRoomDialogComponent,
     LoginComponent
   ],
-  imports: [
-    HttpClientModule,
-    FormsModule,
-    BrowserModule,
-    AppRouting,
-    BrowserAnimationsModule,
-    MatListModule,
-    MatIconModule,
-    MatTabsModule,
-    MatExpansionModule,
-    MatSortModule,
-    MatTableModule,
-    MatTooltipModule,
-    MatToolbarModule,
-    MatProgressSpinnerModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatChipsModule,
-    MatFormFieldModule,
-    MatProgressBarModule,
-    MatPaginatorModule,
-    MatCheckboxModule,
-    MatCardModule,
-    MatChipsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatOptionModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatInputModule,
-    MatDialogModule
-  ],
-  providers: [TrainerService,
+  imports: [HttpClientModule, FormsModule, BrowserModule, AppRouting, BrowserAnimationsModule, AppMaterialModule],
+  providers: [
+    TrainerService,
     SkillService,
     S3CredentialService,
     HttpClient,
@@ -114,10 +72,9 @@ import { LoginComponent } from './components/login/login.component';
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,
       multi: true
-    }],
-  bootstrap: [
-    AppComponent
+    }
   ],
+  bootstrap: [AppComponent],
   entryComponents: [
     LocationAddLocationDialogComponent,
     LocationDeleteLocationDialogComponent,
@@ -130,5 +87,4 @@ import { LoginComponent } from './components/login/login.component';
     LocationEditRoomDialogComponent
   ]
 })
-
-export class AppModule { }
+export class AppModule {}
