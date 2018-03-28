@@ -1,11 +1,11 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-location-add-dialog',
   templateUrl: './location-add-dialog.component.html'
 })
-export class LocationAddDialogComponent {
+export class LocationAddDialogComponent implements OnInit {
   addType: string;
   typeContent;
   // dialogContent;
