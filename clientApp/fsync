@@ -24,6 +24,7 @@ function check_upstream_exists() {
   else
     echo "adding upstream to your remotes"
     git remote add upstream https://github.com/revaturelabs/assignforce-client.git
+    sync
   fi
 }
 
@@ -34,15 +35,15 @@ function checkout_branch() {
 
 function sync() {
   echo "syncing upstream with origin"
-  fetch_upstream()
-  checkout_staging()
-  merge_upstream()
-  checkout_branch()
+  fetch_upstream
+  checkout_staging
+  merge_upstream
+  checkout_branch
 }
 
 function merge() {
   echo "syncing and merging upstream with origin"
-  sync()
+  sync
   echo "merging origin/staging with $branch"
   git merge staging
 }
@@ -50,13 +51,13 @@ function merge() {
 option="${1}"
 case ${option} in
   "init")
-    check_upstream_exists()
+    check_upstream_exists
     ;;
   "sync")
-    sync()
+    sync
     ;;
   "merge")
-    merge()
+    merge
     ;;
   *)
     echo "Invalid command...Options:"
