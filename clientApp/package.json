@@ -10,9 +10,8 @@
     "lint": "ng lint",
     "format:fix": "pretty-quick --staged",
     "precommit": "run-s format:fix lint",
-    "format:check":
-      "prettier --config ./.prettierrc --list-different \"src/{app,environments,assets}/**/*{.ts,.js,.json,.css,.scss}\"",
-    "e2e": "ng e2e"
+    "format:check": "prettier --config ./.prettierrc --list-different \"src/{app,environments,assets}/**/*{.ts,.js,.json,.css,.scss}\"",
+    "e2e": "cypress open"
   },
   "private": true,
   "dependencies": {
@@ -41,11 +40,13 @@
     "@angular/cli": "^1.6.1",
     "@angular/compiler-cli": "^5.1.1",
     "@angular/language-service": "^5.1.1",
+    "@bahmutov/add-typescript-to-cypress": "^2.0.0",
     "@types/jasmine": "~2.5.53",
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "^6.0.94",
     "codelyzer": "~3.2.0",
     "husky": "^0.14.3",
+    "cypress": "^2.1.0",
     "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.1.0",
     "karma": "~1.7.0",
