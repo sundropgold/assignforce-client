@@ -1,21 +1,21 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 import {
-  DateAdapter,
   MatButtonModule,
   MatCardModule,
   MatCheckboxModule,
   MatChipsModule,
-  MatDatepickerModule, MatDialogModule,
+  MatDatepickerModule,
+  MatDialogModule,
   MatExpansionModule,
-  MatExpansionPanel,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
   MatListModule,
   MatMenuModule,
   MatNativeDateModule,
-  MatOptionModule, MatPaginatorModule,
+  MatOptionModule,
+  MatPaginatorModule,
   MatProgressBarModule,
   MatProgressSpinnerModule,
   MatSelectModule,
@@ -92,9 +92,7 @@ import { ReactiveFormsModule } from "@angular/forms";
     MatInputModule,
     MatDialogModule
   ],
-  providers: [
-    DateAdapter
-  ],
   declarations: []
 })
-export class AppMaterialModule { }
+export class AppMaterialModule {
+}
