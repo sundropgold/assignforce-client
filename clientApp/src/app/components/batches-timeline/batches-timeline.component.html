@@ -1,3 +1,24 @@
-<p>
-  batches-timeline works!
-</p>
+<div>
+  <div class="trainer-names" *ngFor="let trainer of trainers; let i=index" left="i*column_width">
+    {{trainer}}
+  </div>
+  <svg id="timeline" x=0 y=0 [attr.width]="width" [attr.height]="height">
+    <rect id="bg" [attr.width]="width" [attr.height]="height" x="0" y="0"
+      fill="#ededf2" />
+      <g class="swimlanes">
+        <line *ngFor="let trainer of trainers; let i=index" class="swimlane"
+          [attr.x1]="swimlane_x_ofs+column_width*i" [attr.y1]="swimlane_y_ofs"
+          [attr.x2]="swimlane_x_ofs+column_width*i"
+          [attr.y2]="height-swimlane_y_ofs" stroke="black" stroke-width="1"></line>
+      </g>
+      <g class="rectangles">
+        <g class="rectangle" *ngFor="let rect of getBatchesRectangles()">
+          <rect [attr.x]="rect.x" [attr.y]="rect.y" [attr.height]="rect.h"
+            [attr.width]="rect.w" [attr.fill]="rect.color"></rect>
+          <text [attr.x]="rect.x+2" [attr.y]="rect.y+2" font-size="14" writing-mode="tb">
+            {{rect.dur}} WEEKS  
+          </text>
+        </g>
+      </g>
+  </svg>
+</div>
