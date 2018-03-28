@@ -2,52 +2,6 @@ import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Angular2Csv } from 'angular2-csv/Angular2-csv';
 
-@Component({
-  selector: 'app-overview',
-  templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.css'],
-  encapsulation: ViewEncapsulation.None
-})
-export class OverviewComponent implements OnInit, AfterViewInit {
-  displayedColumns = ['position', 'name', 'weight', 'symbol', 'progress'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
-  color = 'warn';
-  mode = 'determinate';
-  value = 10;
-  bufferValue = 75;
-
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-
-  constructor() { }
-
-  ngOnInit() {
-
-  }
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-  }
-
-  exportToCSV(evt) {
-    evt.stopPropagation();
-    // this.csvService.download(this.dataSource, 'Batches');
-    new Angular2Csv(ELEMENT_DATA, 'batches');
-  }
-
-  openMenu(evt) {
-    evt.stopPropagation();
-  }
-}
-
-
-export interface Element {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
 const ELEMENT_DATA: Element[] = [
   { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
   { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
@@ -68,5 +22,48 @@ const ELEMENT_DATA: Element[] = [
   { position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl' },
   { position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar' },
   { position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K' },
-  { position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca' },
+  { position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca' }
 ];
+
+@Component({
+  selector: 'app-overview',
+  templateUrl: './overview.component.html',
+  styleUrls: ['./overview.component.css'],
+  encapsulation: ViewEncapsulation.None
+})
+export class OverviewComponent implements OnInit, AfterViewInit {
+  displayedColumns = ['position', 'name', 'weight', 'symbol', 'progress'];
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  color = 'warn';
+  mode = 'determinate';
+  value = 10;
+  bufferValue = 75;
+
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  constructor() {}
+
+  ngOnInit() {}
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
+
+  exportToCSV(evt) {
+    evt.stopPropagation();
+    // this.csvService.download(this.dataSource, 'Batches');
+    const angular2Csv = new Angular2Csv(ELEMENT_DATA, 'batches');
+  }
+
+  openMenu(evt) {
+    evt.stopPropagation();
+  }
+}
+
+export interface Element {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
+}

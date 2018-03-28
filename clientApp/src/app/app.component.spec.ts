@@ -12,7 +12,7 @@ export class MockActivatedRoute {
   private paramsSubject = new BehaviorSubject(this.testParams);
   private _testParams: {};
 
-  params  = this.paramsSubject.asObservable();
+  params = this.paramsSubject.asObservable();
 
   get testParams() {
     return this._testParams;
@@ -24,26 +24,28 @@ export class MockActivatedRoute {
 }
 
 describe('AppComponent', () => {
-  class MockRouter{
+  class MockRouter {
     navigate = jasmine.createSpy('navigate');
   }
-  let activeRoute: MockActivatedRoute;
+  const activeRoute: MockActivatedRoute;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports:[AppMaterialModule, ReactiveFormsModule, RouterTestingModule.withRoutes([]), BrowserAnimationsModule],
-      declarations: [
-        AppComponent,
-        MenuBarComponent
-      ],
-      providers:[ { provide:ActivatedRoute, useValue:activeRoute} ]
-    }).compileComponents();
-  }));
-  it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
-  }));
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [AppMaterialModule, ReactiveFormsModule, RouterTestingModule.withRoutes([]), BrowserAnimationsModule],
+        declarations: [AppComponent, MenuBarComponent],
+        providers: [{ provide: ActivatedRoute, useValue: activeRoute }]
+      }).compileComponents();
+    })
+  );
+  it(
+    'should create the app',
+    async(() => {
+      const fixture = TestBed.createComponent(AppComponent);
+      const app = fixture.debugElement.componentInstance;
+      expect(app).toBeTruthy();
+    })
+  );
   // it(`should have as title 'app'`, async(() => {
   //   const fixture = TestBed.createComponent(AppComponent);
   //   const app = fixture.debugElement.componentInstance;
