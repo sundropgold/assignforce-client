@@ -1,8 +1,11 @@
 it('loads', () => {
-  cy.visit('http://localhost:4200');
+  cy.visit('/');
 });
 
-it('takes a snapshot', () => {
-  cy.visit('http://localhost:4200');
-  cy.get('p').snapshot({name: 'basic login page'});
+it('can navigate', () => {
+  cy.visit('/');
+  cy
+    .get('#mat-tab-label-0-1')
+    .should('contain', 'BATCHES')
+    .click();
 });
