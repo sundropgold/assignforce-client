@@ -1,3 +1,33 @@
-<p>
-  settings works!
-</p>
+<form>
+  Timeline Trainers Per Page
+
+  <br/>
+  Reports Outgoing Grads
+
+  <br/>
+  Reports Candidates Incoming
+  <input name="trainerPerPage" type="number" [(ngModel)]="trainerPerPage">
+  <br/>
+  Default Batch Location
+  <input name="outgoingGrads" type="number" [(ngModel)]="outgoingGrads">
+  <br/>
+  Default Batch Building
+  <input name="outgoingGrads" type="number" [(ngModel)]="outgoingGrads">
+  <br/>
+  Minimum Batch Size
+  
+  <br/>
+  Maximum Batch Size
+
+  <br/>
+  Default Batch Length
+
+  <br/>
+  Minimum Day Between Trainer Batches
+
+  <br/>
+  Default Batch Name pattern
+
+  <br/>
+  <button type="submit" (click)="onclick()"> Submit </button>
+</form>
