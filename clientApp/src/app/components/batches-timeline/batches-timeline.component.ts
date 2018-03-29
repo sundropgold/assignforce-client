@@ -28,44 +28,48 @@ export class BatchesTimelineComponent implements OnInit {
     // test data
     {
       name: 'Feb02-18',
-      core: 'Java',
+      curriculum: 'Java',
       focus: 'none',
       startDate: new Date(2018, 2, 5),
       endDate: new Date(2018, 4, 29),
       trainer: 'August Duet',
+      cotrainer: 'Mitch',
       location: 'Viginia',
       building: '1',
       room: '101'
     },
     {
       name: 'Feb03-16',
-      core: 'Java',
+      curriculum: 'Java',
       focus: 'none',
       startDate: new Date(2016, 2, 5),
       endDate: new Date(2016, 4, 29),
       trainer: 'August',
+      cotrainer: 'Mitch',
       location: 'Viginia',
       building: '1',
       room: '101'
     },
     {
       name: 'Feb02-17',
-      core: 'Java',
+      curriculum: 'Java',
       focus: 'none',
       startDate: new Date(2017, 2, 5),
       endDate: new Date(2017, 4, 29),
       trainer: 'Emily',
+      cotrainer: 'Mitch',
       location: 'Viginia',
       building: '1',
       room: '101'
     },
     {
       name: 'Jun06-18',
-      core: 'Java',
+      curriculum: 'Java',
       focus: 'none',
       startDate: new Date(2018, 6, 5),
       endDate: new Date(2018, 8, 29),
       trainer: 'August',
+      cotrainer: 'Mitch',
       location: 'Viginia',
       building: '1',
       room: '101'
@@ -94,7 +98,7 @@ export class BatchesTimelineComponent implements OnInit {
     if (this.trainers_per_page === 0) {
       this.trainers_per_page = this.batches.length;
     }
-    this.makeTrainerList();
+    this.updateTrainers();
     // set start date to 3 months ago
     const today = new Date(Date.now());
     this.startDate = new Date(today);
@@ -105,8 +109,8 @@ export class BatchesTimelineComponent implements OnInit {
     this.updateTodayLine();
   }
 
-  // returns the appropriate color for the core curriculum type
-  getColorForCore(type) {
+  // returns the appropriate color for the curriculum curriculum type
+  getColorForcurriculum(type) {
     let color = '';
     color = '#ffaa44';
     color = '#1c77b4'; //java
@@ -124,10 +128,8 @@ export class BatchesTimelineComponent implements OnInit {
       const batch = this.batches[i];
       let duration = batch.endDate.valueOf() - batch.startDate.valueOf();
       duration = Math.floor(duration / (1000 * 60 * 60 * 24 * 7)); // ms to weeks
-      // duration = Math.floor(duration);
-      // const h = duration * dur_to_px;
 
-      const color = this.getColorForCore(batch.core);
+      const color = this.getColorForcurriculum(batch.curriculum);
       const w = 20;
 
       const trainer_index = this.trainers.findIndex(t => t === batch.trainer);
@@ -158,7 +160,7 @@ export class BatchesTimelineComponent implements OnInit {
   }
 
   // makes the list of trainers
-  makeTrainerList() {
+  updateTrainers() {
     for (let i = 0; i < this.batches.length; i++) {
       const batch = this.batches[i];
       const trainer = batch.trainer;

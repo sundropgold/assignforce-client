@@ -23,4 +23,52 @@ describe('BatchesTimelineComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should set the today line', () => {
+    component.updateTodayLine();
+    expect(component.today_line.x1).toBeGreaterThan(0);
+    expect(component.today_line.x2).toBeGreaterThan(0);
+    expect(component.today_line.y1).toBeGreaterThan(0);
+    expect(component.today_line.y2).toBeGreaterThan(0);
+  });
+
+  it('should return the rectangles for the batches', () => {
+    const rects = component.getBatchesRectangles();
+    expect(rects.length).toEqual(component.batches.length);
+  });
+
+  it('should return the list of swimlane lines', () => {
+    expect(component.getSwimlanes().length).toEqual(component.trainers.length + 1);
+  });
+
+  it('should set the list of trainers', () => {
+    component.updateTrainers();
+    expect(component.trainers).toBeTruthy();
+    expect(component.trainers[0].name).toBeTruthy();
+    expect(component.trainers[0].left).toBeTruthy();
+    expect(component.trainers[0].width).toBeTruthy();
+  });
+
+  it('should return the list of trainers with positions', () => {
+    expect(component.getTrainers().length).toEqual(component.trainers.length);
+  });
+
+  it('should get a different color for each core curriculum', () => {
+    const jcolor = component.getColorForcurriculum('Java');
+    const scolor = component.getColorForcurriculum('SDET');
+    const dcolor = component.getColorForcurriculum('.NET');
+    const ccolor = component.getColorForcurriculum('Custom');
+    expect(jcolor).not.toEqual(scolor);
+    expect(jcolor).not.toEqual(dcolor);
+    expect(jcolor).not.toEqual(ccolor);
+    expect(scolor).not.toEqual(dcolor);
+    expect(scolor).not.toEqual(ccolor);
+    expect(dcolor).not.toEqual(ccolor);
+  });
+
+  it('should return a list of months and their position', () => {
+    const months = component.getMonths();
+    expect(months.length).toBeGreaterThan(1);
+    expect(months).toContain('20');
+  });
 });
