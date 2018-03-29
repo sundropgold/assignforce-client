@@ -197,6 +197,10 @@ export class BatchesTimelineComponent implements OnInit {
     return lines;
   }
 
+  onFilterChange(evt) {
+    console.log(evt);
+  }
+
   // makes the list of trainers
   updateTrainers() {
     this.trainers = [];

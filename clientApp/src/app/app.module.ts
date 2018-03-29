@@ -65,6 +65,7 @@ import { LoginComponent } from './components/login/login.component';
 import { BatchesTimelineComponent } from './components/batches-timeline/batches-timeline.component';
 import { GetApiUrlService } from './services/api/getApiUrl.service';
 import { ApiUrlBuilderService } from './services/api/api-url-builder.service';
+import { BatchesTimelineFilterComponent } from './components/batches-timeline-filter/batches-timeline-filter.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,8 @@ import { ApiUrlBuilderService } from './services/api/api-url-builder.service';
     LocationDeleteRoomDialogComponent,
     LocationEditRoomDialogComponent,
     LoginComponent,
-    BatchesTimelineComponent
+    BatchesTimelineComponent,
+    BatchesTimelineFilterComponent
   ],
   imports: [
     HttpClientModule,
