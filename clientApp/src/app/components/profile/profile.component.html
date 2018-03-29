@@ -10,9 +10,11 @@ The second md-card/ng-show is for other users to look at other trainers profiles
   <mat-card>
     <mat-toolbar-row>
       <mat-toolbar class="md-toolbar" layout="columns">
-        <div>
           <span>Profile</span>
-        </div>
+          <span class="md-toolbar-spacer"></span>
+          <button mat-icon-button (click)="saveTSkills()">
+            <mat-icon matTooltip="Save" class="material-icons">save</mat-icon>
+          </button>
       </mat-toolbar>
     </mat-toolbar-row>
 
