@@ -1,7 +1,7 @@
 <div>
   <div id="trainer-names-bg">
     <span class="trainer-names" *ngFor="let trainer of getTrainers()"
-      [style.left.px]="trainer.left"
+      [style.margin-left.px]="trainer.left"
       [style.width.px]="trainer.width">
       {{trainer.name}}
     </span>
@@ -9,6 +9,10 @@
   <svg id="timeline" [attr.width]="width" [attr.height]="height">
     <rect id="bg" [attr.width]="width" [attr.height]="height" x="0" y="0"
       fill="#FAFAFA" />
+      <g class="months">
+        <text class="month-text" *ngFor="let month of getMonths()" [attr.x]="month.x" [attr.y]="month.y">{{month.name}}</text>
+        <line></line>
+      </g>
       <g class="swimlanes">
         <line *ngFor="let line of getSwimlanes()" class="swimlane"
           [attr.x1]="line.x1" [attr.y1]="line.y1" [attr.x2]="line.x2"

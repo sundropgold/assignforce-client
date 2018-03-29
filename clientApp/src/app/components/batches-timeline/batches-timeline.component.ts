@@ -66,7 +66,7 @@ export class BatchesTimelineComponent implements OnInit {
       name: 'Jun06-18',
       curriculum: 'Java',
       focus: 'none',
-      startDate: new Date(2018, 6, 5),
+      startDate: new Date(2018, 6, 20),
       endDate: new Date(2018, 8, 29),
       trainer: 'August',
       cotrainer: 'Mitch',
@@ -175,7 +175,10 @@ export class BatchesTimelineComponent implements OnInit {
     const trainerposs = [];
     for (let i = 0; i < this.trainers.length; i++) {
       const trainer = this.trainers[i];
-      const left = this.swimlane_x_ofs + this.column_width * i + this.column_width / 2;
+      let left = 1;
+      if (i === 0) {
+        left += this.swimlane_x_ofs;
+      }
       const width = this.column_width;
       trainerposs.push({ name: trainer, left: left, width: width });
     }
@@ -185,7 +188,69 @@ export class BatchesTimelineComponent implements OnInit {
   // returns the list of months to display and their position
   getMonths() {
     const months = [];
+    // if more than 15 months, show every quater (by starting month name) instead
+    const ms_to_months = 1000 * 60 * 60 * 24 * 30;
+    const full_duration = this.endDate.valueOf() - this.startDate.valueOf();
+    let durmonths = Math.floor(full_duration / ms_to_months);
+    const startMonth = this.startDate.getMonth();
+    const startYear = this.startDate.getFullYear();
+    //console.log(durmonths+' are between '+this.startDate+' and '+this.endDate+'\ny:'+startYear+' m:'+startMonth);
+    let useQuaterly = false;
+    if (durmonths >= 16) {
+      useQuaterly = true;
+      durmonths /= 4;
+    }
+    for (let i = 0; i < durmonths; i++) {
+      const idate = new Date(startYear, startMonth);
+      idate.setMonth(this.startDate.getMonth() + i);
+      const month = idate.getMonth();
+      if (useQuaterly && month % 4 !== 0) {
+        continue;
+      }
+      let name = 'm' + month;
+      switch (month) {
+        case 0:
+          name = idate.getFullYear() + '';
+          break;
+        case 1:
+          name = 'Feb';
+          break;
+        case 2:
+          name = 'Mar';
+          break;
+        case 3:
+          name = 'Apr';
+          break;
+        case 4:
+          name = 'May';
+          break;
+        case 5:
+          name = 'Jun';
+          break;
+        case 6:
+          name = 'Jul';
+          break;
+        case 7:
+          name = 'Aug';
+          break;
+        case 8:
+          name = 'Sep';
+          break;
+        case 9:
+          name = 'Oct';
+          break;
+        case 10:
+          name = 'Nov';
+          break;
+        case 11:
+          name = 'Dec';
+          break;
+      }
 
+      const y = this.swimlane_y_ofs + (idate.valueOf() - this.startDate.valueOf()) / full_duration * this.height;
+      const x = 2;
+      months.push({ name: name, x: x, y: y });
+    }
     return months;
   }
 
@@ -195,6 +260,6 @@ export class BatchesTimelineComponent implements OnInit {
       (new Date(Date.now()).valueOf() - this.startDate.valueOf()) /
       (this.endDate.valueOf() - this.startDate.valueOf()) *
       this.height;
-    this.today_line = { x1: this.swimlane_x_ofs, x2: this.width, y1: y, y2: y };
+    this.today_line = { x1: 0, x2: this.width, y1: y, y2: y };
   }
 }
