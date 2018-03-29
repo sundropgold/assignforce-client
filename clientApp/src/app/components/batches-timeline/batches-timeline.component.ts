@@ -113,6 +113,10 @@ export class BatchesTimelineComponent implements OnInit {
 
   constructor() {}
 
+  zooming = false;
+  zoomingFrom: number;
+  zoomingLine = { x1: 0, x2: 0, y1: 0, y2: 0 };
+
   // generated data
   trainers = [];
   today_line = { x1: 0, x2: 0, y1: 0, y2: 0 };
@@ -230,6 +234,7 @@ export class BatchesTimelineComponent implements OnInit {
     const startYear = this.startDate.getFullYear();
     //console.log(durmonths+' are between '+this.startDate+' and '+this.endDate+'\ny:'+startYear+' m:'+startMonth);
     let useQuaterly = false;
+    // let useYearly = false;
     if (durmonths >= 16) {
       useQuaterly = true;
       durmonths /= 4;
@@ -297,17 +302,25 @@ export class BatchesTimelineComponent implements OnInit {
     this.today_line = { x1: 0, x2: this.width, y1: y, y2: y };
   }
 
-  // start dragging at mouse
+  // start zoom at mouse
   bgmousedown(event) {
-    console.log('bgmousedown');
+    this.zooming = true;
+    const y = event.clientY - event.target.getBoundingClientRect().top;
+    this.zoomingFrom = y; // + this.startDate.valueOf();
+    this.zoomingLine = { x1: 0, x2: this.width, y1: y, y2: y };
   }
-  // finish dragging
+  // finish zoom
   bgmouseup(event) {
-    console.log('bgmouseup');
+    this.zooming = false;
   }
-  // update dragging by delta
+  // update zoom by delta
   bgmousemove(event) {
-    console.log('bgmousemove');
+    if (this.zooming) {
+      const y = event.clientY - event.target.getBoundingClientRect().top;
+      const dy = y - this.zoomingFrom;
+      console.log('mp ' + dy);
+      // this.startDate.
+    }
   }
 
   // show tooltip at mouse

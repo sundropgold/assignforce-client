@@ -35,5 +35,8 @@
       <line class="today"
       [attr.x1]="today_line.x1" [attr.y1]="today_line.y1" [attr.x2]="today_line.x2"
       [attr.y2]="today_line.y2" stroke="#f26a25" stroke-width="1"></line>
+      <line class="zoom-line" *ngIf="zooming"
+      [attr.x1]="zoomingLine.x1" [attr.y1]="zoomingLine.y1" [attr.x2]="zoomingLine.x2"
+      [attr.y2]="zoomingLine.y2" stroke="#000000" stroke-width="1"></line>
     </svg>
   </div>
