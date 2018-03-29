@@ -56,12 +56,15 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
-  MatDialogModule
+  MatDialogModule,
+  MatGridListModule
 } from '@angular/material';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { BatchesTimelineComponent } from './components/batches-timeline/batches-timeline.component';
+import { GetApiUrlService } from './services/api/getApiUrl.service';
+import { ApiUrlBuilderService } from './services/api/api-url-builder.service';
 
 @NgModule({
   declarations: [
@@ -121,7 +124,8 @@ import { BatchesTimelineComponent } from './components/batches-timeline/batches-
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    MatGridListModule
   ],
   providers: [
     TrainerService,
@@ -129,6 +133,8 @@ import { BatchesTimelineComponent } from './components/batches-timeline/batches-
     S3CredentialService,
     HttpClient,
     UrlService,
+    GetApiUrlService,
+    ApiUrlBuilderService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,
