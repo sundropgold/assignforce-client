@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Batch } from '../../model/batch';
 
 @Component({
   selector: 'app-batches-timeline',
@@ -10,14 +11,27 @@ export class BatchesTimelineComponent implements OnInit {
   width = 1536;
   height = 2067;
 
+  // b2: Batch = {
+
+  //   name: 'Feb02-18',
+  //   curriculum: 'Java',
+  //   focus: 'none',
+  //   startDate: new Date(2018, 2, 5),
+  //   endDate: new Date(2018, 4, 29),
+  //   trainer: 'August Duet',
+  //   cotrainer: 'Mitch',
+  //   location: 'Viginia',
+  //   building: '1',
+  //   room: '101'
+  // }
   batches = [
     // test data
     {
       name: 'Feb02-18',
       core: 'Java',
       focus: 'none',
-      start_date: new Date(2018, 2, 5),
-      end_date: new Date(2018, 4, 29),
+      startDate: new Date(2018, 2, 5),
+      endDate: new Date(2018, 4, 29),
       trainer: 'August Duet',
       location: 'Viginia',
       building: '1',
@@ -27,8 +41,8 @@ export class BatchesTimelineComponent implements OnInit {
       name: 'Feb03-16',
       core: 'Java',
       focus: 'none',
-      start_date: new Date(2016, 2, 5),
-      end_date: new Date(2016, 4, 29),
+      startDate: new Date(2016, 2, 5),
+      endDate: new Date(2016, 4, 29),
       trainer: 'August',
       location: 'Viginia',
       building: '1',
@@ -38,8 +52,8 @@ export class BatchesTimelineComponent implements OnInit {
       name: 'Feb02-17',
       core: 'Java',
       focus: 'none',
-      start_date: new Date(2017, 2, 5),
-      end_date: new Date(2017, 4, 29),
+      startDate: new Date(2017, 2, 5),
+      endDate: new Date(2017, 4, 29),
       trainer: 'Emily',
       location: 'Viginia',
       building: '1',
@@ -49,8 +63,8 @@ export class BatchesTimelineComponent implements OnInit {
       name: 'Jun06-18',
       core: 'Java',
       focus: 'none',
-      start_date: new Date(2018, 6, 5),
-      end_date: new Date(2018, 8, 29),
+      startDate: new Date(2018, 6, 5),
+      endDate: new Date(2018, 8, 29),
       trainer: 'August',
       location: 'Viginia',
       building: '1',
@@ -65,8 +79,8 @@ export class BatchesTimelineComponent implements OnInit {
   months = [];
 
   // editable data
-  start_date: Date;
-  end_date: Date;
+  startDate: Date;
+  endDate: Date;
   trainers_per_page = 0;
 
   constructor() {}
@@ -82,11 +96,11 @@ export class BatchesTimelineComponent implements OnInit {
     this.makeTrainerList();
     // set start date to 3 months ago
     const today = new Date(Date.now());
-    this.start_date = new Date(today);
-    this.start_date.setMonth(this.start_date.getMonth() - 3);
+    this.startDate = new Date(today);
+    this.startDate.setMonth(this.startDate.getMonth() - 3);
     // set end date to 6 months ago
-    this.end_date = new Date(today);
-    this.end_date.setMonth(this.end_date.getMonth() + 6);
+    this.endDate = new Date(today);
+    this.endDate.setMonth(this.endDate.getMonth() + 6);
   }
 
   // returns the appropriate color for the core curriculum type
@@ -103,11 +117,11 @@ export class BatchesTimelineComponent implements OnInit {
   // returns the list of rectangles that represent each batch
   getBatchesRectangles() {
     const rects = [];
-    const full_duration = this.end_date.valueOf() - this.start_date.valueOf();
+    const full_duration = this.endDate.valueOf() - this.startDate.valueOf();
     const dur_to_px = this.height / full_duration;
     for (let i = 0; i < this.batches.length; i++) {
       const batch = this.batches[i];
-      let duration = batch.end_date.valueOf() - batch.start_date.valueOf();
+      let duration = batch.endDate.valueOf() - batch.startDate.valueOf();
       duration = Math.floor(duration / (1000 * 60 * 60 * 24 * 7)); // ms to weeks
       // duration = Math.floor(duration);
       // const h = duration * dur_to_px;
@@ -118,8 +132,8 @@ export class BatchesTimelineComponent implements OnInit {
       const trainer_index = this.trainers.findIndex(t => t === batch.trainer);
 
       const x = this.swimlane_x_ofs + trainer_index * this.column_width + (this.column_width - w) * 0.5;
-      const y = (batch.start_date.valueOf() - this.start_date.valueOf()) / full_duration * this.height;
-      const endy = (batch.end_date.valueOf() - this.start_date.valueOf()) / full_duration * this.height;
+      const y = (batch.startDate.valueOf() - this.startDate.valueOf()) / full_duration * this.height;
+      const endy = (batch.endDate.valueOf() - this.startDate.valueOf()) / full_duration * this.height;
       const h = endy - y;
       const durarray = duration
         .toString()
@@ -144,7 +158,6 @@ export class BatchesTimelineComponent implements OnInit {
 
   // makes the list of trainers
   makeTrainerList() {
-    // make list of trainers
     for (let i = 0; i < this.batches.length; i++) {
       const batch = this.batches[i];
       const trainer = batch.trainer;
