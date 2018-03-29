@@ -3,6 +3,7 @@ import { Curriculum } from '../../model/curriculum';
 import { MatDialog } from '@angular/material';
 import { AddFocusComponent } from '../add-focus/add-focus.component';
 import { Skill } from '../../model/skill';
+import { EditFocusComponent } from '../edit-focus/edit-focus.component';
 
 @Component({
   selector: 'app-foci',
@@ -61,6 +62,14 @@ export class FociComponent implements OnInit {
       width: '250px',
       height: '500px'
       // data: this.skills
+    });
+  }
+
+  openEditFocusDialog(focus) {
+    const dialogRef = this.dialog.open(EditFocusComponent, {
+      width: '250px',
+      height: '500px',
+      data: focus
     });
   }
 }
