@@ -96,7 +96,13 @@ export class BatchesTimelineComponent implements OnInit {
   }
 
   getColorForCore(type) {
-    return '#ffaa44';
+    let color = '';
+    color = '#ffaa44';
+    color = '#1c77b4'; //java
+    color = '#ff7f0e'; //.net
+    color = '#aec7e8'; //sdet
+    color = '#ffbb78'; //Custom
+    return color;
   }
 
   getBatchesRectangles() {
@@ -105,12 +111,18 @@ export class BatchesTimelineComponent implements OnInit {
       const batch = this.batches[i];
       let duration = batch.end_date.valueOf() - batch.start_date.valueOf();
       // ms to weeks
-      duration = duration / (1000 * 60 * 60 * 24 * 7);
+      duration = Math.floor(duration / (1000 * 60 * 60 * 24 * 7));
       const h = duration * 10;
       // const y = (this.end_date.valueOf()-this.start_date.valueOf());
       const y = 10;
       const color = this.getColorForCore(batch.core);
-      rects.push({ x: this.swimlane_x_ofs + i * this.column_width, y: y, w: 20, h: h, dur: duration, color: color });
+      const w = 20;
+      const x = this.swimlane_x_ofs + i * this.column_width + (this.column_width - w) * 0.5;
+      const durarray = duration
+        .toString()
+        .split(' ')
+        .concat('WEEKS'.split(''));
+      rects.push({ x: x, y: y, w: w, h: h, dur: durarray, color: color });
     }
     return rects;
   }
