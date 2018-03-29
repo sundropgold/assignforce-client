@@ -5,7 +5,7 @@
     <mat-toolbar-row>
       <span> Trainers </span>
       <span class="md-toolbar-spacer"> </span>
-      <button mat-icon-button *ngIf="isManager==true" (click)="addTrainer($event)"  matTooltip="Add Trainer">
+      <button mat-icon-button *ngIf="isManager==true" (click)="addTrainer()"  matTooltip="Add Trainer">
         <mat-icon>add_circle</mat-icon>
       </button>
       <button mat-icon-button (click)="showCalendar()" matTooltip="View PTO Calendar">
