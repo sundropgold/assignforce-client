@@ -19,11 +19,3 @@ then('The URL is {string}', url => {
 then('I can see {string}', text => {
   cy.get(`*:contains(${text})`).should('contain', text);
 });
-
-given('I am on the batches page', () => {
-  cy.visit('/batches');
-});
-
-then('true should be {int}', value => {
-  expect(value).to.equal(24);
-});
