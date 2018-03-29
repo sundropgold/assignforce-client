@@ -36,6 +36,7 @@ export class FociComponent implements OnInit {
   ngOnInit() {}
 
   addFocus(e) {
+    e.preventDefault();
     console.log('Adding Focus');
   }
 

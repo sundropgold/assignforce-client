@@ -20,10 +20,11 @@ export class SkillsComponent implements OnInit {
   ngOnInit() {}
 
   addSkill(e) {
+    e.preventDefault();
     console.log('Adding Skill');
   }
 
-  editSkil(e) {
+  editSkill(e) {
     console.log('Editing Skill');
   }
 
