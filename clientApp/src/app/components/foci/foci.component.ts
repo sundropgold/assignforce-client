@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Curriculum } from '../../model/curriculum';
 import { MatDialog } from '@angular/material';
 import { AddFocusComponent } from '../add-focus/add-focus.component';
+import { Skill } from '../../model/skill';
 
 @Component({
   selector: 'app-foci',
@@ -33,6 +34,8 @@ export class FociComponent implements OnInit {
     }
   ];
 
+  // @Input() skills: Skill[];
+
   constructor(public dialog: MatDialog) {}
 
   ngOnInit() {}
@@ -57,6 +60,7 @@ export class FociComponent implements OnInit {
     const dialogRef = this.dialog.open(AddFocusComponent, {
       width: '250px',
       height: '500px'
+      // data: this.skills
     });
   }
 }

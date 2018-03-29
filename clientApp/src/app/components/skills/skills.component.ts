@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Skill } from '../../model/skill';
 import { MatDialog } from '@angular/material';
 import { AddSkillComponent } from '../add-skill/add-skill.component';
@@ -17,9 +17,13 @@ export class SkillsComponent implements OnInit {
     { skillId: 5, name: 'JUnit', active: true }
   ];
 
+  @Output() skills: EventEmitter<Skill[]> = new EventEmitter<Skill[]>();
+
   constructor(private dialog: MatDialog) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.skills.emit(this.skillData);
+  }
 
   addSkill(e) {
     console.log('Adding Skill');
@@ -40,7 +44,8 @@ export class SkillsComponent implements OnInit {
   openAddSkillDialog() {
     const dialogRef = this.dialog.open(AddSkillComponent, {
       width: '250px',
-      height: '500px'
+      height: '500px',
+      data: this.skillData
     });
   }
 }

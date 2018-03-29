@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-add-skill',
@@ -6,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-skill.component.css']
 })
 export class AddSkillComponent implements OnInit {
-  constructor() {}
+  constructor(private dialogRef: MatDialogRef<AddSkillComponent>) {}
 
   ngOnInit() {}
+
+  closeDialog(): void {
+    this.dialogRef.close();
+  }
 }

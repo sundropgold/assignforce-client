@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Curriculum } from '../../model/curriculum';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Skill } from '../../model/skill';
 
 @Component({
   selector: 'app-curricula',
@@ -10,15 +11,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 })
 export class CurriculaComponent implements OnInit {
   isAdmin: Boolean = true;
-  currData: Curriculum[] = [
-    {
-      currId: 9,
-      name: 'C++',
-      core: true,
-      active: false,
-      skills: ['Core C++']
-    }
-  ];
+  skills: Skill[];
+
   constructor() {}
 
   ngOnInit() {}
@@ -26,5 +20,9 @@ export class CurriculaComponent implements OnInit {
   clickTest(evt) {
     console.log('button clicked');
     evt.stopPropagation();
+  }
+
+  setSkills(e): void {
+    this.skills = e;
   }
 }
