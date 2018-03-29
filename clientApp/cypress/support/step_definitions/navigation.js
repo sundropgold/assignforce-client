@@ -5,15 +5,8 @@ given('I am on the home page', () => {
   cy.visit('/');
 });
 
-when('I click on the {string} tab', title => {
-  cy
-    .get('#mat-tab-label-0-1')
-    .should('contain', title)
-    .click();
-});
-
-then('The URL is {string}', url => {
-  cy.url().should('contain', url);
+then('the URL is {string}', url => {
+  urlShouldContain(url);
 });
 
 then('I can see {string}', text => {
