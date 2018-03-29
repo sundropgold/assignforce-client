@@ -1,4 +1,4 @@
-/* global given */
+/* global given*/
 
 const url = 'https://facebook.com';
 
