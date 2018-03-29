@@ -1,0 +1,34 @@
+<mat-card>
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header class="toolbar-curricula-sub">
+        <mat-panel-title>
+          <span class="panel-title-fix">Focuses</span>
+        </mat-panel-title>
+        <mat-panel-description>
+          <span class="fill-space"></span>
+          <button mat-icon-button (click)="addFocus($event)">
+            <mat-icon class="icon-margin-fix" matTooltip="Add New Focus">add_circle_outline</mat-icon>
+          </button>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="mat-panel-content">
+        <mat-list>
+          <mat-list-item class="item-detail" *ngFor="let focus of focusData">
+            <div>
+              <h3 class="focus-name">{{focus.name}}</h3>
+              <p class="focus-skills">Skills: {{focus.skills}}</p>
+            </div>
+            <span class="fill-space"></span>
+            <button mat-icon-button class="edit-button button-orange" (click)="editFocus($event)">
+              <mat-icon class="icon-margin-fix" matTooltip="Edit Focus">mode_edit</mat-icon>
+            </button>
+            <button mat-icon-button class="remove-button button-orange" (click)="removeFocus($event)">
+              <mat-icon class="icon-margin-fix" matTooltip="Remove Focus">remove_circle</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</mat-card>
