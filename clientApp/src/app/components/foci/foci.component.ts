@@ -46,4 +46,8 @@ export class FociComponent implements OnInit {
   removeFocus(e) {
     console.log('Removing Focus');
   }
+
+  deselect() {
+    document.getElementById('mat-expansion-panel-header-1').blur();
+  }
 }

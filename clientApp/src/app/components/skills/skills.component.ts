@@ -30,4 +30,8 @@ export class SkillsComponent implements OnInit {
   removeSkill(e) {
     console.log('Removing Skill');
   }
+
+  deselect() {
+    document.getElementById('mat-expansion-panel-header-2').blur();
+  }
 }

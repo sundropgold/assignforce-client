@@ -41,4 +41,8 @@ export class CoreComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  deselect() {
+    document.getElementById('mat-expansion-panel-header-0').blur();
+  }
 }
