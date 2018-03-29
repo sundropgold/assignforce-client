@@ -2,6 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatIconRegistry } from '@angular/material';
 import { Trainer } from '../../../model/trainer';
 import { Skill } from '../../../model/skill';
+import { TrainerService } from '../../../services/trainer/trainer.service';
+
 @Component({
   selector: 'app-trainers-add',
   templateUrl: './trainers-add.component.html',
@@ -30,9 +32,18 @@ export class TrainersAddComponent implements OnInit {
     trainer: this.trainer
   };
 
-  constructor(public dialogRef: MatDialogRef<TrainersAddComponent>, @Inject(MAT_DIALOG_DATA) public dataP: any) {}
+  constructor(
+    public dialogRef: MatDialogRef<TrainersAddComponent>,
+    @Inject(MAT_DIALOG_DATA) public dataP: any,
+    private trainerService: TrainerService
+  ) {}
 
   ngOnInit() {}
+
+  onSubmit() {
+    this.trainerService.create(this.trainer);
+  }
+
   onNoClick(): void {
     this.dialogRef.close();
   }
