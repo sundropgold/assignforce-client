@@ -87,6 +87,7 @@ export class BatchesTimelineComponent implements OnInit {
 
   // generated data
   trainers = [];
+  today_line = { x1: 0, x2: 0, y1: 0, y2: 0 };
 
   // initialize dates
   ngOnInit() {
@@ -101,6 +102,7 @@ export class BatchesTimelineComponent implements OnInit {
     // set end date to 6 months ago
     this.endDate = new Date(today);
     this.endDate.setMonth(this.endDate.getMonth() + 6);
+    this.updateTodayLine();
   }
 
   // returns the appropriate color for the core curriculum type
@@ -118,7 +120,6 @@ export class BatchesTimelineComponent implements OnInit {
   getBatchesRectangles() {
     const rects = [];
     const full_duration = this.endDate.valueOf() - this.startDate.valueOf();
-    const dur_to_px = this.height / full_duration;
     for (let i = 0; i < this.batches.length; i++) {
       const batch = this.batches[i];
       let duration = batch.endDate.valueOf() - batch.startDate.valueOf();
@@ -139,7 +140,7 @@ export class BatchesTimelineComponent implements OnInit {
         .toString()
         .split(' ')
         .concat('WEEKS'.split(''));
-      console.log('batch ' + batch.name + '\n rect: ' + ' x:' + x + ' y:' + y + ' h:' + h);
+      //console.log('batch ' + batch.name + '\n rect: ' + ' x:' + x + ' y:' + y + ' h:' + h);
       rects.push({ x: x, y: y, w: w, h: h, dur: durarray, color: color });
     }
     return rects;
@@ -180,5 +181,18 @@ export class BatchesTimelineComponent implements OnInit {
   }
 
   // returns the list of months to display and their position
-  getMonths() {}
+  getMonths() {
+    const months = [];
+
+    return months;
+  }
+
+  // returns the line for today
+  updateTodayLine() {
+    const y =
+      (new Date(Date.now()).valueOf() - this.startDate.valueOf()) /
+      (this.endDate.valueOf() - this.startDate.valueOf()) *
+      this.height;
+    this.today_line = { x1: this.swimlane_x_ofs, x2: this.width, y1: y, y2: y };
+  }
 }
