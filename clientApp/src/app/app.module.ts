@@ -64,6 +64,10 @@ import { LoginComponent } from './components/login/login.component';
 import { SkillsComponent } from './components/skills/skills.component';
 import { FociComponent } from './components/foci/foci.component';
 import { CoreComponent } from './components/core/core.component';
+import { AddFocusComponent } from './components/add-focus/add-focus.component';
+import { AddSkillComponent } from './components/add-skill/add-skill.component';
+import { EditFocusComponent } from './components/edit-focus/edit-focus.component';
+import { EditSkillComponent } from './components/edit-skill/edit-skill.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +93,11 @@ import { CoreComponent } from './components/core/core.component';
     LoginComponent,
     SkillsComponent,
     FociComponent,
-    CoreComponent
+    CoreComponent,
+    AddFocusComponent,
+    AddSkillComponent,
+    EditFocusComponent,
+    EditSkillComponent
   ],
   imports: [
     HttpClientModule,
