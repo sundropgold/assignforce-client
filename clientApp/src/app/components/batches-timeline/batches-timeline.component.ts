@@ -30,13 +30,37 @@ export class BatchesTimelineComponent implements OnInit {
       name: 'Feb02-18',
       curriculum: 'Java',
       focus: 'none',
-      startDate: new Date(2018, 2, 5),
+      startDate: new Date(2018, 1, 5),
       endDate: new Date(2018, 4, 29),
       trainer: 'August Duet',
       cotrainer: 'Mitch',
       location: 'Viginia',
       building: '1',
       room: '101'
+    },
+    {
+      name: 'WWWWWWW',
+      curriculum: 'Custom',
+      focus: 'none',
+      startDate: new Date(2018, 3, 12),
+      endDate: new Date(2018, 7, 29),
+      trainer: 'TEST longtrainername here',
+      cotrainer: null,
+      location: 'Viginia',
+      building: null,
+      room: null
+    },
+    {
+      name: 'AAA',
+      curriculum: '.NET',
+      focus: 'none',
+      startDate: new Date(2018, 0, 1),
+      endDate: new Date(2018, 0, 8),
+      trainer: 'TEST longtrainername here',
+      cotrainer: null,
+      location: null,
+      building: null,
+      room: null
     },
     {
       name: 'Feb03-16',
@@ -101,6 +125,7 @@ export class BatchesTimelineComponent implements OnInit {
     this.updateTrainers();
     // set start date to 3 months ago
     const today = new Date(Date.now());
+    console.log(today.getMonth());
     this.startDate = new Date(today);
     this.startDate.setMonth(this.startDate.getMonth() - 3);
     // set end date to 6 months ago
