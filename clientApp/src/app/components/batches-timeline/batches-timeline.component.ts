@@ -137,7 +137,6 @@ export class BatchesTimelineComponent implements OnInit {
   // returns the appropriate color for the curriculum curriculum type
   getColorForcurriculum(type) {
     let color = '';
-    // color = '#ffaa44';
     switch (type.toLowerCase()) {
       case 'java':
         color = '#1c77b4'; //java
@@ -296,5 +295,27 @@ export class BatchesTimelineComponent implements OnInit {
       (this.endDate.valueOf() - this.startDate.valueOf()) *
       this.height;
     this.today_line = { x1: 0, x2: this.width, y1: y, y2: y };
+  }
+
+  // start dragging at mouse
+  bgmousedown(event) {
+    console.log('bgmousedown');
+  }
+  // finish dragging
+  bgmouseup(event) {
+    console.log('bgmouseup');
+  }
+  // update dragging by delta
+  bgmousemove(event) {
+    console.log('bgmousemove');
+  }
+
+  // show tooltip at mouse
+  batchmousemove(event) {
+    console.log('batchmousemove');
+  }
+  // hide tooltip
+  batchmouseleave(event) {
+    console.log('batchmouseleave');
   }
 }
