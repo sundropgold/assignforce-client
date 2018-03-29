@@ -137,11 +137,21 @@ export class BatchesTimelineComponent implements OnInit {
   // returns the appropriate color for the curriculum curriculum type
   getColorForcurriculum(type) {
     let color = '';
-    color = '#ffaa44';
-    color = '#1c77b4'; //java
-    color = '#ff7f0e'; //.net
-    color = '#aec7e8'; //sdet
-    color = '#ffbb78'; //Custom
+    // color = '#ffaa44';
+    switch (type.toLowerCase()) {
+      case 'java':
+        color = '#1c77b4'; //java
+        break;
+      case '.net':
+        color = '#ff7f0e'; //.net
+        break;
+      case 'sdet':
+        color = '#aec7e8'; //sdet
+        break;
+      default:
+        color = '#ffbb78'; //custom
+        break;
+    }
     return color;
   }
 
