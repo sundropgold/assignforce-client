@@ -13,6 +13,17 @@ import { Component } from '@angular/core';
 import { of } from 'rxjs/Observable/of';
 import 'rxjs/add/observable/of';
 
+class MockSkillService {
+  getAll(): Observable<Skill[]> {
+    return Observable.of([
+      { skillId: 1, name: 'Java', active: true },
+      { skillId: 2, name: 'SQL', active: true },
+      { skillId: 3, name: 'Angular', active: true },
+      { skillId: 4, name: 'C++', active: true }
+    ]);
+  }
+}
+
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
@@ -47,14 +58,3 @@ describe('ProfileComponent', () => {
     expect(component.skills.length).toBe(4, 'get all skills not fetching properly');
   });
 });
-
-class MockSkillService {
-  getAll(): Observable<Skill[]> {
-    return Observable.of([
-      { skillId: 1, name: 'Java', active: true },
-      { skillId: 2, name: 'SQL', active: true },
-      { skillId: 3, name: 'Angular', active: true },
-      { skillId: 4, name: 'C++', active: true }
-    ]);
-  }
-}
