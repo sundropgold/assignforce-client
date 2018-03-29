@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatIconRegistry } from '@angular/material';
-import { Locations } from '../../model/locations';
-import { Building } from '../../model/building';
-import { Room } from '../../model/room';
+import { Locations } from '../../model/Location';
+import { Building } from '../../model/Building';
+import { Room } from '../../model/Room';
 import { LocationAddDialogComponent } from './add-dialog/location-add-dialog.component';
 
 @Component({

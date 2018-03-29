@@ -1,4 +1,4 @@
-import { Curriculum } from '../../model/curriculum';
+import { Curriculum } from '../../model/Curriculum';
 
 export const curricula: Curriculum[] = [
   {

@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { SkillService } from '../../services/skill/skill.service';
 import { TrainerService } from '../../services/trainer/trainer.service';
 import { S3CredentialService } from '../../services/s3-credential/s3-credential.service';
-import { Trainer } from '../../model/trainer';
-import { Skill } from '../../model/skill';
+import { Trainer } from '../../model/Trainer';
+import { Skill } from '../../model/Skill';
 
 @Component({
   selector: 'app-profile',
@@ -11,23 +11,39 @@ import { Skill } from '../../model/skill';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-
   @Input() fName: string;
   @Input() lName: string;
   tId: -1;
   lockProfile: true;
 
   // data
-  skills: Skill[] = [{ skillId: 1, name: 'Java', active: true }, { skillId: 2, name: 'SQL', active: true }, { skillId: 3, name: 'Angular', active: true }, { skillId: 4, name: 'C++', active: true }];
+  skills: Skill[] = [
+    { skillId: 1, name: 'Java', active: true },
+    { skillId: 2, name: 'SQL', active: true },
+    { skillId: 3, name: 'Angular', active: true },
+    { skillId: 4, name: 'C++', active: true }
+  ];
   myFile: FileList;
   creds: any;
   certFile: FileList = null;
   certName: string;
   skillsList: string[] = [];
   hidden: true;
-  trainer: Trainer = { trainerId: 1, firstName: 'Joseph', lastName: 'Wong', skills: [], resume: null, certifications: [], active: true };
+  trainer: Trainer = {
+    trainerId: 1,
+    firstName: 'Joseph',
+    lastName: 'Wong',
+    skills: [],
+    resume: null,
+    certifications: [],
+    active: true
+  };
 
-  constructor(private trainerService: TrainerService, private skillService: SkillService, private s3Service: S3CredentialService) { }
+  constructor(
+    private trainerService: TrainerService,
+    private skillService: SkillService,
+    private s3Service: S3CredentialService
+  ) {}
 
   ngOnInit() {
     this.populateSkillList();
@@ -103,9 +119,13 @@ export class ProfileComponent implements OnInit {
 
   // called to save the current state of the trainers skills
   saveTSkills() {
-    this.trainerService.update(this.trainer).subscribe(() => { },
-      () => this.showToast('Could not save your skills.'),
-      () => this.showToast('Skills have been saved!'));
+    this.trainerService
+      .update(this.trainer)
+      .subscribe(
+        () => {},
+        () => this.showToast('Could not save your skills.'),
+        () => this.showToast('Skills have been saved!')
+      );
   }
 
   // add a skill to the current trainer
@@ -198,9 +218,9 @@ export class ProfileComponent implements OnInit {
       }
     }
 
-    this.trainerService.update(this.trainer).subscribe(() => { },
-      err => this.showToast(err),
-      () => this.showToast('Removed Certification Successfully'));
+    this.trainerService
+      .update(this.trainer)
+      .subscribe(() => {}, err => this.showToast(err), () => this.showToast('Removed Certification Successfully'));
   }
 
   // queries the database for skills. to be called after a change to the skills array
@@ -212,27 +232,32 @@ export class ProfileComponent implements OnInit {
   // queries the database for the trainer. to be called after a change to the trainer's properties
   rePullTrainer() {
     this.trainer = undefined;
-    this.trainerService.getById(this.tId).subscribe(response => this.trainer = response, () => this.showToast('Could not fetch trainer.'));
+    this.trainerService
+      .getById(this.tId)
+      .subscribe(response => (this.trainer = response), () => this.showToast('Could not fetch trainer.'));
   }
 
   // grab all the skills and create a skill list
   getAllSkills() {
-    this.skillService.getAll().subscribe(response => {
-      this.skills = response;
-      let status = true;
-      for (let i = 0; i < this.skills.length; i++) {
-        for (let j = 0; j < this.trainer.skills.length; j++) {
-          if (this.skills[j].skillId === this.skills[i].skillId) {
-            status = false;
-            break;
+    this.skillService.getAll().subscribe(
+      response => {
+        this.skills = response;
+        let status = true;
+        for (let i = 0; i < this.skills.length; i++) {
+          for (let j = 0; j < this.trainer.skills.length; j++) {
+            if (this.skills[j].skillId === this.skills[i].skillId) {
+              status = false;
+              break;
+            }
           }
+          if (status) {
+            this.skillsList.push(this.skills[i].name);
+          }
+          status = true;
         }
-        if (status) {
-          this.skillsList.push(this.skills[i].name);
-        }
-        status = true;
-      }
-    }, () => this.showToast('Could not fetch skills.'));
+      },
+      () => this.showToast('Could not fetch skills.')
+    );
   }
 
   populateSkillList() {

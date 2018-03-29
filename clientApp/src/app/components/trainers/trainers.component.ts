@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Trainer } from '../../model/trainer';
-import { Skill } from "../../model/skill";
+import { Trainer } from '../../model/Trainer';
+import { Skill } from '../../model/Skill';
 
 @Component({
   selector: 'app-trainers',
@@ -11,65 +11,64 @@ export class TrainersComponent implements OnInit {
   trainers: Trainer[];
   isManager: boolean;
 
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit() {
     this.isManager = false;
-    const Skillz: Skill[] = [{
-      skillId: 1,
-      name: 'Java',
-      active: true
-    }];
-    this.trainers = [{
-      trainerId: 1,
-      firstName: 'James',
-      lastName: 'Smith',
-      skills: Skillz,
-      certifications: 'Certs',
-      active: true,
-      resume: 'Resume',
-    },
-    {
-      trainerId: 2,
-      firstName: 'Jane',
-      lastName: 'Doe',
-      skills: Skillz,
-      certifications: 'Certs',
-      active: false,
-      resume: 'Resume',
-    },
-    {
-      trainerId: 3,
-      firstName: 'Jon',
-      lastName: 'Jones',
-      skills: Skillz,
-      certifications: 'Certs',
-      active: false,
-      resume: 'Resume',
-    },
-    {
-      trainerId: 4,
-      firstName: 'Daniel',
-      lastName: 'Cormier',
-      skills: Skillz,
-      certifications: 'Certs',
-      active: true,
-      resume: 'Resume',
-    }];
+    const Skillz: Skill[] = [
+      {
+        skillId: 1,
+        name: 'Java',
+        active: true
+      }
+    ];
+    this.trainers = [
+      {
+        trainerId: 1,
+        firstName: 'James',
+        lastName: 'Smith',
+        skills: Skillz,
+        certifications: 'Certs',
+        active: true,
+        resume: 'Resume'
+      },
+      {
+        trainerId: 2,
+        firstName: 'Jane',
+        lastName: 'Doe',
+        skills: Skillz,
+        certifications: 'Certs',
+        active: false,
+        resume: 'Resume'
+      },
+      {
+        trainerId: 3,
+        firstName: 'Jon',
+        lastName: 'Jones',
+        skills: Skillz,
+        certifications: 'Certs',
+        active: false,
+        resume: 'Resume'
+      },
+      {
+        trainerId: 4,
+        firstName: 'Daniel',
+        lastName: 'Cormier',
+        skills: Skillz,
+        certifications: 'Certs',
+        active: true,
+        resume: 'Resume'
+      }
+    ];
   }
 
-  addTrainer() {
-  }
+  addTrainer() {}
 
-  showCalendar() {
-  }
+  showCalendar() {}
 
-  goToTrainer(trainer: Trainer) {
-  }
+  goToTrainer(trainer: Trainer) {}
 
-  grabS3Resume(trainer: Trainer) {
-  }
+  grabS3Resume(trainer: Trainer) {}
 
   removeTrainer(trainer: Trainer) {
     trainer.active = false;
@@ -78,5 +77,4 @@ export class TrainersComponent implements OnInit {
   activateTrainer(trainer: Trainer) {
     trainer.active = true;
   }
-
 }
