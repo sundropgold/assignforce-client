@@ -7,15 +7,13 @@ import { Trainer } from '../../../model/trainer';
   styleUrls: ['./trainer-item.component.css']
 })
 export class TrainerItemComponent implements OnInit {
-  @Input() trainer:Trainer;
-  isManager:boolean;
-  constructor() { }
-
+  isManager: boolean;
+  constructor() {}
+  @Input() trainer: Trainer = new Trainer();
   ngOnInit() {
-    
     this.isManager = true;
   }
- 
+
   removeTrainer(trainer: Trainer) {
     trainer.active = false;
   }
