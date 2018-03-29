@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { ApiService } from '../../services/api/api.service';
+import { GetApiUrlService } from '../../services/api/getApiUrl.service';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 @Component({
@@ -22,7 +22,7 @@ export class SettingsComponent implements OnInit {
   private daysBetweenBatches: number;
   private namePattern = '$y$m $mmm$d $c';
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: GetApiUrlService) {}
 
   ngOnInit() {
     this.getSettingsInfo();
