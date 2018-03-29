@@ -1,4 +1,4 @@
-Feature: Navigation
+Feature: The Navigation Page
 
   I want to view the batches page
 

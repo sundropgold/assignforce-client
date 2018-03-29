@@ -1,4 +1,4 @@
-Feature: The Batches Tab
+Feature: The Batches Page
 
 Scenario: Accordian tabs should appear
     Given I am on the batches page

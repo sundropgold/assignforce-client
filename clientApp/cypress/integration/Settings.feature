@@ -1,4 +1,4 @@
-Feature: Settings
+Feature: The Settings Page
 
   I want to interact with the settings page
 
