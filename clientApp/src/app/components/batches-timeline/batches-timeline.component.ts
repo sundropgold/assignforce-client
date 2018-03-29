@@ -199,6 +199,7 @@ export class BatchesTimelineComponent implements OnInit {
 
   // makes the list of trainers
   updateTrainers() {
+    this.trainers = [];
     for (let i = 0; i < this.batches.length; i++) {
       const batch = this.batches[i];
       const trainer = batch.trainer;
