@@ -2,4 +2,13 @@
   position: sticky;
   top: 0px;
   word-wrap: break-word;
+  float: left;
+  vertical-align: bottom;
+}
+#trainer-names-bg {
+  position: sticky;
+  top: 0px;
+  background-color: #d3d3d3;
+  min-height: 40px;
+  height: auto;
 }
