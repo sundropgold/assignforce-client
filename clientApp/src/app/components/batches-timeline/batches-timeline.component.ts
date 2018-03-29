@@ -69,23 +69,17 @@ export class BatchesTimelineComponent implements OnInit {
   end_date: Date;
   trainers_per_page = 0;
 
+  constructor() {}
+
   // generated data
   trainers = [];
 
-  constructor() {}
-
+  // initialize dates
   ngOnInit() {
     if (this.trainers_per_page === 0) {
       this.trainers_per_page = this.batches.length;
     }
-    // make list of trainers
-    for (let i = 0; i < this.batches.length; i++) {
-      const batch = this.batches[i];
-      const trainer = batch.trainer;
-      if (!this.trainers.includes(trainer)) {
-        this.trainers.push(trainer);
-      }
-    }
+    this.makeTrainerList();
     // set start date to 3 months ago
     const today = new Date(Date.now());
     this.start_date = new Date(today);
@@ -95,6 +89,7 @@ export class BatchesTimelineComponent implements OnInit {
     this.end_date.setMonth(this.end_date.getMonth() + 6);
   }
 
+  // returns the appropriate color for the core curriculum type
   getColorForCore(type) {
     let color = '';
     color = '#ffaa44';
@@ -105,6 +100,7 @@ export class BatchesTimelineComponent implements OnInit {
     return color;
   }
 
+  // returns the list of rectangles that represent each batch
   getBatchesRectangles() {
     const rects = [];
     const full_duration = this.end_date.valueOf() - this.start_date.valueOf();
@@ -135,6 +131,7 @@ export class BatchesTimelineComponent implements OnInit {
     return rects;
   }
 
+  // returns a list of the lines that seperate columns
   getSwimlanes() {
     const lines = [];
     for (let i = 0; i < this.trainers.length + 1; i++) {
@@ -144,4 +141,31 @@ export class BatchesTimelineComponent implements OnInit {
     }
     return lines;
   }
+
+  // makes the list of trainers
+  makeTrainerList() {
+    // make list of trainers
+    for (let i = 0; i < this.batches.length; i++) {
+      const batch = this.batches[i];
+      const trainer = batch.trainer;
+      if (!this.trainers.includes(trainer)) {
+        this.trainers.push(trainer);
+      }
+    }
+  }
+
+  // returns the list of trainers with their positions
+  getTrainers() {
+    const trainerposs = [];
+    for (let i = 0; i < this.trainers.length; i++) {
+      const trainer = this.trainers[i];
+      const left = this.swimlane_x_ofs + this.column_width * i + this.column_width / 2;
+      const width = this.column_width;
+      trainerposs.push({ name: trainer, left: left, width: width });
+    }
+    return trainerposs;
+  }
+
+  // returns the list of months to display and their position
+  getMonths() {}
 }

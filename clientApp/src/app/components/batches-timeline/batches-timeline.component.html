@@ -1,9 +1,9 @@
 <div>
   <div id="trainer-names-bg">
-    <span class="trainer-names" *ngFor="let trainer of trainers; let i=index"
-      [style.left.px]="swimlane_x_ofs+column_width*i+column_width/2"
-      [style.width.px]="column_width">
-      {{trainer}}
+    <span class="trainer-names" *ngFor="let trainer of getTrainers()"
+      [style.left.px]="trainer.left"
+      [style.width.px]="trainer.width">
+      {{trainer.name}}
     </span>
   </div>
   <svg id="timeline" [attr.width]="width" [attr.height]="height">
@@ -27,4 +27,4 @@
         </g>
       </g>
     </svg>
-  </div>>>
+  </div>
