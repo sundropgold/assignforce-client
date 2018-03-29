@@ -1,12 +1,12 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import {MenuBarComponent} from "./components/menu-bar/menu-bar.component";
-import {ActivatedRoute, Router} from "@angular/router";
-import {AppMaterialModule} from "./app-material/app-material.module";
-import {ReactiveFormsModule} from "@angular/forms";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
-import {RouterTestingModule} from "@angular/router/testing";
+import { MenuBarComponent } from './components/menu-bar/menu-bar.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AppMaterialModule } from './material.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { RouterTestingModule } from '@angular/router/testing';
 
 export class MockActivatedRoute {
   private paramsSubject = new BehaviorSubject(this.testParams);
@@ -27,7 +27,7 @@ describe('AppComponent', () => {
   class MockRouter {
     navigate = jasmine.createSpy('navigate');
   }
-  let activeRoute: MockActivatedRoute;
+  const activeRoute = new MockActivatedRoute();
 
   beforeEach(
     async(() => {
