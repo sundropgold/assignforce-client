@@ -45,5 +45,5 @@ e2e/*.js
 e2e/*.map
 
 # cypress
-cypress/screenshots/
-cypress/videos/
+clientApp/cypress/screenshots/
+clientApp/cypress/videos/
