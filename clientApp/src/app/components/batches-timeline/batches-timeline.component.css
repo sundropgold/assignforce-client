@@ -1,9 +1,8 @@
 .trainer-names {
-  /* position: sticky; */
-  /* top: 0px; */
   word-wrap: break-word;
   float: left;
   vertical-align: bottom;
+  text-align: center;
 }
 #trainer-names-bg {
   position: sticky;

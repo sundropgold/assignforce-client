@@ -319,7 +319,7 @@ export class BatchesTimelineComponent implements OnInit {
       const y = event.clientY - event.target.getBoundingClientRect().top;
       const dy = y - this.zoomingFrom;
       console.log('mp ' + dy);
-      // this.startDate.
+      // this.startDate.setDate()
     }
   }
 
