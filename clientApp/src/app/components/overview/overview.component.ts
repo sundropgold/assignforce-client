@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Angular2Csv } from 'angular2-csv/Angular2-csv';
+import { Batch } from '../../model/batch';
 
 const ELEMENT_DATA: Element[] = [
   { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
@@ -32,12 +33,32 @@ const ELEMENT_DATA: Element[] = [
   encapsulation: ViewEncapsulation.None
 })
 export class OverviewComponent implements OnInit, AfterViewInit {
-  displayedColumns = ['position', 'name', 'weight', 'symbol', 'progress'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+
+  // ---------------------- OLD DEFAULT CODE FROM LAST BATCH --------------------------
+  // displayedColumns = ['position', 'name', 'weight', 'symbol', 'progress'];
+  // dataSource = new MatTableDataSource(ELEMENT_DATA);
   color = 'warn';
   mode = 'determinate';
   value = 10;
   bufferValue = 75;
+
+  // ----------------------- NEW CODE FROM NEW HOPE ----------------------------------
+
+  batchList: Batch[] = [{name: "Calvin",
+  startDate: new Date(0,0,0),
+  endDate: new Date(1,1,1),
+  curriculum: "Java",
+  focus: "InfoSys",
+  trainer: "August",
+  cotrainer: "Mitch",
+  location: "Virginia",
+  building: "Plaza1",
+  room: "214"}];
+
+  displayedColumns = ['name', 'startDate', 'endDate', 'curriculum', 'focus', 'trainer', 'cotrainer', 'location', 'building', 'room', 'progress'];
+  dataSource = new MatTableDataSource(this.batchList);
+  // Booleans for testing
+  isExported: boolean = false;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -54,11 +75,28 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     evt.stopPropagation();
     // this.csvService.download(this.dataSource, 'Batches');
     const angular2Csv = new Angular2Csv(ELEMENT_DATA, 'batches');
+    this.isExported = true;
   }
 
   openMenu(evt) {
     evt.stopPropagation();
   }
+
+  // ----------------------------------BEGIN OPERATION NEW HOPE -------------------------------------------
+
+  applyFilter(filterType: number){
+    /**
+     *  FILTER TYPE!!!
+     *  0 - By All
+     *  1 - In Progress
+     *  2 - Beginging in two weeks
+     */
+
+     if ( filterType == 0){
+       // Todo 
+     }
+  }
+
 }
 
 export interface Element {
