@@ -15,6 +15,10 @@
   color: white;
 }
 
+#mat-expansion-panel-header-1:hover mat-panel-title {
+  color: black;
+}
+
 .toolbar-mat-buttons {
   margin: 12px 6px;
 }

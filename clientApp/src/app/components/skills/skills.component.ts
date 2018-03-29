@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Skill } from '../../model/skill';
+import { MatDialog } from '@angular/material';
+import { AddSkillComponent } from '../add-skill/add-skill.component';
 
 @Component({
   selector: 'app-skills',
@@ -15,12 +17,11 @@ export class SkillsComponent implements OnInit {
     { skillId: 5, name: 'JUnit', active: true }
   ];
 
-  constructor() {}
+  constructor(private dialog: MatDialog) {}
 
   ngOnInit() {}
 
   addSkill(e) {
-    e.preventDefault();
     console.log('Adding Skill');
   }
 
@@ -30,5 +31,16 @@ export class SkillsComponent implements OnInit {
 
   removeSkill(e) {
     console.log('Removing Skill');
+  }
+
+  deselect() {
+    document.getElementById('mat-expansion-panel-header-2').blur();
+  }
+
+  openAddSkillDialog() {
+    const dialogRef = this.dialog.open(AddSkillComponent, {
+      width: '250px',
+      height: '500px'
+    });
   }
 }

@@ -157,7 +157,11 @@ import { EditSkillComponent } from './components/edit-skill/edit-skill.component
     LocationEditBuildingDialogComponent,
     LocationAddRoomDialogComponent,
     LocationDeleteRoomDialogComponent,
-    LocationEditRoomDialogComponent
+    LocationEditRoomDialogComponent,
+    AddFocusComponent,
+    EditFocusComponent,
+    AddSkillComponent,
+    EditSkillComponent
   ]
 })
 export class AppModule {}

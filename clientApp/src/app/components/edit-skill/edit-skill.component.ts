@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-edit-skill',
@@ -6,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./edit-skill.component.css']
 })
 export class EditSkillComponent implements OnInit {
-  constructor() {}
+  constructor(private dialogRef: MatDialogRef<EditSkillComponent>) {}
 
   ngOnInit() {}
+
+  closeDialog() {
+    this.dialogRef.close();
+  }
 }

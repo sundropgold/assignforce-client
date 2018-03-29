@@ -1,13 +1,13 @@
 <mat-card>
   <mat-accordion>
     <mat-expansion-panel>
-      <mat-expansion-panel-header class="toolbar-curricula-sub">
+      <mat-expansion-panel-header class="toolbar-curricula-sub" (focus)="deselect()">
         <mat-panel-title>
           <span class="panel-title-fix">Focuses</span>
         </mat-panel-title>
         <mat-panel-description>
           <span class="fill-space"></span>
-          <button mat-icon-button (click)="addFocus($event)">
+          <button mat-icon-button (click)="openAddFocusDialog()">
             <mat-icon class="icon-margin-fix" matTooltip="Add New Focus">add_circle_outline</mat-icon>
           </button>
         </mat-panel-description>

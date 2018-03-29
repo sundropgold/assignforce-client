@@ -1,3 +1,10 @@
-<p>
-  add-skill works!
-</p>
+<h1 mat-dialog-title>Add Skill</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <input matInput class="skill-name-input" placeholder="Skill">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button class="close-dialog-button" (click)="closeDialog()">Cancel</button>
+  <button mat-button class="add-skill-button" (click)="addFocus()">Add Skill</button>
+</div>

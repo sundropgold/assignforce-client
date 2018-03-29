@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Curriculum } from '../../model/curriculum';
+import { MatDialog } from '@angular/material';
+import { AddFocusComponent } from '../add-focus/add-focus.component';
 
 @Component({
   selector: 'app-foci',
@@ -31,12 +33,11 @@ export class FociComponent implements OnInit {
     }
   ];
 
-  constructor() {}
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit() {}
 
   addFocus(e) {
-    e.preventDefault();
     console.log('Adding Focus');
   }
 
@@ -46,5 +47,16 @@ export class FociComponent implements OnInit {
 
   removeFocus(e) {
     console.log('Removing Focus');
+  }
+
+  deselect() {
+    document.getElementById('mat-expansion-panel-header-1').blur();
+  }
+
+  openAddFocusDialog() {
+    const dialogRef = this.dialog.open(AddFocusComponent, {
+      width: '250px',
+      height: '500px'
+    });
   }
 }
