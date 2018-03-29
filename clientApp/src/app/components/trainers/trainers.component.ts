@@ -81,12 +81,10 @@ export class TrainersComponent implements OnInit {
     const dialogRef = this.dialog.open(TrainersAddComponent, {
       width: '450px',
       data: {
-        addType: 'trainer',
         trainer: trainer
       }
     });
 
-    dialogRef.close();
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         //  this.addTrainer(result);

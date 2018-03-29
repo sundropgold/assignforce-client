@@ -7,7 +7,7 @@ import { Skill } from '../../../model/skill';
   templateUrl: './trainers-add.component.html',
   styleUrls: ['./trainers-add.component.css']
 })
-export class TrainersAddComponent implements OnInit {
+export class TrainersAddComponent {
   Skillz: Skill[] = [];
   trainer: Trainer = {
     trainerId: 0,
@@ -21,9 +21,10 @@ export class TrainersAddComponent implements OnInit {
   data = {
     trainer: this.trainer
   };
-  constructor(public dialogRef: MatDialogRef<TrainersAddComponent>, @Inject(MAT_DIALOG_DATA) public dataP: any) {}
+  constructor(public dialogRef: MatDialogRef<TrainersAddComponent>, @Inject(MAT_DIALOG_DATA) public dataP: any) {
+    console.log('check');
+  }
 
-  ngOnInit() {}
   onNoClick(): void {
     this.dialogRef.close();
   }

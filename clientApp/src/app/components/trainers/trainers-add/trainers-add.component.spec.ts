@@ -6,6 +6,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { AppMaterialModule } from '../../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { TrainersComponent } from '../trainers.component';
 describe('TrainersAddComponent', () => {
   let component: TrainersAddComponent;
   let fixture: ComponentFixture<TrainersAddComponent>;

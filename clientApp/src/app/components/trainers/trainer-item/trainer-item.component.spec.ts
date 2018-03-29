@@ -36,7 +36,7 @@ describe('TrainerItemComponent', () => {
       }
     ];
 
-    let dummy = {
+    const dummy = {
       trainerId: 1,
       firstName: 'James',
       lastName: 'Smith',
@@ -60,7 +60,7 @@ describe('TrainerItemComponent', () => {
       }
     ];
 
-    let dummy = {
+    const dummy = {
       trainerId: 1,
       firstName: 'James',
       lastName: 'Smith',
