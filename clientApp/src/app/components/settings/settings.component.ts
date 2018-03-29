@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
+import { environment } from '../../../environments/environment';
+import { ApiService } from '../../services/api/api.service';
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -19,16 +22,36 @@ export class SettingsComponent implements OnInit {
   private daysBetweenBatches: number;
   private namePattern = '$y$m $mmm$d $c';
 
-  constructor() {}
+  constructor(private apiService: ApiService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getSettingsInfo();
+  }
 
-  onSubmit() {
+  // saves the settings information
+  save() {
     console.log(this.trainerPerPage);
   }
 
+  // grabs settings information
+  getSettingsInfo() {
+    this.getRequestTest()
+      .toPromise()
+      .then(result => {
+        this.trainerPerPage = result;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  // resets the settings information
   reset(e) {
     e.preventDefault();
     console.log('resetting your mum');
+  }
+
+  getRequestTest(): Observable<number> {
+    return of(2);
   }
 }
