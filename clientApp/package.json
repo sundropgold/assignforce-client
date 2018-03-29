@@ -13,7 +13,8 @@
     "precommit": "run-s format:fix lint test:once",
     "format:check":
       "prettier --config ./.prettierrc --list-different \"src/{app,environments,assets}/**/*{.ts,.js,.json,.css,.scss}\"",
-    "e2e": "cypress open"
+    "e2e": "cypress open",
+    "e2e:run": "cypress run"
   },
   "private": true,
   "dependencies": {
