@@ -1,6 +1,6 @@
-import {Building} from './building';
+import { Building } from './building';
 
-export interface Locations {
+export class Locations {
   id: string;
   name: string;
   city: string;
