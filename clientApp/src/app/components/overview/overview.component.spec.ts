@@ -28,12 +28,6 @@ describe('OverviewComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should export CSV', () => {
-    const evt: Event = new Event('');
-    component.exportToCSV(evt);
-    expect(component.isExported).toBeTruthy();
-  });
-
   it('should filter by all', () => {
     component.batchList = [
       {

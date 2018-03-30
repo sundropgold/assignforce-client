@@ -87,8 +87,6 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     'progress'
   ];
   dataSource = new MatTableDataSource(this.displayedBatchList);
-  // Booleans for testing
-  isExported = false;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -111,7 +109,6 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     evt.stopPropagation();
     // this.csvService.download(this.dataSource, 'Batches');
     const angular2Csv = new Angular2Csv(this.batchList, 'batches');
-    this.isExported = true;
   }
 
   openMenu(evt) {
