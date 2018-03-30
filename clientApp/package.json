@@ -7,13 +7,14 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
-    "test:once": "ng test --single-run",
+    "test:once": "ng test --single-run --browsers='ChromeHeadless'",
     "lint": "ng lint",
     "format:fix": "pretty-quick --staged",
     "precommit": "run-s format:fix lint test:once",
     "format:check":
       "prettier --config ./.prettierrc --list-different \"src/{app,environments,assets}/**/*{.ts,.js,.json,.css,.scss}\"",
-    "e2e": "ng e2e"
+    "e2e": "cypress open",
+    "e2e:run": "cypress run"
   },
   "private": true,
   "dependencies": {
