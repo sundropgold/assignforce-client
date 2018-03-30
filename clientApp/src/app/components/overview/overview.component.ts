@@ -47,18 +47,18 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   // ----------------------- NEW CODE FROM NEW HOPE -----------------------------------
 
   batchList: Batch[] = [
-    {
-      name: 'Calvin',
-      startDate: new Date(0, 0, 0),
-      endDate: new Date(1, 1, 1),
-      curriculum: 'Java',
-      focus: 'InfoSys',
-      trainer: 'August',
-      cotrainer: 'Mitch',
-      location: 'Virginia',
-      building: 'Plaza1',
-      room: '214'
-    }
+    // {
+    //   name: 'Calvin',
+    //   startDate: new Date(0, 0, 0),
+    //   endDate: new Date(1, 1, 1),
+    //   curriculum: 'Java',
+    //   focus: 'InfoSys',
+    //   trainer: 'August',
+    //   cotrainer: 'Mitch',
+    //   location: 'Virginia',
+    //   building: 'Plaza1',
+    //   room: '214'
+    // }
   ];
 
   displayedColumns = [
@@ -117,13 +117,13 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     }
   }
 
-  computeNumOfWeeksBetween(startDate: Date, endDate: Date): number {
+  computeNumOfWeeksBetween(startDate: number, endDate: number): number {
     const numberOfDays = Math.abs(<any>endDate - <any>startDate) / (1000 * 60 * 60 * 24);
     const numberOfWeeks = Math.round(numberOfDays / 7);
     return numberOfWeeks;
   }
 
-  getCurrentWeek(startDate: Date): number {
+  getCurrentWeek(startDate: number): number {
     const currentDate = new Date(Date.now());
     const numberOfDays = Math.abs(<any>currentDate - <any>startDate) / (1000 * 60 * 60 * 24);
     const weekNumber = Math.round(numberOfDays / 7);

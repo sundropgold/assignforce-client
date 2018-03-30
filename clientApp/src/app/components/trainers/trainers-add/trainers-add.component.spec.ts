@@ -9,6 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { TrainerService } from '../../../services/trainer/trainer.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
+class MockTrainerService {}
+
 describe('TrainersAddComponent', () => {
   let component: TrainersAddComponent;
   let fixture: ComponentFixture<TrainersAddComponent>;
@@ -19,7 +21,11 @@ describe('TrainersAddComponent', () => {
         imports: [AppMaterialModule, BrowserAnimationsModule, FormsModule, HttpClientTestingModule],
         declarations: [TrainersAddComponent],
         providers: [
-          TrainerService,
+          // TrainerService,
+          {
+            provide: TrainerService,
+            useClass: MockTrainerService
+          },
           {
             provide: MatDialogRef,
             useValue: {
