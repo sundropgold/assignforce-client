@@ -4,3 +4,9 @@ Feature: The Curricula Page
     Given I have just logged in
     When I click on the "CURRICULA" tab in the "navbar"
     Then the URL is "/curricula"
+
+  Scenario: Make sure all mat-toolbar works (open and close)
+
+  Scenario: Can add/remove/edit focuses
+
+  Scenario: Can add/remove/edit skills
