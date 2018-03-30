@@ -22,7 +22,7 @@ export class TrainersAddComponent implements OnInit {
     trainerId: 0,
     firstName: '',
     lastName: '',
-    skills: Skill[1],
+    skills: this.Skillz,
     certifications: '',
     active: true,
     resume: ''
@@ -41,7 +41,8 @@ export class TrainersAddComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit() {
-    this.trainerService.create(this.trainer);
+    this.trainerService.create(this.trainer).subscribe();
+    console.log(this.trainer);
   }
 
   onNoClick(): void {

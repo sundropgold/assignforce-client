@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 
 import { TrainersAddComponent } from './trainers-add.component';
 
@@ -8,6 +8,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { TrainerService } from '../../../services/trainer/trainer.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { Trainer } from '../../../model/trainer';
+import { Skill } from '../../../model/skill';
 
 describe('TrainersAddComponent', () => {
   let component: TrainersAddComponent;
@@ -41,4 +43,40 @@ describe('TrainersAddComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should call onNoClick', () => {
+    spyOn(component, 'onNoClick');
+    component.onNoClick();
+    expect(component.onNoClick).toHaveBeenCalled();
+  });
+
+  it('should call onSubmit', () => {
+    spyOn(component, 'onSubmit');
+    component.onSubmit();
+    expect(component.onSubmit).toHaveBeenCalled();
+  });
+
+  it(
+    'should create Trainer',
+    inject([TrainerService], (service: TrainerService) => {
+      const Skillz: Skill[] = [
+        {
+          skillId: 1,
+          name: 'Java',
+          active: true
+        }
+      ];
+      const trainer: Trainer = {
+        trainerId: 0,
+        firstName: '',
+        lastName: '',
+        skills: Skill[1],
+        certifications: '',
+        active: true,
+        resume: ''
+      };
+
+      expect(service.create(trainer)).toBeTruthy();
+    })
+  );
 });
