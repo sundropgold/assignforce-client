@@ -39,6 +39,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { AppMaterialModule } from './material.module';
+import { TrainersAddComponent } from './components/trainers/trainers-add/trainers-add.component';
+import { TrainerItemComponent } from './components/trainers/trainer-item/trainer-item.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import { AppMaterialModule } from './material.module';
     LocationAddRoomDialogComponent,
     LocationDeleteRoomDialogComponent,
     LocationEditRoomDialogComponent,
-    LoginComponent
+    LoginComponent,
+    TrainersAddComponent,
+    TrainerItemComponent
   ],
 
   imports: [HttpClientModule, FormsModule, BrowserModule, AppRouting, BrowserAnimationsModule, AppMaterialModule],
@@ -88,7 +92,8 @@ import { AppMaterialModule } from './material.module';
     LocationEditBuildingDialogComponent,
     LocationAddRoomDialogComponent,
     LocationDeleteRoomDialogComponent,
-    LocationEditRoomDialogComponent
+    LocationEditRoomDialogComponent,
+    TrainersAddComponent
   ]
 })
 export class AppModule {}
