@@ -2,5 +2,5 @@ Feature: The Profile Page
 
   Scenario: Navigating to the profile page
     Given I have just logged in
-    When I click on the "PROFILE" tab with id of "#mat-tab-label-0-5"
+    When I click on the "PROFILE" tab in the "navbar"
     Then the URL is "/profile"

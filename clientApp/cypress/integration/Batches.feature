@@ -2,7 +2,7 @@ Feature: The Batches Page
 
   Scenario: Navigating to the batches page
     Given I have just logged in
-    When I click on the "BATCHES" tab with id of "#mat-tab-label-0-1"
+    When I click on the "BATCHES" tab in the "navbar"
     Then the URL is "/batches"
 
   Scenario: Accordian tabs should appear
