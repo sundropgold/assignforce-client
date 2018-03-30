@@ -10,12 +10,19 @@ given('I have just logged in', () => {
  * WHEN
  ******************************************************************/
 
-when('I click on the {string} tab with id of {string}', (tab, id) => {
+when('I click on the {string} tab in the {string}', (tab, navbar) => {
   cy
-    .get(id)
-    .should('contain', tab)
+    .get(`[data-cy="${navbar}"]`)
+    .contains(tab)
     .click();
 });
+
+// when('I click on the {string} tab with id of {string}', (tab, id) => {
+//   cy
+//     .get(id)
+//     .should('contain', tab)
+//     .click();
+// });
 
 /******************************************************************
  * THEN

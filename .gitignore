@@ -43,7 +43,3 @@ package-lock.json
 # e2e
 e2e/*.js
 e2e/*.map
-
-# cypress
-cypress/screenshots/
-cypress/videos/
