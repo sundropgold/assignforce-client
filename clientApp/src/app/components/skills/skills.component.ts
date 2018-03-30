@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Skill } from '../../model/skill';
 import { MatDialog } from '@angular/material';
 import { AddSkillComponent } from '../add-skill/add-skill.component';
+import { EditSkillComponent } from '../edit-skill/edit-skill.component';
 
 @Component({
   selector: 'app-skills',
@@ -47,5 +48,17 @@ export class SkillsComponent implements OnInit {
       // height: '500px',
       data: this.skillData
     });
+  }
+
+  openEditSkillDialog(skill) {
+    const dialogRef = this.dialog.open(EditSkillComponent, {
+      data: skill
+    });
+  }
+
+  confirmRemoveFocus(skill) {
+    if (confirm('Are you sure you want to remove Skill?')) {
+      console.log('Hi');
+    }
   }
 }

@@ -24,7 +24,7 @@
             <button mat-icon-button class="edit-button button-orange" (click)="openEditFocusDialog(focus)">
               <mat-icon class="icon-margin-fix" matTooltip="Edit Focus">mode_edit</mat-icon>
             </button>
-            <button mat-icon-button class="remove-button button-orange" (click)="removeFocus($event)">
+            <button mat-icon-button class="remove-button button-orange" (click)="confirmRemoveFocus(focus)">
               <mat-icon class="icon-margin-fix" matTooltip="Remove Focus">remove_circle</mat-icon>
             </button>
             <mat-divider [inset]="true" *ngIf="!last"></mat-divider>

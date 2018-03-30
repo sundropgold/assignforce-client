@@ -1,13 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditFocusComponent } from './edit-focus.component';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { AppMaterialModule } from '../../app-material/app-material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
+import { Curriculum } from '../../model/curriculum';
 
 describe('EditFocusComponent', () => {
   let component: EditFocusComponent;
   let fixture: ComponentFixture<EditFocusComponent>;
+  const mockFocusData: Curriculum = {
+    currId: 1,
+    name: 'Test Focus',
+    core: false,
+    active: true,
+    skills: ['Test Skill']
+  };
 
   class MockDialogRef {
     close() {}
@@ -17,8 +26,11 @@ describe('EditFocusComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         declarations: [EditFocusComponent],
-        providers: [{ provide: MatDialogRef, useClass: MockDialogRef }],
-        imports: [AppMaterialModule, BrowserAnimationsModule]
+        providers: [
+          { provide: MatDialogRef, useClass: MockDialogRef },
+          { provide: MAT_DIALOG_DATA, useValue: mockFocusData }
+        ],
+        imports: [AppMaterialModule, BrowserAnimationsModule, FormsModule]
       }).compileComponents();
     })
   );

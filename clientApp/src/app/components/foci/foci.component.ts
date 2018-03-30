@@ -72,4 +72,10 @@ export class FociComponent implements OnInit {
       data: focus
     });
   }
+
+  confirmRemoveFocus(focus) {
+    if (confirm('Are you sure you want to remove Focus?')) {
+      console.log('Hi');
+    }
+  }
 }

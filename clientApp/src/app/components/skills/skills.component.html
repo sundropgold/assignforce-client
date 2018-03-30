@@ -20,10 +20,10 @@
                 <br>
               </div>
               <span class="fill-space"></span>
-              <button mat-icon-button class="edit-button button-orange" (click)="editSkill($event)">
+              <button mat-icon-button class="edit-button button-orange" (click)="openEditSkillDialog(skill)">
                 <mat-icon class="icon-margin-fix" matTooltip="Edit Skill">mode_edit</mat-icon>
               </button>
-              <button mat-icon-button class="remove-button button-orange" (click)="removeSkill($event)">
+              <button mat-icon-button class="remove-button button-orange" (click)="confirmRemoveFocus(skill)">
                 <mat-icon class="icon-margin-fix" matTooltip="Remove Skill">remove_circle</mat-icon>
               </button>
               <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
