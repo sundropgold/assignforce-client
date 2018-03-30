@@ -19,6 +19,22 @@
   color: black;
 }
 
+#mat-expansion-panel-header-1:focus {
+  background-color: #3d5360;
+  color: white;
+}
+
+#mat-expansion-panel-header-1:focus:hover {
+  background-color: white;
+  color: black;
+}
+
+.mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled='true']).cdk-keyboard-focused,
+.mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled='true']).cdk-program-focused,
+.mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled='true']):hover {
+  background: white;
+}
+
 .toolbar-mat-buttons {
   margin: 12px 6px;
 }
