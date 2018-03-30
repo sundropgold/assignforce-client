@@ -25,19 +25,11 @@ export class ProfileComponent implements OnInit {
     lastName: new FormControl('', Validators.required)
   });
 
-  // data
-  skills: Skill[] = [
-    { skillId: 1, name: 'Java', active: true },
-    { skillId: 2, name: 'SQL', active: true },
-    { skillId: 3, name: 'Angular', active: true },
-    { skillId: 4, name: 'C++', active: true }
-  ];
   nameFound = false;
   myFile: FileList;
   creds: any;
   certFile: FileList = null;
   certName: string;
-  skillsList: string[] = [];
   hidden: true;
   trainer: Trainer = {
     trainerId: 1,
@@ -49,16 +41,11 @@ export class ProfileComponent implements OnInit {
     active: true
   };
 
-  constructor(
-    private trainerService: TrainerService,
-    private skillService: SkillService,
-    private s3Service: S3CredentialService
-  ) {}
+  constructor(private trainerService: TrainerService, private s3Service: S3CredentialService) {}
 
   ngOnInit() {
-    this.populateSkillList();
+    //this.populateSkillList();
     // data gathering
-
     // id is hard coded for testing. unless you click on a trainer in the trainer page.
     // if (this.tId > -1) {
     //   this.lockProfile = false;
@@ -136,50 +123,6 @@ export class ProfileComponent implements OnInit {
     this.trainer.lastName = this.nameForm.value.lastName;
   }
 
-  // called to save the current state of the trainers skills
-  saveTSkills() {
-    this.trainerService
-      .update(this.trainer)
-      .subscribe(
-        () => {},
-        () => this.showToast('Could not save your skills.'),
-        () => this.showToast('Skills have been saved!')
-      );
-  }
-
-  // add a skill to the current trainer
-  addSkill(skill) {
-    // add the skill to the trainer skill array
-    for (let i = 0; i < this.skills.length; i++) {
-      if (this.skills[i].name === skill) {
-        this.trainer.skills.push(this.skills[i]);
-        break;
-      }
-    }
-
-    this.remove(skill);
-  }
-
-  // remove the same skill from the skill list array
-  remove(skill: any): void {
-    const index = this.skillsList.indexOf(skill);
-
-    if (index >= 0) {
-      this.skillsList.splice(index, 1);
-    }
-  }
-
-  // remove a trainer skill on the bottom
-  removeSkill(skill) {
-    for (let i = 0; i < this.trainer.skills.length; i++) {
-      if (this.trainer.skills[i] === skill) {
-        this.skillsList.push(skill.name);
-        this.trainer.skills.splice(i, 1);
-        break;
-      }
-    }
-  }
-
   // // func to upload a resume to the s3 bucket
   uploadCertification() {
     // set the path to certifications folder and use trainer id with the file name
@@ -254,34 +197,5 @@ export class ProfileComponent implements OnInit {
     this.trainerService
       .getById(this.tId)
       .subscribe(response => (this.trainer = response), () => this.showToast('Could not fetch trainer.'));
-  }
-
-  // grab all the skills and create a skill list
-  getAllSkills() {
-    this.skillService.getAll().subscribe(
-      response => {
-        this.skills = response;
-        let status = true;
-        for (let i = 0; i < this.skills.length; i++) {
-          for (let j = 0; j < this.trainer.skills.length; j++) {
-            if (this.skills[j].skillId === this.skills[i].skillId) {
-              status = false;
-              break;
-            }
-          }
-          if (status) {
-            this.skillsList.push(this.skills[i].name);
-          }
-          status = true;
-        }
-      },
-      () => this.showToast('Could not fetch skills.')
-    );
-  }
-
-  populateSkillList() {
-    for (let i = 0; i < this.skills.length; i++) {
-      this.skillsList.push(this.skills[i].name);
-    }
   }
 }
