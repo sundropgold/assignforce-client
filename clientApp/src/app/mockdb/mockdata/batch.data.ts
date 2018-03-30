@@ -1,7 +1,6 @@
-import { Batch } from '../../model/batch';
-import { Skill } from '../../model/skill';
+import { Batch } from '../../model/Batch';
 
-export const batches = [
+export const batches: Batch[] = [
   {
     id: 187,
     name: '1708 Aug14 Java',
@@ -245,6 +244,7 @@ export const batches = [
     }
   },
   {
+    id: 191,
     name: '1610 Oct24 Java',
     startDate: 1477281600000,
     endDate: 1483678800000,

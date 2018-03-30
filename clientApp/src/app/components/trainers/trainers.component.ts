@@ -8,7 +8,7 @@ import { Skill } from '../../model/Skill';
   styleUrls: ['./trainers.component.css']
 })
 export class TrainersComponent implements OnInit {
-  trainers: Trainer[];
+  trainers;
   isManager: boolean;
 
   constructor() {}

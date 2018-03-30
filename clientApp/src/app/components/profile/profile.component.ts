@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
   certName: string;
   skillsList: string[] = [];
   hidden: true;
-  trainer: Trainer = {
+  trainer = {
     trainerId: 1,
     firstName: 'Joseph',
     lastName: 'Wong',

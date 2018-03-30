@@ -1,4 +1,4 @@
-import { Location } from '../../model/location';
+import { Location } from '../../model/Location';
 
 export const locations: Location[] = [
   {
