@@ -7,25 +7,27 @@
         </mat-panel-title>
         <mat-panel-description>
           <span class="fill-space"></span>
-          <button mat-icon-button (click)="addFocus($event)">
+          <button mat-icon-button (click)="openAddFocusDialog()">
             <mat-icon class="icon-margin-fix" matTooltip="Add New Focus">add_circle_outline</mat-icon>
           </button>
         </mat-panel-description>
       </mat-expansion-panel-header>
       <div class="mat-panel-content">
         <mat-list>
-          <mat-list-item class="item-detail" *ngFor="let focus of focusData">
+          <mat-list-item class="item-detail" *ngFor="let focus of focusData; last as last">
             <div>
-              <h3 class="focus-name">{{focus.name}}</h3>
-              <p class="focus-skills">Skills: {{focus.skills}}</p>
+              <h3 mat-line class="focus-name">{{focus.name}}</h3>
+              <p mat-line class="focus-skills">Skills: {{focus.skills}}</p>
+              <br>
             </div>
             <span class="fill-space"></span>
-            <button mat-icon-button class="edit-button button-orange" (click)="editFocus($event)">
+            <button mat-icon-button class="edit-button button-orange" (click)="openEditFocusDialog(focus)">
               <mat-icon class="icon-margin-fix" matTooltip="Edit Focus">mode_edit</mat-icon>
             </button>
             <button mat-icon-button class="remove-button button-orange" (click)="removeFocus($event)">
               <mat-icon class="icon-margin-fix" matTooltip="Remove Focus">remove_circle</mat-icon>
             </button>
+            <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
           </mat-list-item>
         </mat-list>
       </div>

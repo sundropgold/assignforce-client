@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Curriculum } from '../../model/curriculum';
+import { MatDialog } from '@angular/material';
+import { AddFocusComponent } from '../add-focus/add-focus.component';
+import { Skill } from '../../model/skill';
+import { EditFocusComponent } from '../edit-focus/edit-focus.component';
 
 @Component({
   selector: 'app-foci',
@@ -31,7 +35,9 @@ export class FociComponent implements OnInit {
     }
   ];
 
-  constructor() {}
+  // @Input() skills: Skill[];
+
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit() {}
 
@@ -49,5 +55,21 @@ export class FociComponent implements OnInit {
 
   deselect() {
     document.getElementById('mat-expansion-panel-header-1').blur();
+  }
+
+  openAddFocusDialog() {
+    const dialogRef = this.dialog.open(AddFocusComponent, {
+      width: '250px',
+      height: '500px'
+      // data: this.skills
+    });
+  }
+
+  openEditFocusDialog(focus) {
+    const dialogRef = this.dialog.open(EditFocusComponent, {
+      width: '250px',
+      height: '500px',
+      data: focus
+    });
   }
 }

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Skill } from '../../model/skill';
+import { MatDialog } from '@angular/material';
+import { AddSkillComponent } from '../add-skill/add-skill.component';
 
 @Component({
   selector: 'app-skills',
@@ -15,15 +17,19 @@ export class SkillsComponent implements OnInit {
     { skillId: 5, name: 'JUnit', active: true }
   ];
 
-  constructor() {}
+  @Output() skills: EventEmitter<Skill[]> = new EventEmitter<Skill[]>();
 
-  ngOnInit() {}
+  constructor(private dialog: MatDialog) {}
+
+  ngOnInit() {
+    this.skills.emit(this.skillData);
+  }
 
   addSkill(e) {
     console.log('Adding Skill');
   }
 
-  editSkil(e) {
+  editSkill(e) {
     console.log('Editing Skill');
   }
 
@@ -33,5 +39,13 @@ export class SkillsComponent implements OnInit {
 
   deselect() {
     document.getElementById('mat-expansion-panel-header-2').blur();
+  }
+
+  openAddSkillDialog() {
+    const dialogRef = this.dialog.open(AddSkillComponent, {
+      width: '250px',
+      height: '500px',
+      data: this.skillData
+    });
   }
 }

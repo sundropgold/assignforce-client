@@ -8,10 +8,12 @@
       </mat-expansion-panel-header>
       <div class="mat-panel-content">
         <mat-list>
-          <mat-list-item class="item-detail" *ngFor="let core of coreData">
+          <mat-list-item class="item-detail" *ngFor="let core of coreData; last as last">
             <div>
-              <h3 class="core-name">{{core.name}}</h3>
-              <p class="core-skills">Skills: {{core.skills}}</p>
+              <h3 mat-line class="core-name">{{core.name}}</h3>
+              <p mat-line class="core-skills">Skills: {{core.skills}}</p>
+              <br>
+              <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
             </div>
           </mat-list-item>
         </mat-list>
