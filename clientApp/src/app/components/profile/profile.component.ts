@@ -5,6 +5,8 @@ import { S3CredentialService } from '../../services/s3-credential/s3-credential.
 import { Trainer } from '../../model/trainer';
 import { Skill } from '../../model/skill';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { SkillsComponent } from '../skills/skills.component';
+import { CertificationsComponent } from '../certifications/certifications.component';
 
 @Component({
   selector: 'app-profile',
