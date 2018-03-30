@@ -53,7 +53,7 @@ export class SkillsComponent implements OnInit {
   }
 
   confirmRemoveFocus(skill) {
-    if (confirm('Are you sure you want to remove Skill?')) {
+    if (confirm('Are you sure you want to remove ' + skill.name + '?')) {
       console.log('Hi');
     }
   }

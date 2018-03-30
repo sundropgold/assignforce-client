@@ -18,9 +18,12 @@ export class AddFocusComponent implements OnInit {
     { skillId: 5, name: 'JUnit', active: true }
   ];
 
+  selectedSkills: Skill[];
+
   ngOnInit() {}
 
   closeDialog(): void {
+    console.log(this.selectedSkills);
     this.dialogRef.close();
   }
 }

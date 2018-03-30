@@ -44,4 +44,9 @@ describe('EditFocusComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have name variable populated with current name of focus', () => {
+    fixture.detectChanges();
+    expect(component.data.name).toContain('Test Focus');
+  });
 });
