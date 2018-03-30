@@ -16,29 +16,16 @@ npm install
 
 In order to successfully run the tests, a dev server has to be running.
 
-1. Start dev server
+1.  Start dev server
 
 ```bash
 npm run start
 ```
 
-2. Open a new terminal tab and run the end-to-end tests.
+2.  Open a new terminal tab and run the end-to-end tests.
 
 ```bash
 npm run e2e
-```
-
-## Write Cypress Tests
-
-> The `cypress/integration/example_spec.js` file is provided by cypress by default. It can be a good resource for examples of how to write various assertions.
-
-> Cypress specific tests go in the `cypress/integration` directory
-
-```javascript
-// -> spec.ts
-it('loads', () => {
-  cy.visit('http://localhost:4200');
-});
 ```
 
 ## Write Cucumber Features
@@ -72,5 +59,3 @@ then(`I see {string} in the title`, title => {
   cy.title().should('include', title);
 });
 ```
-
-
