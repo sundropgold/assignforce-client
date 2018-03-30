@@ -7,25 +7,14 @@ import { Batch } from '../../model/batch';
   styleUrls: ['./batches-timeline.component.css']
 })
 export class BatchesTimelineComponent implements OnInit {
+  // todo make responsive
+  // todo use mask
   // values from current site
   width = 1536;
   height = 2067;
 
-  // b2: Batch = {
-
-  //   name: 'Feb02-18',
-  //   curriculum: 'Java',
-  //   focus: 'none',
-  //   startDate: new Date(2018, 2, 5),
-  //   endDate: new Date(2018, 4, 29),
-  //   trainer: 'August Duet',
-  //   cotrainer: 'Mitch',
-  //   location: 'Viginia',
-  //   building: '1',
-  //   room: '101'
-  // }
+  // test data
   batches = [
-    // test data
     {
       name: 'Feb02-18',
       curriculum: 'Java',
@@ -111,22 +100,25 @@ export class BatchesTimelineComponent implements OnInit {
   endDate: Date;
   trainers_per_page = 0;
 
-  constructor() {}
-
+  // zooming
   zooming = false;
   zoomingFrom: number;
   zoomingLine = { x1: 0, x2: 0, y1: 0, y2: 0 };
+
+  // popup
 
   // generated data
   trainers = [];
   today_line = { x1: 0, x2: 0, y1: 0, y2: 0 };
 
-  // initialize dates
+  constructor() {}
+
+  // initialize data
   ngOnInit() {
+    // todo get values from batches timeline component instead
     if (this.trainers_per_page === 0) {
       this.trainers_per_page = this.batches.length;
     }
-    this.updateTrainers();
     // set start date to 3 months ago
     const today = new Date(Date.now());
     console.log(today.getMonth());
@@ -135,10 +127,41 @@ export class BatchesTimelineComponent implements OnInit {
     // set end date to 6 months ago
     this.endDate = new Date(today);
     this.endDate.setMonth(this.endDate.getMonth() + 6);
+
+    this.updateTrainers();
     this.updateTodayLine();
   }
 
-  // returns the appropriate color for the curriculum curriculum type
+  // this is called when any of the filters are changed
+  onFilterChange(evt) {
+    console.log(evt);
+    // todo update stuff
+  }
+
+  // makes the list of trainers
+  updateTrainers() {
+    this.trainers = [];
+    // add all unique trainers found in the batches
+    for (let i = 0; i < this.batches.length; i++) {
+      const batch = this.batches[i];
+      const trainer = batch.trainer;
+      if (!this.trainers.includes(trainer)) {
+        this.trainers.push(trainer);
+      }
+    }
+  }
+
+  // updates the line for today
+  updateTodayLine() {
+    // calculate position of today_line
+    const y =
+      (new Date(Date.now()).valueOf() - this.startDate.valueOf()) /
+      (this.endDate.valueOf() - this.startDate.valueOf()) *
+      this.height;
+    this.today_line = { x1: 0, x2: this.width, y1: y, y2: y };
+  }
+
+  // returns the appropriate color for the core curriculum type
   getColorForcurriculum(type) {
     let color = '';
     switch (type.toLowerCase()) {
@@ -162,20 +185,29 @@ export class BatchesTimelineComponent implements OnInit {
   getBatchesRectangles() {
     const rects = [];
     const full_duration = this.endDate.valueOf() - this.startDate.valueOf();
+    // make a rectangle for each batch
     for (let i = 0; i < this.batches.length; i++) {
       const batch = this.batches[i];
+      // valueOf gives us ms, convert to weeks to get the duration this event takes
       let duration = batch.endDate.valueOf() - batch.startDate.valueOf();
       duration = Math.floor(duration / (1000 * 60 * 60 * 24 * 7)); // ms to weeks
 
+      // get the correct color
       const color = this.getColorForcurriculum(batch.curriculum);
-      const w = 20;
 
+      // get the column this batch will be in
       const trainer_index = this.trainers.findIndex(t => t === batch.trainer);
 
+      // todo set width dynamically
+      const w = 20;
+
+      // get the top left position of the rectangle
       const x = this.swimlane_x_ofs + trainer_index * this.column_width + (this.column_width - w) * 0.5;
       const y = (batch.startDate.valueOf() - this.startDate.valueOf()) / full_duration * this.height;
+      // calculate height from the top and bottom of the rectangle
       const endy = (batch.endDate.valueOf() - this.startDate.valueOf()) / full_duration * this.height;
       const h = endy - y;
+      // get the text that will be put into the rectangle
       const durarray = duration
         .toString()
         .split(' ')
@@ -189,40 +221,27 @@ export class BatchesTimelineComponent implements OnInit {
   // returns a list of the lines that seperate columns
   getSwimlanes() {
     const lines = [];
+    // make 1 more swimlane than the amount of trainers
     for (let i = 0; i < this.trainers.length + 1; i++) {
-      // let duration =
       const xpos = this.swimlane_x_ofs + i * this.column_width;
       lines.push({ x1: xpos, y1: this.swimlane_y_ofs, x2: xpos, y2: this.height - this.swimlane_y_ofs });
     }
     return lines;
   }
 
-  onFilterChange(evt) {
-    console.log(evt);
-  }
-
-  // makes the list of trainers
-  updateTrainers() {
-    this.trainers = [];
-    for (let i = 0; i < this.batches.length; i++) {
-      const batch = this.batches[i];
-      const trainer = batch.trainer;
-      if (!this.trainers.includes(trainer)) {
-        this.trainers.push(trainer);
-      }
-    }
-  }
-
   // returns the list of trainers with their positions
   getTrainers() {
     const trainerposs = [];
     for (let i = 0; i < this.trainers.length; i++) {
+      // get trainer name
       const trainer = this.trainers[i];
-      let left = 1;
+      // get left offset of this trainer
+      let left = 2;
       if (i === 0) {
         left += this.swimlane_x_ofs;
       }
-      const width = this.column_width;
+      // get width
+      const width = this.column_width - 2;
       trainerposs.push({ name: trainer, left: left, width: width });
     }
     return trainerposs;
@@ -238,19 +257,24 @@ export class BatchesTimelineComponent implements OnInit {
     const startMonth = this.startDate.getMonth();
     const startYear = this.startDate.getFullYear();
     //console.log(durmonths+' are between '+this.startDate+' and '+this.endDate+'\ny:'+startYear+' m:'+startMonth);
+    // todo dynamic scale to see days, weeks, months, quaters, or years based on duration
     let useQuaterly = false;
     // let useYearly = false;
     if (durmonths >= 16) {
       useQuaterly = true;
       durmonths /= 4;
     }
+    // go through each month
     for (let i = 0; i < durmonths; i++) {
+      // get a date for the start of this month
       const idate = new Date(startYear, startMonth);
       idate.setMonth(this.startDate.getMonth() + i);
       const month = idate.getMonth();
+
       if (useQuaterly && month % 4 !== 0) {
         continue;
       }
+      // get the name of the month, use year instead of january
       let name = 'm' + month;
       switch (month) {
         case 0:
@@ -291,6 +315,7 @@ export class BatchesTimelineComponent implements OnInit {
           break;
       }
 
+      // calculate the position of the name
       const y = this.swimlane_y_ofs + (idate.valueOf() - this.startDate.valueOf()) / full_duration * this.height;
       const x = 2;
       months.push({ name: name, x: x, y: y });
@@ -298,18 +323,26 @@ export class BatchesTimelineComponent implements OnInit {
     return months;
   }
 
-  // returns the line for today
-  updateTodayLine() {
-    const y =
-      (new Date(Date.now()).valueOf() - this.startDate.valueOf()) /
-      (this.endDate.valueOf() - this.startDate.valueOf()) *
-      this.height;
-    this.today_line = { x1: 0, x2: this.width, y1: y, y2: y };
+  zoomBy(amount) {
+    if (!this.zooming) {
+      return;
+    }
+    // todo
+    // get two durations, before zooming line and after
+    // scale each by the zooming amount
+    // store in temporary variable so that moving the mouse in the current zoom is consistent
+  }
+
+  finishZoom(amount) {
+    // todo
+    // zoom by, but remove temporary variables and save changes
+    // undo support?
   }
 
   // start zoom at mouse
   bgmousedown(event) {
     this.zooming = true;
+    // todo dont use event.target.getBoudingClient, as clicking on text or a rect gives the wrong value
     const y = event.clientY - event.target.getBoundingClientRect().top;
     this.zoomingFrom = y; // + this.startDate.valueOf();
     this.zoomingLine = { x1: 0, x2: this.width, y1: y, y2: y };
@@ -326,14 +359,11 @@ export class BatchesTimelineComponent implements OnInit {
       console.log('mp ' + dy);
       // this.startDate.setDate()
     }
+    // todo disable popup if mouse has not moved over a batch rectangle recently
   }
 
   // show tooltip at mouse
   batchmousemove(event) {
-    console.log('batchmousemove');
-  }
-  // hide tooltip
-  batchmouseleave(event) {
-    console.log('batchmouseleave');
+    // todo
   }
 }
