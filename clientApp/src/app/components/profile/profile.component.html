@@ -11,6 +11,9 @@ The second md-card/ng-show is for other users to look at other trainers profiles
       <mat-toolbar class="md-toolbar" layout="columns">
           <span>Profile</span>
           <span class="md-toolbar-spacer"></span>
+          <button mat-icon-button (click)="update = true">
+            <mat-icon matTooltip="Edit Profile" class="material-icons">edit</mat-icon>
+          </button>
           <button mat-icon-button (click)="updateName()">
             <mat-icon matTooltip="Save" class="material-icons">save</mat-icon>
           </button>
@@ -29,7 +32,7 @@ The second md-card/ng-show is for other users to look at other trainers profiles
         <div class="col-lg-10">
           <div>
             <h1>{{this.trainer.firstName}} {{this.trainer.lastName}}</h1>
-            <form [formGroup]="nameForm">
+            <form *ngIf="update" [formGroup]="nameForm">
               <mat-form-field flex>
                 <input matInput class="formControl" placeholder="First Name" formControlName="firstName" required>
               </mat-form-field>
@@ -44,15 +47,15 @@ The second md-card/ng-show is for other users to look at other trainers profiles
             <label *ngIf="trainer.resume != null">{{trainer.resume}}</label>
             <label *ngIf="trainer.resume == null">No resume on file</label> <br>
           </div>
-          <div class="row">
+          <div *ngIf="update" class="row">
             <div class="col-lg-1">
               <button mat-icon-button (click)="inputResume.click()">
                 <input class="inputFile" #inputResume type="file" (change)="getFiles($event)">
                 <mat-icon matTooltip="Add/Update Resume" position="below" class="material-icons revOrange">add_circle</mat-icon>
               </button>
             </div>
-            <div class="col-lg-11" *ngIf="myFile != undefined">
-              <label>{{myFile[0].name}}</label>
+            <div class="col-lg-11" *ngIf="resume != undefined">
+              <label>{{resume[0].name}}</label>
               <button mat-button (click)="uploadResume()">Update</button>
             </div>
           </div>

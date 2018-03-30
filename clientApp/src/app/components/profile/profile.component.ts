@@ -26,7 +26,7 @@ export class ProfileComponent implements OnInit {
   });
 
   nameFound = false;
-  myFile: FileList;
+  resume: FileList;
   creds: any;
   certFile: FileList = null;
   certName: string;
@@ -40,6 +40,7 @@ export class ProfileComponent implements OnInit {
     certifications: [],
     active: true
   };
+  update = false;
 
   constructor(private trainerService: TrainerService, private s3Service: S3CredentialService) {}
 
@@ -62,8 +63,8 @@ export class ProfileComponent implements OnInit {
   }
 
   getFiles(event) {
-    this.myFile = event.target.files;
-    console.log(this.myFile);
+    this.resume = event.target.files;
+    console.log(this.resume);
   }
 
   getCert(event) {
@@ -103,7 +104,7 @@ export class ProfileComponent implements OnInit {
     //     }
     //   });
     //
-    this.trainer.resume = this.myFile[0].name; // set the trainer resume to the file name(s3 file key to grab that object)
+    this.trainer.resume = this.resume[0].name; // set the trainer resume to the file name(s3 file key to grab that object)
     //
     //   // save the modified trainer resume field
     //   this.trainerService.update(this.trainer).subscribe( () => {},
@@ -111,13 +112,12 @@ export class ProfileComponent implements OnInit {
     //     () => this.showToast('Resume upload finished'));
     //
     //   // set my file to undefined so that update and label will be hidden in the html
-    this.myFile = undefined;
+    this.resume = undefined;
   }
 
   //Updates user's name
   updateName() {
-    console.log(this.nameForm.value.firstName);
-
+    this.update = false;
     this.nameFound = true;
     this.trainer.firstName = this.nameForm.value.firstName;
     this.trainer.lastName = this.nameForm.value.lastName;

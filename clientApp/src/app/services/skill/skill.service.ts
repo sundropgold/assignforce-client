@@ -5,10 +5,9 @@ import { Skill } from '../../model/skill';
 
 @Injectable()
 export class SkillService {
+  url = 'api/skill';
 
-  url = 'api/v2/skill';
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   // var Skill = $resource('api/v2/skill/:skillId',{skillId:'@skillId'},{update:{method:'PUT', url:});
 
