@@ -39,8 +39,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { AppMaterialModule } from './material.module';
+
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemDbService } from './mockdb/in-mem-db.service';
+
+import { TrainersAddComponent } from './components/trainers/trainers-add/trainers-add.component';
+import { TrainerItemComponent } from './components/trainers/trainer-item/trainer-item.component';
+
 
 @NgModule({
   declarations: [
@@ -63,7 +68,9 @@ import { InMemDbService } from './mockdb/in-mem-db.service';
     LocationAddRoomDialogComponent,
     LocationDeleteRoomDialogComponent,
     LocationEditRoomDialogComponent,
-    LoginComponent
+    LoginComponent,
+    TrainersAddComponent,
+    TrainerItemComponent
   ],
 
   imports: [
@@ -98,7 +105,8 @@ import { InMemDbService } from './mockdb/in-mem-db.service';
     LocationEditBuildingDialogComponent,
     LocationAddRoomDialogComponent,
     LocationDeleteRoomDialogComponent,
-    LocationEditRoomDialogComponent
+    LocationEditRoomDialogComponent,
+    TrainersAddComponent
   ]
 })
 export class AppModule {}

@@ -97,7 +97,6 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     'EndDate',
     'Icons'
   ];
-
   // batchData = new MatTableDataSource(BatchData);
 
   @ViewChild(MatSort) sort: MatSort;
