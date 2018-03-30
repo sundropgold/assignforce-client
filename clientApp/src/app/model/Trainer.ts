@@ -1,4 +1,6 @@
 import { Skill } from './Skill';
+import { Skill } from './skill';
+import { Unavailablity } from './unavailability';
 
 export class Trainer {
   trainerId: number;
@@ -7,5 +9,5 @@ export class Trainer {
   skills: Skill[];
   certifications: any;
   active: boolean;
-  resume: string;
+  unavailabilities: Unavailablity;
 }

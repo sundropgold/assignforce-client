@@ -1,3 +1,8 @@
+import { Unavailablity } from './unavailability';
+
 export class Room {
-  name: string;
+  roomID: number;
+  active: boolean;
+  roomName: string;
+  unavailabilities: Unavailablity[];
 }
