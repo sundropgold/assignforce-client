@@ -37,10 +37,6 @@ export class SkillsComponent implements OnInit {
     console.log('Removing Skill');
   }
 
-  deselect() {
-    document.getElementById('mat-expansion-panel-header-2').blur();
-  }
-
   openAddSkillDialog() {
     const dialogRef = this.dialog.open(AddSkillComponent, {
       // width: '250px',

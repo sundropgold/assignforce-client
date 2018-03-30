@@ -53,10 +53,6 @@ export class FociComponent implements OnInit {
     console.log('Removing Focus');
   }
 
-  deselect() {
-    document.getElementById('mat-expansion-panel-header-1').blur();
-  }
-
   openAddFocusDialog() {
     const dialogRef = this.dialog.open(AddFocusComponent, {
       // width: '250px',
