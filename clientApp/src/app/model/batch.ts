@@ -9,4 +9,5 @@ export class Batch {
   location: string;
   building: string;
   room: string;
+  progress: number;
 }

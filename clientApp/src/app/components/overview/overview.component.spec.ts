@@ -46,7 +46,8 @@ describe('OverviewComponent', () => {
         cotrainer: 'Mitch',
         location: 'Virginia',
         building: 'Plaza1',
-        room: '214'
+        room: '214',
+        progress: 10
       },
 
       {
@@ -59,7 +60,8 @@ describe('OverviewComponent', () => {
         cotrainer: 'Mitch',
         location: 'Virginia',
         building: 'Plaza1',
-        room: '214'
+        room: '214',
+        progress: 50
       },
 
       {
@@ -72,7 +74,8 @@ describe('OverviewComponent', () => {
         cotrainer: 'Mitch',
         location: 'Virginia',
         building: 'Plaza1',
-        room: '214'
+        room: '214',
+        progress: 65
       }
     ];
 
@@ -94,7 +97,12 @@ describe('OverviewComponent', () => {
 
   it('current week should be positive', () => {
     const date1 = new Date(2017, 4, 1);
-    expect(component.getCurrentWeek(date1)).toBeGreaterThan(0);
+    expect(component.getCurrentWeekOfBatch(date1)).toBeGreaterThan(0);
+  });
+
+  it('current week should be negative', () => {
+    const date1 = new Date(9999, 4, 1);
+    expect(component.getCurrentWeekOfBatch(date1)).toBeLessThan(0);
   });
 
   it('progress should not be 0', () => {
@@ -108,7 +116,8 @@ describe('OverviewComponent', () => {
       cotrainer: 'Mitch',
       location: 'Virginia',
       building: 'Plaza1',
-      room: '214'
+      room: '214',
+      progress: 20
     };
 
     expect(component.getCurrentProgress(batch)).toBeGreaterThan(0);
