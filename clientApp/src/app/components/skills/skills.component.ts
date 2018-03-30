@@ -43,8 +43,8 @@ export class SkillsComponent implements OnInit {
 
   openAddSkillDialog() {
     const dialogRef = this.dialog.open(AddSkillComponent, {
-      width: '250px',
-      height: '500px',
+      // width: '250px',
+      // height: '500px',
       data: this.skillData
     });
   }

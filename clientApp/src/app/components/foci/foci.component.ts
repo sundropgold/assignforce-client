@@ -59,16 +59,16 @@ export class FociComponent implements OnInit {
 
   openAddFocusDialog() {
     const dialogRef = this.dialog.open(AddFocusComponent, {
-      width: '250px',
-      height: '500px'
+      // width: '250px',
+      // height: '500px'
       // data: this.skills
     });
   }
 
   openEditFocusDialog(focus) {
     const dialogRef = this.dialog.open(EditFocusComponent, {
-      width: '250px',
-      height: '500px',
+      // width: '250px',
+      // height: '500px',
       data: focus
     });
   }

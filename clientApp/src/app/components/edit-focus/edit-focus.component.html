@@ -1,14 +1,17 @@
 <h1 mat-dialog-title>Edit Focus</h1>
 <div mat-dialog-content>
-  <mat-form-field>
-    <input matInput class="focus-name-input" placeholder="Name" [(ngModel)]="data.name">
-    
-  </mat-form-field>
-  <mat-form-field>
-    <mat-select class="focus-skill-select" placeholder="Skills" [(ngModel)]="data.skills" multiple>
-      <mat-option *ngFor="let skill of skills" [value]="name">{{skill.name}}</mat-option>
-    </mat-select>
-  </mat-form-field>
+  <div class="form-field-container">
+    <mat-form-field>
+      <input matInput class="focus-name-input" placeholder="Name" [(ngModel)]="data.name">
+    </mat-form-field>
+  </div>
+  <div class="form-field-container">
+    <mat-form-field>
+      <mat-select class="focus-skill-select" placeholder="Skills" [(ngModel)]="data.skills" multiple>
+        <mat-option *ngFor="let skill of skills" [value]="name">{{skill.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
 </div>
 <div mat-dialog-actions>
   <button mat-button class="close-dialog-button" (click)="closeDialog()">Cancel</button>
