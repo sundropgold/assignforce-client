@@ -28,9 +28,7 @@ describe('TrainersComponent', () => {
   });
 
   // add trainer
-  // it('should receive trainer data', ()=>{
-
-  // });
+  // it('should receive trainer data', () => {});
 
   // submitting the form to the service
   // download the resume

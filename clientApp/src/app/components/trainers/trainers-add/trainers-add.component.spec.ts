@@ -7,6 +7,9 @@ import { AppMaterialModule } from '../../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { TrainersComponent } from '../trainers.component';
+import { TrainerService } from '../../../services/trainer/trainer.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+
 describe('TrainersAddComponent', () => {
   let component: TrainersAddComponent;
   let fixture: ComponentFixture<TrainersAddComponent>;
@@ -14,9 +17,10 @@ describe('TrainersAddComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [AppMaterialModule, BrowserAnimationsModule, FormsModule],
+        imports: [AppMaterialModule, BrowserAnimationsModule, FormsModule, HttpClientTestingModule],
         declarations: [TrainersAddComponent],
         providers: [
+          TrainerService,
           {
             provide: MatDialogRef,
             useValue: {

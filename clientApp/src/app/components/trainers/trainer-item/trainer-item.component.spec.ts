@@ -1,8 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppMaterialModule } from '../../../material.module';
 import { TrainerItemComponent } from './trainer-item.component';
+import { TrainersComponent } from '../trainers.component';
 import { Skill } from '../../../model/skill';
+import { AppMaterialModule } from '../../../material.module';
+import { Trainer } from '../../../model/trainer';
 
 describe('TrainerItemComponent', () => {
   let component: TrainerItemComponent;
@@ -12,7 +14,7 @@ describe('TrainerItemComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [AppMaterialModule],
-        declarations: [TrainerItemComponent]
+        declarations: [TrainerItemComponent, TrainersComponent]
       }).compileComponents();
     })
   );

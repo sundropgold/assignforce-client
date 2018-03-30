@@ -10,70 +10,66 @@ import { MatDialog, MatDialogRef } from '@angular/material';
   styleUrls: ['./trainers.component.css']
 })
 export class TrainersComponent implements OnInit {
-  trainers: Trainer[] = [];
-  isManager: boolean;
-  firstName: string;
-  lastName: string;
+  Skillz: Skill[] = [
+    {
+      skillId: 1,
+      name: 'Java',
+      active: true
+    }
+  ];
+  trainers: Trainer[] = [
+    {
+      trainerId: 1,
+      firstName: 'James',
+      lastName: 'Smith',
+      skills: this.Skillz,
+      certifications: 'Certs',
+      active: true,
+      resume: 'Resume'
+    },
+    {
+      trainerId: 2,
+      firstName: 'Jane',
+      lastName: 'Doe',
+      skills: this.Skillz,
+      certifications: 'Certs',
+      active: false,
+      resume: 'Resume'
+    },
+    {
+      trainerId: 3,
+      firstName: 'Jon',
+      lastName: 'Jones',
+      skills: this.Skillz,
+      certifications: 'Certs',
+      active: false,
+      resume: 'Resume'
+    },
+    {
+      trainerId: 4,
+      firstName: 'Daniel',
+      lastName: 'Cormier',
+      skills: this.Skillz,
+      certifications: 'Certs',
+      active: true,
+      resume: 'Resume'
+    }
+  ];
+  isManager = true;
+  firstName;
+  lastName;
   constructor(public dialog: MatDialog) {}
 
-  ngOnInit() {
-    this.isManager = true;
-    const Skillz: Skill[] = [
-      {
-        skillId: 1,
-        name: 'Java',
-        active: true
-      }
-    ];
-    this.trainers = [
-      {
-        trainerId: 1,
-        firstName: 'James',
-        lastName: 'Smith',
-        skills: Skillz,
-        certifications: 'Certs',
-        active: true,
-        resume: 'Resume'
-      },
-      {
-        trainerId: 2,
-        firstName: 'Jane',
-        lastName: 'Doe',
-        skills: Skillz,
-        certifications: 'Certs',
-        active: false,
-        resume: 'Resume'
-      },
-      {
-        trainerId: 3,
-        firstName: 'Jon',
-        lastName: 'Jones',
-        skills: Skillz,
-        certifications: 'Certs',
-        active: false,
-        resume: 'Resume'
-      },
-      {
-        trainerId: 4,
-        firstName: 'Daniel',
-        lastName: 'Cormier',
-        skills: Skillz,
-        certifications: 'Certs',
-        active: true,
-        resume: 'Resume'
-      }
-    ];
-  }
+  ngOnInit() {}
 
   addTrainer(): void {
     //add trainer
-    console.log('add fire');
-    const Skillz: Skill[] = [];
+
     const trainer: Trainer = {
       trainerId: 0,
       firstName: '',
       lastName: '',
-      skills: Skillz,
+      skills: Skill[1],
       certifications: '',
       active: true,
       resume: ''

@@ -38,11 +38,9 @@ import { UrlService } from './services/url/url.service';
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
+import { AppMaterialModule } from './material.module';
 import { TrainersAddComponent } from './components/trainers/trainers-add/trainers-add.component';
 import { TrainerItemComponent } from './components/trainers/trainer-item/trainer-item.component';
-
-
-import { AppMaterialModule } from './material.module';
 
 @NgModule({
   declarations: [

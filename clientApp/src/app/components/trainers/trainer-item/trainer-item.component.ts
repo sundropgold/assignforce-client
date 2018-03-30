@@ -7,9 +7,11 @@ import { Trainer } from '../../../model/trainer';
   styleUrls: ['./trainer-item.component.css']
 })
 export class TrainerItemComponent implements OnInit {
-  isManager: boolean;
-  constructor() {}
   @Input() trainer: Trainer = new Trainer();
+  isManager: boolean;
+
+  constructor() {}
+
   ngOnInit() {
     this.isManager = true;
   }
