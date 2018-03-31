@@ -5,27 +5,54 @@ import { AppMaterialModule } from '../../material.module';
 import { Skill } from '../../model/Skill';
 import { TrainerItemComponent } from './trainer-item/trainer-item.component';
 import { TrainerService } from '../../services/trainer/trainer.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
 
 describe('TrainersComponent', () => {
   let component: TrainersComponent;
   let fixture: ComponentFixture<TrainersComponent>;
+  let trainerService: TrainerService;
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        imports: [AppMaterialModule, HttpClientModule],
-        declarations: [TrainersComponent, TrainerItemComponent],
-        providers: [TrainerService]
-      }).compileComponents();
-    })
-  );
+  class MockTrainerService {
+    getAll() {}
+  }
+
+  let mockClient;
 
   beforeEach(() => {
+    mockClient = jasmine.createSpyObj('HttpClient', ['get', 'post', 'put', 'delete']);
+    TestBed.configureTestingModule({
+      declarations: [TrainersComponent, TrainerItemComponent],
+      imports: [AppMaterialModule],
+      providers: [
+        { provide: TrainerService, useClass: MockTrainerService },
+        { provide: HttpClient, useValue: mockClient }
+      ]
+    }).compileComponents();
+
     fixture = TestBed.createComponent(TrainersComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    trainerService = TestBed.get(TrainerService);
+    mockClient = TestBed.get(HttpClient);
+    console.log(mockClient);
   });
+
+  // beforeEach(
+  //   async(() => {
+  //     TestBed.configureTestingModule({
+  //       imports: [AppMaterialModule, HttpClientModule],
+  //       declarations: [TrainersComponent, TrainerItemComponent],
+  //       providers: [TrainerService]
+  //     }).compileComponents();
+  //   })
+  // );
+
+  // beforeEach(() => {
+
+  //   fixture = TestBed.createComponent(TrainersComponent);
+  //   component = fixture.componentInstance;
+  //   fixture.detectChanges();
+  // });
 
   it('should create', () => {
     expect(component).toBeTruthy();
