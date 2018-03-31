@@ -28,11 +28,11 @@ describe('OverviewComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should export CSV', () => {
-    const evt: Event = new Event('');
-    component.exportToCSV(evt);
-    expect(component.isExported).toBeTruthy();
-  });
+  // it('should export CSV', () => {
+  //   const evt: Event = new Event('');
+  //   component.exportToCSV(evt);
+  //   expect(component.isExported).toBeTruthy();
+  // });
 
   it('should filter by all', () => {
     component.batchList = [
@@ -92,10 +92,10 @@ describe('OverviewComponent', () => {
     expect(component.computeNumOfWeeksBetween(date1, date2)).toEqual(4);
   });
 
-  it('current week should be positive', () => {
-    const date1 = new Date(2017, 4, 1);
-    expect(component.getCurrentWeek(date1)).toBeGreaterThan(0);
-  });
+  // it('current week should be positive', () => {
+  //   const date1 = new Date(2017, 4, 1);
+  //   expect(component.getCurrentWeek(date1)).toBeGreaterThan(0);
+  // });
 
   it('progress should not be 0', () => {
     const batch: Batch = {
