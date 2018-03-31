@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef, MatDialog } from '@angular/material';
-import { Skill } from '../../model/skill';
+import { Skill } from '../../model/Skill';
 
 @Component({
   selector: 'app-add-focus',

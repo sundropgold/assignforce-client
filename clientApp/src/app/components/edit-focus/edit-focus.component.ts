@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Skill } from '../../model/skill';
-import { Curriculum } from '../../model/curriculum';
+import { Skill } from '../../model/Skill';
+import { Curriculum } from '../../model/Curriculum';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -29,12 +29,12 @@ export class EditFocusComponent implements OnInit {
     for (let i = 0; i < this.data.skills.length; i++) {
       let skillId;
       for (let j = 0; j < this.skills.length; j++) {
-        if (this.skills[j].name === this.data.skills[i]) {
+        if (this.skills[j].name === this.data.skills[i].name) {
           skillId = this.skills[j].skillId;
           console.log('Inside the loop, skillId is ' + skillId);
         }
       }
-      this.selectedSkills[i] = { skillId: skillId, name: this.data.skills[i], active: true };
+      this.selectedSkills[i] = { skillId: skillId, name: this.data.skills[i].name, active: true };
     }
     console.log(this.selectedSkills);
   }

@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatSort, MatTableDataSource, MatCheckbox, MatSelect } from '@angular/material';
-import { Batch } from '../../model/batch';
+import { Batch } from '../../model/Batch';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
@@ -98,13 +98,14 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     'Icons'
   ];
   batchData = new MatTableDataSource([]);
+  // batchData = new MatTableDataSource(BatchData);
 
   @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit() {}
 
   ngAfterViewInit() {
-    this.batchData.sort = this.sort;
+    // this.batchData.sort = this.sort;
   }
 
   EditBatch() {

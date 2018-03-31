@@ -2,9 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditSkillComponent } from './edit-skill.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { AppMaterialModule } from '../../app-material/app-material.module';
+import { AppMaterialModule } from '../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Skill } from '../../model/skill';
+import { Skill } from '../../model/Skill';
 import { FormsModule } from '@angular/forms';
 
 describe('EditSkillComponent', () => {

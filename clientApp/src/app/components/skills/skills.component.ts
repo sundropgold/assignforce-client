@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Skill } from '../../model/skill';
+import { Skill } from '../../model/Skill';
 import { MatDialog } from '@angular/material';
 import { AddSkillComponent } from '../add-skill/add-skill.component';
 import { EditSkillComponent } from '../edit-skill/edit-skill.component';

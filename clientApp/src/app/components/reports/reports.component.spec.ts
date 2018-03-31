@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ReportsComponent } from './reports.component';
-import { AppMaterialModule } from '../../app-material/app-material.module';
+import { AppMaterialModule } from '../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ReportsComponent', () => {

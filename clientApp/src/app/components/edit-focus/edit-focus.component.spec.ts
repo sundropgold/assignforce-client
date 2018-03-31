@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditFocusComponent } from './edit-focus.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { AppMaterialModule } from '../../app-material/app-material.module';
+import { AppMaterialModule } from '../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { Curriculum } from '../../model/curriculum';
@@ -15,7 +15,7 @@ describe('EditFocusComponent', () => {
     name: 'Test Focus',
     core: false,
     active: true,
-    skills: ['Test Skill']
+    skills: [{skillId: 1, name: 'Test Skill', active: true}]
   };
 
   class MockDialogRef {

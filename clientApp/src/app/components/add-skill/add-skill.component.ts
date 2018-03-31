@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Skill } from '../../model/Skill';
 
 @Component({
   selector: 'app-add-skill',
@@ -8,6 +9,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class AddSkillComponent implements OnInit {
   constructor(private dialogRef: MatDialogRef<AddSkillComponent>) {}
+
+  skill: Skill
 
   ngOnInit() {}
 

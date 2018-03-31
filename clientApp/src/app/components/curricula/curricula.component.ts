@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Curriculum } from '../../model/curriculum';
+import { Curriculum } from '../../model/Curriculum';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Skill } from '../../model/skill';
+import { Skill } from '../../model/Skill';
 
 @Component({
   selector: 'app-curricula',
@@ -20,9 +20,5 @@ export class CurriculaComponent implements OnInit {
   clickTest(evt) {
     console.log('button clicked');
     evt.stopPropagation();
-  }
-
-  setSkills(e): void {
-    this.skills = e;
   }
 }

@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CurriculaComponent } from './curricula.component';
-import { AppMaterialModule } from '../../app-material/app-material.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreComponent } from '../core/core.component';
 import { FociComponent } from '../foci/foci.component';
 import { SkillsComponent } from '../skills/skills.component';
+import { AppMaterialModule } from '../../material.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('CurriculaComponent', () => {
   let component: CurriculaComponent;

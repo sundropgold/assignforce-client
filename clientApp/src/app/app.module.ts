@@ -11,7 +11,7 @@ import { MenuBarComponent } from './components/menu-bar/menu-bar.component';
 import { OverviewComponent } from './components/overview/overview.component';
 import { BatchesComponent } from './components/batches/batches.component';
 import {
-  LocationAddBuildingDialogComponent,
+  // LocationAddBuildingDialogComponent,
   LocationAddLocationDialogComponent,
   LocationAddRoomDialogComponent,
   LocationDeleteBuildingDialogComponent,
@@ -22,6 +22,7 @@ import {
   LocationEditRoomDialogComponent,
   LocationsComponent
 } from './components/locations/locations.component';
+import { LocationAddDialogComponent } from './components/locations/add-dialog/location-add-dialog.component';
 import { CurriculaComponent } from './components/curricula/curricula.component';
 import { TrainersComponent } from './components/trainers/trainers.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -33,34 +34,7 @@ import { TrainerService } from './services/trainer/trainer.service';
 import { SkillService } from './services/skill/skill.service';
 import { S3CredentialService } from './services/s3-credential/s3-credential.service';
 import { UrlService } from './services/url/url.service';
-import {
-  MatButtonModule,
-  MatCardModule,
-  MatCheckbox,
-  MatCheckboxModule,
-  MatChipsModule,
-  MatExpansionModule,
-  MatFormFieldModule,
-  MatIconModule,
-  MatInputModule,
-  MatDatepickerModule,
-  MatOptionModule,
-  MatNativeDateModule,
-  MatListModule,
-  MatMenuModule,
-  MatPaginatorModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule,
-  MatSortModule,
-  MatTableModule,
-  MatTabsModule,
-  MatToolbarModule,
-  MatTooltipModule,
-  MatDialogModule
-} from '@angular/material';
-import { MatSelectModule } from '@angular/material/select';
-import { ReactiveFormsModule } from '@angular/forms';
-import { LoginComponent } from './components/login/login.component';
+
 import { SkillsComponent } from './components/skills/skills.component';
 import { FociComponent } from './components/foci/foci.component';
 import { CoreComponent } from './components/core/core.component';
@@ -68,6 +42,19 @@ import { AddFocusComponent } from './components/add-focus/add-focus.component';
 import { AddSkillComponent } from './components/add-skill/add-skill.component';
 import { EditFocusComponent } from './components/edit-focus/edit-focus.component';
 import { EditSkillComponent } from './components/edit-skill/edit-skill.component';
+
+import { MatSelectModule } from '@angular/material/select';
+import { ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './components/login/login.component';
+import { AppMaterialModule } from './material.module';
+
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemDbService } from './mockdb/in-mem-db.service';
+
+import { TrainersAddComponent } from './components/trainers/trainers-add/trainers-add.component';
+import { TrainerItemComponent } from './components/trainers/trainer-item/trainer-item.component';
+import { CurriculaService } from './services/curricula/curricula.service';
+
 
 @NgModule({
   declarations: [
@@ -84,7 +71,7 @@ import { EditSkillComponent } from './components/edit-skill/edit-skill.component
     LocationAddLocationDialogComponent,
     LocationDeleteLocationDialogComponent,
     LocationEditLocationDialogComponent,
-    LocationAddBuildingDialogComponent,
+    LocationAddDialogComponent, // LocationAddBuildingDialogComponent,
     LocationDeleteBuildingDialogComponent,
     LocationEditBuildingDialogComponent,
     LocationAddRoomDialogComponent,
@@ -97,43 +84,19 @@ import { EditSkillComponent } from './components/edit-skill/edit-skill.component
     AddFocusComponent,
     AddSkillComponent,
     EditFocusComponent,
-    EditSkillComponent
+    EditSkillComponent,
+    TrainersAddComponent,
+    TrainerItemComponent
   ],
+
   imports: [
     HttpClientModule,
     FormsModule,
     BrowserModule,
     AppRouting,
     BrowserAnimationsModule,
-    MatListModule,
-    MatIconModule,
-    MatTabsModule,
-    MatExpansionModule,
-    MatSortModule,
-    MatTableModule,
-    MatTooltipModule,
-    MatToolbarModule,
-    MatProgressSpinnerModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatChipsModule,
-    MatFormFieldModule,
-    MatProgressBarModule,
-    MatPaginatorModule,
-    MatCheckboxModule,
-    MatCardModule,
-    MatChipsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatOptionModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatInputModule,
-    MatDialogModule
+    AppMaterialModule,
+    InMemoryWebApiModule.forRoot(InMemDbService)
   ],
   providers: [
     TrainerService,
@@ -145,14 +108,15 @@ import { EditSkillComponent } from './components/edit-skill/edit-skill.component
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,
       multi: true
-    }
+    },
+    CurriculaService
   ],
   bootstrap: [AppComponent],
   entryComponents: [
     LocationAddLocationDialogComponent,
     LocationDeleteLocationDialogComponent,
     LocationEditLocationDialogComponent,
-    LocationAddBuildingDialogComponent,
+    LocationAddDialogComponent, // LocationAddBuildingDialogComponent,
     LocationDeleteBuildingDialogComponent,
     LocationEditBuildingDialogComponent,
     LocationAddRoomDialogComponent,
@@ -161,7 +125,8 @@ import { EditSkillComponent } from './components/edit-skill/edit-skill.component
     AddFocusComponent,
     EditFocusComponent,
     AddSkillComponent,
-    EditSkillComponent
+    EditSkillComponent,
+    TrainersAddComponent
   ]
 })
 export class AppModule {}
