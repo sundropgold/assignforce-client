@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Trainer } from '../../model/trainer';
-import { Skill } from '../../model/skill';
+import { Trainer } from '../../model/Trainer';
+import { Skill } from '../../model/Skill';
 import { TrainersAddComponent } from './trainers-add/trainers-add.component';
 import { TrainerItemComponent } from './trainer-item/trainer-item.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
@@ -11,6 +11,7 @@ import { TrainerService } from '../../services/trainer/trainer.service';
   styleUrls: ['./trainers.component.css']
 })
 export class TrainersComponent implements OnInit {
+  [x: string]: any;
   Skillz: Skill[] = [
     {
       skillId: 1,
@@ -18,55 +19,69 @@ export class TrainersComponent implements OnInit {
       active: true
     }
   ];
-  trainers: Trainer[] = [
-    {
-      trainerId: 1,
-      firstName: 'James',
-      lastName: 'Smith',
-      skills: this.Skillz,
-      certifications: 'Certs',
-      active: true,
-      resume: 'Resume'
-    },
-    {
-      trainerId: 2,
-      firstName: 'Jane',
-      lastName: 'Doe',
-      skills: this.Skillz,
-      certifications: 'Certs',
-      active: false,
-      resume: 'Resume'
-    },
-    {
-      trainerId: 3,
-      firstName: 'Jon',
-      lastName: 'Jones',
-      skills: this.Skillz,
-      certifications: 'Certs',
-      active: false,
-      resume: 'Resume'
-    },
-    {
-      trainerId: 4,
-      firstName: 'Daniel',
-      lastName: 'Cormier',
-      skills: this.Skillz,
-      certifications: 'Certs',
-      active: true,
-      resume: 'Resume'
-    }
-  ];
 
-  isManager = true;
   firstName;
   lastName;
-  constructor(public dialog: MatDialog, private trainerService: TrainerService) {}
+  trainers;
+
+  isManager = true;
+
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit() {
-    // this.trainerService.getAll().subscribe(t => {
-    //   t = this.trainers;
-    // });
+    this.isManager = true;
+    const Skillz: Skill[] = [
+      {
+        skillId: 1,
+        name: 'Java',
+        active: true
+      }
+    ];
+    this.trainers = [
+      {
+        trainerId: 1,
+        firstName: 'Mary',
+        lastName: 'Poppins',
+        skills: Skillz,
+        certifications: 'Certs',
+        active: true,
+        resume: 'Resume'
+      },
+      {
+        trainerId: 2,
+        firstName: 'Moana',
+        lastName: 'Motunui',
+        skills: Skillz,
+        certifications: 'Certs',
+        active: false,
+        resume: 'Resume'
+      },
+      {
+        trainerId: 3,
+        firstName: 'Vanellope',
+        lastName: 'Von Schweetz',
+        skills: Skillz,
+        certifications: 'Certs',
+        active: false,
+        resume: 'Resume'
+      },
+      {
+        trainerId: 4,
+        firstName: 'Peter',
+        lastName: 'Pan',
+        skills: Skillz,
+        certifications: 'Certs',
+        active: true,
+        resume: 'Resume'
+      }
+    ];
   }
+
+  showCalendar() {}
+
+  goToTrainer(trainer: Trainer) {}
+
+  grabS3Resume(trainer: Trainer) {}
 
   addTrainer(): void {
     //add trainer
@@ -78,7 +93,8 @@ export class TrainersComponent implements OnInit {
       skills: Skill[1],
       certifications: '',
       active: true,
-      resume: ''
+      resume: '',
+      unavailabilities: []
     };
     const dialogRef = this.dialog.open(TrainersAddComponent, {
       width: '450px',
@@ -95,9 +111,7 @@ export class TrainersComponent implements OnInit {
     });
   }
 
-  showCalendar() {}
-
-  goToTrainer(trainer: Trainer) {}
-
-  grabS3Resume(trainer: Trainer) {}
+  activateTrainer(trainer: Trainer) {
+    trainer.active = true;
+  }
 }

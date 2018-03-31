@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatIconRegistry } from '@angular/material';
-import { Trainer } from '../../../model/trainer';
-import { Skill } from '../../../model/skill';
+import { Trainer } from '../../../model/Trainer';
+import { Skill } from '../../../model/Skill';
 import { TrainerService } from '../../../services/trainer/trainer.service';
 
 @Component({
@@ -25,7 +25,8 @@ export class TrainersAddComponent implements OnInit {
     skills: this.Skillz,
     certifications: '',
     active: true,
-    resume: ''
+    resume: '',
+    unavailabilities: []
   };
 
   data = {
