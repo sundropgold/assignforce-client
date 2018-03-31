@@ -4,7 +4,7 @@ import { Skill } from '../../model/Skill';
 import { TrainersAddComponent } from './trainers-add/trainers-add.component';
 import { TrainerItemComponent } from './trainer-item/trainer-item.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
-
+import { TrainerService } from '../../services/trainer/trainer.service';
 @Component({
   selector: 'app-trainers',
   templateUrl: './trainers.component.html',
@@ -106,6 +106,7 @@ export class TrainersComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         //  this.addTrainer(result);
+        this.trainers.push(result);
       }
     });
   }
