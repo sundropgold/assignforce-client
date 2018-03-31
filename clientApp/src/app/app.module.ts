@@ -47,6 +47,7 @@ import { BatchControllerService } from './services/api/batch-controller/batch-co
 import { AddressControllerService } from './services/api/address-controller/address-controller.service';
 import { BuildingControllerService } from './services/api/building-controller/building-controller.service';
 import { LocationControllerService } from './services/api/location-controller/location-controller.service';
+import { CurriculumControllerService } from './services/api/curriculum-controller/curriculum-controller.service';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { LocationControllerService } from './services/api/location-controller/lo
     AddressControllerService,
     BuildingControllerService,
     LocationControllerService,
+    CurriculumControllerService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,
