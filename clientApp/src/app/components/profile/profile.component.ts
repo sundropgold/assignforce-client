@@ -2,8 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { SkillService } from '../../services/skill/skill.service';
 import { TrainerService } from '../../services/trainer/trainer.service';
 import { S3CredentialService } from '../../services/s3-credential/s3-credential.service';
-import { Trainer } from '../../model/trainer';
-import { Skill } from '../../model/skill';
+
+import { Trainer } from '../../model/Trainer';
+import { Skill } from '../../model/Skill';
+
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SkillsComponent } from '../skills/skills.component';
 import { CertificationsComponent } from '../certifications/certifications.component';
@@ -31,7 +33,8 @@ export class ProfileComponent implements OnInit {
   certFile: FileList = null;
   certName: string;
   hidden: true;
-  trainer: Trainer = {
+
+  trainer = {
     trainerId: 1,
     firstName: 'Joseph',
     lastName: 'Wong',

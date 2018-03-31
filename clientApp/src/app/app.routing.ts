@@ -29,7 +29,7 @@ const appRoutes: Routes = [
     component: LocationsComponent
   },
   {
-    path: 'curricula',
+    path: 'curriculum',
     component: CurriculaComponent
   },
   {
@@ -51,11 +51,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(appRoutes),
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forRoot(appRoutes)],
+  exports: [RouterModule]
 })
-export class AppRouting { }
+export class AppRouting {}

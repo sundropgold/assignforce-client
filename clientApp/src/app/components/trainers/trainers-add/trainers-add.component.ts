@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatIconRegistry } from '@angular/material';
-import { Trainer } from '../../../model/trainer';
-import { Skill } from '../../../model/skill';
+import { Trainer } from '../../../model/Trainer';
+import { Skill } from '../../../model/Skill';
 import { TrainerService } from '../../../services/trainer/trainer.service';
 
 @Component({
@@ -22,10 +22,11 @@ export class TrainersAddComponent implements OnInit {
     trainerId: 0,
     firstName: '',
     lastName: '',
-    skills: Skill[1],
+    skills: this.Skillz,
     certifications: '',
     active: true,
-    resume: ''
+    resume: '',
+    unavailabilities: []
   };
 
   data = {
@@ -41,7 +42,35 @@ export class TrainersAddComponent implements OnInit {
   ngOnInit() {}
 
   onSubmit() {
-    this.trainerService.create(this.trainer);
+    if (
+      this.trainer.firstName !== '' &&
+      this.trainer.lastName !== '' &&
+      this.trainer.firstName.charAt(0).match(/[A-Za-z]/i) &&
+      this.trainer.lastName.charAt(0).match(/[A-Za-z]/i)
+    ) {
+      const fn = this.trainer.firstName.charAt(0).toUpperCase() + this.trainer.firstName.substring(1).toLowerCase();
+      this.trainer.firstName = fn;
+
+      let f = '';
+
+      for (let i = 0; i < this.trainer.firstName.length; i++) {
+        if (this.trainer.firstName.charAt(i) === ' ') {
+          f += fn.charAt(i);
+          f += fn.charAt(i + 1).toUpperCase();
+          i++;
+        } else {
+          f += fn.charAt(i);
+        }
+      }
+
+      this.trainer.firstName = f;
+
+      const ln = this.trainer.lastName.charAt(0).toUpperCase() + this.trainer.lastName.substring(1).toLowerCase();
+      this.trainer.lastName = ln;
+
+      this.trainerService.create(this.trainer).subscribe();
+      console.log(this.trainer);
+    }
   }
 
   onNoClick(): void {

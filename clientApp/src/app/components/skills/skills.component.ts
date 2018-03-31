@@ -28,6 +28,7 @@ export class SkillsComponent implements OnInit {
     skills: [],
     resume: null,
     certifications: [],
+    unavailabilities: [],
     active: true
   };
   skill: Skill;
