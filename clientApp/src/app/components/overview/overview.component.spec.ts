@@ -80,37 +80,37 @@ describe('OverviewComponent', () => {
   //   // expect(component.batchList.length)
   // });
 
-  it('should compute weeks', () => {
-    const date1 = new Date(2018, 3, 1);
-    const date2 = new Date(2018, 4, 1);
-    expect(component.computeNumOfWeeksBetween(date1, date2)).toEqual(4);
-  });
+  // it('should compute weeks', () => {
+  //   const date1 = new Date(2018, 3, 1);
+  //   const date2 = new Date(2018, 4, 1);
+  //   expect(component.computeNumOfWeeksBetween(date1, date2)).toEqual(4);
+  // });
 
-  it('should not compute to be negative', () => {
-    const date1 = new Date(2018, 4, 1);
-    const date2 = new Date(2018, 3, 1);
-    expect(component.computeNumOfWeeksBetween(date1, date2)).toEqual(4);
-  });
+  // it('should not compute to be negative', () => {
+  //   const date1 = new Date(2018, 4, 1);
+  //   const date2 = new Date(2018, 3, 1);
+  //   expect(component.computeNumOfWeeksBetween(date1, date2)).toEqual(4);
+  // });
 
-  it('current week should be positive', () => {
-    const date1 = new Date(2017, 4, 1);
-    expect(component.getCurrentWeek(date1)).toBeGreaterThan(0);
-  });
+  // it('current week should be positive', () => {
+  //   const date1 = new Date(2017, 4, 1);
+  //   expect(component.getCurrentWeek(date1)).toBeGreaterThan(0);
+  // });
 
-  it('progress should not be 0', () => {
-    // const batch: Batch = {
-    //   name: 'Calvin',
-    //   startDate: new Date(0, 0, 0),
-    //   endDate: new Date(1, 1, 1),
-    //   curriculum: 'Java',
-    //   focus: 'InfoSys',
-    //   trainer: 'August',
-    //   cotrainer: 'Mitch',
-    //   location: 'Virginia',
-    //   building: 'Plaza1',
-    //   room: '214'
-    // };
+  // it('progress should not be 0', () => {
+  //   const batch: Batch = {
+  //     name: 'Calvin',
+  //     startDate: new Date(0, 0, 0),
+  //     endDate: new Date(1, 1, 1),
+  //     curriculum: 'Java',
+  //     focus: 'InfoSys',
+  //     trainer: 'August',
+  //     cotrainer: 'Mitch',
+  //     location: 'Virginia',
+  //     building: 'Plaza1',
+  //     room: '214'
+  //   };
 
-    // expect(component.getCurrentProgress(batch)).toBeGreaterThan(0);
-  });
+  //   expect(component.getCurrentProgress(batch)).toBeGreaterThan(0);
+  // });
 });

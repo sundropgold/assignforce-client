@@ -11,6 +11,17 @@ import { MatDialog, MatDialogRef } from '@angular/material';
   styleUrls: ['./trainers.component.css']
 })
 export class TrainersComponent implements OnInit {
+  [x: string]: any;
+  Skillz: Skill[] = [
+    {
+      skillId: 1,
+      name: 'Java',
+      active: true
+    }
+  ];
+
+  firstName;
+  lastName;
   trainers;
   isManager: boolean;
 
@@ -68,18 +79,6 @@ export class TrainersComponent implements OnInit {
   goToTrainer(trainer: Trainer) {}
 
   grabS3Resume(trainer: Trainer) {}
-
-  Skillz: Skill[] = [
-    {
-      skillId: 1,
-      name: 'Java',
-      active: true
-    }
-  ];
-
-  firstName;
-  lastName;
-  constructor(public dialog: MatDialog) {}
 
   addTrainer(): void {
     //add trainer

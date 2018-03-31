@@ -26,7 +26,7 @@ export class TrainersAddComponent implements OnInit {
     certifications: '',
     active: true,
     resume: '',
-    unavailabilities: []
+    unavailabilities: null
   };
 
   data = {
@@ -41,9 +41,9 @@ export class TrainersAddComponent implements OnInit {
 
   ngOnInit() {}
 
-  onSubmit() {
-    this.trainerService.create(this.trainer);
-  }
+  // onSubmit() {
+  //   this.trainerService.create(this.trainer);
+  // }
 
   onNoClick(): void {
     this.dialogRef.close();

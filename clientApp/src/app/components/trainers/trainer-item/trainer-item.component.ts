@@ -7,7 +7,8 @@ import { Trainer } from '../../../model/Trainer';
   styleUrls: ['./trainer-item.component.css']
 })
 export class TrainerItemComponent implements OnInit {
-  @Input() trainer: Trainer;
+  // @Input() trainer: Trainer = new Trainer();
+  @Input() trainer: Trainer = null;
   isManager: boolean;
 
   constructor() {}

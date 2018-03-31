@@ -2,8 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddFocusComponent } from './add-focus.component';
 import { MatDialogRef } from '@angular/material';
-import { AppMaterialModule } from '../../app-material/app-material.module';
+import { AppMaterialModule } from '../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 
 describe('AddFocusComponent', () => {
   let component: AddFocusComponent;
@@ -18,7 +19,7 @@ describe('AddFocusComponent', () => {
       TestBed.configureTestingModule({
         declarations: [AddFocusComponent],
         providers: [{ provide: MatDialogRef, useClass: MockDialogRef }],
-        imports: [AppMaterialModule, BrowserAnimationsModule]
+        imports: [AppMaterialModule, BrowserAnimationsModule, FormsModule]
       }).compileComponents();
     })
   );
