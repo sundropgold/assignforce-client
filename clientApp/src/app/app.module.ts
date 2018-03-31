@@ -49,6 +49,7 @@ import { BuildingControllerService } from './services/api/building-controller/bu
 import { LocationControllerService } from './services/api/location-controller/location-controller.service';
 import { CurriculumControllerService } from './services/api/curriculum-controller/curriculum-controller.service';
 import { SettingControllerService } from './services/api/setting-controller/setting-controller.service';
+import { SkillControllerService } from './services/api/skill-controller/skill-controller.service';
 
 @NgModule({
   declarations: [
@@ -98,6 +99,7 @@ import { SettingControllerService } from './services/api/setting-controller/sett
     LocationControllerService,
     CurriculumControllerService,
     SettingControllerService,
+    SkillControllerService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,
