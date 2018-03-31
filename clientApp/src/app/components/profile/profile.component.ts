@@ -2,8 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { SkillService } from '../../services/skill/skill.service';
 import { TrainerService } from '../../services/trainer/trainer.service';
 import { S3CredentialService } from '../../services/s3-credential/s3-credential.service';
-import { Trainer } from '../../model/trainer';
-import { Skill } from '../../model/skill';
+
+import { Trainer } from '../../model/Trainer';
+import { Skill } from '../../model/Skill';
+
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -30,14 +32,17 @@ export class ProfileComponent implements OnInit {
     { skillId: 3, name: 'Angular', active: true },
     { skillId: 4, name: 'C++', active: true }
   ];
+
   nameFound = false;
+
   myFile: FileList;
   creds: any;
   certFile: FileList = null;
   certName: string;
   skillsList: string[] = [];
   hidden: true;
-  trainer: Trainer = {
+
+  trainer = {
     trainerId: 1,
     firstName: 'Joseph',
     lastName: 'Wong',

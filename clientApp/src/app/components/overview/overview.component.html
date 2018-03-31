@@ -2,7 +2,7 @@
   <mat-accordion>
     <mat-expansion-panel [expanded]="true" [disabled]="true">
       <mat-expansion-panel-header>
-        <mat-panel-title style="color:white">
+        <mat-panel-title style="color: white">
           All Batches
         </mat-panel-title>
         <mat-panel-description>
@@ -13,14 +13,14 @@
             menu
           </mat-icon>
           <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="applyFilter(0)">
+              <span>All</span>
+            </button>
             <button mat-menu-item (click)="applyFilter(1)">
               <span>In Progress</span>
             </button>
             <button mat-menu-item (click)="applyFilter(2)">
               <span>Beginging within two weeks</span>
-            </button>
-            <button mat-menu-item (click)="applyFilter(0)">
-              <span>All</span>
             </button>
           </mat-menu>
 

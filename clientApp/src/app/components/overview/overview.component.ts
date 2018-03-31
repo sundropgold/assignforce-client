@@ -1,8 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Angular2Csv } from 'angular2-csv/Angular2-csv';
-import { Batch } from '../../model/batch';
-
+import { Batch } from '../../model/Batch';
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
@@ -16,8 +15,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   bufferValue = 75;
 
   // ----------------------- NEW CODE FROM NEW HOPE -----------------------------------
-
-  batchList: Batch[] = [
+  batchList: any[] = [
     {
       name: 'Java J2EE',
       startDate: new Date(2018, 2, 31),
@@ -71,9 +69,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
       progress: 0
     }
   ];
-
-  displayedBatchList: Batch[];
-
+  displayedBatchList: any[];
   displayedColumns = [
     'name',
     'startDate',
@@ -86,8 +82,8 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     'room',
     'progress'
   ];
-  dataSource = new MatTableDataSource(this.displayedBatchList);
 
+  dataSource = new MatTableDataSource(this.displayedBatchList);
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -103,8 +99,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
-
-  // --------------------------------
+  // -------------------------------- PREVIOUS BATCH'S METHODS -------------------------------------------
   exportToCSV(evt) {
     evt.stopPropagation();
     // this.csvService.download(this.dataSource, 'Batches');
@@ -117,7 +112,6 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   // --------------------------------- END OF THE OLD -----------------------------------------------------
 
   // ----------------------------------BEGIN OPERATION NEW HOPE -------------------------------------------
-
   applyFilter(filterType: number) {
     /**
      *  FILTER TYPE!!!
@@ -163,17 +157,15 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     return weekNumber;
   }
 
-  getCurrentProgress(batch: Batch): number {
+  getCurrentProgress(batch: any): number {
     const training_duration = this.computeNumOfWeeksBetween(batch.startDate, batch.endDate);
     if (training_duration === 0) {
       return 0;
     }
-
     const batch_current_week = this.getCurrentWeekOfBatch(batch.startDate);
     if (batch_current_week <= 0) {
       return 0;
     }
-
     const progress = batch_current_week / training_duration;
     return progress * 100;
   }
