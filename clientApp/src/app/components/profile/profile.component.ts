@@ -76,42 +76,7 @@ export class ProfileComponent implements OnInit {
   }
 
   uploadResume() {
-    //   const path = 'Resumes/' + this.trainer.trainerId + '_' + this.myFile.name;
-    //
-    //   // This initializes a bucket with the keys obtained from Creds rest controller
-    //   const bucket = new AWS.S3({
-    //     apiVersion: '2006-03-01',
-    //     accessKeyId: this.creds.ID,
-    //     secretAccessKey: this.creds.SecretKey,
-    //     region: 'us-east-1',
-    //     httpOptions: {
-    //       proxy: 'http://dev.assignforce.revature.pro/'
-    //     }
-    //   });
-    //
-    //   // set the parameters needed to put an object in the aws s3 bucket
-    //   const params = {
-    //     Bucket: this.creds.BucketName,
-    //     Key: path,
-    //     Body: this.myFile
-    //   };
-    //
-    //   // putting an object in the s3 bucket
-    //   bucket.putObject(params, function (err) {
-    //     if (err) {
-    //       this.showToast('could not upload file.');
-    //       return;
-    //     }
-    //   });
-    //
-    this.trainer.resume = this.resume[0].name; // set the trainer resume to the file name(s3 file key to grab that object)
-    //
-    //   // save the modified trainer resume field
-    //   this.trainerService.update(this.trainer).subscribe( () => {},
-    //     () => this.showToast('Failed to upload resume'),
-    //     () => this.showToast('Resume upload finished'));
-    //
-    //   // set my file to undefined so that update and label will be hidden in the html
+    this.trainer.resume = this.resume[0].name;
     this.resume = undefined;
   }
 
