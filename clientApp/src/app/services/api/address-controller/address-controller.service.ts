@@ -8,7 +8,7 @@ import { Location } from '../../../model/Location';
 export class AddressControllerService {
   constructor(private http: HttpClient) {}
 
-  addressController = environment.apiUrls.addressController;
+  private addressController = environment.apiUrls.addressController;
 
   public createLocation(location: Location): Observable<Location> {
     return this.http.post<Location>(this.addressController.baseUrl + this.addressController.createLocation, location);

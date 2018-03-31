@@ -45,6 +45,7 @@ import { TrainersAddComponent } from './components/trainers/trainers-add/trainer
 import { TrainerItemComponent } from './components/trainers/trainer-item/trainer-item.component';
 import { BatchControllerService } from './services/api/batch-controller/batch-controller.service';
 import { AddressControllerService } from './services/api/address-controller/address-controller.service';
+import { BuildingControllerService } from './services/api/building-controller/building-controller.service';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { AddressControllerService } from './services/api/address-controller/addr
     UrlService,
     BatchControllerService,
     AddressControllerService,
+    BuildingControllerService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,
