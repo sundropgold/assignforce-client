@@ -6,6 +6,9 @@ import { AppMaterialModule } from '../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { Curriculum } from '../../model/curriculum';
+import { Skill } from '../../model/Skill';
+import { SkillService } from '../../services/skill/skill.service';
+import { Observable } from 'rxjs/Observable';
 
 describe('EditFocusComponent', () => {
   let component: EditFocusComponent;
@@ -15,8 +18,16 @@ describe('EditFocusComponent', () => {
     name: 'Test Focus',
     core: false,
     active: true,
-    skills: [{skillId: 1, name: 'Test Skill', active: true}]
+    skills: [{ skillId: 1, name: 'Test Skill', active: true }]
   };
+  const testData: Skill[] = [new Skill(1, 'Test Skill', true), new Skill(2, 'Test Skill 2', true)];
+  let skillService = SkillService;
+
+  class MockSkillService {
+    getAll(): Observable<Skill[]> {
+      return Observable.of(testData);
+    }
+  }
 
   class MockDialogRef {
     close() {}
@@ -28,10 +39,12 @@ describe('EditFocusComponent', () => {
         declarations: [EditFocusComponent],
         providers: [
           { provide: MatDialogRef, useClass: MockDialogRef },
-          { provide: MAT_DIALOG_DATA, useValue: mockFocusData }
+          { provide: MAT_DIALOG_DATA, useValue: mockFocusData },
+          { provide: SkillService, useClass: MockSkillService }
         ],
         imports: [AppMaterialModule, BrowserAnimationsModule, FormsModule]
       }).compileComponents();
+      skillService = TestBed.get(SkillService);
     })
   );
 

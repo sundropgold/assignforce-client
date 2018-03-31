@@ -3,17 +3,30 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SkillsComponent } from './skills.component';
 import { AppMaterialModule } from '../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Skill } from '../../model/Skill';
+import { SkillService } from '../../services/skill/skill.service';
+import { Observable } from 'rxjs/Observable';
 
 describe('SkillsComponent', () => {
   let component: SkillsComponent;
   let fixture: ComponentFixture<SkillsComponent>;
+  const testData: Skill[] = [new Skill(1, 'Test Skill', true), new Skill(2, 'Test Skill 2', true)];
+  let skillService = SkillService;
+
+  class MockSkillService {
+    getAll(): Observable<Skill[]> {
+      return Observable.of(testData);
+    }
+  }
 
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
         imports: [AppMaterialModule, BrowserAnimationsModule],
-        declarations: [SkillsComponent]
+        declarations: [SkillsComponent],
+        providers: [{ provide: SkillService, useClass: MockSkillService }]
       }).compileComponents();
+      skillService = TestBed.get(SkillService);
     })
   );
 

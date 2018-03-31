@@ -17,8 +17,12 @@
           <mat-list-item class="item-detail" *ngFor="let focus of focusData; last as last">
             <div>
               <h3 mat-line class="focus-name">{{focus.name}}</h3>
-              <p mat-line class="focus-skills">Skills: {{focus.skills}}</p>
-              <br>
+              <span>Skills: </span>
+              <span *ngFor="let skill of focus.skills; lasty as last">
+                <span *ngIf="!lasty" class="focus-skills">{{skill.name}}, </span>
+                <span *ngIf="lasty" class="focus-skills">{{skill.name}}</span>
+              </span>
+              <br><br><br><br>
             </div>
             <span class="fill-space"></span>
             <button mat-icon-button class="edit-button button-orange" (click)="openEditFocusDialog(focus)">

@@ -5,13 +5,12 @@ import { Observable } from 'rxjs/observable';
 
 @Injectable()
 export class CurriculaService {
+  //This value is for testing using the service without a backend, can be change later - Paul Fox
+  url = 'api/curricula';
 
   constructor(private http: HttpClient) {}
 
   getCurricula(): Observable<Curriculum[]> {
-
-    return this.http.get<Curriculum[]>('api/curricula');
-
+    return this.http.get<Curriculum[]>(`${this.url}`);
   }
-
 }

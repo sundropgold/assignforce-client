@@ -11,8 +11,9 @@
           <mat-list-item class="item-detail" *ngFor="let core of coreData; last as last">
             <div>
               <h3 mat-line class="core-name">{{core.name}}</h3>
-              <span *ngFor="let skill of core.skills; first as first" class="core-skills">Skills: {{skill.name}}</span>
-              <br>
+              <span class="core-skills-label">Skills: </span>
+              <span *ngFor="let skill of core.skills; first as first" class="core-skills">{{skill.name}}, </span>
+              <br><br><br><br>
               <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
             </div>
           </mat-list-item>

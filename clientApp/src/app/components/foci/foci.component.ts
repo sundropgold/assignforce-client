@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material';
 import { AddFocusComponent } from '../add-focus/add-focus.component';
 import { Skill } from '../../model/Skill';
 import { EditFocusComponent } from '../edit-focus/edit-focus.component';
+import { CurriculaService } from '../../services/curricula/curricula.service';
 
 @Component({
   selector: 'app-foci',
@@ -12,44 +13,51 @@ import { EditFocusComponent } from '../edit-focus/edit-focus.component';
 })
 export class FociComponent implements OnInit {
   focusData: Curriculum[] = [
-    {
-      currId: 4,
-      name: 'Microservices',
-      core: false,
-      active: true,
-      skills: [
-        {skillId: 1, name: 'Core JAVA', active: true},
-        {skillId: 2, name: 'JUnit', active: true},
-        {skillId: 3, name: 'Spring', active: true},
-        {skillId: 4, name: 'REST', active: true},
-        {skillId: 5, name: 'MVC', active: true},
-        {skillId: 6, name: 'SOAP', active: true}
-      ]
-    },
-    {
-      currId: 2,
-      name: 'Pega',
-      core: false,
-      active: true,
-      skills: [{skillId: 7, name: 'Pega', active: true}]
-    },
-    {
-      currId: 3,
-      name: 'Oracle Fusion',
-      core: false,
-      active: true,
-      skills: [
-        {skillId: 1, name: 'Core JAVA', active: true},
-        {skillId: 8, name: 'Oracle SQL', active: true}
-      ]
-    }
+    // {
+    //   currId: 4,
+    //   name: 'Microservices',
+    //   core: false,
+    //   active: true,
+    //   skills: [
+    //     {skillId: 1, name: 'Core JAVA', active: true},
+    //     {skillId: 2, name: 'JUnit', active: true},
+    //     {skillId: 3, name: 'Spring', active: true},
+    //     {skillId: 4, name: 'REST', active: true},
+    //     {skillId: 5, name: 'MVC', active: true},
+    //     {skillId: 6, name: 'SOAP', active: true}
+    //   ]
+    // },
+    // {
+    //   currId: 2,
+    //   name: 'Pega',
+    //   core: false,
+    //   active: true,
+    //   skills: [{skillId: 7, name: 'Pega', active: true}]
+    // },
+    // {
+    //   currId: 3,
+    //   name: 'Oracle Fusion',
+    //   core: false,
+    //   active: true,
+    //   skills: [
+    //     {skillId: 1, name: 'Core JAVA', active: true},
+    //     {skillId: 8, name: 'Oracle SQL', active: true}
+    //   ]
+    // }
   ];
 
-  // @Input() skills: Skill[];
+  constructor(private dialog: MatDialog, private curriculaService: CurriculaService) {}
 
-  constructor(public dialog: MatDialog) {}
-
-  ngOnInit() {}
+  ngOnInit() {
+    this.curriculaService.getCurricula().subscribe(data => {
+      const tempData: Curriculum[] = data;
+      for (let i = 0; i < tempData.length; i++) {
+        if (tempData[i].core === false) {
+          this.focusData.push(tempData[i]);
+        }
+      }
+    });
+  }
 
   addFocus(e) {
     console.log('Adding Focus');
@@ -64,17 +72,11 @@ export class FociComponent implements OnInit {
   }
 
   openAddFocusDialog() {
-    const dialogRef = this.dialog.open(AddFocusComponent, {
-      // width: '250px',
-      // height: '500px'
-      // data: this.skills
-    });
+    const dialogRef = this.dialog.open(AddFocusComponent, {});
   }
 
   openEditFocusDialog(focus) {
     const dialogRef = this.dialog.open(EditFocusComponent, {
-      // width: '250px',
-      // height: '500px',
       data: focus
     });
   }
