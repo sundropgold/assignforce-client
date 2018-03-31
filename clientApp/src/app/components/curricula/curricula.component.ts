@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Curriculum } from '../../model/curriculum';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 @Component({
   selector: 'app-curricula',
   templateUrl: './curricula.component.html',
@@ -10,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 })
 export class CurriculaComponent implements OnInit {
   isAdmin: Boolean = true;
-  currData: Curriculum[] = [
+  currData = [
     {
       currId: 1,
       name: '.NET',

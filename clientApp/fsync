@@ -14,7 +14,14 @@ function checkout_staging() {
 
 function merge_upstream() {
   echo "merging from upstream"
-  git merge upstream/master
+  git merge upstream/staging
+}
+
+function commit_to_origin() {
+  echo "create commit"
+  git commit -am "updating from upstream"
+  echo "push to origin"
+  git push
 }
 
 function check_upstream_exists() {
@@ -42,18 +49,6 @@ function checkout_branch() {
   git checkout ${branch}
 }
 
-function sync() {
-  echo "syncing upstream with origin"
-  fetch_upstream
-  checkout_staging
-  merge_upstream
-}
-
-function push_to_fork() {
-  echo "pushing changes to origin on GitHub"
-  git commit -am "sync with upstream"
-}
-
 function merge() {
   echo "merging origin/staging with $branch"
   git merge staging
@@ -64,22 +59,41 @@ case ${option} in
   "init")
     check_upstream_exists
     stash
-    sync
+    fetch_upstream
+    checkout_staging
+    merge_upstream
+    commit_to_origin
     checkout_branch
     unstash
     ;;
   "sync")
     stash
-    sync
+    fetch_upstream
+    checkout_staging
+    merge_upstream
+    commit_to_origin
     checkout_branch
     unstash
     ;;
   "merge")
     stash
-    sync
-    push_to_fork
+    fetch_upstream
+    checkout_staging
+    merge_upstream
+    commit_to_origin
     checkout_branch
     merge
+    unstash
+    ;;
+  "test")
+    stash
+    fetch_upstream
+    checkout_staging
+    merge_upstream
+    commit_to_origin
+    git checkout testing
+    merge
+    checkout_branch
     unstash
     ;;
   *)
