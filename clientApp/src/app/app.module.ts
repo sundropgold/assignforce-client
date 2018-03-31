@@ -40,6 +40,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { AppMaterialModule } from './material.module';
 
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemDbService } from './mockdb/in-mem-db.service';
+
+import { TrainersAddComponent } from './components/trainers/trainers-add/trainers-add.component';
+import { TrainerItemComponent } from './components/trainers/trainer-item/trainer-item.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,10 +68,20 @@ import { AppMaterialModule } from './material.module';
     LocationAddRoomDialogComponent,
     LocationDeleteRoomDialogComponent,
     LocationEditRoomDialogComponent,
-    LoginComponent
+    LoginComponent,
+    TrainersAddComponent,
+    TrainerItemComponent
   ],
 
-  imports: [HttpClientModule, FormsModule, BrowserModule, AppRouting, BrowserAnimationsModule, AppMaterialModule],
+  imports: [
+    HttpClientModule,
+    FormsModule,
+    BrowserModule,
+    AppRouting,
+    BrowserAnimationsModule,
+    AppMaterialModule,
+    InMemoryWebApiModule.forRoot(InMemDbService)
+  ],
 
   providers: [
     TrainerService,
@@ -88,7 +105,8 @@ import { AppMaterialModule } from './material.module';
     LocationEditBuildingDialogComponent,
     LocationAddRoomDialogComponent,
     LocationDeleteRoomDialogComponent,
-    LocationEditRoomDialogComponent
+    LocationEditRoomDialogComponent,
+    TrainersAddComponent
   ]
 })
 export class AppModule {}
