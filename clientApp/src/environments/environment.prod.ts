@@ -14,16 +14,81 @@ export const environment = {
   },
 
   apiUrls: {
-    curriculumService: 'https://curriculum-service.cfapps.io',
-    locationService: 'https://location-service.cfapps.io',
-    settingsService: 'https://settings-service.cfapps.io',
-    skillService: 'https://skill-service.cfapps.io',
-    trainerService: 'https://trainer-service.cfapps.io',
-    unavailableService: 'https://unavailable-service.cfapps.io',
-    centralConfig: 'https://central-config.cfapps.io',
-    batchService: 'https://batch-service.cfapps.io'
+    curriculumService: {
+      base: this.baseUrl,
+      api: '/curriculum',
+      get: '/',
+      update: '/',
+      remove: '/',
+      create: '/'
+    },
+    locationService: {
+      base: this.baseUrl,
+      api: '/location',
+      get: '/',
+      update: '/',
+      remove: '/',
+      create: '/'
+    },
+    settingsService: {
+      base: this.baseUrl,
+      api: '/setting',
+      get: '/',
+      update: '/',
+      remove: '/',
+      create: '/'
+    },
+    skillService: {
+      base: this.baseUrl,
+      api: '/skill',
+      get: '/',
+      update: '/',
+      remove: '/',
+      create: '/'
+    },
+    trainerService: {
+      base: this.baseUrl,
+      api: '/trainer',
+      get: '/',
+      update: '/',
+      remove: '/',
+      create: '/'
+    },
+    unavailableService: {
+      base: this.baseUrl,
+      api: '/unavailable',
+      get: '/',
+      update: '/',
+      remove: '/',
+      create: '/'
+    },
+    centralConfig: {
+      base: this.baseUrl,
+      api: '/centralConfig',
+      get: '/',
+      update: '/',
+      remove: '/',
+      create: '/'
+    },
+    batchService: {
+      base: this.baseUrl,
+      api: '/batch',
+      get: '/',
+      update: '/',
+      remove: '/',
+      create: '/'
+    },
+    buildingService: {
+      base: this.baseUrl,
+      api: '/building',
+      get: '/',
+      update: '/',
+      remove: '/',
+      create: '/'
+    }
   },
 
   //base url
-  baseURL: 'http://assignforce.revaturelabs.com'
+  baseUrl: 'http://assignforce.revaturelabs.com',
+  baseApiUrl: 'https://assignforceback.cfapps.io/api/v2'
 };

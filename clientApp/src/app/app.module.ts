@@ -35,8 +35,6 @@ import { SkillService } from './services/skill/skill.service';
 import { S3CredentialService } from './services/s3-credential/s3-credential.service';
 import { UrlService } from './services/url/url.service';
 
-import { MatSelectModule } from '@angular/material/select';
-import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { AppMaterialModule } from './material.module';
 
@@ -45,7 +43,14 @@ import { InMemDbService } from './mockdb/in-mem-db.service';
 
 import { TrainersAddComponent } from './components/trainers/trainers-add/trainers-add.component';
 import { TrainerItemComponent } from './components/trainers/trainer-item/trainer-item.component';
-import { CommonModule } from '@angular/common';
+import { BatchLocationApiService } from './services/api/batch-location/batch-location-api.service';
+import { LocationApiService } from './services/api/location/location-api.service';
+import { SettingApiService } from './services/api/setting/setting-api.service';
+import { CurriculumApiService } from './services/api/curriculum/curriculum-api.service';
+import { UnavailabilityApiService } from './services/api/unavailability/unavailability-api.service';
+import { BuildingApiService } from './services/api/building/building-api.service';
+import { TrainerApiService } from './services/api/trainer/trainer-api.service';
+import { BatchStatusApiService } from './services/api/batch-status/batch-status-api.service';
 
 @NgModule({
   declarations: [
@@ -80,7 +85,6 @@ import { CommonModule } from '@angular/common';
     AppRouting,
     BrowserAnimationsModule,
     AppMaterialModule,
-    CommonModule,
     InMemoryWebApiModule.forRoot(InMemDbService)
   ],
 
@@ -90,6 +94,14 @@ import { CommonModule } from '@angular/common';
     S3CredentialService,
     HttpClient,
     UrlService,
+    BatchLocationApiService,
+    BatchStatusApiService,
+    BuildingApiService,
+    CurriculumApiService,
+    LocationApiService,
+    SettingApiService,
+    TrainerApiService,
+    UnavailabilityApiService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,
