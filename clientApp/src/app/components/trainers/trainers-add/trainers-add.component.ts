@@ -66,7 +66,20 @@ export class TrainersAddComponent implements OnInit {
       this.trainer.firstName = f;
 
       const ln = this.trainer.lastName.charAt(0).toUpperCase() + this.trainer.lastName.substring(1).toLowerCase();
-      this.trainer.lastName = ln;
+
+      let l = '';
+
+      for (let i = 0; i < this.trainer.lastName.length; i++) {
+        if (this.trainer.lastName.charAt(i) === ' ') {
+          l += ln.charAt(i);
+          l += ln.charAt(i + 1).toUpperCase();
+          i++;
+        } else {
+          l += ln.charAt(i);
+        }
+      }
+
+      this.trainer.lastName = l;
 
       this.trainerService.create(this.trainer).subscribe();
       console.log(this.trainer);
