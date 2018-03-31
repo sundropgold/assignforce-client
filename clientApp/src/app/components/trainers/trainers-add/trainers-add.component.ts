@@ -42,8 +42,8 @@ export class TrainersAddComponent implements OnInit {
 
   onSubmit() {
     if (
-      this.trainer.firstName != '' &&
-      this.trainer.lastName != '' &&
+      this.trainer.firstName !== '' &&
+      this.trainer.lastName !== '' &&
       this.trainer.firstName.charAt(0).match(/[A-Za-z]/i) &&
       this.trainer.lastName.charAt(0).match(/[A-Za-z]/i)
     ) {
@@ -53,7 +53,7 @@ export class TrainersAddComponent implements OnInit {
       let f = '';
 
       for (let i = 0; i < this.trainer.firstName.length; i++) {
-        if (this.trainer.firstName.charAt(i) == ' ') {
+        if (this.trainer.firstName.charAt(i) === ' ') {
           f += fn.charAt(i);
           f += fn.charAt(i + 1).toUpperCase();
           i++;
