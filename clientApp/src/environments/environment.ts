@@ -52,75 +52,70 @@ export const environment = {
     },
 
     locationController: {
-      baseUrl: 'http://address-service.cfapps.io/api/v2/location'
+      baseUrl: 'http://address-service.cfapps.io/api/v2/location',
+      createLocation: '',
+      retrieveLocation: '/',
+      updateLocation: '',
+      retrieveAllLocation: ''
     },
 
-    curriculumService: {
-      base: this.baseUrl,
-      api: '/curriculum',
-      get: '/',
-      update: '/',
-      remove: '/',
-      create: '/'
+    curriculumController: {
+      baseUrl: 'http://curriculum-service.cfapps.io/api/v2/curriculum',
+      createCurriculum: '',
+      retrieveCurriculum: '/',
+      updateCurriculum: '',
+      deleteCurriculum: '/',
+      retrieveAllCurricula: '',
+      retrieveAllActiveCurricula: '/active',
+      retrieveAllCore: '/core',
+      retrieveAllActiveCore: '/activeCore',
+      retrieveAllFocus: '/focus',
+      retrieveAllActiveFocus: '/activeFocus'
     },
-    locationService: {
-      base: this.baseUrl,
-      api: '/location',
-      get: '/',
-      update: '/',
-      remove: '/',
-      create: '/'
+
+    settingController: {
+      baseUrl: 'http://setting-service.cfapps.io/api/v2/setting',
+      createSetting: '',
+      retrieveSetting: '/',
+      getGlobalSetting: '',
+      updateSetting: '',
+      deleteSetting: '/'
     },
-    settingsService: {
-      base: this.baseUrl,
-      api: '/setting',
-      get: '/',
-      update: '/',
-      remove: '/',
-      create: '/'
+
+    skillController: {
+      baseUrl: 'http://skill-service.cfapps.io',
+      findAllActive: '/skill/all',
+      findAll: '/vp/skill',
+      findSkillById: '/skill/',
+      updateSkillCaliber: '/vp/skill/update',
+      saveSkill: '/vp/skill',
+      createSkill: '/api/v2/skill',
+      retrieveSkill: '/api/v2/skill/',
+      updateSkillMinerva: '/api/v2/skill',
+      deleteSkill: '/api/v2/skill/',
+      retrieveAllSkills: '/api/v2/skill',
+      retrieveSkillsByIds: '/api/v2/skill/ids'
     },
-    skillService: {
-      base: this.baseUrl,
-      api: '/skill',
-      get: '/',
-      update: '/',
-      remove: '/',
-      create: '/'
+
+    trainerController: {
+      baseUrl: 'http://trainer-service.cfapps.io',
+      createTrainer: '/vp/trainer/create',
+      updateTrainer: '/vp/trainer/update',
+      findTrainer: '/training/trainer/byemail/',
+      makeInactive: '/vp/trainer/delete',
+      getAllTrainersTitles: '/vp/trainer/titles',
+      getAllTrainers: '/all/trainer/all'
     },
-    trainerService: {
-      base: this.baseUrl,
-      api: '/trainer',
-      get: '/',
-      update: '/',
-      remove: '/',
-      create: '/'
-    },
-    unavailableService: {
-      base: this.baseUrl,
-      api: '/unavailable',
-      get: '/',
-      update: '/',
-      remove: '/',
-      create: '/'
-    },
-    centralConfig: {
-      base: this.baseUrl,
-      api: '/centralConfig',
-      get: '/',
-      update: '/',
-      remove: '/',
-      create: '/'
-    },
-    buildingService: {
-      base: this.baseUrl,
-      api: '/building',
-      get: '/',
-      update: '/',
-      remove: '/',
-      create: '/'
+
+    unavailableController: {
+      baseUrl: 'http://unavailable-service.cfapps.io/api/v2/unavailable',
+      createUnavailability: '',
+      retrieveUnavailability: '/',
+      updateSkill: '',
+      deleteUnavailability: '',
+      retrieveAllUnavailabilities: ''
     }
   },
 
-  baseUrl: 'http://localhost:4200',
-  baseApiUrl: 'https://assignforceback.cfapps.io/api/v2'
+  baseUrl: 'http://localhost:4200'
 };

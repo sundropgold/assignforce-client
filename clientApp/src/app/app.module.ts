@@ -44,6 +44,7 @@ import { InMemDbService } from './mockdb/in-mem-db.service';
 import { TrainersAddComponent } from './components/trainers/trainers-add/trainers-add.component';
 import { TrainerItemComponent } from './components/trainers/trainer-item/trainer-item.component';
 import { BatchControllerService } from './services/api/batch-controller/batch-controller.service';
+import { AddressControllerService } from './services/api/address-controller/address-controller.service';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { BatchControllerService } from './services/api/batch-controller/batch-co
     HttpClient,
     UrlService,
     BatchControllerService,
+    AddressControllerService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,
