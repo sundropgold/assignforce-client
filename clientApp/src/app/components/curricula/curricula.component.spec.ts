@@ -13,12 +13,16 @@ import { CurriculaService } from '../../services/curricula/curricula.service';
 describe('CurriculaComponent', () => {
   let component: CurriculaComponent;
   let fixture: ComponentFixture<CurriculaComponent>;
-  const testData: Curriculum = new Curriculum(1, 'Test Curriculum', true, true, [
-    { skillId: 1, name: 'Test Skill', active: true }
-  ]);
+  const testData: Curriculum[] = [
+    new Curriculum(1, 'Test Curriculum', true, true, [{ skillId: 1, name: 'Test Skill', active: true }]),
+    new Curriculum(2, 'Test Curriculum 2', true, true, [{ skillId: 1, name: 'Test Skill', active: true }])
+  ];
+  let curriculaService = CurriculaService;
 
   class MockCurriculaService {
-    getCurricula() {}
+    getCurricula(): Observable<Curriculum[]> {
+      return Observable.of(testData);
+    }
   }
 
   beforeEach(
@@ -28,6 +32,7 @@ describe('CurriculaComponent', () => {
         declarations: [CurriculaComponent, CoreComponent, FociComponent, SkillsComponent],
         providers: [{ provide: CurriculaService, useClass: MockCurriculaService }]
       }).compileComponents();
+      curriculaService = TestBed.get(CurriculaService);
     })
   );
 
