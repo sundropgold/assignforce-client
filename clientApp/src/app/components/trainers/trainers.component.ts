@@ -26,8 +26,10 @@ export class TrainersComponent implements OnInit {
 
   isManager = true;
 
+  constructor(public dialog: MatDialog) {}
+
   ngOnInit() {
-    this.isManager = false;
+    this.isManager = true;
     const Skillz: Skill[] = [
       {
         skillId: 1,
@@ -80,8 +82,6 @@ export class TrainersComponent implements OnInit {
   goToTrainer(trainer: Trainer) {}
 
   grabS3Resume(trainer: Trainer) {}
-
-  constructor(public dialog: MatDialog) {}
 
   addTrainer(): void {
     //add trainer
