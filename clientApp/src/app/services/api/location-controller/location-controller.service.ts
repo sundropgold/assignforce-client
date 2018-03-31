@@ -25,7 +25,15 @@ export class LocationControllerService {
   }
 
   public retrieveLocation(id: number): Observable<BatchLocation> {
-    return this.http.get<BatchLocation>(this.locationController.baseUrl + this.locationController.retrieveLocation);
+    return this.http.get<BatchLocation>(
+      this.locationController.baseUrl + this.locationController.retrieveLocation + id
+    );
+  }
+
+  public deleteLocation(id: number): Observable<BatchLocation> {
+    return this.http.delete<BatchLocation>(
+      this.locationController.baseUrl + this.locationController.deleteLocation + id
+    );
   }
 
   public retrieveAllLocation(): Observable<BatchLocation[]> {

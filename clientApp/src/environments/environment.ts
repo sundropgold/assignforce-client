@@ -56,6 +56,7 @@ export const environment = {
       createLocation: '',
       retrieveLocation: '/',
       updateLocation: '',
+      deleteLocation: '/',
       retrieveAllLocation: ''
     },
 
