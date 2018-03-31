@@ -20,6 +20,41 @@ export const environment = {
   },
 
   apiUrls: {
+    batchController: {
+      baseUrl: 'http://batch-service.cfapps.io',
+      createBatch: '/all/batch/create',
+      deleteBatch: '/all/batch/delete/',
+      updateBatch: '/all/batch/update',
+      findCommonLocations: '/all/locations',
+      getAllBatches: '/qc/batch/all',
+      findAllBatchesByTrainer: '/trainer/batch/all',
+      createWeek: '/trainer/week/new/',
+      getAllVpBatches: '/vp/batch/all',
+      getAllCurrentBatches: '/vp/batch/all/current'
+    },
+
+    addressController: {
+      baseUrl: 'http://address-service.cfapps.io',
+      createLocation: '/vp/location/create',
+      updateLocation: '/vp/location/update',
+      getAllLocations: '/all/location/all',
+      removeLocation: '/vp/location/delete',
+      reactivateLocation: '/vp/location/reactivate'
+    },
+
+    buildingController: {
+      baseUrl: 'http://address-service.cfapps.io/api/v2/building',
+      createBuilding: '',
+      retrieveBuilding: '/',
+      updateBuilding: '',
+      deleteBuilding: '/',
+      retrieveAllBuildings: ''
+    },
+
+    locationController: {
+      baseUrl: 'http://address-service.cfapps.io/api/v2/location'
+    },
+
     curriculumService: {
       base: this.baseUrl,
       api: '/curriculum',
@@ -71,14 +106,6 @@ export const environment = {
     centralConfig: {
       base: this.baseUrl,
       api: '/centralConfig',
-      get: '/',
-      update: '/',
-      remove: '/',
-      create: '/'
-    },
-    batchService: {
-      base: this.baseUrl,
-      api: '/batch',
       get: '/',
       update: '/',
       remove: '/',

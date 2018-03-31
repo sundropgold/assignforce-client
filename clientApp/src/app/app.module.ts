@@ -43,14 +43,7 @@ import { InMemDbService } from './mockdb/in-mem-db.service';
 
 import { TrainersAddComponent } from './components/trainers/trainers-add/trainers-add.component';
 import { TrainerItemComponent } from './components/trainers/trainer-item/trainer-item.component';
-import { BatchLocationApiService } from './services/api/batch-location/batch-location-api.service';
-import { LocationApiService } from './services/api/location/location-api.service';
-import { SettingApiService } from './services/api/setting/setting-api.service';
-import { CurriculumApiService } from './services/api/curriculum/curriculum-api.service';
-import { UnavailabilityApiService } from './services/api/unavailability/unavailability-api.service';
-import { BuildingApiService } from './services/api/building/building-api.service';
-import { TrainerApiService } from './services/api/trainer/trainer-api.service';
-import { BatchStatusApiService } from './services/api/batch-status/batch-status-api.service';
+import { BatchControllerService } from './services/api/batch-controller/batch-controller.service';
 
 @NgModule({
   declarations: [
@@ -94,14 +87,7 @@ import { BatchStatusApiService } from './services/api/batch-status/batch-status-
     S3CredentialService,
     HttpClient,
     UrlService,
-    BatchLocationApiService,
-    BatchStatusApiService,
-    BuildingApiService,
-    CurriculumApiService,
-    LocationApiService,
-    SettingApiService,
-    TrainerApiService,
-    UnavailabilityApiService,
+    BatchControllerService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,
