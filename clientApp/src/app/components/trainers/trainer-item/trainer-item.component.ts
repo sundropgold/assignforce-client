@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Trainer } from '../../../model/trainer';
+import { Trainer } from '../../../model/Trainer';
 
 @Component({
   selector: 'app-trainer-item',
@@ -7,7 +7,8 @@ import { Trainer } from '../../../model/trainer';
   styleUrls: ['./trainer-item.component.css']
 })
 export class TrainerItemComponent implements OnInit {
-  @Input() trainer: Trainer = new Trainer();
+  // @Input() trainer: Trainer = new Trainer();
+  @Input() trainer: Trainer = null;
   isManager: boolean;
 
   constructor() {}

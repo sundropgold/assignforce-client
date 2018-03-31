@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatIconRegistry } from '@angular/material';
-import { Trainer } from '../../../model/trainer';
-import { Skill } from '../../../model/skill';
+import { Trainer } from '../../../model/Trainer';
+import { Skill } from '../../../model/Skill';
 import { TrainerService } from '../../../services/trainer/trainer.service';
 
 @Component({
@@ -25,7 +25,8 @@ export class TrainersAddComponent implements OnInit {
     skills: Skill[1],
     certifications: '',
     active: true,
-    resume: ''
+    resume: '',
+    unavailabilities: null
   };
 
   data = {
@@ -40,9 +41,9 @@ export class TrainersAddComponent implements OnInit {
 
   ngOnInit() {}
 
-  onSubmit() {
-    this.trainerService.create(this.trainer);
-  }
+  // onSubmit() {
+  //   this.trainerService.create(this.trainer);
+  // }
 
   onNoClick(): void {
     this.dialogRef.close();
