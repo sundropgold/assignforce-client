@@ -1,0 +1,18 @@
+language: node.js
+
+install:
+  - npm install
+
+  
+deploy:
+  provider: cloudfoundry
+  api: https://api.run.pivotal.io
+  username:
+    secure: "... secure username, generated with travis cli"
+  password:
+    secure: "... secure password, generated with travis cli"
+  organization: august-duet.org
+  space: development
+  on:
+    repo: revaturelabs/assignforce
+    branch: development
