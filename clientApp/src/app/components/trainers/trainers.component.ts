@@ -23,9 +23,8 @@ export class TrainersComponent implements OnInit {
   firstName;
   lastName;
   trainers;
-  isManager: boolean;
 
-  constructor() {}
+  isManager = true;
 
   ngOnInit() {
     this.isManager = false;
@@ -39,8 +38,8 @@ export class TrainersComponent implements OnInit {
     this.trainers = [
       {
         trainerId: 1,
-        firstName: 'James',
-        lastName: 'Smith',
+        firstName: 'Mary',
+        lastName: 'Poppins',
         skills: Skillz,
         certifications: 'Certs',
         active: true,
@@ -48,8 +47,8 @@ export class TrainersComponent implements OnInit {
       },
       {
         trainerId: 2,
-        firstName: 'Jane',
-        lastName: 'Doe',
+        firstName: 'Moana',
+        lastName: 'Motunui',
         skills: Skillz,
         certifications: 'Certs',
         active: false,
@@ -57,8 +56,8 @@ export class TrainersComponent implements OnInit {
       },
       {
         trainerId: 3,
-        firstName: 'Jon',
-        lastName: 'Jones',
+        firstName: 'Vanellope',
+        lastName: 'Von Schweetz',
         skills: Skillz,
         certifications: 'Certs',
         active: false,
@@ -66,8 +65,8 @@ export class TrainersComponent implements OnInit {
       },
       {
         trainerId: 4,
-        firstName: 'Daniel',
-        lastName: 'Cormier',
+        firstName: 'Peter',
+        lastName: 'Pan',
         skills: Skillz,
         certifications: 'Certs',
         active: true,
@@ -81,6 +80,8 @@ export class TrainersComponent implements OnInit {
   goToTrainer(trainer: Trainer) {}
 
   grabS3Resume(trainer: Trainer) {}
+
+  constructor(public dialog: MatDialog) {}
 
   addTrainer(): void {
     //add trainer

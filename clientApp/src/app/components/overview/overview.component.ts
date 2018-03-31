@@ -1,33 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Angular2Csv } from 'angular2-csv/Angular2-csv';
-import { Batch } from '../../model/batch';
-
-// --------------------------------- HARD CODED ELEMENT DATA... SHOULD BE DELETED --------------------------------------
-
-// const ELEMENT_DATA: Element[] = [
-//   { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-//   { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-//   { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-//   { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-//   { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-//   { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-//   { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-//   { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-//   { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-//   { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-//   { position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na' },
-//   { position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg' },
-//   { position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al' },
-//   { position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si' },
-//   { position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P' },
-//   { position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S' },
-//   { position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl' },
-//   { position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar' },
-//   { position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K' },
-//   { position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca' }
-// ];
-
+import { Batch } from '../../model/Batch';
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
@@ -35,32 +9,66 @@ import { Batch } from '../../model/batch';
   encapsulation: ViewEncapsulation.None
 })
 export class OverviewComponent implements OnInit, AfterViewInit {
-  // ---------------------- OLD DEFAULT CODE FROM LAST BATCH --------------------------
-  // displayedColumns = ['position', 'name', 'weight', 'symbol', 'progress'];
-  // dataSource = new MatTableDataSource(ELEMENT_DATA);
-  //-----------------------------------------------------------------------------------
   color = 'warn';
   mode = 'determinate';
-  value = 10;
+  value = 0;
   bufferValue = 75;
-
   // ----------------------- NEW CODE FROM NEW HOPE -----------------------------------
-
-  batchList: Batch[] = [
-    // {
-    //   name: 'Calvin',
-    //   startDate: new Date(0, 0, 0),
-    //   endDate: new Date(1, 1, 1),
-    //   curriculum: 'Java',
-    //   focus: 'InfoSys',
-    //   trainer: 'August',
-    //   cotrainer: 'Mitch',
-    //   location: 'Virginia',
-    //   building: 'Plaza1',
-    //   room: '214'
-    // }
+  batchList: any[] = [
+    {
+      name: 'Java J2EE',
+      startDate: new Date(2018, 2, 31),
+      endDate: new Date(2018, 5, 4),
+      curriculum: 'Java',
+      focus: 'Pivotal',
+      trainer: 'August',
+      cotrainer: 'Mitch',
+      location: 'Virginia',
+      building: 'Plaza1',
+      room: '214',
+      progress: 0
+    },
+    {
+      name: '.Net',
+      startDate: new Date(2018, 1, 1),
+      endDate: new Date(2018, 4, 1),
+      curriculum: 'Java',
+      focus: 'MicroService',
+      trainer: 'Mitch',
+      cotrainer: '',
+      location: 'Florida',
+      building: 'CapitalB',
+      room: '452',
+      progress: 0
+    },
+    {
+      name: 'Appian',
+      startDate: new Date(2018, 1, 15),
+      endDate: new Date(2018, 4, 15),
+      curriculum: 'C++',
+      focus: 'Java',
+      trainer: 'Bob',
+      cotrainer: '',
+      location: 'New York',
+      building: 'EmpireState',
+      room: '834',
+      progress: 0
+    },
+    {
+      name: 'SysAdmin',
+      startDate: new Date(2018, 4, 1),
+      endDate: new Date(2018, 7, 1),
+      curriculum: 'Python',
+      focus: 'Magic',
+      trainer: 'Jerry',
+      cotrainer: 'Dennis',
+      location: 'Texas',
+      building: 'BigBill',
+      room: 'B312',
+      progress: 0
+    }
   ];
-
+  displayedBatchList: any[];
   displayedColumns = [
     'name',
     'startDate',
@@ -68,42 +76,37 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     'curriculum',
     'focus',
     'trainer',
-    'cotrainer',
     'location',
     'building',
     'room',
     'progress'
   ];
-  dataSource = new MatTableDataSource(this.batchList);
-  // Booleans for testing
-  isExported = false;
-
+  dataSource = new MatTableDataSource(this.displayedBatchList);
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
   constructor() {}
-
-  ngOnInit() {}
+  ngOnInit() {
+    this.batchList.forEach(batch => {
+      batch.progress = this.getCurrentProgress(batch);
+      console.log(batch);
+    });
+    this.applyFilter(0);
+  }
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
-
   // --------------------------------
   exportToCSV(evt) {
     evt.stopPropagation();
     // this.csvService.download(this.dataSource, 'Batches');
     const angular2Csv = new Angular2Csv(this.batchList, 'batches');
-    this.isExported = true;
   }
-
   openMenu(evt) {
     evt.stopPropagation();
   }
   // --------------------------------- END OF THE OLD -----------------------------------------------------
-
   // ----------------------------------BEGIN OPERATION NEW HOPE -------------------------------------------
-
   applyFilter(filterType: number) {
     /**
      *  FILTER TYPE!!!
@@ -111,46 +114,51 @@ export class OverviewComponent implements OnInit, AfterViewInit {
      *  1 - In Progress
      *  2 - Beginging in two weeks
      */
-
+    this.displayedBatchList = [];
     if (filterType === 0) {
-      // Todo
+      this.displayedBatchList = this.batchList;
+    } else if (filterType === 1) {
+      this.batchList.forEach(batch => {
+        const index = this.batchList.indexOf(batch);
+        if (batch.progress > 0 && batch.progress < 100) {
+          this.displayedBatchList.push(batch);
+        }
+      });
+    } else if (filterType === 2) {
+      this.batchList.forEach(batch => {
+        const index = this.batchList.indexOf(batch);
+        if (batch.progress === 0) {
+          if (this.getCurrentWeekOfBatch(batch.startDate) > -2) {
+            this.displayedBatchList.push(batch);
+          }
+        }
+      });
     }
+    this.dataSource.data = this.displayedBatchList;
   }
-
-  computeNumOfWeeksBetween(startDate: number, endDate: number): number {
+  computeNumOfWeeksBetween(startDate: Date, endDate: Date): number {
     const numberOfDays = Math.abs(<any>endDate - <any>startDate) / (1000 * 60 * 60 * 24);
     const numberOfWeeks = Math.round(numberOfDays / 7);
     return numberOfWeeks;
   }
-
-  getCurrentWeek(startDate: number): number {
+  // IF RETURN IS POSITIVE, BATCH HAS STARTED/IS IN SESSION FOR # WEEKS.
+  // IF RETURN IS NEGATIVE, BATCH HAS NOT STARTED/WILL START IN # WEEKS.
+  getCurrentWeekOfBatch(startDate: Date): number {
     const currentDate = new Date(Date.now());
-    const numberOfDays = Math.abs(<any>currentDate - <any>startDate) / (1000 * 60 * 60 * 24);
+    const numberOfDays = (<any>currentDate - <any>startDate) / (1000 * 60 * 60 * 24);
     const weekNumber = Math.round(numberOfDays / 7);
     return weekNumber;
   }
-
-  getCurrentProgress(batch: Batch): number {
+  getCurrentProgress(batch: any): number {
     const training_duration = this.computeNumOfWeeksBetween(batch.startDate, batch.endDate);
-
     if (training_duration === 0) {
       return 0;
     }
-
-    const batch_current_week = this.getCurrentWeek(batch.startDate);
+    const batch_current_week = this.getCurrentWeekOfBatch(batch.startDate);
+    if (batch_current_week <= 0) {
+      return 0;
+    }
     const progress = batch_current_week / training_duration;
     return progress * 100;
   }
-
-  // getCurrentProgress(currentWeek:number, totalWeek:number):number{
-  //   let progress = currentWeek/totalWeek;
-  //   return progress*100;
-  // }
 }
-
-// export interface Element {
-//   name: string;
-//   position: number;
-//   weight: number;
-//   symbol: string;
-// }

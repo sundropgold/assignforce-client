@@ -26,7 +26,7 @@ export class TrainersAddComponent implements OnInit {
     certifications: '',
     active: true,
     resume: '',
-    unavailabilities: null
+    unavailabilities: []
   };
 
   data = {
