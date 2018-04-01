@@ -3,7 +3,6 @@ language: node_js
 install:
   - npm install
 
-  
 deploy:
   provider: cloudfoundry
   api: https://api.run.pivotal.io
