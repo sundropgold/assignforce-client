@@ -1,10 +1,17 @@
-language: node.js
+language: node_js
 
 install:
   - npm install
 
-script:
-  - zip -r latest *
-  - mkdir -p dpl_cd_upload
-  - mv latest.zip dpl_cd_upload/latest.zip
-
+  
+deploy:
+  provider: cloudfoundry
+  api: https://api.run.pivotal.io
+  username: pdawson2090@gmail.com
+  password: $CF_PASS
+    secure: "... secure password, generated with travis cli"
+  organization: august-duet.org
+  space: development
+  on:
+    repo: revaturelabs/assignforce-client
+    branch: master
