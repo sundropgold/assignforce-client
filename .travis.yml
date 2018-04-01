@@ -9,12 +9,19 @@ script:
   - mv latest.zip dpl_cd_upload/latest.zip
 deploy:
   provider: cloudfoundry
+  username: user
+  password: pass
   api: https://api.run.pivotal.io
-  username: pdawson2090@gmail.com
-  password: $CF_PASS
-    secure: "... secure password, generated with travis cli"
   organization: august-duet.org
   space: development
-  on:
-    repo: revaturelabs/assignforce-client
-    branch: master
+
+  # provider: cloudfoundry
+  # api: https://api.run.pivotal.io
+  # username: pdawson2090@gmail.com
+  # password: $CF_PASS
+  #   secure: "... secure password, generated with travis cli"
+  # organization: august-duet.org
+  # space: development
+  # on:
+  #   repo: revaturelabs/assignforce-client
+  #   branch: master
