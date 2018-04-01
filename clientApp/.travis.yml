@@ -5,14 +5,14 @@ install:
 
 script:
 
-deploy:
-  provider: cloudfoundry
-  api: https://api.run.pivotal.io
-  username: pdawson2090@gmail.com
-  password: $CF_PASS
-    secure: "... secure password, generated with travis cli"
-  organization: august-duet.org
-  space: development
-  on:
-    repo: revaturelabs/assignforce-client
-    branch: master
+# deploy:
+#   provider: cloudfoundry
+#   api: https://api.run.pivotal.io
+#   username: pdawson2090@gmail.com
+#   password: $CF_PASS
+#     secure: "... secure password, generated with travis cli"
+#   organization: august-duet.org
+#   space: development
+#   on:
+#     repo: revaturelabs/assignforce-client
+#     branch: master
