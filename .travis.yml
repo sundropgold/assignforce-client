@@ -3,6 +3,8 @@ node_js:
   - "8.9.4"
 install:
   - npm install
+script:
+  - npm run verify
 # deploy:
 #   provider: cloudfoundry
 #   api: https://api.run.pivotal.io
