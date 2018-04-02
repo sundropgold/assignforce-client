@@ -94,9 +94,9 @@ export class BatchesTimelineComponent implements OnInit {
 
   // default values for formatting
   column_width = 50;
-  swimlane_x_ofs = 80;
+  swimlane_x_ofs = 100;
   swimlane_y_ofs = 20;
-  months = [];
+  timescale_x_ofs = 80;
 
   // editable data
   startDate: Date;
@@ -413,7 +413,7 @@ export class BatchesTimelineComponent implements OnInit {
       }
       // calculate the position of the text
       const y = this.swimlane_y_ofs + (date.valueOf() - this.startDate.valueOf()) / full_duration * this.height;
-      const x = this.swimlane_x_ofs - 5;
+      const x = this.timescale_x_ofs - 5;
       timescale.push({ name: name, x: x, y: y });
     }
     return timescale;
