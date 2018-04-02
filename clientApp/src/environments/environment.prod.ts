@@ -15,7 +15,7 @@ export const environment = {
 
   apiUrls: {
     batchController: {
-      baseUrl: 'http://batch-service.cfapps.io',
+      baseUrl: this.baseApiUrl + '/batch',
       createBatch: '/all/batch/create',
       deleteBatch: '/all/batch/delete/',
       updateBatch: '/all/batch/update',
@@ -28,7 +28,7 @@ export const environment = {
     },
 
     addressController: {
-      baseUrl: 'http://address-service.cfapps.io',
+      baseUrl: this.baseApiUrl + '/address',
       createLocation: '/vp/location/create',
       updateLocation: '/vp/location/update',
       getAllLocations: '/all/location/all',
@@ -37,7 +37,7 @@ export const environment = {
     },
 
     buildingController: {
-      baseUrl: 'http://address-service.cfapps.io/api/v2/building',
+      baseUrl: this.baseApiUrl + '/address/building',
       createBuilding: '',
       retrieveBuilding: '/',
       updateBuilding: '',
@@ -46,15 +46,16 @@ export const environment = {
     },
 
     locationController: {
-      baseUrl: 'http://address-service.cfapps.io/api/v2/location',
+      baseUrl: this.baseApiUrl + '/address/location',
       createLocation: '',
       retrieveLocation: '/',
       updateLocation: '',
+      deleteLocation: '/',
       retrieveAllLocation: ''
     },
 
     curriculumController: {
-      baseUrl: 'http://curriculum-service.cfapps.io/api/v2/curriculum',
+      baseUrl: this.baseApiUrl + '/curriculum',
       createCurriculum: '',
       retrieveCurriculum: '/',
       updateCurriculum: '',
@@ -68,7 +69,7 @@ export const environment = {
     },
 
     settingController: {
-      baseUrl: 'http://setting-service.cfapps.io/api/v2/setting',
+      baseUrl: this.baseApiUrl + '/setting',
       createSetting: '',
       retrieveSetting: '/',
       getGlobalSetting: '',
@@ -77,7 +78,7 @@ export const environment = {
     },
 
     skillController: {
-      baseUrl: 'http://skill-service.cfapps.io',
+      baseUrl: this.baseApiUrl + '/skill',
       findAllActive: '/skill/all',
       findAll: '/vp/skill',
       findSkillById: '/skill/',
@@ -92,7 +93,7 @@ export const environment = {
     },
 
     trainerController: {
-      baseUrl: 'http://trainer-service.cfapps.io',
+      baseUrl: this.baseApiUrl + '/trainer',
       createTrainer: '/vp/trainer/create',
       updateTrainer: '/vp/trainer/update',
       findTrainer: '/training/trainer/byemail/',
@@ -102,15 +103,15 @@ export const environment = {
     },
 
     unavailableController: {
-      baseUrl: 'http://unavailable-service.cfapps.io/api/v2/unavailable',
+      baseUrl: this.baseApiUrl + '/unavailable',
       createUnavailability: '',
       retrieveUnavailability: '/',
-      updateSkill: '',
       deleteUnavailability: '',
       retrieveAllUnavailabilities: ''
     }
   },
 
   //base url
-  baseUrl: 'http://assignforce.revaturelabs.com'
+  baseUrl: 'https://assignforce.revaturelabs.com',
+  baseApiUrl: 'https://hydra.cfapps.io'
 };
