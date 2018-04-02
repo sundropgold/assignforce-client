@@ -72,4 +72,13 @@ describe('BatchesTimelineComponent', () => {
     const months = component.getMonths();
     expect(months.length).toBeGreaterThan(1);
   });
+
+  it('should zoom the page', () => {
+    const prezoom = component.endDate.valueOf() - component.startDate.valueOf();
+    const zoomFactor = 2;
+    component.startZoom(100);
+    component.zoomBy(zoomFactor);
+    component.finishZoom();
+    expect(component.endDate.valueOf() - component.startDate.valueOf()).toEqual(zoomFactor * prezoom);
+  });
 });
