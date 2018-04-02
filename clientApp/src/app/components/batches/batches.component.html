@@ -16,67 +16,67 @@
         <div class="example-container">
           <div>
             <mat-form-field>
-            <mat-select placeholder="Core Curriculum" >
-              <mat-option *ngFor="let Curriculum of Curriculums" [value]="Curriculum.value" >
-                {{ Curriculum.viewValue }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+              <mat-select placeholder="Core Curriculum">
+                <mat-option *ngFor="let Curriculum of Curriculums" [value]="Curriculum.value">
+                  {{ Curriculum.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
 
-          <mat-form-field>
-            <mat-select placeholder="Focus">
-              <mat-option *ngFor="let focus of focuses" [value]="focus.value">
-                {{ focus.viewValue }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+            <mat-form-field>
+              <mat-select placeholder="Focus">
+                <mat-option *ngFor="let focus of focuses" [value]="focus.value">
+                  {{ focus.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
 
-          <mat-form-field>
-            <mat-select placeholder="Skills" [formControl]="skills" multiple>
-              <mat-option *ngFor="let skill of skillsList" [value]="skill">{{skill}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          </div>
-          <div>
-          <mat-form-field>
-            <input matInput [matDatepicker]="picker1" placeholder="Choose a start date">
-            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
-          </mat-form-field>
-
-          <mat-form-field>
-            <input matInput [matDatepicker]="picker2" placeholder="Choose an end date">
-            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-            <mat-datepicker #picker2></mat-datepicker>
-          </mat-form-field>
-
-          <mat-form-field>
-            <input matInput placeholder="spans {{datebetween}} weeks" readonly>
-          </mat-form-field>
-
-          <mat-form-field>
-            <input matInput placeholder="Name">
-          </mat-form-field>
+            <mat-form-field>
+              <mat-select placeholder="Skills" [formControl]="skills" multiple>
+                <mat-option *ngFor="let skill of skillsList" [value]="skill">{{skill}}</mat-option>
+              </mat-select>
+            </mat-form-field>
 
           </div>
           <div>
-          <mat-form-field>
-            <mat-select placeholder="Trainer">
-              <mat-option *ngFor="let trainer of trainers" [value]="trainer.value">
-                {{ trainer.viewValue }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+            <mat-form-field>
+              <input matInput [matDatepicker]="picker1" placeholder="Choose a start date">
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
 
-          <mat-form-field>
-            <mat-select placeholder="Co-Trainer">
-              <mat-option *ngFor="let trainer of trainers" [value]="trainer.value">
-                {{ trainer.viewValue }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-            </div>
+            <mat-form-field>
+              <input matInput [matDatepicker]="picker2" placeholder="Choose an end date">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput placeholder="spans {{datebetween}} weeks" readonly>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput placeholder="Name">
+            </mat-form-field>
+
+          </div>
+          <div>
+            <mat-form-field>
+              <mat-select placeholder="Trainer">
+                <mat-option *ngFor="let trainer of trainers" [value]="trainer.value">
+                  {{ trainer.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-select placeholder="Co-Trainer">
+                <mat-option *ngFor="let trainer of trainers" [value]="trainer.value">
+                  {{ trainer.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
 
           <mat-form-field>
             <mat-select placeholder="Location">
@@ -129,7 +129,9 @@
           <!-- Checkbox Column -->
           <ng-container matColumnDef="Checkbox">
             <mat-header-cell *matHeaderCellDef mat-sort-header id="check"> </mat-header-cell>
-            <mat-cell *matCellDef="let batch" id="checkcell"> <mat-checkbox></mat-checkbox> </mat-cell>
+            <mat-cell *matCellDef="let batch" id="checkcell">
+              <mat-checkbox></mat-checkbox>
+            </mat-cell>
           </ng-container>
 
 
@@ -171,7 +173,7 @@
 
           <!-- Room Column -->
           <ng-container matColumnDef="Room">
-            <mat-header-cell *matHeaderCellDef mat-sort-header > Room </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Room </mat-header-cell>
             <mat-cell *matCellDef="let batch"> {{batch.room}} </mat-cell>
           </ng-container>
 

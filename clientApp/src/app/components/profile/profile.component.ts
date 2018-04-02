@@ -8,7 +8,6 @@ import { Skill } from '../../model/Skill';
 
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',

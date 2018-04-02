@@ -22,10 +22,8 @@ The second md-card/ng-show is for other users to look at other trainers profiles
     <mat-card-content *ngIf="trainer != undefined && skills != undefined">
       <div class="row">
         <div class="col-lg-2">
-          <img layout="column" style="border-radius: 50%;" alt=""
-               ng-src="https://app.revature.com/core/resources/download/default/interns/image?t=1486138020884"
-               id="displayImage" class="width-200 height-200"
-               src="https://app.revature.com/core/resources/download/default/interns/image?t=1486138020884">
+          <img layout="column" style="border-radius: 50%;" alt="" ng-src="https://app.revature.com/core/resources/download/default/interns/image?t=1486138020884"
+            id="displayImage" class="width-200 height-200" src="https://app.revature.com/core/resources/download/default/interns/image?t=1486138020884">
         </div>
         <div class="col-lg-10">
           <div>
@@ -43,7 +41,8 @@ The second md-card/ng-show is for other users to look at other trainers profiles
             <!--need to figure out accessing the file, as far as permissions go-->
             <label> Current Resume: </label>
             <label *ngIf="trainer.resume != null">{{trainer.resume}}</label>
-            <label *ngIf="trainer.resume == null">No resume on file</label> <br>
+            <label *ngIf="trainer.resume == null">No resume on file</label>
+            <br>
           </div>
           <div class="row">
             <div class="col-lg-1">
@@ -98,7 +97,7 @@ The second md-card/ng-show is for other users to look at other trainers profiles
         <span>Certifications</span>
         <span class="md-toolbar-spacer"></span>
         <button mat-icon-button (click)="inputCert.click()">
-          <input class="inputFile" #inputCert  type="file" (change)="getCert($event)">
+          <input class="inputFile" #inputCert type="file" (change)="getCert($event)">
           <mat-icon matTooltip="Add Certification" class="material-icons md-toolbar-icon">add_circle</mat-icon>
         </button>
       </mat-toolbar>
@@ -120,8 +119,8 @@ The second md-card/ng-show is for other users to look at other trainers profiles
         </div>
         <mat-divider *ngIf="certFile != undefined"></mat-divider>
         <span *ngIf="trainer.certifications == null">
-                <h6>You have no certifications selected. Try adding some.</h6>
-            </span>
+          <h6>You have no certifications selected. Try adding some.</h6>
+        </span>
         <mat-list>
           <mat-list-item *ngFor="let cert of trainer.certifications">
             <mat-icon matListIcon class="material-icons" style="color: black;">insert_drive_file</mat-icon>
@@ -160,10 +159,8 @@ The second md-card/ng-show is for other users to look at other trainers profiles
       <!--info section-->
       <!--<mat-card-content layout="columns" layout-padding flex *ngIf="trainer != undefined && skills != undefined">-->
       <mat-card-content layout="columns" layout-padding flex>
-        <img layout="column" style="border-radius: 50%" alt=""
-             ng-src="https://app.revature.com/core/resources/download/default/interns/image?t=1486138020884"
-             id="displayImage" class="width-200 height-200"
-             src="https://app.revature.com/core/resources/download/default/interns/image?t=1486138020884">
+        <img layout="column" style="border-radius: 50%" alt="" ng-src="https://app.revature.com/core/resources/download/default/interns/image?t=1486138020884"
+          id="displayImage" class="width-200 height-200" src="https://app.revature.com/core/resources/download/default/interns/image?t=1486138020884">
         <div layout="column">
           <div layout="row" flex layout-fill>
             <!--<form class="nameForm" name="nameForm" (submit)="updateName(nameForm.$valid)" novalidate>-->
@@ -181,7 +178,8 @@ The second md-card/ng-show is for other users to look at other trainers profiles
             <!--need to figure out accessing the file, as far as permissions go-->
             <label> Current Resume: </label>
             <label *ngIf="trainer.resume != null"> {{trainer.resume}}</label>
-            <label *ngIf="trainer.resume == null">No resume on file</label> <br>
+            <label *ngIf="trainer.resume == null">No resume on file</label>
+            <br>
           </div>
           <div layout="row">
             <!--<input class="ng-hide" id="input-file-id"  type="file" [(ngModel)]="myFile">-->
@@ -253,8 +251,8 @@ The second md-card/ng-show is for other users to look at other trainers profiles
           </div>
           <mat-divider *ngIf="certFile != undefined"></mat-divider>
           <span *ngIf="trainer.certifications == null">
-                <h6>You have no certifications selected. Try adding some.</h6>
-            </span>
+            <h6>You have no certifications selected. Try adding some.</h6>
+          </span>
           <mat-list>
             <mat-list-item *ngFor="let cert of trainer.certifications">
               <mat-icon md-svg-icon="img/ic_sim_card_black_24px.svg" class="revOrange"></mat-icon>
