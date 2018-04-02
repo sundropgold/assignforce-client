@@ -14,10 +14,10 @@
       fill="#FAFAFA"></rect>
     <g class="timescale">
       <text class="timescale-text unselectable" *ngFor="let timescale of getTimescale()"
-        [attr.x]="timescale.x" [attr.y]="timescale.y">{{timescale.name}}</text>
+        [attr.x]="timescale.x" [attr.y]="timescale.y" text-anchor="end">{{timescale.name}}</text>
         <line id="righttimescaleline"
         [attr.x1]="swimlane_x_ofs" [attr.y1]="swimlane_y_ofs" [attr.x2]="swimlane_x_ofs"
-        [attr.y2]="height" stroke="#000000" stroke-width="1"></line>
+        [attr.y2]="height" stroke="#000000" stroke-width="2"></line>
     </g>
     <g class="swimlanes">
       <line *ngFor="let line of getSwimlanes()" class="swimlane"

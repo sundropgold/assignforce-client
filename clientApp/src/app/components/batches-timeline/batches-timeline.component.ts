@@ -256,104 +256,113 @@ export class BatchesTimelineComponent implements OnInit {
 
   // returns the list of months to display and their position
   getTimescale() {
-    // get duration that will be shown
-    // scale shown - max duration
-    // days (Mon 23) - up to 36 days
-    // weeks (sep, sep 08, sep 15) - up to 18 weeks
-    // months - up to 15 months
-    // quarters (20xx, apr, july, oct) - up to 20 months
-    // years - up to 12 years
-    // 2-years - up to 29 years
-    // 5-years - up to 60 years
-    // 10-years - up to 130 years
-    // todo dynamic scale to see days, weeks, months, quaters, or years based on duration
+    // cache some common values
     const full_duration = this.endDate.valueOf() - this.startDate.valueOf();
-    // const num_days = Math.floor(full_duration / (1000 * 60 * 60 * 24)); // ms to days
-    // const num_months = Math.floor(num_days / 30);
-    // const num_years = Math.floor(num_days / 365);
-
     const start_month = this.startDate.getMonth();
     const start_year = this.startDate.getFullYear();
 
-    // todo show based on space in between
+    // get distance between months (px) to determine which scale to use
     const ys0 = (new Date(start_year, start_month).valueOf() - this.startDate.valueOf()) / full_duration * this.height;
     const ys1 =
       (new Date(start_year, start_month + 1).valueOf() - this.startDate.valueOf()) / full_duration * this.height;
     const dist_between_months = ys1 - ys0;
-    console.log(dist_between_months);
+    // console.log(dist_between_months);
 
-    const day_in_ms = 1000 * 60 * 60 * 24;
-
+    // number of dates to be shown on the screen
     // const numDates = dist_between_months / this.height + 1;
     const num_dates = 30; //todo based on height
     // console.log("showing "+num_dates+" num dates");
+
+    // min value for dist_between_months to be for that scale
+    // numbers magically determined from trial and error
+    const pxdays = 1900;
+    const px2days = 800;
+    const pxweeks = 300;
+    const pxmonths = 100;
+    const pxquarters = 30;
+    const pxyears = 6;
+    const px2years = 2;
+    const px5years = 1;
+    const px10years = 0;
+
+    // create an array of all the dates to be shown and determine the naming style
     const dates: Date[] = [];
     let namestyle = 'month';
-    // let interval = 0;
-    // create an array of all the dates to be shown
-    if (dist_between_months > 1900) {
+    if (dist_between_months > pxdays) {
       // show in days
       namestyle = 'day';
       for (let i = 0; i < num_dates; i++) {
         dates.push(new Date(start_year, start_month, this.startDate.getDate() + i));
       }
-      console.log('day');
-    } else if (dist_between_months > 800) {
+      // console.log('day');
+    } else if (dist_between_months > px2days) {
       // show in 2 days
       namestyle = 'day';
       const aligned_start_date_2 = this.startDate.getDate() - this.startDate.getDate() % 2;
       for (let i = 0; i < num_dates; i++) {
         dates.push(new Date(start_year, start_month, aligned_start_date_2 + i * 2));
       }
-      console.log('2day');
-    } else if (dist_between_months > 400) {
+      // console.log('2day');
+    } else if (dist_between_months > pxweeks) {
       // show in weeks
       namestyle = 'month';
-      //todo always show month day 0
+      // todo always show month day 0 and year month 0
       const aligned_start_date = this.startDate.getDate() - this.startDate.getDate() % 7;
       for (let i = 0; i < num_dates; i++) {
         dates.push(new Date(start_year, start_month, i * 7));
       }
-      console.log('week');
-    } else if (dist_between_months > 110) {
+      // console.log('week');
+    } else if (dist_between_months > pxmonths) {
       // show in months
       namestyle = 'month';
       for (let i = 0; i < num_dates; i++) {
         dates.push(new Date(start_year, start_month + i));
       }
-      console.log('mnth');
-    } else if (dist_between_months > 40) {
+      // console.log('mnth');
+    } else if (dist_between_months > pxquarters) {
       // show in quarters
       namestyle = 'month';
       for (let i = 0; i < num_dates; i++) {
         dates.push(new Date(start_year, i * 3));
       }
-      console.log('qtr');
-    } else if (dist_between_months > 6) {
+      // console.log('qtr');
+    } else if (dist_between_months > pxyears) {
       // show in years
       namestyle = 'year';
       for (let i = 0; i < num_dates; i++) {
         dates.push(new Date(start_year + i, 0));
       }
-      console.log('yr');
-    } else if (dist_between_months > 1) {
+      // console.log('yr');
+    } else if (dist_between_months > px2years) {
+      // show in 2 years
+      namestyle = 'year';
+      const aligned_start_year = start_year - start_year % 2;
+      for (let i = 0; i < num_dates; i++) {
+        dates.push(new Date(aligned_start_year + i * 2, 0));
+      }
+      // console.log('2yr');
+    } else if (dist_between_months > px5years) {
       // show in 5 years
       namestyle = 'year';
       const aligned_start_year = start_year - start_year % 5;
       for (let i = 0; i < num_dates; i++) {
         dates.push(new Date(aligned_start_year + i * 5, 0));
       }
-      console.log('5yr');
-    } else {
+      // console.log('5yr');
+    } else if (dist_between_months > px10years) {
       // show in 10 years
       namestyle = 'year';
       const aligned_start_year = start_year - start_year % 10;
       for (let i = 0; i < num_dates; i++) {
         dates.push(new Date(aligned_start_year + i * 10, 0));
       }
-      console.log('10yr');
+      // console.log('10yr');
+    } else {
+      console.log('getTimescale failed to determine scale');
+      return null;
     }
 
+    // used to show names instead of numbers
     const fullMonthNames = [
       'January',
       'February',
@@ -371,11 +380,12 @@ export class BatchesTimelineComponent implements OnInit {
     const shortMonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const dayOfWeekNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
 
+    // go through all the dates that were just created to apply the naming style and calculate the position
     const timescale = [];
     for (let i = 0; i < dates.length; i++) {
       const date = dates[i];
+      // apply naming style - day, month, or year
       let name = 'name ' + i;
-
       switch (namestyle) {
         case 'day':
           if (date.getDate() === 1) {
@@ -401,80 +411,12 @@ export class BatchesTimelineComponent implements OnInit {
       if (date.getMonth() === 0 && date.getDate() === 1) {
         name = '' + date.getFullYear();
       }
+      // calculate the position of the text
       const y = this.swimlane_y_ofs + (date.valueOf() - this.startDate.valueOf()) / full_duration * this.height;
-      const x = 2;
+      const x = this.swimlane_x_ofs - 5;
       timescale.push({ name: name, x: x, y: y });
     }
-
     return timescale;
-    // const months = [];
-    // // if more than 15 months, show every quater (by starting month name) instead
-    // const ms_to_months = 1000 * 60 * 60 * 24 * 30;
-    // let durmonths = Math.floor(full_duration / ms_to_months);
-    // //console.log(durmonths+' are between '+this.startDate+' and '+this.endDate+'\ny:'+startYear+' m:'+startMonth);
-    // let useQuaterly = false;
-    // // let useYearly = false;
-    // if (durmonths >= 16) {
-    //   useQuaterly = true;
-    //   durmonths /= 4;
-    // }
-    // // go through each month
-    // for (let i = 0; i < durmonths; i++) {
-    //   // get a date for the start of this month
-    //   const idate = new Date(start_year, start_month);
-    //   idate.setMonth(this.startDate.getMonth() + i);
-    //   const month = idate.getMonth();
-
-    //   if (useQuaterly && month % 4 !== 0) {
-    //     continue;
-    //   }
-    //   // get the name of the month, use year instead of january
-    //   let name = 'm' + month;
-    //   switch (month) {
-    //     case 0:
-    //       name = idate.getFullYear() + '';
-    //       break;
-    //     case 1:
-    //       name = 'Feb';
-    //       break;
-    //     case 2:
-    //       name = 'Mar';
-    //       break;
-    //     case 3:
-    //       name = 'Apr';
-    //       break;
-    //     case 4:
-    //       name = 'May';
-    //       break;
-    //     case 5:
-    //       name = 'Jun';
-    //       break;
-    //     case 6:
-    //       name = 'Jul';
-    //       break;
-    //     case 7:
-    //       name = 'Aug';
-    //       break;
-    //     case 8:
-    //       name = 'Sep';
-    //       break;
-    //     case 9:
-    //       name = 'Oct';
-    //       break;
-    //     case 10:
-    //       name = 'Nov';
-    //       break;
-    //     case 11:
-    //       name = 'Dec';
-    //       break;
-    //   }
-
-    //   // calculate the position of the name
-    //   const y = this.swimlane_y_ofs + (idate.valueOf() - this.startDate.valueOf()) / full_duration * this.height;
-    //   const x = 2;
-    //   months.push({ name: name, x: x, y: y });
-    // }
-    // return months;
   }
 
   startZoom(mouseposy) {
