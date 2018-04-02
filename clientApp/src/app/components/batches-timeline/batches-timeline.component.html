@@ -13,7 +13,7 @@
     <rect id="bg" [attr.width]="width" [attr.height]="height" x="0" y="0"
       fill="#FAFAFA"></rect>
     <g class="months">
-      <text class="month-text" *ngFor="let month of getMonths()"
+      <text class="month-text unselectable" *ngFor="let month of getMonths()"
         [attr.x]="month.x" [attr.y]="month.y">{{month.name}}</text>
       <line></line>
     </g>
@@ -27,7 +27,7 @@
         <rect [attr.x]="rect.x" [attr.y]="rect.y" [attr.height]="rect.h"
           [attr.width]="rect.w" [attr.fill]="rect.color"
           (mousemove)="batchmousemove($event)" (mouseleave)="batchmouseleave()"></rect>
-        <text [attr.x]="rect.x+2" [attr.y]="rect.y+2" font-size="14">
+        <text class="unselectable" [attr.x]="rect.x+2" [attr.y]="rect.y+2" font-size="14">
           <tspan *ngFor="let d of rect.dur; let i= index" [attr.x]="rect.x+2"
             [attr.y]="rect.y+20+i*15">
             {{d}}

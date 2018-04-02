@@ -330,7 +330,22 @@ export class BatchesTimelineComponent implements OnInit {
     return months;
   }
 
+  startZoom(mouseposy) {
+    // calculate values needed for zooming from the mousepos
+    this.zoomingFrom = mouseposy;
+    this.zoomingLine = { x1: 0, x2: this.width, y1: mouseposy, y2: mouseposy };
+    // position (px) to date
+    this.zoomingFromDate =
+      mouseposy / this.height * (this.endDate.valueOf() - this.startDate.valueOf()) + this.startDate.valueOf();
+    // get duration before and after zoom line
+    // console.log(new Date(this.zoomingFromDate));
+    this.preZoomBeforeDuration = this.zoomingFromDate - this.startDate.valueOf();
+    this.preZoomAfterDuration = this.endDate.valueOf() - this.zoomingFromDate;
+    this.zooming = true;
+  }
+
   zoomBy(amount) {
+    // must be zooming to zoom
     if (!this.zooming) {
       return;
     }
@@ -339,9 +354,9 @@ export class BatchesTimelineComponent implements OnInit {
     const newStart = this.zoomingFromDate - newBeforeDuration;
     const newAfterDuration = this.preZoomAfterDuration * amount;
     const newEnd = this.zoomingFromDate + newAfterDuration;
-    console.log(new Date(newStart) + ', ' + new Date(this.endDate));
+    // console.log(new Date(newStart) + ', ' + new Date(this.endDate));
     if (newStart >= newEnd) {
-      console.log('start is after end date!');
+      console.log('start date is after end date!');
       return;
     }
     // set start and end dates
@@ -350,51 +365,39 @@ export class BatchesTimelineComponent implements OnInit {
     this.updateTodayLine();
   }
 
-  finishZoom(amount) {
-    // todo
-    // zoom by, but remove temporary variables and save changes
-    // undo support?
-  }
-
-  // start zoom at mouse
-  bgmousedown(event) {
-    this.zooming = true;
-    const y = event.clientY - this.timelineRootElement.nativeElement.getBoundingClientRect().top;
-    this.zoomingFrom = y; // + this.startDate.valueOf();
-    this.zoomingLine = { x1: 0, x2: this.width, y1: y, y2: y };
-    // position (px) to date
-    this.zoomingFromDate =
-      y / this.height * (this.endDate.valueOf() - this.startDate.valueOf()) + this.startDate.valueOf();
-    // get duration before and after zoom line
-    console.log(new Date(this.zoomingFromDate));
-    this.preZoomBeforeDuration = this.zoomingFromDate - this.startDate.valueOf();
-    this.preZoomAfterDuration = this.endDate.valueOf() - this.zoomingFromDate;
-    console.log(this.preZoomBeforeDuration + ', ' + this.preZoomAfterDuration);
-  }
-  // finish zoom
-  bgmouseup(event) {
+  finishZoom() {
+    // todo undo support?
     this.zooming = false;
   }
-  // update zoom by delta
+
+  // start zoom at mouse pos on mousedown
+  bgmousedown(event) {
+    const mousey = event.clientY - this.timelineRootElement.nativeElement.getBoundingClientRect().top;
+    this.startZoom(mousey);
+  }
+  // finish zoom on mouseup
+  bgmouseup(event) {
+    this.finishZoom();
+  }
+  // hide popup and update zoom by delta on mouse move
   bgmousemove(event) {
     if (this.zooming) {
       // stop zooming if mouse is up (happens when mouse is released outside of the timeline and returns)
       if (event.buttons !== 1) {
-        this.bgmouseup(null);
+        this.finishZoom();
       }
-      // get the scale to zoom by from the relative mouse position
+      // get the factor to zoom by from the relative mouse position
       const y = event.clientY - this.timelineRootElement.nativeElement.getBoundingClientRect().top;
-      let dy = y - this.zoomingFrom;
-      dy *= this.zoomScale;
-      dy = Math.pow(2, dy);
-      console.log('mp ' + dy);
-      this.zoomBy(dy);
-      // this.startDate.setDate()
+      const dy = y - this.zoomingFrom;
+      let zoomFactor = dy * this.zoomScale;
+      zoomFactor = Math.pow(2, zoomFactor);
+      // console.log('zf ' + zoomFactor);
+      this.zoomBy(zoomFactor);
     }
     // todo disable popup if mouse has not moved over a batch rectangle recently
   }
 
-  // show tooltip at mouse
+  // show tooltip at mouse on mouse move on batch
   batchmousemove(event) {
     // todo
   }
