@@ -50,6 +50,7 @@ import { LocationControllerService } from './services/api/location-controller/lo
 import { CurriculumControllerService } from './services/api/curriculum-controller/curriculum-controller.service';
 import { SettingControllerService } from './services/api/setting-controller/setting-controller.service';
 import { SkillControllerService } from './services/api/skill-controller/skill-controller.service';
+import { TrainerControllerService } from './services/api/trainer-controller/trainer-controller.service';
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import { SkillControllerService } from './services/api/skill-controller/skill-co
     CurriculumControllerService,
     SettingControllerService,
     SkillControllerService,
+    TrainerControllerService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,
