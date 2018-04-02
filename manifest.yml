@@ -2,6 +2,7 @@
 applications:
 - name: assignforce_client
   memory: 1024M
+  path: clientApp
   buildpack: https://github.com/cloudfoundry/nodejs-buildpack
   host: assignforce_client
   command: node server.js
