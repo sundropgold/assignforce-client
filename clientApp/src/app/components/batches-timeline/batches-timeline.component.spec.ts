@@ -69,7 +69,7 @@ describe('BatchesTimelineComponent', () => {
   });
 
   it('should return a list of months and their position', () => {
-    const months = component.getMonths();
+    const months = component.getTimescale();
     expect(months.length).toBeGreaterThan(1);
   });
 

@@ -17,3 +17,6 @@
   -webkit-user-select: none;
   -moz-user-select: none;
 }
+.timescale-text {
+  text-align: right;
+}

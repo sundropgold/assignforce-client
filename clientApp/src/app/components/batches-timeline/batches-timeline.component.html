@@ -12,10 +12,12 @@
     (mousemove)="bgmousemove($event)"  #timelineroot>
     <rect id="bg" [attr.width]="width" [attr.height]="height" x="0" y="0"
       fill="#FAFAFA"></rect>
-    <g class="months">
-      <text class="month-text unselectable" *ngFor="let month of getMonths()"
-        [attr.x]="month.x" [attr.y]="month.y">{{month.name}}</text>
-      <line></line>
+    <g class="timescale">
+      <text class="timescale-text unselectable" *ngFor="let timescale of getTimescale()"
+        [attr.x]="timescale.x" [attr.y]="timescale.y">{{timescale.name}}</text>
+        <line id="righttimescaleline"
+        [attr.x1]="swimlane_x_ofs" [attr.y1]="swimlane_y_ofs" [attr.x2]="swimlane_x_ofs"
+        [attr.y2]="height" stroke="#000000" stroke-width="1"></line>
     </g>
     <g class="swimlanes">
       <line *ngFor="let line of getSwimlanes()" class="swimlane"
