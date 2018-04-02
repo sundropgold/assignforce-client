@@ -29,4 +29,8 @@ export class AddressControllerService {
       location
     );
   }
+
+  public getLocation(id: number): Observable<Location> {
+    return this.http.get<Location>(this.addressController.baseUrl + this.addressController.getLocation + id);
+  }
 }

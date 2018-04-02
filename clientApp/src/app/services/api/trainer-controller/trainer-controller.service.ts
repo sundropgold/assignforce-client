@@ -18,8 +18,8 @@ export class TrainerControllerService {
     return this.http.put<Trainer>(this.trainerController.baseUrl + this.trainerController.updateTrainer, trainer);
   }
 
-  public findTrainer(id: number): Observable<Trainer> {
-    return this.http.get<Trainer>(this.trainerController.baseUrl + this.trainerController.findTrainer + id);
+  public findTrainer(email: string): Observable<Trainer> {
+    return this.http.get<Trainer>(this.trainerController.baseUrl + this.trainerController.findTrainer + email);
   }
 
   public makeInactive(id: number): Observable<Trainer> {

@@ -15,7 +15,7 @@ export const environment = {
 
   apiUrls: {
     batchController: {
-      baseUrl: this.baseApiUrl + '/batch',
+      baseUrl: 'https://hydra.cfapps.io/api/batch/v0',
       createBatch: '/all/batch/create',
       deleteBatch: '/all/batch/delete/',
       updateBatch: '/all/batch/update',
@@ -28,7 +28,7 @@ export const environment = {
     },
 
     addressController: {
-      baseUrl: this.baseApiUrl + '/address',
+      baseUrl: 'https://hydra.cfapps.io/api/address/v0',
       createLocation: '/vp/location/create',
       updateLocation: '/vp/location/update',
       getAllLocations: '/all/location/all',
@@ -37,7 +37,7 @@ export const environment = {
     },
 
     buildingController: {
-      baseUrl: this.baseApiUrl + '/address/building',
+      baseUrl: 'https://hydra.cfapps.io/api/address/building/v0',
       createBuilding: '',
       retrieveBuilding: '/',
       updateBuilding: '',
@@ -46,7 +46,7 @@ export const environment = {
     },
 
     locationController: {
-      baseUrl: this.baseApiUrl + '/address/location',
+      baseUrl: 'https://hydra.cfapps.io/api/address/location/v0',
       createLocation: '',
       retrieveLocation: '/',
       updateLocation: '',
@@ -55,7 +55,7 @@ export const environment = {
     },
 
     curriculumController: {
-      baseUrl: this.baseApiUrl + '/curriculum',
+      baseUrl: 'https://hydra.cfapps.io/api/curriculum/v0',
       createCurriculum: '',
       retrieveCurriculum: '/',
       updateCurriculum: '',
@@ -69,7 +69,7 @@ export const environment = {
     },
 
     settingController: {
-      baseUrl: this.baseApiUrl + '/setting',
+      baseUrl: 'https://hydra.cfapps.io/api/setting/v0',
       createSetting: '',
       retrieveSetting: '/',
       getGlobalSetting: '',
@@ -78,7 +78,7 @@ export const environment = {
     },
 
     skillController: {
-      baseUrl: this.baseApiUrl + '/skill',
+      baseUrl: 'https://hydra.cfapps.io/api/skill/v0',
       findAllActive: '/skill/all',
       findAll: '/vp/skill',
       findSkillById: '/skill/',
@@ -93,25 +93,24 @@ export const environment = {
     },
 
     trainerController: {
-      baseUrl: this.baseApiUrl + '/trainer',
+      baseUrl: 'https://hydra.cfapps.io/api/trainer/v0',
       createTrainer: '/vp/trainer/create',
       updateTrainer: '/vp/trainer/update',
       findTrainer: '/training/trainer/byemail/',
-      makeInactive: '/vp/trainer/delete',
+      makeInactive: '/vp/trainer/delete/',
       getAllTrainersTitles: '/vp/trainer/titles',
       getAllTrainers: '/all/trainer/all'
     },
 
     unavailableController: {
-      baseUrl: this.baseApiUrl + '/unavailable',
+      baseUrl: 'https://hydra.cfapps.io/api/unavailable/v0',
       createUnavailability: '',
       retrieveUnavailability: '/',
       deleteUnavailability: '',
-      retrieveAllUnavailabilities: ''
+      retrieveAllUnavailabilities: '/'
     }
   },
 
   //base url
-  baseUrl: 'https://assignforce.revaturelabs.com',
-  baseApiUrl: 'https://hydra.cfapps.io'
+  baseUrl: 'https://assignforce.revaturelabs.com'
 };

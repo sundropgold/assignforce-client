@@ -6,6 +6,9 @@
 export const environment = {
   production: false,
 
+  baseUrl: 'http://localhost:4200',
+  baseApiUrl: '',
+
   //routers
   appRoutes: {
     login: '',
@@ -21,29 +24,30 @@ export const environment = {
 
   apiUrls: {
     batchController: {
-      baseUrl: this.baseApiUrl + '/batch',
-      createBatch: '/all/batch/create',
-      deleteBatch: '/all/batch/delete/',
-      updateBatch: '/all/batch/update',
-      findCommonLocations: '/all/locations',
-      getAllBatches: '/qc/batch/all',
-      findAllBatchesByTrainer: '/trainer/batch/all',
-      createWeek: '/trainer/week/new/',
-      getAllVpBatches: '/vp/batch/all',
-      getAllCurrentBatches: '/vp/batch/all/current'
+      baseUrl: 'api/batch',
+      createBatch: '',
+      deleteBatch: '/',
+      updateBatch: '',
+      findCommonLocations: '',
+      getAllBatches: '',
+      findAllBatchesByTrainer: '/',
+      createWeek: '',
+      getAllVpBatches: '',
+      getAllCurrentBatches: ''
     },
 
     addressController: {
-      baseUrl: this.baseApiUrl + '/address',
-      createLocation: '/vp/location/create',
-      updateLocation: '/vp/location/update',
-      getAllLocations: '/all/location/all',
-      removeLocation: '/vp/location/delete',
-      reactivateLocation: '/vp/location/reactivate'
+      baseUrl: 'api/location',
+      createLocation: '',
+      updateLocation: '',
+      getAllLocations: '',
+      removeLocation: '/',
+      getLocation: '/',
+      reactivateLocation: ''
     },
 
     buildingController: {
-      baseUrl: this.baseApiUrl + '/address/building',
+      baseUrl: 'api/building',
       createBuilding: '',
       retrieveBuilding: '/',
       updateBuilding: '',
@@ -52,7 +56,7 @@ export const environment = {
     },
 
     locationController: {
-      baseUrl: this.baseApiUrl + '/address/location',
+      baseUrl: 'api/location',
       createLocation: '',
       retrieveLocation: '/',
       updateLocation: '',
@@ -61,21 +65,21 @@ export const environment = {
     },
 
     curriculumController: {
-      baseUrl: this.baseApiUrl + '/curriculum',
+      baseUrl: 'api/curriculum',
       createCurriculum: '',
       retrieveCurriculum: '/',
       updateCurriculum: '',
       deleteCurriculum: '/',
       retrieveAllCurricula: '',
-      retrieveAllActiveCurricula: '/active',
-      retrieveAllCore: '/core',
-      retrieveAllActiveCore: '/activeCore',
-      retrieveAllFocus: '/focus',
-      retrieveAllActiveFocus: '/activeFocus'
+      retrieveAllActiveCurricula: '',
+      retrieveAllCore: '',
+      retrieveAllActiveCore: '',
+      retrieveAllFocus: '',
+      retrieveAllActiveFocus: ''
     },
 
     settingController: {
-      baseUrl: this.baseApiUrl + '/setting',
+      baseUrl: 'api/setting',
       createSetting: '',
       retrieveSetting: '/',
       getGlobalSetting: '',
@@ -84,39 +88,36 @@ export const environment = {
     },
 
     skillController: {
-      baseUrl: this.baseApiUrl + '/skillController',
-      findAllActive: '/skill/all',
-      findAll: '/vp/skill',
-      findSkillById: '/skill/',
-      updateSkillCaliber: '/vp/skill/update',
-      saveSkill: '/vp/skill',
-      createSkill: '/api/v2/skill',
-      retrieveSkill: '/api/v2/skill/',
-      updateSkillMinerva: '/api/v2/skill',
-      deleteSkill: '/api/v2/skill/',
-      retrieveAllSkills: '/api/v2/skill',
-      retrieveSkillsByIds: '/api/v2/skill/ids'
+      baseUrl: 'api/skill',
+      findAllActive: '',
+      findAll: '',
+      findSkillById: '/',
+      updateSkillCaliber: '',
+      saveSkill: '',
+      createSkill: '',
+      retrieveSkill: '/',
+      updateSkillMinerva: '',
+      deleteSkill: '/',
+      retrieveAllSkills: '',
+      retrieveSkillsByIds: ''
     },
 
     trainerController: {
-      baseUrl: this.baseApiUrl + '/trainer',
-      createTrainer: '/vp/trainer/create',
-      updateTrainer: '/vp/trainer/update',
-      findTrainer: '/training/trainer/byemail/',
-      makeInactive: '/vp/trainer/delete',
-      getAllTrainersTitles: '/vp/trainer/titles',
-      getAllTrainers: '/all/trainer/all'
+      baseUrl: 'api/trainer',
+      createTrainer: '',
+      updateTrainer: '',
+      findTrainer: '/',
+      makeInactive: '/',
+      getAllTrainersTitles: '',
+      getAllTrainers: ''
     },
 
     unavailableController: {
-      baseUrl: this.baseApiUrl + '/unavailable',
+      baseUrl: 'api/unavailable',
       createUnavailability: '',
       retrieveUnavailability: '/',
       deleteUnavailability: '',
       retrieveAllUnavailabilities: ''
     }
-  },
-
-  baseUrl: 'http://localhost:4200',
-  baseApiUrl: 'https://hydra.cfapps.io'
+  }
 };
