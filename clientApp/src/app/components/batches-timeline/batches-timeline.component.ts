@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Batch } from '../../model/batch';
 
 @Component({
@@ -89,6 +89,9 @@ export class BatchesTimelineComponent implements OnInit {
     }
   ];
 
+  // root element of the timeline. used for getting the relative mouse position
+  @ViewChild('timelineroot') timelineRootElement: ElementRef;
+
   // default values for formatting
   column_width = 50;
   swimlane_x_ofs = 50;
@@ -103,7 +106,11 @@ export class BatchesTimelineComponent implements OnInit {
   // zooming
   zooming = false;
   zoomingFrom: number;
+  zoomingFromDate: number;
   zoomingLine = { x1: 0, x2: 0, y1: 0, y2: 0 };
+  preZoomBeforeDuration: number;
+  preZoomAfterDuration: number;
+  zoomScale = 0.01; // px to zoom scale
 
   // popup
 
@@ -327,10 +334,20 @@ export class BatchesTimelineComponent implements OnInit {
     if (!this.zooming) {
       return;
     }
-    // todo
-    // get two durations, before zooming line and after
-    // scale each by the zooming amount
-    // store in temporary variable so that moving the mouse in the current zoom is consistent
+    // scale the durations before and after the zoom line
+    const newBeforeDuration = this.preZoomBeforeDuration * amount;
+    const newStart = this.zoomingFromDate - newBeforeDuration;
+    const newAfterDuration = this.preZoomAfterDuration * amount;
+    const newEnd = this.zoomingFromDate + newAfterDuration;
+    console.log(new Date(newStart) + ', ' + new Date(this.endDate));
+    if (newStart >= newEnd) {
+      console.log('start is after end date!');
+      return;
+    }
+    // set start and end dates
+    this.startDate = new Date(newStart);
+    this.endDate = new Date(newEnd);
+    this.updateTodayLine();
   }
 
   finishZoom(amount) {
@@ -342,10 +359,17 @@ export class BatchesTimelineComponent implements OnInit {
   // start zoom at mouse
   bgmousedown(event) {
     this.zooming = true;
-    // todo dont use event.target.getBoudingClient, as clicking on text or a rect gives the wrong value
-    const y = event.clientY - event.target.getBoundingClientRect().top;
+    const y = event.clientY - this.timelineRootElement.nativeElement.getBoundingClientRect().top;
     this.zoomingFrom = y; // + this.startDate.valueOf();
     this.zoomingLine = { x1: 0, x2: this.width, y1: y, y2: y };
+    // position (px) to date
+    this.zoomingFromDate =
+      y / this.height * (this.endDate.valueOf() - this.startDate.valueOf()) + this.startDate.valueOf();
+    // get duration before and after zoom line
+    console.log(new Date(this.zoomingFromDate));
+    this.preZoomBeforeDuration = this.zoomingFromDate - this.startDate.valueOf();
+    this.preZoomAfterDuration = this.endDate.valueOf() - this.zoomingFromDate;
+    console.log(this.preZoomBeforeDuration + ', ' + this.preZoomAfterDuration);
   }
   // finish zoom
   bgmouseup(event) {
@@ -354,9 +378,17 @@ export class BatchesTimelineComponent implements OnInit {
   // update zoom by delta
   bgmousemove(event) {
     if (this.zooming) {
-      const y = event.clientY - event.target.getBoundingClientRect().top;
-      const dy = y - this.zoomingFrom;
+      // stop zooming if mouse is up (happens when mouse is released outside of the timeline and returns)
+      if (event.buttons !== 1) {
+        this.bgmouseup(null);
+      }
+      // get the scale to zoom by from the relative mouse position
+      const y = event.clientY - this.timelineRootElement.nativeElement.getBoundingClientRect().top;
+      let dy = y - this.zoomingFrom;
+      dy *= this.zoomScale;
+      dy = Math.pow(2, dy);
       console.log('mp ' + dy);
+      this.zoomBy(dy);
       // this.startDate.setDate()
     }
     // todo disable popup if mouse has not moved over a batch rectangle recently
