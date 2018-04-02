@@ -4,6 +4,7 @@ import { Skill } from './Skill';
 import { BatchStatus } from './BatchStatus';
 import { BatchLocation } from './BatchLocation';
 
+
 export class Batch {
   id: number;
   name: string;
