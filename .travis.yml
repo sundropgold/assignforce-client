@@ -6,7 +6,7 @@ install:
 - npm i headless-chromium
 script:
 - npm run lint -- --fix
-- npm run test: once
+# - npm run test: once
 deploy:
   provider: cloudfoundry
   api: https://api.run.pivotal.io
