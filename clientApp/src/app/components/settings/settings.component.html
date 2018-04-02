@@ -3,7 +3,7 @@
     <mat-grid-tile
       [colspan] = "2"
       [rowspan] = "1">
-      <label for="trainerPerPage" >Timeline Trainers Per Page</label>
+      <label class="leftAlign" for="trainerPerPage" >Timeline Trainers Per Page</label>
     </mat-grid-tile>
 
     <mat-grid-tile
@@ -18,7 +18,7 @@
     <mat-grid-tile
     [colspan] = "2"
     [rowspan] = "1">
-        <label for="outgoingGrads">Reports Outgoing Grads</label>
+        <label class="leftAlign" for="outgoingGrads">Reports Outgoing Grads</label>
     </mat-grid-tile>
 
     <mat-grid-tile
@@ -32,7 +32,7 @@
     <mat-grid-tile
     [colspan] = "2"
     [rowspan] = "1">
-      <label for="candidateIncoming">Reports Candidates Incoming</label>
+      <label class="leftAlign" for="candidateIncoming">Reports Candidates Incoming</label>
     </mat-grid-tile>
 
     <mat-grid-tile
@@ -47,7 +47,7 @@
     <mat-grid-tile
     [colspan] = "2"
     [rowspan] = "1">
-      <label for="batchLocation">Default Batch Location</label>
+      <label class="leftAlign" for="batchLocation">Default Batch Location</label>
     </mat-grid-tile>
 
     <mat-grid-tile
@@ -65,7 +65,7 @@
     <mat-grid-tile
     [colspan] = "2"
     [rowspan] = "1">
-      <label for="batchBuilding">Default Batch Building</label>
+      <label class="leftAlign" for="batchBuilding">Default Batch Building</label>
     </mat-grid-tile>
 
     <mat-grid-tile
@@ -83,7 +83,7 @@
     <mat-grid-tile
     [colspan] = "2"
     [rowspan] = "1">
-      <label for="minBatchSize">Minimum Batch Size</label>
+      <label class="leftAlign" for="minBatchSize">Minimum Batch Size</label>
     </mat-grid-tile>
 
     <mat-grid-tile
@@ -97,7 +97,7 @@
     <mat-grid-tile
     [colspan] = "2"
     [rowspan] = "1">
-      <label for="maxBatchSize">Maximum Batch Size</label>
+      <label class="leftAlign" for="maxBatchSize">Maximum Batch Size</label>
     </mat-grid-tile>
 
     <mat-grid-tile
@@ -111,7 +111,7 @@
     <mat-grid-tile
     [colspan] = "2"
     [rowspan] = "1">
-      <label for="batchDuration">Default Batch Length</label>
+      <label class="leftAlign" for="batchDuration">Default Batch Length</label>
     </mat-grid-tile>
 
     <mat-grid-tile
@@ -125,7 +125,7 @@
     <mat-grid-tile
     [colspan] = "2"
     [rowspan] = "1">
-      <label for="daysBetweenBatches">Minimum Day Between Trainer Batches</label>
+      <label class="leftAlign" for="daysBetweenBatches">Minimum Day Between Trainer Batches</label>
     </mat-grid-tile>
 
     <mat-grid-tile
@@ -139,14 +139,14 @@
     <mat-grid-tile
     [colspan] = "2"
     [rowspan] = "1">
-      <label for="namePattern">Default Batch Name pattern</label>
+      <label class="leftAlign" for="namePattern">Default Batch Name Pattern</label>
     </mat-grid-tile>
 
     <mat-grid-tile
     [colspan] = "2"
     [rowspan] = "1">
       <mat-form-field>
-        <input matInput required name="namePattern" type="text" [(ngModel)]="setting.defaultNamePattern">
+        <input matInput required name="namePattern" type="text" readonly [(ngModel)]="setting.defaultNamePattern">
       </mat-form-field>
     </mat-grid-tile>
 

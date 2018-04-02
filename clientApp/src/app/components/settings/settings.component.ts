@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SettingControllerService } from '../../services/api/setting-controller/setting-controller.service';
-import { Setting } from '../../model/Setting';
+import { Setting } from '../../model/setting';
 import { AddressControllerService } from '../../services/api/address-controller/address-controller.service';
 import { Location } from '../../model/Location';
 import { Building } from '../../model/Building';
