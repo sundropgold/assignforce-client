@@ -51,6 +51,7 @@ import { CurriculumControllerService } from './services/api/curriculum-controlle
 import { SettingControllerService } from './services/api/setting-controller/setting-controller.service';
 import { SkillControllerService } from './services/api/skill-controller/skill-controller.service';
 import { TrainerControllerService } from './services/api/trainer-controller/trainer-controller.service';
+import { UnavailableControllerService } from './services/api/unavailable-controller/unavailable-controller.service';
 
 @NgModule({
   declarations: [
@@ -102,6 +103,7 @@ import { TrainerControllerService } from './services/api/trainer-controller/trai
     SettingControllerService,
     SkillControllerService,
     TrainerControllerService,
+    UnavailableControllerService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,

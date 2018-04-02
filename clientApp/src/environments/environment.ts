@@ -112,7 +112,6 @@ export const environment = {
       baseUrl: 'http://unavailable-service.cfapps.io/api/v2/unavailable',
       createUnavailability: '',
       retrieveUnavailability: '/',
-      updateSkill: '',
       deleteUnavailability: '',
       retrieveAllUnavailabilities: ''
     }
