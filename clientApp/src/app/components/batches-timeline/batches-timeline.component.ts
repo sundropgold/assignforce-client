@@ -93,6 +93,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
   // root element of the timeline. used for getting the relative mouse position
   @ViewChild('timelineroot') timelineRootElement: ElementRef;
+  // trainer name. used to set the width
   @ViewChild('trainernames') trainernames: ElementRef;
 
   // default values for formatting
@@ -116,10 +117,10 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   zoomScale = 0.01; // px to zoom scale
 
   // tooltip
-  tooltipRect = { active: false, x: 0, y: 0, w: 0, h: 0, color: '#000000' };
+  tooltipRect = { active: true, x: 0, y: 0, w: 0, h: 0, linespacing: 15, color: '#00000099', triangle: '0,0 0,0 0,0' };
   tooltipData = [];
 
-  // generated data
+  // other generated data
   trainers = [];
   today_line = { x1: 0, x2: 0, y1: 0, y2: 0 };
 
@@ -133,7 +134,6 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     }
     // set start date to 3 months ago
     const today = new Date(Date.now());
-    console.log(today.getMonth());
     this.startDate = new Date(today);
     this.startDate.setMonth(this.startDate.getMonth() - 3);
     // set end date to 6 months ago
@@ -145,7 +145,10 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
   // setup page size
   ngAfterViewInit() {
-    this.updateSize();
+    // causes exception if done without a short timeout
+    setTimeout(() => {
+      this.updateSize();
+    }, 100);
   }
 
   // this is called when any of the filters are changed
@@ -189,9 +192,81 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     this.today_line = { x1: this.timescale_x_ofs, x2: this.width, y1: y, y2: y };
   }
 
+  // makes a simple object for a tooltip line for reuseablility
+  getTooltipLine(val, text) {
+    // if it is null say there is none, or say it
+    if (val != null) {
+      return [{ text: text + ': ', color: 'white' }, { text: val, color: 'yellow' }];
+    } else {
+      return [{ text: 'No ' + text.toLowerCase() + ' ', color: 'red' }, { text: 'for this batch.', color: 'white' }];
+    }
+  }
+
   // sets the tooltip rect and tooltip data
   updateTooltip(mousepos) {
-    // todo
+    // hide tooltip if zooming or mouse is out of range
+    if (this.zooming || mousepos.y < 0) {
+      this.tooltipRect.active = false;
+      return;
+    }
+
+    // todo get batch under mouse
+    const batch: Batch = this.batches[0];
+    if (batch == null) {
+      console.log('no batch under mouse');
+      this.tooltipRect.active = false;
+      return;
+    }
+
+    // create text that goes on the tooltip
+    const lines = [];
+    if (batch.curriculum != null) {
+      lines.push([{ text: batch.curriculum, color: 'orange' }, { text: ' Batch', color: 'white' }]);
+    } else {
+      lines.push([{ text: 'No core curriculum.', color: 'red' }]);
+    }
+    if (batch.focus != null) {
+      lines.push([{ text: 'w/ focus on ', color: 'white' }, { text: batch.focus, color: 'orange' }]);
+    } else {
+      lines.push([{ text: 'w/', color: 'white' }, { text: 'no focus.', color: 'red' }]);
+    }
+    lines.push([{ text: '----------', color: 'white' }]);
+    lines.push(this.getTooltipLine(batch.trainer, 'Trainer'));
+    lines.push(this.getTooltipLine(batch.cotrainer, 'Cotrainer'));
+    lines.push(this.getTooltipLine(batch.startDate.toDateString(), 'Start Date'));
+    lines.push(this.getTooltipLine(batch.endDate.toDateString(), 'End Date'));
+    lines.push([{ text: '----------', color: 'white' }]);
+    lines.push(this.getTooltipLine(batch.location, 'Location'));
+    lines.push(this.getTooltipLine(batch.building, 'Building'));
+    lines.push(this.getTooltipLine(batch.room, 'Room'));
+
+    // get positioning of the tooltip rect
+    const rectw = 200;
+    const recth = this.tooltipRect.linespacing * lines.length + 5;
+    const rectx = mousepos.x - rectw / 2;
+    const recty = mousepos.y - recth - 12;
+    const triangle_points =
+      mousepos.x -
+      5 +
+      ',' +
+      (mousepos.y - 12) +
+      ' ' +
+      mousepos.x +
+      ',' +
+      (mousepos.y - 2) +
+      ' ' +
+      (mousepos.x + 5) +
+      ',' +
+      (mousepos.y - 12);
+
+    // update values
+    this.tooltipData = lines;
+    this.tooltipRect.active = true;
+    this.tooltipRect.x = rectx;
+    this.tooltipRect.y = recty;
+    this.tooltipRect.w = rectw;
+    this.tooltipRect.h = recth;
+    this.tooltipRect.triangle = triangle_points;
   }
 
   // returns the appropriate color for the core curriculum type
@@ -487,6 +562,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     this.preZoomBeforeDuration = this.zoomingFromDate - this.startDate.valueOf();
     this.preZoomAfterDuration = this.endDate.valueOf() - this.zoomingFromDate;
     this.zooming = true;
+    this.updateTooltip(null);
   }
 
   zoomBy(amount) {
@@ -526,25 +602,30 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   }
   // hide popup and update zoom by delta on mouse move
   bgmousemove(event) {
+    const my = event.clientY - this.timelineRootElement.nativeElement.getBoundingClientRect().top;
+    const mx = event.clientX - this.timelineRootElement.nativeElement.getBoundingClientRect().left;
     if (this.zooming) {
       // stop zooming if mouse is up (happens when mouse is released outside of the timeline and returns)
       if (event.buttons !== 1) {
         this.finishZoom();
       }
       // get the factor to zoom by from the relative mouse position
-      const y = event.clientY - this.timelineRootElement.nativeElement.getBoundingClientRect().top;
-      const dy = y - this.zoomingFrom;
+      const dy = my - this.zoomingFrom;
       let zoomFactor = dy * this.zoomScale;
       zoomFactor = Math.pow(2, zoomFactor);
       // console.log('zf ' + zoomFactor);
       this.zoomBy(zoomFactor);
     }
     // todo disable popup if mouse has not moved over a batch rectangle recently
+    this.updateTooltip({ x: mx, y: my });
   }
 
   // show tooltip at mouse on mouse move on batch
   batchmousemove(event) {
-    this.updateTooltip({ x: event.clientX, y: event.clientY });
+    // console.log(event.target);
+    const x = event.clientX - this.timelineRootElement.nativeElement.getBoundingClientRect().left;
+    const y = event.clientY - this.timelineRootElement.nativeElement.getBoundingClientRect().top;
+    this.updateTooltip({ x: x, y: y });
   }
 
   // window has been resized, update timeline

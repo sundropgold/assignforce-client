@@ -7,7 +7,7 @@
       {{trainer.name}}
     </span>
   </div>
-  <svg id="timeline" [attr.width]="width" [attr.height]="height"
+  <svg id="timeline" x="0" y="0" [attr.width]="width" [attr.height]="height"
     (mousedown)="bgmousedown($event)" (mouseup)="bgmouseup($event)"
     (window:mousemove)="bgmousemove($event)" #timelineroot>
     <rect id="bg" [attr.width]="width" [attr.height]="height" x="0" y="0"
@@ -50,17 +50,19 @@
       [attr.x1]="zoomingLine.x1" [attr.y1]="zoomingLine.y1"
       [attr.x2]="zoomingLine.x2"
       [attr.y2]="zoomingLine.y2" stroke="#000000" stroke-width="1"></line>
-    <g class="tooltip" *ngIf="tooltipRect.active">
-      <rect [attr.x]="tooltipRect.x" [attr.y]="tooltipRect.y"
-        [attr.height]="tooltipRect.h"
-        [attr.width]="tooltipRect.w" [attr.fill]="tooltipRect.color"></rect>
-      <g class="tooltipline" *ngFor="let data of tooltipData">
-          <!-- [attr.x]="line.x" [attr.y]="data.y" -->
-        <text class="unselectable" *ngFor="let line of data.line"
-        font-size="14" [attr.fill]="line.color" text-anchor="start" alignment-baseline="top">
-        {{line.text}}
+    <g class="batch-tooltip" *ngIf="tooltipRect.active">
+      <rect [attr.x]="tooltipRect.x" [attr.y]="tooltipRect.y" 
+        [attr.width]="tooltipRect.w" [attr.height]="tooltipRect.h" 
+        [attr.fill]="tooltipRect.color">
+      </rect>
+      <polygon class="tooltip-triangle" [attr.points]="tooltipRect.triangle" [attr.fill]="tooltipRect.color"></polygon>
+      <g class="tooltipline" *ngFor="let line of tooltipData; let i = index">
+        <text [attr.x]="tooltipRect.x+2" [attr.y]="tooltipRect.y + tooltipRect.linespacing*(i+1)" font-size="14" text-anchor="start"  alignment-baseline="hanging">
+         <tspan *ngFor="let l of line" [attr.fill]="l.color">
+         {{l.text}}
+         </tspan>
         </text>
-    </g>
+      </g>
     </g>
   </svg>
 </div>
