@@ -55,6 +55,7 @@ import { AuthenticatingComponent } from './components/authenticating/authenticat
 import { SkillsComponent } from './components/skills/skills.component';
 import { CertificationsComponent } from './components/certifications/certifications.component';
 import { MatButtonModule, MatMenuModule, MatToolbarModule, MatIconModule, MatCardModule } from '@angular/material';
+import { SecurityContext } from './services/auth/security-context.service';
 
 @NgModule({
   declarations: [
@@ -115,6 +116,7 @@ import { MatButtonModule, MatMenuModule, MatToolbarModule, MatIconModule, MatCar
     TrainerControllerService,
     UnavailableControllerService,
     AuthService,
+    SecurityContext,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,

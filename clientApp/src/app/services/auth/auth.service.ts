@@ -8,6 +8,8 @@ import Auth0Lock from 'auth0-lock';
 export class AuthService {
   constructor(private router: Router, private urlService: UrlService) {}
 
+  userProfile: any;
+
   lock = new Auth0Lock(environment.auth0.clientId, environment.auth0.domain, {
     autoclose: true,
     closable: false,
@@ -42,9 +44,20 @@ export class AuthService {
   private setSession(authResult): void {
     // Set the time that the Access Token will expire at
     const expiresAt = JSON.stringify(authResult.expiresIn * 1000 + new Date().getTime());
+    //Set the scopes to provided scopes || requested scopes || ''
+    const scopes = authResult.scope || '';
+
+    const namespace = environment.auth0.namespace;
+
+    const roles = authResult.idTokenPayload[namespace + 'roles'] || '';
+    const groups = authResult.idTokenPayload[namespace + 'groups'] || '';
+
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
+    localStorage.setItem('scopes', JSON.stringify(scopes));
+    localStorage.setItem('roles', JSON.stringify(roles));
+    localStorage.setItem('groups', JSON.stringify(groups));
   }
 
   public logout(): void {
@@ -61,5 +74,26 @@ export class AuthService {
     // Access Token's expiry time
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     return new Date().getTime() < expiresAt;
+  }
+
+  public userHasRole(expectedRoles: Array<String>): boolean {
+    const roles = JSON.parse(localStorage.getItem('roles'));
+    const included: boolean = roles.some(role => expectedRoles.includes(role));
+    return included;
+  }
+
+  public getProfile(cb): void {
+    const accessToken = localStorage.getItem('access_token');
+    if (!accessToken) {
+      throw new Error('Access token must exist to fetch profile');
+    }
+
+    const self = this;
+    this.lock.getUserInfo(accessToken, (error, profile) => {
+      if (profile) {
+        self.userProfile = profile;
+      }
+      cb(error, profile);
+    });
   }
 }
