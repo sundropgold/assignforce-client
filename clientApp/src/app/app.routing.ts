@@ -9,6 +9,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ReportsComponent } from './components/reports/reports.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { LoginComponent } from './components/login/login.component';
+import { AuthenticatingComponent } from './components/authenticating/authenticating.component';
 
 const appRoutes: Routes = [
   {
@@ -29,7 +30,7 @@ const appRoutes: Routes = [
     component: LocationsComponent
   },
   {
-    path: 'curricula',
+    path: 'curriculum',
     component: CurriculaComponent
   },
   {
@@ -47,15 +48,15 @@ const appRoutes: Routes = [
   {
     path: 'settings',
     component: SettingsComponent
+  },
+  {
+    path: 'callback',
+    component: AuthenticatingComponent
   }
 ];
 
 @NgModule({
-  imports: [
-    RouterModule.forRoot(appRoutes),
-  ],
-  exports: [
-    RouterModule
-  ]
+  imports: [RouterModule.forRoot(appRoutes)],
+  exports: [RouterModule]
 })
-export class AppRouting { }
+export class AppRouting {}

@@ -1,17 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AppComponent } from './app.component';
 
 import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SpringXsrfInterceptor } from './interceptors/springXsrfInterceptor';
 import { MenuBarComponent } from './components/menu-bar/menu-bar.component';
 import { OverviewComponent } from './components/overview/overview.component';
 import { BatchesComponent } from './components/batches/batches.component';
 import {
-  LocationAddBuildingDialogComponent,
+  // LocationAddBuildingDialogComponent,
   LocationAddLocationDialogComponent,
   LocationAddRoomDialogComponent,
   LocationDeleteBuildingDialogComponent,
@@ -22,6 +20,7 @@ import {
   LocationEditRoomDialogComponent,
   LocationsComponent
 } from './components/locations/locations.component';
+import { LocationAddDialogComponent } from './components/locations/add-dialog/location-add-dialog.component';
 import { CurriculaComponent } from './components/curricula/curricula.component';
 import { TrainersComponent } from './components/trainers/trainers.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -33,39 +32,33 @@ import { TrainerService } from './services/trainer/trainer.service';
 import { SkillService } from './services/skill/skill.service';
 import { S3CredentialService } from './services/s3-credential/s3-credential.service';
 import { UrlService } from './services/url/url.service';
-import {
-  MatButtonModule,
-  MatCardModule,
-  MatCheckbox,
-  MatCheckboxModule,
-  MatChipsModule,
-  MatExpansionModule,
-  MatFormFieldModule,
-  MatIconModule,
-  MatInputModule,
-  MatDatepickerModule,
-  MatOptionModule,
-  MatNativeDateModule,
-  MatListModule,
-  MatMenuModule,
-  MatPaginatorModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule,
-  MatSortModule,
-  MatTableModule,
-  MatTabsModule,
-  MatToolbarModule,
-  MatTooltipModule,
-  MatDialogModule,
-  MatGridListModule
-} from '@angular/material';
-import { MatSelectModule } from '@angular/material/select';
-import { ReactiveFormsModule } from '@angular/forms';
+
 import { LoginComponent } from './components/login/login.component';
 import { BatchesTimelineComponent } from './components/batches-timeline/batches-timeline.component';
-import { GetApiUrlService } from './services/api/getApiUrl.service';
-import { ApiUrlBuilderService } from './services/api/api-url-builder.service';
 import { BatchesTimelineFilterComponent } from './components/batches-timeline-filter/batches-timeline-filter.component';
+
+import { AppMaterialModule } from './material.module';
+
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemDbService } from './mockdb/in-mem-db.service';
+
+import { TrainersAddComponent } from './components/trainers/trainers-add/trainers-add.component';
+import { TrainerItemComponent } from './components/trainers/trainer-item/trainer-item.component';
+import { BatchControllerService } from './services/api/batch-controller/batch-controller.service';
+import { AddressControllerService } from './services/api/address-controller/address-controller.service';
+import { BuildingControllerService } from './services/api/building-controller/building-controller.service';
+import { LocationControllerService } from './services/api/location-controller/location-controller.service';
+import { CurriculumControllerService } from './services/api/curriculum-controller/curriculum-controller.service';
+import { SettingControllerService } from './services/api/setting-controller/setting-controller.service';
+import { SkillControllerService } from './services/api/skill-controller/skill-controller.service';
+import { TrainerControllerService } from './services/api/trainer-controller/trainer-controller.service';
+import { UnavailableControllerService } from './services/api/unavailable-controller/unavailable-controller.service';
+import { AuthService } from './services/auth/auth.service';
+import { AuthenticatingComponent } from './components/authenticating/authenticating.component';
+import { SkillsComponent } from './components/skills/skills.component';
+import { CertificationsComponent } from './components/certifications/certifications.component';
+import { MatButtonModule, MatMenuModule, MatToolbarModule, MatIconModule, MatCardModule } from '@angular/material';
+import { SecurityContext } from './services/auth/security-context.service';
 
 @NgModule({
   declarations: [
@@ -82,7 +75,7 @@ import { BatchesTimelineFilterComponent } from './components/batches-timeline-fi
     LocationAddLocationDialogComponent,
     LocationDeleteLocationDialogComponent,
     LocationEditLocationDialogComponent,
-    LocationAddBuildingDialogComponent,
+    LocationAddDialogComponent, // LocationAddBuildingDialogComponent,
     LocationDeleteBuildingDialogComponent,
     LocationEditBuildingDialogComponent,
     LocationAddRoomDialogComponent,
@@ -90,53 +83,45 @@ import { BatchesTimelineFilterComponent } from './components/batches-timeline-fi
     LocationEditRoomDialogComponent,
     LoginComponent,
     BatchesTimelineComponent,
-    BatchesTimelineFilterComponent
+    BatchesTimelineFilterComponent,
+    TrainersAddComponent,
+    TrainerItemComponent,
+    AuthenticatingComponent,
+    TrainerItemComponent,
+    SkillsComponent,
+    CertificationsComponent
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+
   imports: [
     HttpClientModule,
     FormsModule,
     BrowserModule,
     AppRouting,
     BrowserAnimationsModule,
-    MatListModule,
-    MatIconModule,
-    MatTabsModule,
-    MatExpansionModule,
-    MatSortModule,
-    MatTableModule,
-    MatTooltipModule,
-    MatToolbarModule,
-    MatProgressSpinnerModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatChipsModule,
-    MatFormFieldModule,
-    MatProgressBarModule,
-    MatPaginatorModule,
-    MatCheckboxModule,
-    MatCardModule,
-    MatChipsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatOptionModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatInputModule,
-    MatDialogModule,
-    MatGridListModule
+    AppMaterialModule,
+    InMemoryWebApiModule.forRoot(InMemDbService)
   ],
+
+  exports: [AppMaterialModule],
+
   providers: [
     TrainerService,
     SkillService,
     S3CredentialService,
     HttpClient,
     UrlService,
-    GetApiUrlService,
-    ApiUrlBuilderService,
+    BatchControllerService,
+    AddressControllerService,
+    BuildingControllerService,
+    LocationControllerService,
+    CurriculumControllerService,
+    SettingControllerService,
+    SkillControllerService,
+    TrainerControllerService,
+    UnavailableControllerService,
+    AuthService,
+    SecurityContext,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,
@@ -148,12 +133,13 @@ import { BatchesTimelineFilterComponent } from './components/batches-timeline-fi
     LocationAddLocationDialogComponent,
     LocationDeleteLocationDialogComponent,
     LocationEditLocationDialogComponent,
-    LocationAddBuildingDialogComponent,
+    LocationAddDialogComponent, // LocationAddBuildingDialogComponent,
     LocationDeleteBuildingDialogComponent,
     LocationEditBuildingDialogComponent,
     LocationAddRoomDialogComponent,
     LocationDeleteRoomDialogComponent,
-    LocationEditRoomDialogComponent
+    LocationEditRoomDialogComponent,
+    TrainersAddComponent
   ]
 })
 export class AppModule {}

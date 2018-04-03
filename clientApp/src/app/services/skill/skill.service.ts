@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { Skill } from '../../model/skill';
+import { Skill } from '../../model/Skill';
 
 @Injectable()
 export class SkillService {
+  url = 'api/skill';
 
-  url = 'api/v2/skill';
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   // var Skill = $resource('api/v2/skill/:skillId',{skillId:'@skillId'},{update:{method:'PUT', url:});
 

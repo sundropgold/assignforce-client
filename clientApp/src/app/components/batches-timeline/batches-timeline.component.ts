@@ -225,43 +225,43 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     }
 
     // todo get batch from id
-    const batch: Batch = this.batches[2];
-    // if (batch == null) {
-    //   console.log('no batch under mouse');
-    //   this.tooltipActive = false;
-    //   return;
-    // }
+    const batch: Batch = null; //this.batches[2];
+    if (batch == null) {
+      console.log('no batch by that id!');
+      this.tooltipActive = false;
+      return;
+    }
 
     // create text that goes on the tooltip
     const lines = [];
-    if (batch.curriculum != null) {
-      lines.push([
-        { text: batch.curriculum, color: this.tooltipTitleColor },
-        { text: ' Batch', color: this.tooltipDefaultColor }
-      ]);
-    } else {
-      lines.push([{ text: 'No core curriculum.', color: this.tooltipNoneColor }]);
-    }
-    if (batch.focus != null) {
-      lines.push([
-        { text: 'w/ focus on ', color: this.tooltipDefaultColor },
-        { text: batch.focus, color: this.tooltipTitleColor }
-      ]);
-    } else {
-      lines.push([
-        { text: 'w/', color: this.tooltipDefaultColor },
-        { text: 'no focus.', color: this.tooltipNoneColor }
-      ]);
-    }
+    // if (batch.curriculum != null) {
+    //   lines.push([
+    //     { text: batch.curriculum, color: this.tooltipTitleColor },
+    //     { text: ' Batch', color: this.tooltipDefaultColor }
+    //   ]);
+    // } else {
+    //   lines.push([{ text: 'No core curriculum.', color: this.tooltipNoneColor }]);
+    // }
+    // if (batch.focus != null) {
+    //   lines.push([
+    //     { text: 'w/ focus on ', color: this.tooltipDefaultColor },
+    //     { text: batch.focus, color: this.tooltipTitleColor }
+    //   ]);
+    // } else {
+    //   lines.push([
+    //     { text: 'w/', color: this.tooltipDefaultColor },
+    //     { text: 'no focus.', color: this.tooltipNoneColor }
+    //   ]);
+    // }
     lines.push([{ text: '----------', color: this.tooltipDefaultColor }]);
-    lines.push(this.getTooltipLine(batch.trainer, 'Trainer'));
-    lines.push(this.getTooltipLine(batch.cotrainer, 'Cotrainer'));
-    lines.push(this.getTooltipLine(batch.startDate.toDateString(), 'Start Date'));
-    lines.push(this.getTooltipLine(batch.endDate.toDateString(), 'End Date'));
-    lines.push([{ text: '----------', color: this.tooltipDefaultColor }]);
-    lines.push(this.getTooltipLine(batch.location, 'Location'));
-    lines.push(this.getTooltipLine(batch.building, 'Building'));
-    lines.push(this.getTooltipLine(batch.room, 'Room'));
+    // lines.push(this.getTooltipLine(batch.trainer, 'Trainer'));
+    // lines.push(this.getTooltipLine(batch.cotrainer, 'Cotrainer'));
+    // lines.push(this.getTooltipLine(batch.startDate.toDateString(), 'Start Date'));
+    // lines.push(this.getTooltipLine(batch.endDate.toDateString(), 'End Date'));
+    // lines.push([{ text: '----------', color: this.tooltipDefaultColor }]);
+    // lines.push(this.getTooltipLine(batch.location, 'Location'));
+    // lines.push(this.getTooltipLine(batch.building, 'Building'));
+    // lines.push(this.getTooltipLine(batch.room, 'Room'));
 
     // get positioning of the tooltip rect
     // todo dynamic width based on text width
