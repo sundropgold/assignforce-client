@@ -232,6 +232,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       const y = (batch.startDate.valueOf() - this.startDate.valueOf()) / full_duration * this.height;
       // calculate height from the top and bottom of the rectangle
       const endy = (batch.endDate.valueOf() - this.startDate.valueOf()) / full_duration * this.height;
+      // todo dont draw if out of bounds
       const h = endy - y;
       // get the text that will be put into the rectangle
       const durarray = duration
@@ -288,10 +289,8 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     const dist_between_months = ys1 - ys0;
     // console.log(dist_between_months);
 
-    // number of dates to be shown on the screen
-    // const numDates = dist_between_months / this.height + 1;
-    const num_dates = 35; //todo based on height
-    // console.log("showing "+num_dates+" num dates");
+    // the maximum number of dates to be shown on the screen
+    const max_dates = 40;
 
     // min value for dist_between_months to be for that scale
     // numbers magically determined from trial and error
@@ -313,7 +312,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     if (dist_between_months > pxdays) {
       // show in days
       namestyle = 'day';
-      for (let i = 0; i < num_dates; i++) {
+      for (let i = 0; i < max_dates; i++) {
         dates.push(new Date(start_year, start_month, this.startDate.getDate() + i));
       }
       // console.log('day');
@@ -321,7 +320,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       // show in 2 days
       namestyle = 'day';
       const aligned_start_date_2 = this.startDate.getDate() - this.startDate.getDate() % 2;
-      for (let i = 0; i < num_dates; i++) {
+      for (let i = 0; i < max_dates; i++) {
         dates.push(new Date(start_year, start_month, aligned_start_date_2 + i * 2));
       }
       // console.log('2day');
@@ -330,28 +329,28 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       namestyle = 'month';
       // todo always show month day 0 and year month 0
       const aligned_start_date = this.startDate.getDate() - this.startDate.getDate() % 7;
-      for (let i = 0; i < num_dates; i++) {
+      for (let i = 0; i < max_dates; i++) {
         dates.push(new Date(start_year, start_month, i * 7));
       }
       // console.log('week');
     } else if (dist_between_months > pxmonths) {
       // show in months
       namestyle = 'month';
-      for (let i = 0; i < num_dates; i++) {
+      for (let i = 0; i < max_dates; i++) {
         dates.push(new Date(start_year, start_month + i));
       }
       // console.log('mnth');
     } else if (dist_between_months > pxquarters) {
       // show in quarters
       namestyle = 'month';
-      for (let i = 0; i < num_dates; i++) {
+      for (let i = 0; i < max_dates; i++) {
         dates.push(new Date(start_year, i * 3));
       }
       // console.log('qtr');
     } else if (dist_between_months > pxyears) {
       // show in years
       namestyle = 'year';
-      for (let i = 0; i < num_dates; i++) {
+      for (let i = 0; i < max_dates; i++) {
         dates.push(new Date(start_year + i, 0));
       }
       // console.log('yr');
@@ -359,7 +358,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       // show in 2 years
       namestyle = 'year';
       const aligned_start_year = start_year - start_year % 2;
-      for (let i = 0; i < num_dates; i++) {
+      for (let i = 0; i < max_dates; i++) {
         dates.push(new Date(aligned_start_year + i * 2, 0));
       }
       // console.log('2yr');
@@ -367,7 +366,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       // show in 5 years
       namestyle = 'year';
       const aligned_start_year = start_year - start_year % 5;
-      for (let i = 0; i < num_dates; i++) {
+      for (let i = 0; i < max_dates; i++) {
         dates.push(new Date(aligned_start_year + i * 5, 0));
       }
       // console.log('5yr');
@@ -375,7 +374,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       // show in 10 years
       namestyle = 'year';
       const aligned_start_year = start_year - start_year % 10;
-      for (let i = 0; i < num_dates; i++) {
+      for (let i = 0; i < max_dates; i++) {
         dates.push(new Date(aligned_start_year + i * 10, 0));
       }
       // console.log('10yr');
@@ -435,6 +434,11 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       }
       // calculate the position of the text
       const y = this.swimlane_y_ofs + (date.valueOf() - this.startDate.valueOf()) / full_duration * this.height;
+      if (y < this.swimlane_y_ofs) {
+        continue;
+      } else if (y > this.height - this.swimlane_y_ofs) {
+        break;
+      }
       const x = this.timescale_x_ofs - 5;
       timescale.push({ name: name, x: x, y: y });
     }
