@@ -116,6 +116,8 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   zoomScale = 0.01; // px to zoom scale
 
   // tooltip
+  tooltipRect = { active: false, x: 0, y: 0, w: 0, h: 0, color: '#000000' };
+  tooltipData = [];
 
   // generated data
   trainers = [];
@@ -185,6 +187,11 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       (this.endDate.valueOf() - this.startDate.valueOf()) *
       this.height;
     this.today_line = { x1: this.timescale_x_ofs, x2: this.width, y1: y, y2: y };
+  }
+
+  // sets the tooltip rect and tooltip data
+  updateTooltip(mousepos) {
+    // todo
   }
 
   // returns the appropriate color for the core curriculum type
@@ -537,9 +544,10 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
   // show tooltip at mouse on mouse move on batch
   batchmousemove(event) {
-    // todo
+    this.updateTooltip({ x: event.clientX, y: event.clientY });
   }
 
+  // window has been resized, update timeline
   windowResize(event) {
     this.updateSize();
   }

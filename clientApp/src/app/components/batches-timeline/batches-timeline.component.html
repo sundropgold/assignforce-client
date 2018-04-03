@@ -9,14 +9,17 @@
   </div>
   <svg id="timeline" [attr.width]="width" [attr.height]="height"
     (mousedown)="bgmousedown($event)" (mouseup)="bgmouseup($event)"
-    (window:mousemove)="bgmousemove($event)"  #timelineroot>
+    (window:mousemove)="bgmousemove($event)" #timelineroot>
     <rect id="bg" [attr.width]="width" [attr.height]="height" x="0" y="0"
       fill="#FAFAFA"></rect>
     <g class="timescale">
-      <text class="timescale-text unselectable" *ngFor="let timescale of getTimescale()"
-        [attr.x]="timescale.x" [attr.y]="timescale.y" text-anchor="end" alignment-baseline="middle">{{timescale.name}}</text>
-        <line id="righttimescaleline"
-        [attr.x1]="timescale_x_ofs" [attr.y1]="swimlane_y_ofs" [attr.x2]="timescale_x_ofs"
+      <text class="timescale-text unselectable" *ngFor="let timescale of
+        getTimescale()"
+        [attr.x]="timescale.x" [attr.y]="timescale.y" text-anchor="end"
+        alignment-baseline="middle">{{timescale.name}}</text>
+      <line id="righttimescaleline"
+        [attr.x1]="timescale_x_ofs" [attr.y1]="swimlane_y_ofs"
+        [attr.x2]="timescale_x_ofs"
         [attr.y2]="height - swimlane_y_ofs" stroke="#000000" stroke-width="2"></line>
     </g>
     <g class="swimlanes">
@@ -29,8 +32,10 @@
         <rect [attr.x]="rect.x" [attr.y]="rect.y" [attr.height]="rect.h"
           [attr.width]="rect.w" [attr.fill]="rect.color"
           (mousemove)="batchmousemove($event)"></rect>
-        <text class="unselectable" [attr.x]="rect.labelx" [attr.y]="rect.labely" font-size="14" text-anchor="start">
-          <tspan *ngFor="let l of rect.label; let i = index" [attr.x]="rect.labelx"
+        <text class="unselectable" [attr.x]="rect.labelx" [attr.y]="rect.labely"
+          font-size="14" text-anchor="start">
+          <tspan *ngFor="let l of rect.label; let i= index"
+            [attr.x]="rect.labelx"
             [attr.y]="rect.labely+i*15">
             {{l}}
           </tspan>
@@ -45,5 +50,17 @@
       [attr.x1]="zoomingLine.x1" [attr.y1]="zoomingLine.y1"
       [attr.x2]="zoomingLine.x2"
       [attr.y2]="zoomingLine.y2" stroke="#000000" stroke-width="1"></line>
+    <g class="tooltip" *ngIf="tooltipRect.active">
+      <rect [attr.x]="tooltipRect.x" [attr.y]="tooltipRect.y"
+        [attr.height]="tooltipRect.h"
+        [attr.width]="tooltipRect.w" [attr.fill]="tooltipRect.color"></rect>
+      <g class="tooltipline" *ngFor="let data of tooltipData">
+          <!-- [attr.x]="line.x" [attr.y]="data.y" -->
+        <text class="unselectable" *ngFor="let line of data.line"
+        font-size="14" [attr.fill]="line.color" text-anchor="start" alignment-baseline="top">
+        {{line.text}}
+        </text>
+    </g>
+    </g>
   </svg>
 </div>
