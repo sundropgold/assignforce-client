@@ -51,7 +51,7 @@ export class FociComponent implements OnInit {
 
   confirmRemoveFocus(focus) {
     if (confirm('Are you sure you want to remove ' + focus.name + '?')) {
-      console.log('Hi');
+      this.curriculumControllerService.deleteCurriculum(focus.id);
     }
   }
 }

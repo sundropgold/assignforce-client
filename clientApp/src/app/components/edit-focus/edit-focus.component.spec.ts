@@ -9,6 +9,8 @@ import { Curriculum } from '../../model/curriculum';
 import { Skill } from '../../model/Skill';
 import { SkillService } from '../../services/skill/skill.service';
 import { Observable } from 'rxjs/Observable';
+import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
+import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
 
 describe('EditFocusComponent', () => {
   let component: EditFocusComponent;
@@ -21,12 +23,17 @@ describe('EditFocusComponent', () => {
     skills: [{ skillId: 1, name: 'Test Skill', active: true }]
   };
   const testData: Skill[] = [new Skill(1, 'Test Skill', true), new Skill(2, 'Test Skill 2', true)];
-  let skillService = SkillService;
+  let skillControllerService: SkillControllerService;
+  let curriculaControllerService: CurriculumControllerService;
 
   class MockSkillService {
-    getAll(): Observable<Skill[]> {
+    findAll(): Observable<Skill[]> {
       return Observable.of(testData);
     }
+  }
+
+  class MockCurriculaController {
+    updateCurriculum(curriculum: Curriculum) {}
   }
 
   class MockDialogRef {
@@ -40,11 +47,13 @@ describe('EditFocusComponent', () => {
         providers: [
           { provide: MatDialogRef, useClass: MockDialogRef },
           { provide: MAT_DIALOG_DATA, useValue: mockFocusData },
-          { provide: SkillService, useClass: MockSkillService }
+          { provide: SkillControllerService, useClass: MockSkillService },
+          { provide: CurriculumControllerService, useClass: MockCurriculaController }
         ],
         imports: [AppMaterialModule, BrowserAnimationsModule, FormsModule]
       }).compileComponents();
-      skillService = TestBed.get(SkillService);
+      skillControllerService = TestBed.get(SkillControllerService);
+      curriculaControllerService = TestBed.get(CurriculumControllerService);
     })
   );
 

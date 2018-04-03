@@ -6,14 +6,20 @@ import { AppMaterialModule } from '../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Skill } from '../../model/Skill';
 import { FormsModule } from '@angular/forms';
+import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
 
 describe('EditSkillComponent', () => {
   let component: EditSkillComponent;
   let fixture: ComponentFixture<EditSkillComponent>;
   const mockDialogData: Skill = { skillId: 1, name: 'Test Skill', active: true };
+  let skillControllerService: SkillControllerService;
 
   class MockDialogRef {
     close() {}
+  }
+
+  class MockSkillController {
+    updateSkillCaliber() {}
   }
 
   beforeEach(
@@ -22,10 +28,12 @@ describe('EditSkillComponent', () => {
         declarations: [EditSkillComponent],
         providers: [
           { provide: MatDialogRef, useClass: MockDialogRef },
-          { provide: MAT_DIALOG_DATA, useValue: mockDialogData }
+          { provide: MAT_DIALOG_DATA, useValue: mockDialogData },
+          { provide: SkillControllerService, useClass: MockSkillController }
         ],
         imports: [AppMaterialModule, BrowserAnimationsModule, FormsModule]
       }).compileComponents();
+      skillControllerService = TestBed.get(SkillControllerService);
     })
   );
 

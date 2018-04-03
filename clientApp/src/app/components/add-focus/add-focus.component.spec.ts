@@ -5,22 +5,33 @@ import { MatDialogRef } from '@angular/material';
 import { AppMaterialModule } from '../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
+import { Curriculum } from '../../model/Curriculum';
 
 describe('AddFocusComponent', () => {
   let component: AddFocusComponent;
   let fixture: ComponentFixture<AddFocusComponent>;
+  let curriculaControllerService: CurriculumControllerService;
 
   class MockDialogRef {
     close() {}
+  }
+
+  class MockCurriculumController {
+    createCurriculum(curriculum: Curriculum) {}
   }
 
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
         declarations: [AddFocusComponent],
-        providers: [{ provide: MatDialogRef, useClass: MockDialogRef }],
+        providers: [
+          { provide: MatDialogRef, useClass: MockDialogRef },
+          { provide: CurriculumControllerService, useClass: MockCurriculumController }
+        ],
         imports: [AppMaterialModule, BrowserAnimationsModule, FormsModule]
       }).compileComponents();
+      curriculaControllerService = TestBed.get(CurriculumControllerService);
     })
   );
 
