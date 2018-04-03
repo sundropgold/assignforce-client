@@ -117,8 +117,12 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   zoomScale = 0.01; // px to zoom scale
 
   // tooltip
-  tooltipRect = { active: true, x: 0, y: 0, w: 0, h: 0, linespacing: 15, color: '#00000099', triangle: '0,0 0,0 0,0' };
+  tooltipActive = false;
+  tooltipRect = { x: 0, y: 0, w: 0, h: 0, linespacing: 15, color: '#000000cc', triangle: '0,0 0,0 0,0' };
   tooltipData = [];
+  tooltipTimeoutDur = 100;
+  tooltipTimeoutTimer = null;
+  tooltipSetThisFrame = false;
 
   // other generated data
   trainers = [];
@@ -203,20 +207,20 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   }
 
   // sets the tooltip rect and tooltip data
-  updateTooltip(mousepos) {
+  updateTooltip(batchid, mousepos) {
     // hide tooltip if zooming or mouse is out of range
     if (this.zooming || mousepos.y < 0) {
-      this.tooltipRect.active = false;
+      this.tooltipActive = false;
       return;
     }
 
-    // todo get batch under mouse
-    const batch: Batch = this.batches[0];
-    if (batch == null) {
-      console.log('no batch under mouse');
-      this.tooltipRect.active = false;
-      return;
-    }
+    // todo get batch from id
+    const batch: Batch = this.batches[2];
+    // if (batch == null) {
+    //   console.log('no batch under mouse');
+    //   this.tooltipActive = false;
+    //   return;
+    // }
 
     // create text that goes on the tooltip
     const lines = [];
@@ -241,7 +245,8 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     lines.push(this.getTooltipLine(batch.room, 'Room'));
 
     // get positioning of the tooltip rect
-    const rectw = 200;
+    // todo dynamic width based on text width
+    const rectw = 250;
     const recth = this.tooltipRect.linespacing * lines.length + 5;
     const rectx = mousepos.x - rectw / 2;
     const recty = mousepos.y - recth - 12;
@@ -261,12 +266,39 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
     // update values
     this.tooltipData = lines;
-    this.tooltipRect.active = true;
+    this.tooltipActive = true;
     this.tooltipRect.x = rectx;
     this.tooltipRect.y = recty;
     this.tooltipRect.w = rectw;
     this.tooltipRect.h = recth;
     this.tooltipRect.triangle = triangle_points;
+
+    // clear timeout
+    if (this.tooltipTimeoutTimer != null) {
+      // console.log("clearing timeout");
+      clearTimeout(this.tooltipTimeoutTimer);
+      this.tooltipTimeoutTimer = null;
+    }
+    this.tooltipSetThisFrame = true;
+  }
+
+  // called when mouse moves, and it may not be over a batch
+  updateTooltipVisibility() {
+    // if tooltip was not just set
+    if (!this.tooltipSetThisFrame) {
+      // and the tooltip is active, and the timer is not already set
+      if (this.tooltipActive && this.tooltipTimeoutTimer == null) {
+        // start timeout
+        // console.log("starting tooltip timeout timer");
+        this.tooltipTimeoutTimer = setTimeout(() => {
+          // hide the tooltip
+          // console.log("tooltip time out");
+          this.tooltipActive = false;
+          this.tooltipTimeoutTimer = null;
+        }, this.tooltipTimeoutDur);
+      }
+    }
+    this.tooltipSetThisFrame = false;
   }
 
   // returns the appropriate color for the core curriculum type
@@ -345,7 +377,8 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         .split(' ')
         .concat(labeltext.split(''));
       //console.log('batch ' + batch.name + '\n rect: ' + ' x:' + x + ' y:' + y + ' h:' + h);
-      rects.push({ x: x, y: y, w: w, h: h, label: label, labelx: labelx, labely: labely, color: color });
+      // todo batch id
+      rects.push({ x: x, y: y, w: w, h: h, id: '', label: label, labelx: labelx, labely: labely, color: color });
     }
     return rects;
   }
@@ -562,7 +595,9 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     this.preZoomBeforeDuration = this.zoomingFromDate - this.startDate.valueOf();
     this.preZoomAfterDuration = this.endDate.valueOf() - this.zoomingFromDate;
     this.zooming = true;
-    this.updateTooltip(null);
+
+    // hide tooltip
+    this.tooltipActive = false;
   }
 
   zoomBy(amount) {
@@ -616,8 +651,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       // console.log('zf ' + zoomFactor);
       this.zoomBy(zoomFactor);
     }
-    // todo disable popup if mouse has not moved over a batch rectangle recently
-    this.updateTooltip({ x: mx, y: my });
+    this.updateTooltipVisibility();
   }
 
   // show tooltip at mouse on mouse move on batch
@@ -625,7 +659,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     // console.log(event.target);
     const x = event.clientX - this.timelineRootElement.nativeElement.getBoundingClientRect().left;
     const y = event.clientY - this.timelineRootElement.nativeElement.getBoundingClientRect().top;
-    this.updateTooltip({ x: x, y: y });
+    this.updateTooltip(event.target.id, { x: x, y: y });
   }
 
   // window has been resized, update timeline
