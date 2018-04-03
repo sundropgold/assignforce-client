@@ -4,6 +4,8 @@ import { OverviewComponent } from './overview.component';
 import { AppMaterialModule } from '../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Batch } from '../../model/batch';
+import { UrlService } from '../../services/url/url.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('OverviewComponent', () => {
   let component: OverviewComponent;
@@ -12,7 +14,8 @@ describe('OverviewComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [AppMaterialModule, BrowserAnimationsModule],
+        imports: [AppMaterialModule, BrowserAnimationsModule, HttpClientTestingModule],
+        providers: [UrlService],
         declarations: [OverviewComponent]
       }).compileComponents();
     })
@@ -28,89 +31,49 @@ describe('OverviewComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should export CSV', () => {
-    const evt: Event = new Event('');
-    component.exportToCSV(evt);
-    expect(component.isExported).toBeTruthy();
+  it('should compute weeks', () => {
+    const date1 = new Date(2018, 3, 1).valueOf();
+    const date2 = new Date(2018, 4, 1).valueOf();
+    expect(component.computeNumOfWeeksBetween(date1, date2)).toEqual(4);
   });
 
-  // it('should filter by all', () => {
-  //   component.batchList = [
-  //     {
-  //       name: 'Calvin',
-  //       startDate: new Date(0, 0, 0),
-  //       endDate: new Date(1, 1, 1),
-  //       curriculum: 'Java',
-  //       focus: 'InfoSys',
-  //       trainer: 'August',
-  //       cotrainer: 'Mitch',
-  //       location: 'Virginia',
-  //       building: 'Plaza1',
-  //       room: '214'
-  //     },
+  it('should not compute to be negative', () => {
+    const date1 = new Date(2018, 4, 1).valueOf();
+    const date2 = new Date(2018, 3, 1).valueOf();
+    expect(component.computeNumOfWeeksBetween(date1, date2)).toEqual(4);
+  });
 
-  //     {
-  //       name: 'Justin',
-  //       startDate: new Date(0, 0, 0),
-  //       endDate: new Date(2, 2, 2),
-  //       curriculum: 'Java',
-  //       focus: 'CapitalOne',
-  //       trainer: 'August',
-  //       cotrainer: 'Mitch',
-  //       location: 'Virginia',
-  //       building: 'Plaza1',
-  //       room: '214'
-  //     },
+  it('current week should be positive', () => {
+    const date1 = new Date(2017, 4, 1).valueOf();
+    expect(component.getCurrentWeekOfBatch(date1)).toBeGreaterThan(0);
+  });
 
-  //     {
-  //       name: 'Flynn',
-  //       startDate: new Date(0, 0, 0),
-  //       endDate: new Date(3, 3, 3),
-  //       curriculum: 'Java',
-  //       focus: 'Cognizant',
-  //       trainer: 'August',
-  //       cotrainer: 'Mitch',
-  //       location: 'Virginia',
-  //       building: 'Plaza1',
-  //       room: '214'
-  //     }
-  //   ];
+  it('current week should be negative', () => {
+    const date1 = new Date(9999, 4, 1).valueOf();
+    expect(component.getCurrentWeekOfBatch(date1)).toBeLessThan(0);
+  });
 
-  //   component.applyFilter(0);
-  //   // expect(component.batchList.length)
-  // });
+  it('progress should not be 0', () => {
+    const batch = {
+      startDate: new Date(0, 0, 0).valueOf(),
+      endDate: new Date(1, 1, 1).valueOf()
+    };
+    expect(component.getCurrentProgress(batch)).toBeGreaterThan(0);
+  });
 
-  // it('should compute weeks', () => {
-  //   const date1 = new Date(2018, 3, 1);
-  //   const date2 = new Date(2018, 4, 1);
-  //   expect(component.computeNumOfWeeksBetween(date1, date2)).toEqual(4);
-  // });
+  it('progress should be 0', () => {
+    const batch = {
+      startDate: new Date(9998, 0, 0).valueOf(),
+      endDate: new Date(9999, 1, 1).valueOf()
+    };
+    expect(component.getCurrentProgress(batch)).toEqual(0);
+  });
 
-  // it('should not compute to be negative', () => {
-  //   const date1 = new Date(2018, 4, 1);
-  //   const date2 = new Date(2018, 3, 1);
-  //   expect(component.computeNumOfWeeksBetween(date1, date2)).toEqual(4);
-  // });
-
-  // it('current week should be positive', () => {
-  //   const date1 = new Date(2017, 4, 1);
-  //   expect(component.getCurrentWeek(date1)).toBeGreaterThan(0);
-  // });
-
-  // it('progress should not be 0', () => {
-  //   const batch: Batch = {
-  //     name: 'Calvin',
-  //     startDate: new Date(0, 0, 0),
-  //     endDate: new Date(1, 1, 1),
-  //     curriculum: 'Java',
-  //     focus: 'InfoSys',
-  //     trainer: 'August',
-  //     cotrainer: 'Mitch',
-  //     location: 'Virginia',
-  //     building: 'Plaza1',
-  //     room: '214'
-  //   };
-
-  //   expect(component.getCurrentProgress(batch)).toBeGreaterThan(0);
-  // });
+  it('progress should be still be 0', () => {
+    const batch = {
+      startDate: new Date(9990, 0, 0).valueOf(),
+      endDate: new Date(9999, 0, 0).valueOf()
+    };
+    expect(component.getCurrentProgress(batch)).toEqual(0);
+  });
 });

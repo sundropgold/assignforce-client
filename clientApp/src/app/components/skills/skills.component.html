@@ -1,0 +1,28 @@
+<!--skills section-->
+  <mat-toolbar-row>
+    <mat-toolbar class="md-toolbar" layout="columns">
+      <span>Skills</span>
+      <span class="md-toolbar-spacer"></span>
+      <button mat-icon-button (click)="saveTSkills()">
+        <mat-icon matTooltip="Save" class="material-icons">save</mat-icon>
+      </button>
+    </mat-toolbar>
+  </mat-toolbar-row>
+  <mat-card-content>
+    <div class="md-padding" layout="column">
+      <h2 matSubheader>Select a skill:</h2>
+      <mat-chip-list>
+        <mat-chip *ngFor="let skill of skillsList" (click)="addSkill(skill)">
+          {{skill}}
+        </mat-chip>
+      </mat-chip-list>
+      <hr>
+      <h2 matSubheader>Current skills:</h2>
+      <mat-list>
+        <button mat-button class="md-list-item" *ngFor="let skill of trainer.skills" (click)="removeSkill(skill)">
+          <mat-icon class="material-icons" style="color: #FB8C00">stars</mat-icon>
+          <h5>{{skill.name}}</h5>
+        </button>
+      </mat-list>
+    </div>
+  </mat-card-content>
