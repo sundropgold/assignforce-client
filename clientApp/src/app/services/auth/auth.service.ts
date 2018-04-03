@@ -9,6 +9,15 @@ import Auth0Lock from 'auth0-lock';
 export class AuthService {
   constructor(private router: Router, private urlService: UrlService) {}
 
+  auth0 = new auth0.WebAuth({
+    clientID: environment.auth0.clientId,
+    domain: environment.auth0.domain,
+    responseType: environment.auth0.responseType,
+    audience: environment.auth0.audience,
+    redirectUri: environment.auth0.redirectUri,
+    scope: environment.auth0.scope
+  });
+
   lock = new Auth0Lock(environment.auth0.clientId, environment.auth0.domain, {
     autoclose: true,
     closable: false,
@@ -23,11 +32,12 @@ export class AuthService {
   });
 
   public showLogin(): void {
-    this.lock.show();
+    if (this.isAuthenticated()) this.router.navigate([this.urlService.getOverviewUrl()]);
+    else this.lock.show();
   }
 
   public handleAuthentication(): void {
-    this.lock.parseHash((err, authResult) => {
+    this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
         this.setSession(authResult);
