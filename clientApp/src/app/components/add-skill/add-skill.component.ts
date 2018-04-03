@@ -28,5 +28,6 @@ export class AddSkillComponent implements OnInit {
     console.log('We are Adding a skill ' + this.skill.name);
     this.skillControllerService.saveSkill(this.skill);
     this.skill = new Skill(0, '', true);
+    this.closeDialog();
   }
 }
