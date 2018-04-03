@@ -1,32 +1,39 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { SkillsComponent } from './skills.component';
 import { AppMaterialModule } from '../../material.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Skill } from '../../model/Skill';
+import { SkillsComponent } from './skills.component';
+import { MatListModule } from '@angular/material/list';
+import { MatCardModule, MatCardContent } from '@angular/material/card';
+import { MatToolbarModule, MatToolbarRow } from '@angular/material/toolbar';
+import { TrainerService } from '../../services/trainer/trainer.service';
+import { SkillService } from '../../services/skill/skill.service';
+import { HttpClient, HttpHandler, HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
+import { Skill } from '../../model/skill';
+import { TrainersComponent } from '../trainers/trainers.component';
+import { Trainer } from '../../model/trainer';
+
+class MockSkillService {
+  getAll(): Observable<Skill[]> {
+    return Observable.of([
+      { skillId: 1, name: 'Java', active: true },
+      { skillId: 2, name: 'SQL', active: true },
+      { skillId: 3, name: 'Angular', active: true },
+      { skillId: 4, name: 'C++', active: true }
+    ]);
+  }
+}
 
 describe('SkillsComponent', () => {
   let component: SkillsComponent;
   let fixture: ComponentFixture<SkillsComponent>;
-  const testData: Skill[] = [new Skill(1, 'Test Skill', true), new Skill(2, 'Test Skill 2', true)];
-  let skillControllerService = SkillControllerService;
-
-  class MockSkillControllerService {
-    findAll(): Observable<Skill[]> {
-      return Observable.of(testData);
-    }
-  }
 
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [AppMaterialModule, BrowserAnimationsModule],
+        imports: [AppMaterialModule, HttpClientModule],
         declarations: [SkillsComponent],
-        providers: [{ provide: SkillControllerService, useClass: MockSkillControllerService }]
+        providers: [{ provide: SkillService, useClass: MockSkillService }, TrainerService, HttpClient]
       }).compileComponents();
-      skillControllerService = TestBed.get(SkillControllerService);
     })
   );
 
@@ -40,38 +47,22 @@ describe('SkillsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should contain a mat-list', () => {
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('mat-list')).toBeTruthy();
+  //should populate the component's skills array with skills from the service
+  it('should populate component.skills', () => {
+    component.populateSkillList();
+    expect(component.skills.length).toBe(4, 'skills not populated correctly');
   });
 
-  it('should contain the skill name', () => {
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.skill-name').textContent).toContain(component.skillData[0].name);
+  //TEST: getAllSkills should get all skills the teacher does and doesn't have, should be 4 because the component trainer has no skills currently
+  it('should return a skill array', () => {
+    component.skillsList = [];
+    component.getAllSkills();
+    expect(component.skillsList.length).toBe(4, 'get all skills not fetching properly');
   });
 
-  it('should contain an accordion for the skills', () => {
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('mat-accordion')).toBeTruthy();
-  });
-
-  it('should contain a title named Skills', () => {
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('mat-panel-title').textContent).toContain('Skills');
-  });
-
-  it('should add a skill when the add skill function is called', () => {
-    fixture.detectChanges();
-    component.addSkill("This doesn't matter");
-  });
-
-  it('should have a remove button', () => {
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.remove-button')).toBeTruthy();
-  });
-
-  it('should have an edit button', () => {
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.edit-button')).toBeTruthy();
+  // TEST: remove should remove java form the skillsList array
+  it('should remove Java from the skillsList', () => {
+    component.remove('Java');
+    expect(component.skillsList.length).toBe(3, 'skill not properly removed');
   });
 });

@@ -5,11 +5,6 @@ import { Skill } from '../../model/Skill';
 
 @Injectable()
 export class SkillService {
-  //url = 'api/v2/skill';
-
-  skills: Skill[] = [];
-
-  //this will allow me to use the in memory database - Paul Fox
   url = 'api/skill';
 
   constructor(private http: HttpClient) {}

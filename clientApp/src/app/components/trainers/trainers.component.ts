@@ -4,7 +4,7 @@ import { Skill } from '../../model/Skill';
 import { TrainersAddComponent } from './trainers-add/trainers-add.component';
 import { TrainerItemComponent } from './trainer-item/trainer-item.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
-
+import { TrainerService } from '../../services/trainer/trainer.service';
 @Component({
   selector: 'app-trainers',
   templateUrl: './trainers.component.html',
@@ -23,7 +23,8 @@ export class TrainersComponent implements OnInit {
   firstName;
   lastName;
   trainers;
-  isManager: boolean;
+
+  isManager = true;
 
   ngOnInit() {
     this.isManager = false;
@@ -37,8 +38,8 @@ export class TrainersComponent implements OnInit {
     this.trainers = [
       {
         trainerId: 1,
-        firstName: 'James',
-        lastName: 'Smith',
+        firstName: 'Mary',
+        lastName: 'Poppins',
         skills: Skillz,
         certifications: 'Certs',
         active: true,
@@ -46,8 +47,8 @@ export class TrainersComponent implements OnInit {
       },
       {
         trainerId: 2,
-        firstName: 'Jane',
-        lastName: 'Doe',
+        firstName: 'Moana',
+        lastName: 'Motunui',
         skills: Skillz,
         certifications: 'Certs',
         active: false,
@@ -55,8 +56,8 @@ export class TrainersComponent implements OnInit {
       },
       {
         trainerId: 3,
-        firstName: 'Jon',
-        lastName: 'Jones',
+        firstName: 'Vanellope',
+        lastName: 'Von Schweetz',
         skills: Skillz,
         certifications: 'Certs',
         active: false,
@@ -64,8 +65,8 @@ export class TrainersComponent implements OnInit {
       },
       {
         trainerId: 4,
-        firstName: 'Daniel',
-        lastName: 'Cormier',
+        firstName: 'Peter',
+        lastName: 'Pan',
         skills: Skillz,
         certifications: 'Certs',
         active: true,
@@ -79,6 +80,8 @@ export class TrainersComponent implements OnInit {
   goToTrainer(trainer: Trainer) {}
 
   grabS3Resume(trainer: Trainer) {}
+
+  constructor(public dialog: MatDialog) {}
 
   addTrainer(): void {
     //add trainer
@@ -103,6 +106,7 @@ export class TrainersComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         //  this.addTrainer(result);
+        this.trainers.push(result);
       }
     });
   }

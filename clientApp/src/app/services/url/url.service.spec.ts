@@ -11,7 +11,7 @@ describe('UrlService', () => {
       imports: [HttpClientTestingModule],
       providers: [UrlService]
     });
-    urlService = new UrlService();
+    urlService = TestBed.get(UrlService);
   });
 
   it(

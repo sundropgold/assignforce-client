@@ -1,4 +1,4 @@
-import { Setting } from '../../model/setting';
+import { Setting } from '../../model/Setting';
 
 export const settings: Setting[] = [
   {

@@ -12,6 +12,7 @@ import { Skill } from '../../model/Skill';
 import { SkillService } from '../../services/skill/skill.service';
 import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
 import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
+import { CurriculumSkillsComponent } from '../curriculum-skills/curriculum-skills.component';
 
 describe('CurriculaComponent', () => {
   let component: CurriculaComponent;
@@ -43,7 +44,7 @@ describe('CurriculaComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [AppMaterialModule, BrowserAnimationsModule],
-        declarations: [CurriculaComponent, CoreComponent, FociComponent, SkillsComponent],
+        declarations: [CurriculaComponent, CoreComponent, FociComponent, CurriculumSkillsComponent],
         providers: [
           { provide: CurriculumControllerService, useClass: MockCurriculaService },
           { provide: SkillControllerService, useClass: MockSkillControllerService }

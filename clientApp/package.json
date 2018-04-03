@@ -32,6 +32,8 @@
     "@angular/router": "^5.2.9",
     "angular2-csv": "^0.2.5",
     "angular4-datepicker": "^1.0.1",
+    "auth0-js": "^9.4.2",
+    "auth0-lock": "^11.5.2",
     "bootstrap": "^3.3.7",
     "core-js": "^2.5.4",
     "express": "^4.16.3",
