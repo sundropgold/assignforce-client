@@ -5,6 +5,8 @@ import { AppMaterialModule } from '../../material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BatchesTimelineComponent } from '../batches-timeline/batches-timeline.component';
+import { BatchesTimelineFilterComponent } from '../batches-timeline-filter/batches-timeline-filter.component';
 
 describe('BatchesComponent', () => {
   let component: BatchesComponent;
@@ -20,7 +22,7 @@ describe('BatchesComponent', () => {
           HttpClientTestingModule,
           BrowserAnimationsModule
         ],
-        declarations: [BatchesComponent]
+        declarations: [BatchesComponent, BatchesTimelineComponent, BatchesTimelineFilterComponent]
       }).compileComponents();
     })
   );
