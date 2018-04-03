@@ -13,6 +13,16 @@ export const environment = {
     settings: 'settings'
   },
 
+  auth0: {
+    title: 'AssignForce Login',
+    clientId: 'uS5tb62hP8K3CgU00qa38SVnfWvzviiH',
+    domain: 'revature.auth0.com',
+    responseType: 'token id_token',
+    audience: 'https://revature.auth0.com/userinfo',
+    redirectUri: 'https://assignforce.revaturelabs.com/callback',
+    scope: 'openid'
+  },
+
   apiUrls: {
     batchController: {
       baseUrl: 'https://hydra.cfapps.io/api/batch/v0',
