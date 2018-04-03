@@ -66,6 +66,7 @@ import { AuthService } from './services/auth/auth.service';
 import { AuthenticatingComponent } from './components/authenticating/authenticating.component';
 import { CertificationsComponent } from './components/certifications/certifications.component';
 import { MatButtonModule, MatMenuModule, MatToolbarModule, MatIconModule, MatCardModule } from '@angular/material';
+import { SecurityContext } from './services/auth/security-context.service';
 import { CurriculumSkillsComponent } from './components/curriculum-skills/curriculum-skills.component';
 
 @NgModule({
@@ -135,6 +136,7 @@ import { CurriculumSkillsComponent } from './components/curriculum-skills/curric
     TrainerControllerService,
     UnavailableControllerService,
     AuthService,
+    SecurityContext,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,
