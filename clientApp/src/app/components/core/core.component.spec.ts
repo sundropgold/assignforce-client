@@ -4,9 +4,9 @@ import { CoreComponent } from './core.component';
 import { AppMaterialModule } from '../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable } from 'rxjs/Observable';
-import { CurriculaService } from '../../services/curricula/curricula.service';
 import { of } from 'rxjs/Observable/of';
 import { Curriculum } from '../../model/Curriculum';
+import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
 
 describe('CoreComponent', () => {
   let component: CoreComponent;
@@ -15,10 +15,10 @@ describe('CoreComponent', () => {
     new Curriculum(1, 'Test Curriculum', true, true, [{ skillId: 1, name: 'Test Skill', active: true }]),
     new Curriculum(2, 'Test Curriculum 2', true, true, [{ skillId: 1, name: 'Test Skill', active: true }])
   ];
-  let curriculaService = CurriculaService;
+  let curriculaControllerService = CurriculumControllerService;
 
-  class MockCurriculaService {
-    getCurricula(): Observable<Curriculum[]> {
+  class MockCurriculaControllerService {
+    retrieveAllActiveCore(): Observable<Curriculum[]> {
       return Observable.of(testData);
     }
   }
@@ -28,9 +28,9 @@ describe('CoreComponent', () => {
       TestBed.configureTestingModule({
         imports: [AppMaterialModule, BrowserAnimationsModule],
         declarations: [CoreComponent],
-        providers: [{ provide: CurriculaService, useClass: MockCurriculaService }]
+        providers: [{ provide: CurriculumControllerService, useClass: MockCurriculaControllerService }]
       }).compileComponents();
-      curriculaService = TestBed.get(CurriculaService);
+      curriculaControllerService = TestBed.get(CurriculumControllerService);
     })
   );
 

@@ -5,19 +5,19 @@ import { MatDialogRef } from '@angular/material';
 import { AppMaterialModule } from '../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Skill } from '../../model/Skill';
-import { SkillService } from '../../services/skill/skill.service';
 import { FormsModule } from '@angular/forms';
+import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
 
 describe('AddSkillComponent', () => {
   let component: AddSkillComponent;
   let fixture: ComponentFixture<AddSkillComponent>;
-  let skillService: SkillService;
+  let skillControllerService: SkillControllerService;
 
   class MockDialogRef {
     close() {}
   }
 
-  class MockSkillServie {
+  class MockSkillControllerService {
     create(skill: Skill) {}
   }
 
@@ -27,11 +27,11 @@ describe('AddSkillComponent', () => {
         declarations: [AddSkillComponent],
         providers: [
           { provide: MatDialogRef, useClass: MockDialogRef },
-          { provide: SkillService, useClass: MockSkillServie }
+          { provide: SkillControllerService, useClass: MockSkillControllerService }
         ],
         imports: [AppMaterialModule, BrowserAnimationsModule, FormsModule]
       }).compileComponents();
-      skillService = TestBed.get(SkillService);
+      skillControllerService = TestBed.get(SkillControllerService);
     })
   );
 

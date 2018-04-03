@@ -4,17 +4,17 @@ import { SkillsComponent } from './skills.component';
 import { AppMaterialModule } from '../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Skill } from '../../model/Skill';
-import { SkillService } from '../../services/skill/skill.service';
 import { Observable } from 'rxjs/Observable';
+import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
 
 describe('SkillsComponent', () => {
   let component: SkillsComponent;
   let fixture: ComponentFixture<SkillsComponent>;
   const testData: Skill[] = [new Skill(1, 'Test Skill', true), new Skill(2, 'Test Skill 2', true)];
-  let skillService = SkillService;
+  let skillControllerService = SkillControllerService;
 
-  class MockSkillService {
-    getAll(): Observable<Skill[]> {
+  class MockSkillControllerService {
+    findAll(): Observable<Skill[]> {
       return Observable.of(testData);
     }
   }
@@ -24,9 +24,9 @@ describe('SkillsComponent', () => {
       TestBed.configureTestingModule({
         imports: [AppMaterialModule, BrowserAnimationsModule],
         declarations: [SkillsComponent],
-        providers: [{ provide: SkillService, useClass: MockSkillService }]
+        providers: [{ provide: SkillControllerService, useClass: MockSkillControllerService }]
       }).compileComponents();
-      skillService = TestBed.get(SkillService);
+      skillControllerService = TestBed.get(SkillControllerService);
     })
   );
 

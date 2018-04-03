@@ -4,8 +4,8 @@ import { FociComponent } from './foci.component';
 import { AppMaterialModule } from '../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Curriculum } from '../../model/Curriculum';
-import { CurriculaService } from '../../services/curricula/curricula.service';
 import { Observable } from 'rxjs/Observable';
+import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
 
 describe('FociComponent', () => {
   let component: FociComponent;
@@ -14,10 +14,10 @@ describe('FociComponent', () => {
     new Curriculum(1, 'Test Curriculum', false, true, [{ skillId: 1, name: 'Test Skill', active: true }]),
     new Curriculum(2, 'Test Curriculum 2', true, true, [{ skillId: 1, name: 'Test Skill', active: true }])
   ];
-  let curriculaService = CurriculaService;
+  let curriculaControllerService = CurriculumControllerService;
 
   class MockCurriculaService {
-    getCurricula(): Observable<Curriculum[]> {
+    retrieveAllActiveFocus(): Observable<Curriculum[]> {
       return Observable.of(testData);
     }
   }
@@ -27,9 +27,9 @@ describe('FociComponent', () => {
       TestBed.configureTestingModule({
         imports: [AppMaterialModule, BrowserAnimationsModule],
         declarations: [FociComponent],
-        providers: [{ provide: CurriculaService, useClass: MockCurriculaService }]
+        providers: [{ provide: CurriculumControllerService, useClass: MockCurriculaService }]
       }).compileComponents();
-      curriculaService = TestBed.get(CurriculaService);
+      curriculaControllerService = TestBed.get(CurriculumControllerService);
     })
   );
 

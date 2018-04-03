@@ -55,6 +55,15 @@ import { TrainersAddComponent } from './components/trainers/trainers-add/trainer
 import { TrainerItemComponent } from './components/trainers/trainer-item/trainer-item.component';
 import { CurriculaService } from './services/curricula/curricula.service';
 
+import { BatchControllerService } from './services/api/batch-controller/batch-controller.service';
+import { AddressControllerService } from './services/api/address-controller/address-controller.service';
+import { BuildingControllerService } from './services/api/building-controller/building-controller.service';
+import { LocationControllerService } from './services/api/location-controller/location-controller.service';
+import { CurriculumControllerService } from './services/api/curriculum-controller/curriculum-controller.service';
+import { SettingControllerService } from './services/api/setting-controller/setting-controller.service';
+import { SkillControllerService } from './services/api/skill-controller/skill-controller.service';
+import { TrainerControllerService } from './services/api/trainer-controller/trainer-controller.service';
+import { UnavailableControllerService } from './services/api/unavailable-controller/unavailable-controller.service';
 
 @NgModule({
   declarations: [
@@ -104,6 +113,15 @@ import { CurriculaService } from './services/curricula/curricula.service';
     S3CredentialService,
     HttpClient,
     UrlService,
+    BatchControllerService,
+    AddressControllerService,
+    BuildingControllerService,
+    LocationControllerService,
+    CurriculumControllerService,
+    SettingControllerService,
+    SkillControllerService,
+    TrainerControllerService,
+    UnavailableControllerService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,

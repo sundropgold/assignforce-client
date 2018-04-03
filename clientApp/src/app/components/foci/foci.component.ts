@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material';
 import { AddFocusComponent } from '../add-focus/add-focus.component';
 import { Skill } from '../../model/Skill';
 import { EditFocusComponent } from '../edit-focus/edit-focus.component';
-import { CurriculaService } from '../../services/curricula/curricula.service';
+import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
 
 @Component({
   selector: 'app-foci',
@@ -12,44 +12,12 @@ import { CurriculaService } from '../../services/curricula/curricula.service';
   styleUrls: ['./foci.component.css']
 })
 export class FociComponent implements OnInit {
-  focusData: Curriculum[] = [
-    // {
-    //   currId: 4,
-    //   name: 'Microservices',
-    //   core: false,
-    //   active: true,
-    //   skills: [
-    //     {skillId: 1, name: 'Core JAVA', active: true},
-    //     {skillId: 2, name: 'JUnit', active: true},
-    //     {skillId: 3, name: 'Spring', active: true},
-    //     {skillId: 4, name: 'REST', active: true},
-    //     {skillId: 5, name: 'MVC', active: true},
-    //     {skillId: 6, name: 'SOAP', active: true}
-    //   ]
-    // },
-    // {
-    //   currId: 2,
-    //   name: 'Pega',
-    //   core: false,
-    //   active: true,
-    //   skills: [{skillId: 7, name: 'Pega', active: true}]
-    // },
-    // {
-    //   currId: 3,
-    //   name: 'Oracle Fusion',
-    //   core: false,
-    //   active: true,
-    //   skills: [
-    //     {skillId: 1, name: 'Core JAVA', active: true},
-    //     {skillId: 8, name: 'Oracle SQL', active: true}
-    //   ]
-    // }
-  ];
+  focusData: Curriculum[] = [];
 
-  constructor(private dialog: MatDialog, private curriculaService: CurriculaService) {}
+  constructor(private dialog: MatDialog, private curriculumControllerService: CurriculumControllerService) {}
 
   ngOnInit() {
-    this.curriculaService.getCurricula().subscribe(data => {
+    this.curriculumControllerService.retrieveAllActiveFocus().subscribe(data => {
       const tempData: Curriculum[] = data;
       for (let i = 0; i < tempData.length; i++) {
         if (tempData[i].core === false) {

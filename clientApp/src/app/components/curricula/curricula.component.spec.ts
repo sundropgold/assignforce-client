@@ -8,9 +8,10 @@ import { AppMaterialModule } from '../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Curriculum } from '../../model/Curriculum';
 import { Observable } from 'rxjs/Observable';
-import { CurriculaService } from '../../services/curricula/curricula.service';
 import { Skill } from '../../model/Skill';
 import { SkillService } from '../../services/skill/skill.service';
+import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
+import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
 
 describe('CurriculaComponent', () => {
   let component: CurriculaComponent;
@@ -20,17 +21,20 @@ describe('CurriculaComponent', () => {
     new Curriculum(2, 'Test Curriculum 2', true, true, [{ skillId: 1, name: 'Test Skill', active: true }])
   ];
   const testData2: Skill[] = [new Skill(1, 'Test Skill', true), new Skill(2, 'Test Skill 2', true)];
-  let skillService = SkillService;
-  let curriculaService = CurriculaService;
+  let skillControllerService = SkillControllerService;
+  let curriculumControllerService = CurriculumControllerService;
 
   class MockCurriculaService {
-    getCurricula(): Observable<Curriculum[]> {
+    retrieveAllActiveCore(): Observable<Curriculum[]> {
+      return Observable.of(testData);
+    }
+    retrieveAllActiveFocus(): Observable<Curriculum[]> {
       return Observable.of(testData);
     }
   }
 
-  class MockSkillService {
-    getAll(): Observable<Skill[]> {
+  class MockSkillControllerService {
+    findAll(): Observable<Skill[]> {
       return Observable.of(testData2);
     }
   }
@@ -41,12 +45,12 @@ describe('CurriculaComponent', () => {
         imports: [AppMaterialModule, BrowserAnimationsModule],
         declarations: [CurriculaComponent, CoreComponent, FociComponent, SkillsComponent],
         providers: [
-          { provide: CurriculaService, useClass: MockCurriculaService },
-          { provide: SkillService, useClass: MockSkillService }
+          { provide: CurriculumControllerService, useClass: MockCurriculaService },
+          { provide: SkillControllerService, useClass: MockSkillControllerService }
         ]
       }).compileComponents();
-      curriculaService = TestBed.get(CurriculaService);
-      skillService = TestBed.get(SkillService);
+      curriculumControllerService = TestBed.get(CurriculumControllerService);
+      skillControllerService = TestBed.get(SkillControllerService);
     })
   );
 

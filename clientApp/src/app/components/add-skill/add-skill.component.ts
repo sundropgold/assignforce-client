@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Skill } from '../../model/Skill';
-import { SkillService } from '../../services/skill/skill.service';
+import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
 
 @Component({
   selector: 'app-add-skill',
@@ -9,7 +9,10 @@ import { SkillService } from '../../services/skill/skill.service';
   styleUrls: ['./add-skill.component.css']
 })
 export class AddSkillComponent implements OnInit {
-  constructor(private dialogRef: MatDialogRef<AddSkillComponent>, private skillService: SkillService) {}
+  constructor(
+    private dialogRef: MatDialogRef<AddSkillComponent>,
+    private skillControllerService: SkillControllerService
+  ) {}
 
   skill: Skill;
 
@@ -23,7 +26,7 @@ export class AddSkillComponent implements OnInit {
 
   addSkill(): void {
     console.log('We are Adding a skill ' + this.skill.name);
-    this.skillService.create(this.skill);
+    this.skillControllerService.saveSkill(this.skill);
     this.skill = new Skill(0, '', true);
   }
 }

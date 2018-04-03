@@ -13,7 +13,7 @@
 
       <div style="padding-top: .5%">
         <mat-accordion>
-          <mat-expansion-panel *ngFor="let location of locations" >
+          <mat-expansion-panel *ngFor="let location of locations">
             <mat-expansion-panel-header (click)="collapseAll(location.id)">
               <mat-panel-title>
                 <mat-icon mat-list-icon svgIcon="location"></mat-icon>
@@ -38,24 +38,29 @@
                     <mat-panel-description>
                       <span class="fill-space"></span>
                       <mat-icon matTooltip="Add Room" class="material-icons" (click)="openAddRoomDialog($event, location, building)"> add_circle_outline</mat-icon>
-                      <mat-icon matTooltip="Remove Building" class="material-icons" (click)="openDeleteBuildingDialog($event, location, building)"> remove_circle</mat-icon>
-                      <mat-icon matTooltip="Edit Building" class="material-icons" (click)="openEditBuildingDialog($event, location, building)"> edit</mat-icon>
+                      <mat-icon matTooltip="Remove Building" class="material-icons" (click)="openDeleteBuildingDialog($event, location, building)">
+                        remove_circle</mat-icon>
+                      <mat-icon matTooltip="Edit Building" class="material-icons" (click)="openEditBuildingDialog($event, location, building)">
+                        edit</mat-icon>
                     </mat-panel-description>
                   </mat-expansion-panel-header>
 
                   <div style="padding-top: .5%">
                     <mat-list *ngFor="let room of building.rooms">
-                      <mat-list-item >
-                        <h4 mat-line><mat-icon style="color: black">store</mat-icon>{{room.name}}</h4>
+                      <mat-list-item>
+                        <h4 mat-line>
+                          <mat-icon style="color: black">store</mat-icon>{{room.name}}</h4>
                         <span class="fill-space"></span>
-                        <mat-icon matTooltip="Remove Room" class="material-icons" style="color: black; cursor: pointer" (click)="openDeleteRoomDialog($event, location, building, room)"> remove_circle_outline</mat-icon>
-                        <mat-icon matTooltip="Edit Room" class="material-icons"style="color: black; cursor: pointer" (click)="openEditRoomDialog($event, location, room)"> edit</mat-icon>
+                        <mat-icon matTooltip="Remove Room" class="material-icons" style="color: black; cursor: pointer" (click)="openDeleteRoomDialog($event, location, building, room)">
+                          remove_circle_outline</mat-icon>
+                        <mat-icon matTooltip="Edit Room" class="material-icons" style="color: black; cursor: pointer" (click)="openEditRoomDialog($event, location, room)">
+                          edit</mat-icon>
                       </mat-list-item>
                       <mat-divider></mat-divider>
                     </mat-list>
                   </div>
 
-                </mat-expansion-panel >
+                </mat-expansion-panel>
               </mat-accordion>
             </div>
           </mat-expansion-panel>

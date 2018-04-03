@@ -3,7 +3,7 @@ import { Skill } from '../../model/Skill';
 import { MatDialog } from '@angular/material';
 import { AddSkillComponent } from '../add-skill/add-skill.component';
 import { EditSkillComponent } from '../edit-skill/edit-skill.component';
-import { SkillService } from '../../services/skill/skill.service';
+import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
 
 @Component({
   selector: 'app-skills',
@@ -13,10 +13,10 @@ import { SkillService } from '../../services/skill/skill.service';
 export class SkillsComponent implements OnInit {
   skillData: Skill[] = [];
 
-  constructor(private dialog: MatDialog, private skillService: SkillService) {}
+  constructor(private dialog: MatDialog, private skillControllerService: SkillControllerService) {}
 
   ngOnInit() {
-    this.skillService.getAll().subscribe(data => {
+    this.skillControllerService.findAll().subscribe(data => {
       this.skillData = data;
     });
   }
@@ -35,8 +35,6 @@ export class SkillsComponent implements OnInit {
 
   openAddSkillDialog() {
     const dialogRef = this.dialog.open(AddSkillComponent, {
-      // width: '250px',
-      // height: '500px',
       data: this.skillData
     });
   }
