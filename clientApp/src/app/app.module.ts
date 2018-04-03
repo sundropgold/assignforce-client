@@ -52,6 +52,8 @@ import { SettingControllerService } from './services/api/setting-controller/sett
 import { SkillControllerService } from './services/api/skill-controller/skill-controller.service';
 import { TrainerControllerService } from './services/api/trainer-controller/trainer-controller.service';
 import { UnavailableControllerService } from './services/api/unavailable-controller/unavailable-controller.service';
+import { AuthService } from './services/auth/auth.service';
+import { AuthenticatingComponent } from './components/authenticating/authenticating.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +78,8 @@ import { UnavailableControllerService } from './services/api/unavailable-control
     LocationEditRoomDialogComponent,
     LoginComponent,
     TrainersAddComponent,
-    TrainerItemComponent
+    TrainerItemComponent,
+    AuthenticatingComponent
   ],
 
   imports: [
@@ -104,6 +107,7 @@ import { UnavailableControllerService } from './services/api/unavailable-control
     SkillControllerService,
     TrainerControllerService,
     UnavailableControllerService,
+    AuthService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,

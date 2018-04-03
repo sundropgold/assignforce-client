@@ -22,6 +22,15 @@ export const environment = {
     settings: 'settings'
   },
 
+  auth0: {
+    clientId: 'uS5tb62hP8K3CgU00qa38SVnfWvzviiH',
+    domain: 'revature.auth0.com',
+    responseType: 'token id_token',
+    audience: 'https://revature.auth0.com/userinfo',
+    redirectUri: 'http://localhost:4200/overview',
+    scope: 'openid'
+  },
+
   apiUrls: {
     batchController: {
       baseUrl: 'api/batch',

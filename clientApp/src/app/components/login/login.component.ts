@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UrlService } from '../../services/url/url.service'
+import { UrlService } from '../../services/url/url.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -7,11 +8,9 @@ import { UrlService } from '../../services/url/url.service'
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  constructor(private url: UrlService) { }
+  constructor(private auth0: AuthService) {}
 
   ngOnInit() {
-    //window.location.href = this.url.getUrl();
+    this.auth0.showLogin();
   }
-
 }

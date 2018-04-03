@@ -13,6 +13,8 @@ export const environment = {
     settings: 'settings'
   },
 
+  clientId: 'uS5tb62hP8K3CgU00qa38SVnfWvzviiH',
+
   apiUrls: {
     batchController: {
       baseUrl: 'https://hydra.cfapps.io/api/batch/v0',
