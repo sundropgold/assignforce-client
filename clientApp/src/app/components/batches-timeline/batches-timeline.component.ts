@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Batch } from '../../model/batch';
 
 @Component({
@@ -6,11 +6,13 @@ import { Batch } from '../../model/batch';
   templateUrl: './batches-timeline.component.html',
   styleUrls: ['./batches-timeline.component.css']
 })
-export class BatchesTimelineComponent implements OnInit {
+export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   // todo make responsive
   // todo use mask
   // values from current site
   width = 1536;
+  minWidth = 100;
+  // width = window.screen.width;
   height = 2067;
 
   // test data
@@ -91,6 +93,7 @@ export class BatchesTimelineComponent implements OnInit {
 
   // root element of the timeline. used for getting the relative mouse position
   @ViewChild('timelineroot') timelineRootElement: ElementRef;
+  @ViewChild('trainernames') trainernames: ElementRef;
 
   // default values for formatting
   column_width = 50;
@@ -112,7 +115,7 @@ export class BatchesTimelineComponent implements OnInit {
   preZoomAfterDuration: number;
   zoomScale = 0.01; // px to zoom scale
 
-  // popup
+  // tooltip
 
   // generated data
   trainers = [];
@@ -136,13 +139,29 @@ export class BatchesTimelineComponent implements OnInit {
     this.endDate.setMonth(this.endDate.getMonth() + 6);
 
     this.updateTrainers();
-    this.updateTodayLine();
+  }
+
+  // setup page size
+  ngAfterViewInit() {
+    this.updateSize();
   }
 
   // this is called when any of the filters are changed
   onFilterChange(evt) {
     console.log(evt);
     // todo update stuff
+  }
+
+  updateSize() {
+    // set width to be the same size as the trainernames div, as it scales with the page
+    this.width = this.trainernames.nativeElement.getBoundingClientRect().width;
+    // - event.target.offsetWidth * 2;
+    // todo determine height ?
+    this.swimlane_x_ofs = (this.width - this.timescale_x_ofs) / 2 - this.trainers.length / 2 * this.column_width;
+    this.swimlane_x_ofs = Math.max(this.timescale_x_ofs + 10, this.swimlane_x_ofs);
+    // this.height = event.target.innerHeight * 2;
+    // console.log(this.width + ' ' + this.height);
+    this.updateTodayLine();
   }
 
   // makes the list of trainers
@@ -165,7 +184,7 @@ export class BatchesTimelineComponent implements OnInit {
       (new Date(Date.now()).valueOf() - this.startDate.valueOf()) /
       (this.endDate.valueOf() - this.startDate.valueOf()) *
       this.height;
-    this.today_line = { x1: 0, x2: this.width, y1: y, y2: y };
+    this.today_line = { x1: this.timescale_x_ofs, x2: this.width, y1: y, y2: y };
   }
 
   // returns the appropriate color for the core curriculum type
@@ -206,7 +225,7 @@ export class BatchesTimelineComponent implements OnInit {
       const trainer_index = this.trainers.findIndex(t => t === batch.trainer);
 
       // todo set width dynamically
-      const w = 20;
+      const w = 25;
 
       // get the top left position of the rectangle
       const x = this.swimlane_x_ofs + trainer_index * this.column_width + (this.column_width - w) * 0.5;
@@ -239,16 +258,17 @@ export class BatchesTimelineComponent implements OnInit {
   // returns the list of trainers with their positions
   getTrainers() {
     const trainerposs = [];
+    const spacing = 2;
     for (let i = 0; i < this.trainers.length; i++) {
       // get trainer name
       const trainer = this.trainers[i];
       // get left offset of this trainer
-      let left = 2;
+      let left = spacing;
       if (i === 0) {
         left += this.swimlane_x_ofs;
       }
       // get width
-      const width = this.column_width - 2;
+      const width = this.column_width - spacing;
       trainerposs.push({ name: trainer, left: left, width: width });
     }
     return trainerposs;
@@ -270,7 +290,7 @@ export class BatchesTimelineComponent implements OnInit {
 
     // number of dates to be shown on the screen
     // const numDates = dist_between_months / this.height + 1;
-    const num_dates = 30; //todo based on height
+    const num_dates = 35; //todo based on height
     // console.log("showing "+num_dates+" num dates");
 
     // min value for dist_between_months to be for that scale
@@ -288,6 +308,8 @@ export class BatchesTimelineComponent implements OnInit {
     // create an array of all the dates to be shown and determine the naming style
     const dates: Date[] = [];
     let namestyle = 'month';
+    // dates.push(this.startDate);
+    // dates.push(this.endDate);
     if (dist_between_months > pxdays) {
       // show in days
       namestyle = 'day';
@@ -422,7 +444,7 @@ export class BatchesTimelineComponent implements OnInit {
   startZoom(mouseposy) {
     // calculate values needed for zooming from the mousepos
     this.zoomingFrom = mouseposy;
-    this.zoomingLine = { x1: 0, x2: this.width, y1: mouseposy, y2: mouseposy };
+    this.zoomingLine = { x1: this.timescale_x_ofs, x2: this.width, y1: mouseposy, y2: mouseposy };
     // position (px) to date
     this.zoomingFromDate =
       mouseposy / this.height * (this.endDate.valueOf() - this.startDate.valueOf()) + this.startDate.valueOf();
@@ -489,5 +511,9 @@ export class BatchesTimelineComponent implements OnInit {
   // show tooltip at mouse on mouse move on batch
   batchmousemove(event) {
     // todo
+  }
+
+  windowResize(event) {
+    this.updateSize();
   }
 }

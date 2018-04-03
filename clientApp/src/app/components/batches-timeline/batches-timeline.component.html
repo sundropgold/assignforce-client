@@ -1,6 +1,6 @@
 <app-batches-timeline-filter (filterChangeEmitter)="onFilterChange($event)"></app-batches-timeline-filter>
-<div>
-  <div id="trainer-names-bg">
+<div (window:resize)="windowResize($event)" id="full-timeline">
+  <div id="trainer-names-bg" #trainernames>
     <span class="trainer-names" *ngFor="let trainer of getTrainers()"
       [style.margin-left.px]="trainer.left"
       [style.width.px]="trainer.width">
@@ -14,7 +14,7 @@
       fill="#FAFAFA"></rect>
     <g class="timescale">
       <text class="timescale-text unselectable" *ngFor="let timescale of getTimescale()"
-        [attr.x]="timescale.x" [attr.y]="timescale.y" text-anchor="end">{{timescale.name}}</text>
+        [attr.x]="timescale.x" [attr.y]="timescale.y" text-anchor="end" alignment-baseline="middle">{{timescale.name}}</text>
         <line id="righttimescaleline"
         [attr.x1]="timescale_x_ofs" [attr.y1]="swimlane_y_ofs" [attr.x2]="timescale_x_ofs"
         [attr.y2]="height - swimlane_y_ofs" stroke="#000000" stroke-width="2"></line>
