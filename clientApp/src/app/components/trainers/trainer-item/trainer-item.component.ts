@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, DoCheck } from '@angular/core';
 import { Trainer } from '../../../model/Trainer';
 import { Skill } from '../../../model/Skill';
 
@@ -7,7 +7,7 @@ import { Skill } from '../../../model/Skill';
   templateUrl: './trainer-item.component.html',
   styleUrls: ['./trainer-item.component.css']
 })
-export class TrainerItemComponent implements OnInit {
+export class TrainerItemComponent implements OnInit, DoCheck {
   @Input() trainer: Trainer = new Trainer(0, '', '', [], [], null, '', []);
   isManager: boolean;
   check = false;
@@ -36,11 +36,11 @@ export class TrainerItemComponent implements OnInit {
 
   listSkills(skills: Skill[]) {
     this.skillsList = '';
-    for (var i = 0; i < skills.length; i++) {
+    for (let i = 0; i < skills.length; i++) {
       this.skillsList += skills[i].name += ' ';
     }
 
-    if (this.skillsList == '' || skills.length == 0) {
+    if (this.skillsList === '' || skills.length === 0) {
       this.skillsList = 'None';
     }
 
