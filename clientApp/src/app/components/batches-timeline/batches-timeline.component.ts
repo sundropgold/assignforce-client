@@ -224,7 +224,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       // get the column this batch will be in
       const trainer_index = this.trainers.findIndex(t => t === batch.trainer);
 
-      // todo set width dynamically
+      // todo set width dynamically ?
       const w = 25;
 
       // get the top left position of the rectangle
@@ -232,15 +232,38 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       const y = (batch.startDate.valueOf() - this.startDate.valueOf()) / full_duration * this.height;
       // calculate height from the top and bottom of the rectangle
       const endy = (batch.endDate.valueOf() - this.startDate.valueOf()) / full_duration * this.height;
-      // todo dont draw if out of bounds
       const h = endy - y;
+
+      // change label based on height of rectangle
+      const labelx = x + w / 4;
+      let labely = y + 20;
+      const pxhlong = 105;
+      const pxhshort = 30;
+      const pxhnum = 0;
+      let labeltext = '';
+      if (h > pxhlong) {
+        // spell out weeks
+        labeltext = 'WEEKS';
+        labely = y + 25;
+      } else if (h > pxhshort) {
+        // only have number and w
+        labeltext = 'W';
+        labely = y + 15;
+      } else if (h > pxhnum) {
+        // only number
+        labeltext = '';
+        labely = y - 2;
+      } else {
+        console.log('batch rectangle height is negative!');
+        continue;
+      }
       // get the text that will be put into the rectangle
-      const durarray = duration
+      const label = duration
         .toString()
         .split(' ')
-        .concat('WEEKS'.split(''));
+        .concat(labeltext.split(''));
       //console.log('batch ' + batch.name + '\n rect: ' + ' x:' + x + ' y:' + y + ' h:' + h);
-      rects.push({ x: x, y: y, w: w, h: h, dur: durarray, color: color });
+      rects.push({ x: x, y: y, w: w, h: h, label: label, labelx: labelx, labely: labely, color: color });
     }
     return rects;
   }

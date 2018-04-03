@@ -29,10 +29,10 @@
         <rect [attr.x]="rect.x" [attr.y]="rect.y" [attr.height]="rect.h"
           [attr.width]="rect.w" [attr.fill]="rect.color"
           (mousemove)="batchmousemove($event)"></rect>
-        <text class="unselectable" [attr.x]="rect.x+2" [attr.y]="rect.y+2" font-size="14">
-          <tspan *ngFor="let d of rect.dur; let i= index" [attr.x]="rect.x+2"
-            [attr.y]="rect.y+20+i*15">
-            {{d}}
+        <text class="unselectable" [attr.x]="rect.labelx" [attr.y]="rect.labely" font-size="14" text-anchor="start">
+          <tspan *ngFor="let l of rect.label; let i = index" [attr.x]="rect.labelx"
+            [attr.y]="rect.labely+i*15">
+            {{l}}
           </tspan>
         </text>
       </g>
