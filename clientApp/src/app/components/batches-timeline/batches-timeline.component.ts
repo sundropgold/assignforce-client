@@ -120,9 +120,13 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   tooltipActive = false;
   tooltipRect = { x: 0, y: 0, w: 0, h: 0, linespacing: 15, color: '#000000cc', triangle: '0,0 0,0 0,0' };
   tooltipData = [];
-  tooltipTimeoutDur = 100;
+  tooltipTimeoutDur = 120;
   tooltipTimeoutTimer = null;
   tooltipSetThisFrame = false;
+  tooltipDefaultColor = '#ffffff';
+  tooltipTitleColor = '#FFA500';
+  tooltipMidSectionColor = '#FFD700';
+  tooltipNoneColor = '#FF6347';
 
   // other generated data
   trainers = [];
@@ -200,9 +204,15 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   getTooltipLine(val, text) {
     // if it is null say there is none, or say it
     if (val != null) {
-      return [{ text: text + ': ', color: 'white' }, { text: val, color: 'yellow' }];
+      return [
+        { text: text + ': ', color: this.tooltipDefaultColor },
+        { text: val, color: this.tooltipMidSectionColor }
+      ];
     } else {
-      return [{ text: 'No ' + text.toLowerCase() + ' ', color: 'red' }, { text: 'for this batch.', color: 'white' }];
+      return [
+        { text: 'No ' + text.toLowerCase() + ' ', color: this.tooltipNoneColor },
+        { text: 'for this batch.', color: this.tooltipDefaultColor }
+      ];
     }
   }
 
@@ -225,21 +235,30 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     // create text that goes on the tooltip
     const lines = [];
     if (batch.curriculum != null) {
-      lines.push([{ text: batch.curriculum, color: 'orange' }, { text: ' Batch', color: 'white' }]);
+      lines.push([
+        { text: batch.curriculum, color: this.tooltipTitleColor },
+        { text: ' Batch', color: this.tooltipDefaultColor }
+      ]);
     } else {
-      lines.push([{ text: 'No core curriculum.', color: 'red' }]);
+      lines.push([{ text: 'No core curriculum.', color: this.tooltipNoneColor }]);
     }
     if (batch.focus != null) {
-      lines.push([{ text: 'w/ focus on ', color: 'white' }, { text: batch.focus, color: 'orange' }]);
+      lines.push([
+        { text: 'w/ focus on ', color: this.tooltipDefaultColor },
+        { text: batch.focus, color: this.tooltipTitleColor }
+      ]);
     } else {
-      lines.push([{ text: 'w/', color: 'white' }, { text: 'no focus.', color: 'red' }]);
+      lines.push([
+        { text: 'w/', color: this.tooltipDefaultColor },
+        { text: 'no focus.', color: this.tooltipNoneColor }
+      ]);
     }
-    lines.push([{ text: '----------', color: 'white' }]);
+    lines.push([{ text: '----------', color: this.tooltipDefaultColor }]);
     lines.push(this.getTooltipLine(batch.trainer, 'Trainer'));
     lines.push(this.getTooltipLine(batch.cotrainer, 'Cotrainer'));
     lines.push(this.getTooltipLine(batch.startDate.toDateString(), 'Start Date'));
     lines.push(this.getTooltipLine(batch.endDate.toDateString(), 'End Date'));
-    lines.push([{ text: '----------', color: 'white' }]);
+    lines.push([{ text: '----------', color: this.tooltipDefaultColor }]);
     lines.push(this.getTooltipLine(batch.location, 'Location'));
     lines.push(this.getTooltipLine(batch.building, 'Building'));
     lines.push(this.getTooltipLine(batch.room, 'Room'));
