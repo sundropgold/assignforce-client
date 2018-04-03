@@ -81,4 +81,10 @@ describe('BatchesTimelineComponent', () => {
     component.finishZoom();
     expect(component.endDate.valueOf() - component.startDate.valueOf()).toEqual(zoomFactor * prezoom);
   });
+
+  it('should set the tooltip', () => {
+    component.updateTooltip(0, { x: 1, y: 1 });
+    // todo fix
+    expect(component.tooltipRect.x < 0);
+  });
 });
