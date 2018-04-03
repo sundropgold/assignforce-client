@@ -9,6 +9,7 @@ import {
   MatDialogModule,
   MatExpansionModule,
   MatFormFieldModule,
+  MatGridListModule,
   MatIconModule,
   MatInputModule,
   MatListModule,
@@ -58,7 +59,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    MatGridListModule
   ],
   exports: [
     MatTabsModule,
@@ -90,7 +92,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    MatGridListModule
   ],
   declarations: []
 })

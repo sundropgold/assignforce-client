@@ -33,8 +33,6 @@ import { SkillService } from './services/skill/skill.service';
 import { S3CredentialService } from './services/s3-credential/s3-credential.service';
 import { UrlService } from './services/url/url.service';
 
-import { MatSelectModule } from '@angular/material/select';
-import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { AppMaterialModule } from './material.module';
 
@@ -43,6 +41,15 @@ import { InMemDbService } from './mockdb/in-mem-db.service';
 
 import { TrainersAddComponent } from './components/trainers/trainers-add/trainers-add.component';
 import { TrainerItemComponent } from './components/trainers/trainer-item/trainer-item.component';
+import { BatchControllerService } from './services/api/batch-controller/batch-controller.service';
+import { AddressControllerService } from './services/api/address-controller/address-controller.service';
+import { BuildingControllerService } from './services/api/building-controller/building-controller.service';
+import { LocationControllerService } from './services/api/location-controller/location-controller.service';
+import { CurriculumControllerService } from './services/api/curriculum-controller/curriculum-controller.service';
+import { SettingControllerService } from './services/api/setting-controller/setting-controller.service';
+import { SkillControllerService } from './services/api/skill-controller/skill-controller.service';
+import { TrainerControllerService } from './services/api/trainer-controller/trainer-controller.service';
+import { UnavailableControllerService } from './services/api/unavailable-controller/unavailable-controller.service';
 import { SkillsComponent } from './components/skills/skills.component';
 import { CertificationsComponent } from './components/certifications/certifications.component';
 import { MatButtonModule, MatMenuModule, MatToolbarModule, MatIconModule, MatCardModule } from '@angular/material';
@@ -94,6 +101,15 @@ import { MatButtonModule, MatMenuModule, MatToolbarModule, MatIconModule, MatCar
     S3CredentialService,
     HttpClient,
     UrlService,
+    BatchControllerService,
+    AddressControllerService,
+    BuildingControllerService,
+    LocationControllerService,
+    CurriculumControllerService,
+    SettingControllerService,
+    SkillControllerService,
+    TrainerControllerService,
+    UnavailableControllerService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,
