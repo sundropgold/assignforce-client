@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Trainer } from '../../../model/Trainer';
+import { Skill } from '../../../model/Skill';
 
 @Component({
   selector: 'app-trainer-item',
@@ -9,11 +10,20 @@ import { Trainer } from '../../../model/Trainer';
 export class TrainerItemComponent implements OnInit {
   @Input() trainer: Trainer = new Trainer(0, '', '', [], [], null, '', []);
   isManager: boolean;
+  check = false;
+  skillsList = '';
 
   constructor() {}
 
   ngOnInit() {
     this.isManager = true;
+  }
+
+  ngDoCheck() {
+    if (this.trainer.skills && !this.check) {
+      this.listSkills(this.trainer.skills);
+      this.check = true;
+    }
   }
 
   removeTrainer(trainer: Trainer) {
@@ -22,5 +32,18 @@ export class TrainerItemComponent implements OnInit {
 
   activateTrainer(trainer: Trainer) {
     trainer.active = true;
+  }
+
+  listSkills(skills: Skill[]) {
+    this.skillsList = '';
+    for (var i = 0; i < skills.length; i++) {
+      this.skillsList += skills[i].name += ' ';
+    }
+
+    if (this.skillsList == '' || skills.length == 0) {
+      this.skillsList = 'None';
+    }
+
+    console.log(this.skillsList);
   }
 }

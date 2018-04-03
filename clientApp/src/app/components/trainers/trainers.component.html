@@ -20,7 +20,7 @@
   </mat-toolbar>
   <!--shows a list of all the active trainers-->
   <mat-card-content *ngIf="trainers != undefined">
-      <mat-list *ngFor=" let trainer of trainers">
+      <mat-list *ngFor="let trainer of trainers">
           <app-trainer-item [trainer]="trainer" *ngIf="trainer.active"></app-trainer-item>
          </mat-list>
   </mat-card-content>
