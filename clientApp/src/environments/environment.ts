@@ -23,6 +23,7 @@ export const environment = {
   },
 
   auth0: {
+    title: 'AssignForce Login',
     clientId: 'uS5tb62hP8K3CgU00qa38SVnfWvzviiH',
     domain: 'revature.auth0.com',
     responseType: 'token id_token',
@@ -74,7 +75,7 @@ export const environment = {
     },
 
     curriculumController: {
-      baseUrl: 'api/curriculum',
+      baseUrl: 'api/curricula',
       createCurriculum: '',
       retrieveCurriculum: '/',
       updateCurriculum: '',

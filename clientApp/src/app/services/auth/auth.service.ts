@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import * as auth0 from 'auth0-js';
 import { UrlService } from '../url/url.service';
 import { environment } from '../../../environments/environment';
 import Auth0Lock from 'auth0-lock';
@@ -8,15 +7,6 @@ import Auth0Lock from 'auth0-lock';
 @Injectable()
 export class AuthService {
   constructor(private router: Router, private urlService: UrlService) {}
-
-  auth0 = new auth0.WebAuth({
-    clientID: environment.auth0.clientId,
-    domain: environment.auth0.domain,
-    responseType: environment.auth0.responseType,
-    audience: environment.auth0.audience,
-    redirectUri: environment.auth0.redirectUri,
-    scope: environment.auth0.scope
-  });
 
   lock = new Auth0Lock(environment.auth0.clientId, environment.auth0.domain, {
     autoclose: true,
@@ -37,15 +27,15 @@ export class AuthService {
   }
 
   public handleAuthentication(): void {
-    this.auth0.parseHash((err, authResult) => {
-      if (authResult && authResult.accessToken && authResult.idToken) {
-        window.location.hash = '';
-        this.setSession(authResult);
-        this.router.navigate([this.urlService.getOverviewUrl()]);
-      } else if (err) {
-        this.router.navigate([this.urlService.getLoginUrl()]);
-        console.log(err);
-      }
+    this.lock.on('authenticated', authResult => {
+      this.lock.getUserInfo(authResult.accessToken, (error, profile) => {
+        if (authResult && authResult.accessToken && authResult.idToken) {
+          this.setSession(authResult);
+          this.router.navigate([this.urlService.getOverviewUrl()]);
+        } else if (error) {
+          this.router.navigate([this.urlService.getLoginUrl()]);
+        }
+      });
     });
   }
 
