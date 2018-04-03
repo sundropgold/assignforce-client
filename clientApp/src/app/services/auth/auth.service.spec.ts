@@ -12,24 +12,27 @@ export class MockAuthService {
   showLogin() {
     return;
   }
+  handleAuthentication() {
+    return;
+  }
 }
 
 describe('AuthService', () => {
-  // let mockRouter = {
-  //   navigate: jasmine.createSpy('navigate')
-  // }
-  //
-  // beforeEach(() => {
-  //   TestBed.configureTestingModule({
-  //     imports: [RouterTestingModule, HttpClientModule],
-  //     providers: [AuthService, UrlService, {provide: Router, useClass: AppRouting}]
-  //   }).compileComponents();
-  // });
-  //
-  // it(
-  //   'should be created',
-  //   inject([AuthService], (service: AuthService) => {
-  //     expect(service).toBeTruthy();
-  //   })
-  // );
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule, HttpClientModule],
+      providers: [
+        { provide: AuthService, useClass: MockAuthService },
+        UrlService,
+        { provide: Router, useClass: AppRouting }
+      ]
+    }).compileComponents();
+  });
+
+  it(
+    'should be created',
+    inject([AuthService], (service: AuthService) => {
+      expect(service).toBeTruthy();
+    })
+  );
 });
