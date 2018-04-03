@@ -4,22 +4,34 @@ import { AddSkillComponent } from './add-skill.component';
 import { MatDialogRef } from '@angular/material';
 import { AppMaterialModule } from '../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Skill } from '../../model/Skill';
+import { SkillService } from '../../services/skill/skill.service';
+import { FormsModule } from '@angular/forms';
 
 describe('AddSkillComponent', () => {
   let component: AddSkillComponent;
   let fixture: ComponentFixture<AddSkillComponent>;
+  let skillService: SkillService;
 
   class MockDialogRef {
     close() {}
+  }
+
+  class MockSkillServie {
+    create(skill: Skill) {}
   }
 
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
         declarations: [AddSkillComponent],
-        providers: [{ provide: MatDialogRef, useClass: MockDialogRef }],
-        imports: [AppMaterialModule, BrowserAnimationsModule]
+        providers: [
+          { provide: MatDialogRef, useClass: MockDialogRef },
+          { provide: SkillService, useClass: MockSkillServie }
+        ],
+        imports: [AppMaterialModule, BrowserAnimationsModule, FormsModule]
       }).compileComponents();
+      skillService = TestBed.get(SkillService);
     })
   );
 
