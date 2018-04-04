@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Batch } from '../../model/batch';
+import { batches } from '../../mockdb/mockdata/batch.data';
 
 @Component({
   selector: 'app-batches-timeline',
@@ -7,89 +8,12 @@ import { Batch } from '../../model/batch';
   styleUrls: ['./batches-timeline.component.css']
 })
 export class BatchesTimelineComponent implements OnInit, AfterViewInit {
-  // todo make responsive
-  // todo use mask
-  // values from current site
+  // values will be updated when page loads
   width = 1536;
   minWidth = 100;
-  // width = window.screen.width;
   height = 2067;
 
-  // test data
-  batches = [
-    {
-      name: 'Feb02-18',
-      curriculum: 'Java',
-      focus: 'none',
-      startDate: new Date(2018, 1, 5),
-      endDate: new Date(2018, 4, 29),
-      trainer: 'August Duet',
-      cotrainer: 'Mitch',
-      location: 'Viginia',
-      building: '1',
-      room: '101'
-    },
-    {
-      name: 'WWWWWWW',
-      curriculum: 'Custom',
-      focus: 'none',
-      startDate: new Date(2018, 3, 12),
-      endDate: new Date(2018, 7, 29),
-      trainer: 'TEST longtrainername here',
-      cotrainer: null,
-      location: 'Viginia',
-      building: null,
-      room: null
-    },
-    {
-      name: 'AAA',
-      curriculum: '.NET',
-      focus: 'none',
-      startDate: new Date(2018, 0, 1),
-      endDate: new Date(2018, 0, 8),
-      trainer: 'TEST longtrainername here',
-      cotrainer: null,
-      location: null,
-      building: null,
-      room: null
-    },
-    {
-      name: 'Feb03-16',
-      curriculum: 'Java',
-      focus: 'none',
-      startDate: new Date(2016, 2, 5),
-      endDate: new Date(2016, 4, 29),
-      trainer: 'August',
-      cotrainer: 'Mitch',
-      location: 'Viginia',
-      building: '1',
-      room: '101'
-    },
-    {
-      name: 'Feb02-17',
-      curriculum: 'Java',
-      focus: 'none',
-      startDate: new Date(2017, 2, 5),
-      endDate: new Date(2017, 4, 29),
-      trainer: 'Emily',
-      cotrainer: 'Mitch',
-      location: 'Viginia',
-      building: '1',
-      room: '101'
-    },
-    {
-      name: 'Jun06-18',
-      curriculum: 'Java',
-      focus: 'none',
-      startDate: new Date(2018, 6, 20),
-      endDate: new Date(2018, 8, 29),
-      trainer: 'August',
-      cotrainer: 'Mitch',
-      location: 'Viginia',
-      building: '1',
-      room: '101'
-    }
-  ];
+  batches = [];
 
   // root element of the timeline. used for getting the relative mouse position
   @ViewChild('timelineroot') timelineRootElement: ElementRef;
@@ -97,15 +21,15 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   @ViewChild('trainernames') trainernames: ElementRef;
 
   // default values for formatting
-  column_width = 50;
-  swimlane_x_ofs = 100;
-  swimlane_y_ofs = 20;
-  timescale_x_ofs = 80;
+  columnWidth = 50;
+  swimlaneXOfs = 100;
+  swimlaneYOfs = 20;
+  timescaleXOfs = 80;
 
   // editable data
   startDate: Date;
   endDate: Date;
-  trainers_per_page = 0;
+  trainersPerPage = 0;
 
   // zooming
   zooming = false;
@@ -130,15 +54,15 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
   // other generated data
   trainers = [];
-  today_line = { x1: 0, x2: 0, y1: 0, y2: 0 };
+  todayLine = { x1: 0, x2: 0, y1: 0, y2: 0 };
 
   constructor() {}
 
   // initialize data
   ngOnInit() {
     // todo get values from batches timeline component instead
-    if (this.trainers_per_page === 0) {
-      this.trainers_per_page = this.batches.length;
+    if (this.trainersPerPage === 0) {
+      this.trainersPerPage = this.batches.length;
     }
     // set start date to 3 months ago
     const today = new Date(Date.now());
@@ -148,7 +72,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     this.endDate = new Date(today);
     this.endDate.setMonth(this.endDate.getMonth() + 6);
 
-    this.updateTrainers();
+    this.updateBatches();
   }
 
   // setup page size
@@ -160,18 +84,28 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   }
 
   // this is called when any of the filters are changed
-  onFilterChange(evt) {
-    console.log(evt);
+  onFilterChange(event) {
+    console.log(event.target);
     // todo update stuff
+    // event.target.id
+    // event.targ et.value
   }
 
+  // gets an updates list of batches
+  updateBatches() {
+    //todo get batches instead of using this test data
+    this.batches = batches;
+    this.updateTrainers();
+  }
+
+  // sets size of the svg graphic to fit the screen
   updateSize() {
     // set width to be the same size as the trainernames div, as it scales with the page
     this.width = this.trainernames.nativeElement.getBoundingClientRect().width;
     // - event.target.offsetWidth * 2;
     // todo determine height ?
-    this.swimlane_x_ofs = (this.width - this.timescale_x_ofs) / 2 - this.trainers.length / 2 * this.column_width;
-    this.swimlane_x_ofs = Math.max(this.timescale_x_ofs + 10, this.swimlane_x_ofs);
+    this.swimlaneXOfs = (this.width - this.timescaleXOfs) / 2 - this.trainers.length / 2 * this.columnWidth;
+    this.swimlaneXOfs = Math.max(this.timescaleXOfs + 10, this.swimlaneXOfs);
     // this.height = event.target.innerHeight * 2;
     // console.log(this.width + ' ' + this.height);
     this.updateTodayLine();
@@ -184,6 +118,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     for (let i = 0; i < this.batches.length; i++) {
       const batch = this.batches[i];
       const trainer = batch.trainer;
+      // '(' + batch.trainer.id + ') ' +
       if (!this.trainers.includes(trainer)) {
         this.trainers.push(trainer);
       }
@@ -197,23 +132,21 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       (new Date(Date.now()).valueOf() - this.startDate.valueOf()) /
       (this.endDate.valueOf() - this.startDate.valueOf()) *
       this.height;
-    this.today_line = { x1: this.timescale_x_ofs, x2: this.width, y1: y, y2: y };
+    this.todayLine = { x1: this.timescaleXOfs, x2: this.width, y1: y, y2: y };
   }
 
   // makes a simple object for a tooltip line for reuseablility
-  getTooltipLine(val, text) {
-    // if it is null say there is none, or say it
-    if (val != null) {
-      return [
-        { text: text + ': ', color: this.tooltipDefaultColor },
-        { text: val, color: this.tooltipMidSectionColor }
-      ];
-    } else {
-      return [
-        { text: 'No ' + text.toLowerCase() + ' ', color: this.tooltipNoneColor },
-        { text: 'for this batch.', color: this.tooltipDefaultColor }
-      ];
-    }
+  getTooltipExists(text: String, value: String) {
+    return [
+      { text: text + ': ', color: this.tooltipDefaultColor },
+      { text: value, color: this.tooltipMidSectionColor }
+    ];
+  }
+  getTooltipNone(text: String) {
+    return [
+      { text: 'No ' + text.toLowerCase() + ' ', color: this.tooltipNoneColor },
+      { text: 'for this batch.', color: this.tooltipDefaultColor }
+    ];
   }
 
   // sets the tooltip rect and tooltip data
@@ -224,44 +157,86 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    // todo get batch from id
-    const batch: Batch = null; //this.batches[2];
+    // get batch from id
+    batchid = batchid.toString().split('-')[1];
+    let batch: Batch = null;
+    for (let i = 0; i < batches.length; i++) {
+      const b = batches[i];
+      if (b.id.toString() === batchid) {
+        batch = b;
+        break;
+      }
+    }
     if (batch == null) {
-      console.log('no batch by that id!');
+      console.log('no batch with id ' + batchid);
       this.tooltipActive = false;
       return;
     }
 
     // create text that goes on the tooltip
     const lines = [];
-    // if (batch.curriculum != null) {
-    //   lines.push([
-    //     { text: batch.curriculum, color: this.tooltipTitleColor },
-    //     { text: ' Batch', color: this.tooltipDefaultColor }
-    //   ]);
-    // } else {
-    //   lines.push([{ text: 'No core curriculum.', color: this.tooltipNoneColor }]);
-    // }
-    // if (batch.focus != null) {
-    //   lines.push([
-    //     { text: 'w/ focus on ', color: this.tooltipDefaultColor },
-    //     { text: batch.focus, color: this.tooltipTitleColor }
-    //   ]);
-    // } else {
-    //   lines.push([
-    //     { text: 'w/', color: this.tooltipDefaultColor },
-    //     { text: 'no focus.', color: this.tooltipNoneColor }
-    //   ]);
-    // }
+    if (batch.curriculum != null) {
+      lines.push([
+        { text: batch.curriculum.name, color: this.tooltipTitleColor },
+        { text: ' Batch', color: this.tooltipDefaultColor }
+      ]);
+    } else {
+      lines.push(this.getTooltipNone('core curriculum'));
+    }
+    if (batch.focus != null) {
+      lines.push([
+        { text: 'w/ focus on ', color: this.tooltipDefaultColor },
+        { text: batch.focus.name, color: this.tooltipTitleColor }
+      ]);
+    } else {
+      lines.push([
+        { text: 'w/', color: this.tooltipDefaultColor },
+        { text: 'no focus.', color: this.tooltipNoneColor }
+      ]);
+    }
+
     lines.push([{ text: '----------', color: this.tooltipDefaultColor }]);
-    // lines.push(this.getTooltipLine(batch.trainer, 'Trainer'));
-    // lines.push(this.getTooltipLine(batch.cotrainer, 'Cotrainer'));
-    // lines.push(this.getTooltipLine(batch.startDate.toDateString(), 'Start Date'));
-    // lines.push(this.getTooltipLine(batch.endDate.toDateString(), 'End Date'));
-    // lines.push([{ text: '----------', color: this.tooltipDefaultColor }]);
-    // lines.push(this.getTooltipLine(batch.location, 'Location'));
-    // lines.push(this.getTooltipLine(batch.building, 'Building'));
-    // lines.push(this.getTooltipLine(batch.room, 'Room'));
+
+    if (batch.trainer != null) {
+      lines.push(this.getTooltipExists('Trainer', batch.trainer.firstName + ' ' + batch.trainer.lastName));
+    } else {
+      lines.push(this.getTooltipNone('Trainer'));
+    }
+    if (batch.cotrainer != null) {
+      lines.push(this.getTooltipExists('Cotrainer', batch.cotrainer.firstName + ' ' + batch.cotrainer.lastName));
+    } else {
+      lines.push(this.getTooltipNone('Cotrainer'));
+    }
+    if (batch.startDate != null) {
+      lines.push(this.getTooltipExists('Start Date', new Date(batch.startDate).toDateString()));
+    } else {
+      lines.push(this.getTooltipNone('Start Date'));
+    }
+    if (batch.endDate != null) {
+      lines.push(this.getTooltipExists('End Date', new Date(batch.endDate).toDateString()));
+    } else {
+      lines.push(this.getTooltipNone('End Date'));
+    }
+
+    lines.push([{ text: '----------', color: this.tooltipDefaultColor }]);
+
+    if (batch.batchLocation != null) {
+      if (batch.batchLocation.locationName != null) {
+        lines.push(this.getTooltipExists('Location', batch.batchLocation.locationName));
+      } else {
+        lines.push(this.getTooltipNone('Location'));
+      }
+      if (batch.batchLocation.buildingName != null) {
+        lines.push(this.getTooltipExists('Building', batch.batchLocation.buildingName));
+      } else {
+        lines.push(this.getTooltipNone('Building'));
+      }
+      if (batch.batchLocation.roomName != null) {
+        lines.push(this.getTooltipExists('Room', batch.batchLocation.roomName));
+      } else {
+        lines.push(this.getTooltipNone('Room'));
+      }
+    }
 
     // get positioning of the tooltip rect
     // todo dynamic width based on text width
@@ -321,20 +296,23 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   }
 
   // returns the appropriate color for the core curriculum type
-  getColorForcurriculum(type) {
+  getColorForcurriculum(currId: number) {
     let color = '';
-    switch (type.toLowerCase()) {
-      case 'java':
-        color = '#1c77b4'; //java
+    switch (currId) {
+      case 1:
+        color = '#1c77b4'; // java
         break;
-      case '.net':
-        color = '#ff7f0e'; //.net
+      case 2:
+        color = '#ff7f0e'; // .net
         break;
-      case 'sdet':
-        color = '#aec7e8'; //sdet
+      case 3:
+        color = '#aec7e8'; // sdet
+        break;
+      case 4:
+        color = '#ffbb78'; // custom
         break;
       default:
-        color = '#ffbb78'; //custom
+        color = '#dddddd'; // other
         break;
     }
     return color;
@@ -348,11 +326,11 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     for (let i = 0; i < this.batches.length; i++) {
       const batch = this.batches[i];
       // valueOf gives us ms, convert to weeks to get the duration this event takes
-      let duration = batch.endDate.valueOf() - batch.startDate.valueOf();
+      let duration = batch.endDate - batch.startDate;
       duration = Math.floor(duration / (1000 * 60 * 60 * 24 * 7)); // ms to weeks
 
       // get the correct color
-      const color = this.getColorForcurriculum(batch.curriculum);
+      const color = this.getColorForcurriculum(batch.curriculum.currId);
 
       // get the column this batch will be in
       const trainer_index = this.trainers.findIndex(t => t === batch.trainer);
@@ -361,10 +339,10 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       const w = 25;
 
       // get the top left position of the rectangle
-      const x = this.swimlane_x_ofs + trainer_index * this.column_width + (this.column_width - w) * 0.5;
-      const y = (batch.startDate.valueOf() - this.startDate.valueOf()) / full_duration * this.height;
+      const x = this.swimlaneXOfs + trainer_index * this.columnWidth + (this.columnWidth - w) * 0.5;
+      const y = (batch.startDate - this.startDate.valueOf()) / full_duration * this.height;
       // calculate height from the top and bottom of the rectangle
-      const endy = (batch.endDate.valueOf() - this.startDate.valueOf()) / full_duration * this.height;
+      const endy = (batch.endDate - this.startDate.valueOf()) / full_duration * this.height;
       const h = endy - y;
 
       // change label based on height of rectangle
@@ -395,9 +373,19 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         .toString()
         .split(' ')
         .concat(labeltext.split(''));
+
       //console.log('batch ' + batch.name + '\n rect: ' + ' x:' + x + ' y:' + y + ' h:' + h);
-      // todo batch id
-      rects.push({ x: x, y: y, w: w, h: h, id: '', label: label, labelx: labelx, labely: labely, color: color });
+      rects.push({
+        x: x,
+        y: y,
+        w: w,
+        h: h,
+        id: 'batch-' + batch.id,
+        label: label,
+        labelx: labelx,
+        labely: labely,
+        color: color
+      });
     }
     return rects;
   }
@@ -407,8 +395,8 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     const lines = [];
     // make 1 more swimlane than the amount of trainers
     for (let i = 0; i < this.trainers.length + 1; i++) {
-      const xpos = this.swimlane_x_ofs + i * this.column_width;
-      lines.push({ x1: xpos, y1: this.swimlane_y_ofs, x2: xpos, y2: this.height - this.swimlane_y_ofs });
+      const xpos = this.swimlaneXOfs + i * this.columnWidth;
+      lines.push({ x1: xpos, y1: this.swimlaneYOfs, x2: xpos, y2: this.height - this.swimlaneYOfs });
     }
     return lines;
   }
@@ -420,14 +408,15 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     for (let i = 0; i < this.trainers.length; i++) {
       // get trainer name
       const trainer = this.trainers[i];
+      const name = trainer.firstName + ' ' + trainer.lastName;
       // get left offset of this trainer
       let left = spacing;
       if (i === 0) {
-        left += this.swimlane_x_ofs;
+        left += this.swimlaneXOfs;
       }
       // get width
-      const width = this.column_width - spacing;
-      trainerposs.push({ name: trainer, left: left, width: width });
+      const width = this.columnWidth - spacing;
+      trainerposs.push({ name: name, left: left, width: width });
     }
     return trainerposs;
   }
@@ -590,13 +579,13 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         name = '' + date.getFullYear();
       }
       // calculate the position of the text
-      const y = this.swimlane_y_ofs + (date.valueOf() - this.startDate.valueOf()) / full_duration * this.height;
-      if (y < this.swimlane_y_ofs) {
+      const y = this.swimlaneYOfs + (date.valueOf() - this.startDate.valueOf()) / full_duration * this.height;
+      if (y < this.swimlaneYOfs) {
         continue;
-      } else if (y > this.height - this.swimlane_y_ofs) {
+      } else if (y > this.height - this.swimlaneYOfs) {
         break;
       }
-      const x = this.timescale_x_ofs - 5;
+      const x = this.timescaleXOfs - 5;
       timescale.push({ name: name, x: x, y: y });
     }
     return timescale;
@@ -605,7 +594,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   startZoom(mouseposy) {
     // calculate values needed for zooming from the mousepos
     this.zoomingFrom = mouseposy;
-    this.zoomingLine = { x1: this.timescale_x_ofs, x2: this.width, y1: mouseposy, y2: mouseposy };
+    this.zoomingLine = { x1: this.timescaleXOfs, x2: this.width, y1: mouseposy, y2: mouseposy };
     // position (px) to date
     this.zoomingFromDate =
       mouseposy / this.height * (this.endDate.valueOf() - this.startDate.valueOf()) + this.startDate.valueOf();

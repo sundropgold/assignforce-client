@@ -38,10 +38,10 @@ describe('BatchesTimelineComponent', () => {
 
   it('should set the today line', () => {
     component.updateTodayLine();
-    expect(component.today_line.x1).not.toBeNull();
-    expect(component.today_line.x2).not.toBeNull();
-    expect(component.today_line.y1).not.toBeNull();
-    expect(component.today_line.y2).not.toBeNull();
+    expect(component.todayLine.x1).not.toBeNull();
+    expect(component.todayLine.x2).not.toBeNull();
+    expect(component.todayLine.y1).not.toBeNull();
+    expect(component.todayLine.y2).not.toBeNull();
   });
 
   it('should return the rectangles for the batches', () => {
@@ -68,10 +68,10 @@ describe('BatchesTimelineComponent', () => {
   });
 
   it('should get a different color for each core curriculum', () => {
-    const jcolor = component.getColorForcurriculum('Java');
-    const scolor = component.getColorForcurriculum('SDET');
-    const dcolor = component.getColorForcurriculum('.NET');
-    const ccolor = component.getColorForcurriculum('Custom');
+    const jcolor = component.getColorForcurriculum(1);
+    const scolor = component.getColorForcurriculum(2);
+    const dcolor = component.getColorForcurriculum(3);
+    const ccolor = component.getColorForcurriculum(4);
     expect(jcolor).not.toEqual(scolor);
     expect(jcolor).not.toEqual(dcolor);
     expect(jcolor).not.toEqual(ccolor);
