@@ -189,5 +189,18 @@ export const curriculum: Curriculum[] = [
     ],
     active: true,
     core: true
+  },
+  {
+    currId: 4,
+    name: 'Microservices',
+    skills: [
+      {
+        skillId: 1,
+        name: 'Core Java',
+        active: true
+      }
+    ],
+    active: true,
+    core: false
   }
 ];

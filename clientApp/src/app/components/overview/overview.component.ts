@@ -67,8 +67,8 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     // });
   }
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    //   this.dataSource.sort = this.sort;
+    //   this.dataSource.paginator = this.paginator;
   }
   // -------------------------------- PREVIOUS BATCH'S METHODS -------------------------------------------
   exportToCSV(evt) {
