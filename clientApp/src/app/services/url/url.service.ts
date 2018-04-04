@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { Batch } from '../../model/batch';
+import { Batch } from '../../model/Batch';
 
 @Injectable()
 export class UrlService {
