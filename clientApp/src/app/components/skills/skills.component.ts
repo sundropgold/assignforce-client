@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppMaterialModule } from '../../material.module';
-import { Skill } from '../../model/skill';
+import { Skill } from '../../model/Skill';
 import { SkillService } from '../../services/skill/skill.service';
 import { Trainer } from '../../model/trainer';
 import { TrainerService } from '../../services/trainer/trainer.service';
