@@ -10,7 +10,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable } from 'rxjs/Observable';
 import { Skill } from '../../model/Skill';
 import { Component } from '@angular/core';
-import { of } from 'rxjs/Observable/of';
 import 'rxjs/add/observable/of';
 import { CompileNgModuleMetadata } from '@angular/compiler';
 import { SkillsComponent } from '../skills/skills.component';
