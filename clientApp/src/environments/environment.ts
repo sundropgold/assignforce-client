@@ -6,8 +6,8 @@
 export const environment = {
   production: false,
 
-  baseUrl: 'http://localhost:4200',
-  baseApiUrl: '',
+  baseUrl: 'https://localhost:4200',
+  baseApiUrl: 'api',
 
   //routers
   appRoutes: {
@@ -25,12 +25,13 @@ export const environment = {
   auth0: {
     namespace: 'https://revature.com/',
     title: 'AssignForce Login',
-    clientId: 'uS5tb62hP8K3CgU00qa38SVnfWvzviiH',
+    //clientId: 'uS5tb62hP8K3CgU00qa38SVnfWvzviiH',
+    clientId: 'tjQhcs0O4mRV2iry6SAO0Gy1YQcBrWCa',
     domain: 'revature.auth0.com',
     responseType: 'token id_token',
-    audience: 'https://revature.auth0.com/userinfo',
-    redirectUri: 'http://localhost:4200/callback',
-    scope: 'openid'
+    audience: 'hydra-gateway',
+    redirectUri: 'https://localhost:4200/callback',
+    scope: 'openid profile'
   },
 
   security_config: {

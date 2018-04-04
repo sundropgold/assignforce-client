@@ -28,9 +28,6 @@ export class MenuBarComponent implements OnInit {
 
   selectTab(evt) {
     console.log(evt);
-    if (evt.index === 8) {
-      this.auth0.logout();
-    }
     this.router.navigate([this.tabs[evt.index]]);
   }
 }

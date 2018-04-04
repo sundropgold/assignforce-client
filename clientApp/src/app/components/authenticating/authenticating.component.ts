@@ -11,6 +11,6 @@ export class AuthenticatingComponent implements OnInit {
   constructor(private auth0: AuthService) {}
 
   ngOnInit() {
-    this.auth0.handleAuthentication();
+    //this.auth0.handleAuthentication();
   }
 }
