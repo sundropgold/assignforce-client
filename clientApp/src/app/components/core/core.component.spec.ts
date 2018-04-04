@@ -4,7 +4,6 @@ import { CoreComponent } from './core.component';
 import { AppMaterialModule } from '../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/Observable/of';
 import { Curriculum } from '../../model/Curriculum';
 import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
 
