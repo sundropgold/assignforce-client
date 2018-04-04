@@ -57,7 +57,7 @@
         [attr.fill]="tooltipRect.color">
       </rect>
       <polygon class="tooltip-triangle" [attr.points]="tooltipRect.triangle" [attr.fill]="tooltipRect.color"></polygon>
-      <g class="tooltipline" *ngFor="let line of tooltipData; let i = index">
+      <g class="tooltip-line" *ngFor="let line of tooltipData; let i = index">
         <text [attr.x]="tooltipRect.x+2" [attr.y]="tooltipRect.y + tooltipRect.linespacing*(i+1)" font-size="14" text-anchor="start"  alignment-baseline="hanging">
          <tspan *ngFor="let l of line" [attr.fill]="l.color">
          {{l.text}}

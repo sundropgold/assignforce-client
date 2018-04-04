@@ -6,6 +6,7 @@ import { AppMaterialModule } from '../../material.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BatchesTimelineFilterComponent } from '../batches-timeline-filter/batches-timeline-filter.component';
+import { BatchControllerService } from '../../services/api/batch-controller/batch-controller.service';
 
 describe('BatchesTimelineComponent', () => {
   let component: BatchesTimelineComponent;
@@ -21,7 +22,8 @@ describe('BatchesTimelineComponent', () => {
           HttpClientTestingModule,
           BrowserAnimationsModule
         ],
-        declarations: [BatchesTimelineComponent, BatchesTimelineFilterComponent]
+        declarations: [BatchesTimelineComponent, BatchesTimelineFilterComponent],
+        providers: [{ provide: BatchControllerService }]
       }).compileComponents();
     })
   );

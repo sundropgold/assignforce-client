@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Batch } from '../../model/batch';
-import { batches } from '../../mockdb/mockdata/batch.data';
+import { BatchControllerService } from '../../services/api/batch-controller/batch-controller.service';
 
 @Component({
   selector: 'app-batches-timeline',
@@ -8,10 +8,10 @@ import { batches } from '../../mockdb/mockdata/batch.data';
   styleUrls: ['./batches-timeline.component.css']
 })
 export class BatchesTimelineComponent implements OnInit, AfterViewInit {
-  // values will be updated when page loads
+  // width and height will be updated when page loads
   width = 1536;
-  minWidth = 100;
   height = 2067;
+  minWidth = 400;
 
   batches = [];
 
@@ -56,7 +56,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   trainers = [];
   todayLine = { x1: 0, x2: 0, y1: 0, y2: 0 };
 
-  constructor() {}
+  constructor(private batchController: BatchControllerService) {}
 
   // initialize data
   ngOnInit() {
@@ -86,22 +86,25 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   // this is called when any of the filters are changed
   onFilterChange(event) {
     console.log(event.target);
-    // todo update stuff
+    // todo update stuff to respond to filters
     // event.target.id
     // event.targ et.value
   }
 
   // gets an updates list of batches
   updateBatches() {
-    //todo get batches instead of using this test data
-    this.batches = batches;
-    this.updateTrainers();
+    console.log('updating batches...');
+    this.batchController.getAllBatches().subscribe(result => {
+      this.batches = result;
+      this.updateTrainers();
+    });
   }
 
   // sets size of the svg graphic to fit the screen
   updateSize() {
     // set width to be the same size as the trainernames div, as it scales with the page
     this.width = this.trainernames.nativeElement.getBoundingClientRect().width;
+    this.width = Math.max(this.minWidth, this.width);
     // - event.target.offsetWidth * 2;
     // todo determine height ?
     this.swimlaneXOfs = (this.width - this.timescaleXOfs) / 2 - this.trainers.length / 2 * this.columnWidth;
@@ -160,8 +163,8 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     // get batch from id
     batchid = batchid.toString().split('-')[1];
     let batch: Batch = null;
-    for (let i = 0; i < batches.length; i++) {
-      const b = batches[i];
+    for (let i = 0; i < this.batches.length; i++) {
+      const b = this.batches[i];
       if (b.id.toString() === batchid) {
         batch = b;
         break;
@@ -403,8 +406,14 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
   // returns the list of trainers with their positions
   getTrainers() {
-    const trainerposs = [];
     const spacing = 2;
+    const width = this.columnWidth - spacing;
+    // if there are no trainers, show it
+    if (this.trainers.length === 0) {
+      return [{ name: 'No batches with trainers', left: spacing, width: this.minWidth }];
+    }
+    // add each trainer and position to array
+    const trainerposs = [];
     for (let i = 0; i < this.trainers.length; i++) {
       // get trainer name
       const trainer = this.trainers[i];
@@ -414,8 +423,6 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       if (i === 0) {
         left += this.swimlaneXOfs;
       }
-      // get width
-      const width = this.columnWidth - spacing;
       trainerposs.push({ name: name, left: left, width: width });
     }
     return trainerposs;

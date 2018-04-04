@@ -16,3 +16,6 @@
   -webkit-user-select: none;
   -moz-user-select: none;
 }
+.batch-tooltip {
+  z-index: -1;
+}
