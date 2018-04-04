@@ -81,6 +81,8 @@ export class BatchesComponent implements OnInit, AfterViewInit {
 
   //number of weeks between two of the selected dates
   numOfWeeksBetween = 0;
+  //generated batch name based on the selected Curriculum/Focus and start date
+  genBatchName = '';
 
   firstTabHeader = 'Create New Batch';
 
@@ -131,7 +133,9 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     this.batchForm.valueChanges.subscribe(data => {
       const startDate = data.startDate;
       const endDate = data.endDate;
+      const curriculum = data.curriculum;
       this.numOfWeeksBetween = this.computeNumOfWeeksBetween(startDate, endDate);
+      this.genBatchName = this.createBatchName(curriculum, startDate);
     });
   }
 
@@ -169,6 +173,33 @@ export class BatchesComponent implements OnInit, AfterViewInit {
       return numberOfWeeks;
     }
     return 0;
+  }
+
+  //Generate Batch Name
+  createBatchName(curriculum: string, startDate: number): string {
+    if (curriculum && startDate) {
+      const date = new Date(startDate);
+
+      const year = date
+        .getFullYear()
+        .toString()
+        .substr(-2);
+      let day = date.getDate().toString();
+      let month = (date.getMonth() + 1).toString();
+      const monthName = date.toLocaleString('en-us', { month: 'short' });
+
+      if (date.getDate() < 10) {
+        day = '0' + day;
+      }
+
+      if (date.getMonth() < 10) {
+        month = '0' + month;
+      }
+
+      return year + '' + month + ' ' + monthName + '' + day + ' ' + curriculum;
+    }
+
+    return '';
   }
 
   // SynchronizeBatch() {}
