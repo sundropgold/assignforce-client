@@ -72,7 +72,10 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     this.endDate = new Date(today);
     this.endDate.setMonth(this.endDate.getMonth() + 6);
 
-    this.updateBatches();
+    console.log('batches timeline component init');
+    setTimeout(() => {
+      this.updateBatches();
+    }, 0);
   }
 
   // setup page size
@@ -80,7 +83,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     // causes exception if done without a short timeout
     setTimeout(() => {
       this.updateSize();
-    }, 100);
+    }, 0);
   }
 
   // this is called when any of the filters are changed
@@ -325,6 +328,10 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   // returns the list of rectangles that represent each batch
   getBatchesRectangles() {
     const rects = [];
+    // no batches
+    if (this.batches.length === 0) {
+      return rects;
+    }
     const full_duration = this.endDate.valueOf() - this.startDate.valueOf();
     // make a rectangle for each batch
     for (let i = 0; i < this.batches.length; i++) {

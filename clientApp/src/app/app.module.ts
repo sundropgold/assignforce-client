@@ -97,6 +97,8 @@ import { CurriculumSkillsComponent } from './components/curriculum-skills/curric
     SkillsComponent,
     FociComponent,
     CoreComponent,
+    BatchesTimelineComponent,
+    BatchesTimelineFilterComponent,
     AddFocusComponent,
     AddSkillComponent,
     EditFocusComponent,
