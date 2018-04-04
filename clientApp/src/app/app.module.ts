@@ -1,11 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AppComponent } from './app.component';
 
 import { FormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SpringXsrfInterceptor } from './interceptors/springXsrfInterceptor';
 import { MenuBarComponent } from './components/menu-bar/menu-bar.component';
 import { OverviewComponent } from './components/overview/overview.component';
@@ -45,6 +43,9 @@ import { InMemDbService } from './mockdb/in-mem-db.service';
 
 import { TrainersAddComponent } from './components/trainers/trainers-add/trainers-add.component';
 import { TrainerItemComponent } from './components/trainers/trainer-item/trainer-item.component';
+import { SkillsComponent } from './components/skills/skills.component';
+import { CertificationsComponent } from './components/certifications/certifications.component';
+import { MatButtonModule, MatMenuModule, MatToolbarModule, MatIconModule, MatCardModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -69,8 +70,11 @@ import { TrainerItemComponent } from './components/trainers/trainer-item/trainer
     LocationEditRoomDialogComponent,
     LoginComponent,
     TrainersAddComponent,
-    TrainerItemComponent
+    TrainerItemComponent,
+    SkillsComponent,
+    CertificationsComponent
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
   imports: [
     HttpClientModule,
@@ -81,6 +85,8 @@ import { TrainerItemComponent } from './components/trainers/trainer-item/trainer
     AppMaterialModule,
     InMemoryWebApiModule.forRoot(InMemDbService)
   ],
+
+  exports: [AppMaterialModule],
 
   providers: [
     TrainerService,

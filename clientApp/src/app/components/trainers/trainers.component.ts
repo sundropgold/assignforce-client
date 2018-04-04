@@ -12,67 +12,21 @@ import { TrainerService } from '../../services/trainer/trainer.service';
 })
 export class TrainersComponent implements OnInit {
   [x: string]: any;
-  Skillz: Skill[] = [
-    {
-      skillId: 1,
-      name: 'Java',
-      active: true
-    }
-  ];
 
   firstName;
   lastName;
-  trainers;
+  trainers: Trainer[] = [];
 
   isManager = true;
 
+  constructor(public dialog: MatDialog, private trainerService: TrainerService) {}
+
   ngOnInit() {
-    this.isManager = false;
-    const Skillz: Skill[] = [
-      {
-        skillId: 1,
-        name: 'Java',
-        active: true
-      }
-    ];
-    this.trainers = [
-      {
-        trainerId: 1,
-        firstName: 'Mary',
-        lastName: 'Poppins',
-        skills: Skillz,
-        certifications: 'Certs',
-        active: true,
-        resume: 'Resume'
-      },
-      {
-        trainerId: 2,
-        firstName: 'Moana',
-        lastName: 'Motunui',
-        skills: Skillz,
-        certifications: 'Certs',
-        active: false,
-        resume: 'Resume'
-      },
-      {
-        trainerId: 3,
-        firstName: 'Vanellope',
-        lastName: 'Von Schweetz',
-        skills: Skillz,
-        certifications: 'Certs',
-        active: false,
-        resume: 'Resume'
-      },
-      {
-        trainerId: 4,
-        firstName: 'Peter',
-        lastName: 'Pan',
-        skills: Skillz,
-        certifications: 'Certs',
-        active: true,
-        resume: 'Resume'
-      }
-    ];
+    this.isManager = true;
+
+    this.trainerService.getAll().subscribe(t => {
+      this.trainers = t;
+    });
   }
 
   showCalendar() {}
@@ -80,8 +34,6 @@ export class TrainersComponent implements OnInit {
   goToTrainer(trainer: Trainer) {}
 
   grabS3Resume(trainer: Trainer) {}
-
-  constructor(public dialog: MatDialog) {}
 
   addTrainer(): void {
     //add trainer
