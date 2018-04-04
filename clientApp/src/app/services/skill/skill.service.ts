@@ -5,7 +5,7 @@ import { Skill } from '../../model/Skill';
 
 @Injectable()
 export class SkillService {
-  url = 'api/v2/skill';
+  url = 'api/skill';
 
   constructor(private http: HttpClient) {}
 

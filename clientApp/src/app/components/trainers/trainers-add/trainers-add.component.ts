@@ -22,11 +22,11 @@ export class TrainersAddComponent implements OnInit {
     trainerId: 0,
     firstName: '',
     lastName: '',
-    skills: Skill[1],
+    skills: this.Skillz,
     certifications: '',
     active: true,
     resume: '',
-    unavailabilities: null
+    unavailabilities: []
   };
 
   data = {
@@ -41,9 +41,50 @@ export class TrainersAddComponent implements OnInit {
 
   ngOnInit() {}
 
-  // onSubmit() {
-  //   this.trainerService.create(this.trainer);
-  // }
+  onSubmit() {
+    if (
+      this.trainer.firstName !== '' &&
+      this.trainer.lastName !== '' &&
+      this.trainer.firstName.charAt(0).match(/[A-Za-z]/i) &&
+      this.trainer.lastName.charAt(0).match(/[A-Za-z]/i)
+    ) {
+      const fn = this.trainer.firstName.charAt(0).toUpperCase() + this.trainer.firstName.substring(1).toLowerCase();
+      this.trainer.firstName = fn;
+
+      let f = '';
+
+      for (let i = 0; i < this.trainer.firstName.length; i++) {
+        if (this.trainer.firstName.charAt(i) === ' ') {
+          f += fn.charAt(i);
+          f += fn.charAt(i + 1).toUpperCase();
+          i++;
+        } else {
+          f += fn.charAt(i);
+        }
+      }
+
+      this.trainer.firstName = f;
+
+      const ln = this.trainer.lastName.charAt(0).toUpperCase() + this.trainer.lastName.substring(1).toLowerCase();
+
+      let l = '';
+
+      for (let i = 0; i < this.trainer.lastName.length; i++) {
+        if (this.trainer.lastName.charAt(i) === ' ') {
+          l += ln.charAt(i);
+          l += ln.charAt(i + 1).toUpperCase();
+          i++;
+        } else {
+          l += ln.charAt(i);
+        }
+      }
+
+      this.trainer.lastName = l;
+
+      this.trainerService.create(this.trainer).subscribe();
+      console.log(this.trainer);
+    }
+  }
 
   onNoClick(): void {
     this.dialogRef.close();

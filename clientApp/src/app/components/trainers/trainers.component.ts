@@ -4,7 +4,7 @@ import { Skill } from '../../model/Skill';
 import { TrainersAddComponent } from './trainers-add/trainers-add.component';
 import { TrainerItemComponent } from './trainer-item/trainer-item.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
-
+import { TrainerService } from '../../services/trainer/trainer.service';
 @Component({
   selector: 'app-trainers',
   templateUrl: './trainers.component.html',
@@ -12,68 +12,21 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 })
 export class TrainersComponent implements OnInit {
   [x: string]: any;
-  Skillz: Skill[] = [
-    {
-      skillId: 1,
-      name: 'Java',
-      active: true
-    }
-  ];
 
   firstName;
   lastName;
-  trainers;
-  isManager: boolean;
+  trainers: Trainer[] = [];
 
-  constructor() {}
+  isManager = true;
+
+  constructor(public dialog: MatDialog, private trainerService: TrainerService) {}
 
   ngOnInit() {
-    this.isManager = false;
-    const Skillz: Skill[] = [
-      {
-        skillId: 1,
-        name: 'Java',
-        active: true
-      }
-    ];
-    this.trainers = [
-      {
-        trainerId: 1,
-        firstName: 'James',
-        lastName: 'Smith',
-        skills: Skillz,
-        certifications: 'Certs',
-        active: true,
-        resume: 'Resume'
-      },
-      {
-        trainerId: 2,
-        firstName: 'Jane',
-        lastName: 'Doe',
-        skills: Skillz,
-        certifications: 'Certs',
-        active: false,
-        resume: 'Resume'
-      },
-      {
-        trainerId: 3,
-        firstName: 'Jon',
-        lastName: 'Jones',
-        skills: Skillz,
-        certifications: 'Certs',
-        active: false,
-        resume: 'Resume'
-      },
-      {
-        trainerId: 4,
-        firstName: 'Daniel',
-        lastName: 'Cormier',
-        skills: Skillz,
-        certifications: 'Certs',
-        active: true,
-        resume: 'Resume'
-      }
-    ];
+    this.isManager = true;
+
+    this.trainerService.getAll().subscribe(t => {
+      this.trainers = t;
+    });
   }
 
   showCalendar() {}
@@ -105,6 +58,7 @@ export class TrainersComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         //  this.addTrainer(result);
+        this.trainers.push(result);
       }
     });
   }
