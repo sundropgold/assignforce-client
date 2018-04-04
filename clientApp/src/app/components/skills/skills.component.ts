@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppMaterialModule } from '../../material.module';
 import { Skill } from '../../model/Skill';
 import { SkillService } from '../../services/skill/skill.service';
-import { Trainer } from '../../model/trainer';
+import { Trainer } from '../../model/Trainer';
 import { TrainerService } from '../../services/trainer/trainer.service';
 import { HttpClient } from '@angular/common/http';
 
