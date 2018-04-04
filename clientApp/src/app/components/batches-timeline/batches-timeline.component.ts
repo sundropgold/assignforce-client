@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ViewChildren } from '@angular/core';
 import { Batch } from '../../model/batch';
 import { BatchControllerService } from '../../services/api/batch-controller/batch-controller.service';
 import { MatSelectChange, MatCheckboxChange, MatOption } from '@angular/material';
@@ -19,7 +19,9 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   // root element of the timeline. used for getting the relative mouse position
   @ViewChild('timelineroot') timelineRootElement: ElementRef;
   // trainer name. used to set the width
-  @ViewChild('trainernames') trainernames: ElementRef;
+  @ViewChild('trainernames') trainernamesElement: ElementRef;
+  // trainer name. used to set the width
+  @ViewChildren('tooltiptext') tooltipTexts;
 
   // default values for formatting
   columnWidth = 50;
@@ -45,6 +47,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   tooltipActive = false;
   tooltipRect = { x: 0, y: 0, w: 0, h: 0, linespacing: 15, color: '#000000cc', triangle: '0,0 0,0 0,0' };
   tooltipData = [];
+  tooltipLastBatch = null;
   tooltipTimeoutDur = 120;
   tooltipTimeoutTimer = null;
   tooltipSetThisFrame = false;
@@ -155,7 +158,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   // sets size of the svg graphic to fit the screen
   updateSize() {
     // set width to be the same size as the trainernames div, as it scales with the page
-    this.width = this.trainernames.nativeElement.getBoundingClientRect().width;
+    this.width = this.trainernamesElement.nativeElement.getBoundingClientRect().width;
     this.width = Math.max(this.minWidth, this.width);
     // - event.target.offsetWidth * 2;
     // todo determine height ?
@@ -228,98 +231,142 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    // create text that goes on the tooltip
-    const lines = [];
-    if (batch.curriculum != null) {
-      lines.push([
-        { text: batch.curriculum.name, color: this.tooltipTitleColor },
-        { text: ' Batch', color: this.tooltipDefaultColor }
-      ]);
-    } else {
-      lines.push(this.getTooltipNone('core curriculum'));
-    }
-    if (batch.focus != null) {
-      lines.push([
-        { text: 'w/ focus on ', color: this.tooltipDefaultColor },
-        { text: batch.focus.name, color: this.tooltipTitleColor }
-      ]);
-    } else {
-      lines.push([
-        { text: 'w/', color: this.tooltipDefaultColor },
-        { text: 'no focus.', color: this.tooltipNoneColor }
-      ]);
-    }
+    // only need to do setup once
+    if (this.tooltipLastBatch !== batch) {
+      this.tooltipLastBatch = batch;
 
-    lines.push([{ text: '----------', color: this.tooltipDefaultColor }]);
-
-    if (batch.trainer != null) {
-      lines.push(this.getTooltipExists('Trainer', batch.trainer.firstName + ' ' + batch.trainer.lastName));
-    } else {
-      lines.push(this.getTooltipNone('Trainer'));
-    }
-    if (batch.cotrainer != null) {
-      lines.push(this.getTooltipExists('Cotrainer', batch.cotrainer.firstName + ' ' + batch.cotrainer.lastName));
-    } else {
-      lines.push(this.getTooltipNone('Cotrainer'));
-    }
-    if (batch.startDate != null) {
-      lines.push(this.getTooltipExists('Start Date', new Date(batch.startDate).toDateString()));
-    } else {
-      lines.push(this.getTooltipNone('Start Date'));
-    }
-    if (batch.endDate != null) {
-      lines.push(this.getTooltipExists('End Date', new Date(batch.endDate).toDateString()));
-    } else {
-      lines.push(this.getTooltipNone('End Date'));
-    }
-
-    lines.push([{ text: '----------', color: this.tooltipDefaultColor }]);
-
-    if (batch.batchLocation != null) {
-      if (batch.batchLocation.locationName != null) {
-        lines.push(this.getTooltipExists('Location', batch.batchLocation.locationName));
+      // create text that goes on the tooltip
+      const lines = [];
+      if (batch.curriculum != null) {
+        lines.push([
+          { text: batch.curriculum.name, color: this.tooltipTitleColor },
+          { text: ' Batch', color: this.tooltipDefaultColor }
+        ]);
       } else {
-        lines.push(this.getTooltipNone('Location'));
+        lines.push(this.getTooltipNone('core curriculum'));
       }
-      if (batch.batchLocation.buildingName != null) {
-        lines.push(this.getTooltipExists('Building', batch.batchLocation.buildingName));
+      if (batch.focus != null) {
+        lines.push([
+          { text: 'w/ focus on ', color: this.tooltipDefaultColor },
+          { text: batch.focus.name, color: this.tooltipTitleColor }
+        ]);
       } else {
-        lines.push(this.getTooltipNone('Building'));
+        lines.push([
+          { text: 'w/', color: this.tooltipDefaultColor },
+          { text: 'no focus.', color: this.tooltipNoneColor }
+        ]);
       }
-      if (batch.batchLocation.roomName != null) {
-        lines.push(this.getTooltipExists('Room', batch.batchLocation.roomName));
+
+      lines.push([{ text: '----------', color: this.tooltipDefaultColor }]);
+
+      if (batch.trainer != null) {
+        lines.push(this.getTooltipExists('Trainer', batch.trainer.firstName + ' ' + batch.trainer.lastName));
       } else {
-        lines.push(this.getTooltipNone('Room'));
+        lines.push(this.getTooltipNone('Trainer'));
       }
+      if (batch.cotrainer != null) {
+        lines.push(this.getTooltipExists('Cotrainer', batch.cotrainer.firstName + ' ' + batch.cotrainer.lastName));
+      } else {
+        lines.push(this.getTooltipNone('Cotrainer'));
+      }
+      if (batch.startDate != null) {
+        lines.push(this.getTooltipExists('Start Date', new Date(batch.startDate).toDateString()));
+      } else {
+        lines.push(this.getTooltipNone('Start Date'));
+      }
+      if (batch.endDate != null) {
+        lines.push(this.getTooltipExists('End Date', new Date(batch.endDate).toDateString()));
+      } else {
+        lines.push(this.getTooltipNone('End Date'));
+      }
+
+      lines.push([{ text: '----------', color: this.tooltipDefaultColor }]);
+
+      if (batch.batchLocation != null) {
+        if (batch.batchLocation.locationName != null) {
+          lines.push(this.getTooltipExists('Location', batch.batchLocation.locationName));
+        } else {
+          lines.push(this.getTooltipNone('Location'));
+        }
+        if (batch.batchLocation.buildingName != null) {
+          lines.push(this.getTooltipExists('Building', batch.batchLocation.buildingName));
+        } else {
+          lines.push(this.getTooltipNone('Building'));
+        }
+        if (batch.batchLocation.roomName != null) {
+          lines.push(this.getTooltipExists('Room', batch.batchLocation.roomName));
+        } else {
+          lines.push(this.getTooltipNone('Room'));
+        }
+      }
+
+      // dynamic width
+      let rectw = 250;
+      // after lines have been set,
+      setTimeout(() => {
+        // find the longest line
+        rectw = 0;
+        const texts = this.tooltipTexts.toArray();
+        for (let i = 0; i < texts.length; i++) {
+          const ttwidth = texts[i].nativeElement.getBoundingClientRect().width;
+          // console.log(texts[i].nativeElement);
+          if (ttwidth > rectw) {
+            rectw = ttwidth;
+          }
+        }
+        if (rectw < 100) {
+          // text wasnt loaded!
+          console.log('tooltip text hasnt loaded in time for dynamic width');
+          return;
+        }
+        rectw += 6;
+        this.tooltipRect.w = rectw;
+      }, 0);
+
+      // get positioning of the tooltip rect
+      const recth = this.tooltipRect.linespacing * lines.length + 5;
+
+      // update values
+      this.tooltipData = lines;
+      this.tooltipRect.w = rectw;
+      this.tooltipRect.h = recth;
     }
 
-    // get positioning of the tooltip rect
-    // todo dynamic width based on text width
-    const rectw = 250;
-    const recth = this.tooltipRect.linespacing * lines.length + 5;
-    const rectx = mousepos.x - rectw / 2;
-    const recty = mousepos.y - recth - 12;
+    // set every time
+    this.tooltipActive = true;
+    const rectx = mousepos.x - this.tooltipRect.w / 2;
+    let recty = mousepos.y - this.tooltipRect.h - 12;
+    let tricentery = mousepos.y - 2;
+    let tridir = -10;
+
+    // flip tooltip if too high
+    // get the rect top relative to the screen and trainernames sticky
+    const screen_mouse_pos_y =
+      mousepos.y +
+      this.timelineRootElement.nativeElement.getBoundingClientRect().top -
+      this.trainernamesElement.nativeElement.getBoundingClientRect().height;
+    const screen_rel_rect_y = screen_mouse_pos_y - this.tooltipRect.h - 12;
+    if (recty < 0 || screen_rel_rect_y < 0) {
+      recty = mousepos.y + 15;
+      tricentery = mousepos.y + 5;
+      tridir = 10;
+    }
     const triangle_points =
       mousepos.x -
       5 +
       ',' +
-      (mousepos.y - 12) +
+      (tricentery + tridir) +
       ' ' +
       mousepos.x +
       ',' +
-      (mousepos.y - 2) +
+      tricentery +
       ' ' +
       (mousepos.x + 5) +
       ',' +
-      (mousepos.y - 12);
+      (tricentery + tridir);
 
-    // update values
-    this.tooltipData = lines;
-    this.tooltipActive = true;
     this.tooltipRect.x = rectx;
     this.tooltipRect.y = recty;
-    this.tooltipRect.w = rectw;
-    this.tooltipRect.h = recth;
     this.tooltipRect.triangle = triangle_points;
 
     // clear timeout

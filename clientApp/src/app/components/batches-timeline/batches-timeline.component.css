@@ -9,6 +9,7 @@
   top: 0;
   background-color: #d3d3d3;
   overflow: auto;
+  z-index: 5;
 }
 .unselectable {
   pointer-events: none;
@@ -16,6 +17,11 @@
   -webkit-user-select: none;
   -moz-user-select: none;
 }
+#timeline {
+  position: relative;
+  z-index: 1;
+}
 .batch-tooltip {
-  z-index: -1;
+  position: relative;
+  z-index: 10;
 }
