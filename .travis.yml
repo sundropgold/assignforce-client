@@ -4,6 +4,7 @@ node_js:
 # sudo: required
 # dist: trusty
 before_script:
+- cd clientApp
 - "sudo chown root /opt/google/chrome/chrome-sandbox"
 - "sudo chmod 4755 /opt/google/chrome/chrome-sandbox"
 cache:
