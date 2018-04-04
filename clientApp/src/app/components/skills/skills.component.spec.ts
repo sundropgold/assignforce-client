@@ -8,6 +8,7 @@ import { TrainerService } from '../../services/trainer/trainer.service';
 import { SkillService } from '../../services/skill/skill.service';
 import { HttpClient, HttpHandler, HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 import { Skill } from '../../model/Skill';
 import { TrainersComponent } from '../trainers/trainers.component';
 import { Trainer } from '../../model/Trainer';
