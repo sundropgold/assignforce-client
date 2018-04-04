@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Batch } from '../../model/batch';
 import { BatchControllerService } from '../../services/api/batch-controller/batch-controller.service';
+import { MatSelectChange, MatCheckboxChange, MatOption } from '@angular/material';
 
 @Component({
   selector: 'app-batches-timeline',
@@ -88,10 +89,57 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
   // this is called when any of the filters are changed
   onFilterChange(event) {
-    console.log(event.target);
-    // todo update stuff to respond to filters
-    // event.target.id
-    // event.targ et.value
+    // get id and value from the event
+    let id = '';
+    let value;
+    if (event instanceof MatSelectChange) {
+      id = event.source.id;
+      const matopt = event.source.selected;
+      if (matopt instanceof MatOption) {
+        value = matopt.viewValue;
+      }
+    } else if (event instanceof MatCheckboxChange) {
+      id = event.source.id;
+      value = event.checked;
+    } else if (event.targetElement != null) {
+      // mat input date event
+      id = event.targetElement.id;
+      value = event.value;
+    } else if (event.target != null) {
+      id = event.target.id;
+      if (event.value != null) {
+        value = event.value;
+      } else {
+        value = event.target.value;
+      }
+    }
+    // console.log('got event: '+id+': '+value);
+    // handle the event with the specified id
+    if (id === 'startDate') {
+      this.startDate = new Date(value);
+      this.updateTodayLine();
+      return;
+    } else if (id === 'endDate') {
+      this.endDate = new Date(value);
+      this.updateTodayLine();
+      return;
+    } else if (id === 'curriculum') {
+      // todo filtering
+
+      return;
+    } else if (id === 'focus') {
+      return;
+    } else if (id === 'location') {
+      return;
+    } else if (id === 'building') {
+      return;
+    } else if (id === 'hidefinished') {
+      return;
+    } else if (id === 'hidebatchless') {
+      return;
+    }
+    // unknown event!
+    console.log('unknown event filter triggered! ' + event + '\n' + event.target);
   }
 
   // gets an updates list of batches

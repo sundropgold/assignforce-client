@@ -62,7 +62,6 @@ export class BatchesTimelineFilterComponent implements OnInit {
 
   onFilterChange(evt: Event) {
     this.filterChangeEmitter.emit(evt);
-    console.log(evt);
   }
 
   ngOnInit() {
