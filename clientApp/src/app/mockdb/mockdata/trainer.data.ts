@@ -111,7 +111,7 @@ export const trainers: Trainer[] = [
       },
       {
         skillId: 70,
-        name: 'Pyhton',
+        name: 'Python',
         active: true
       }
     ],

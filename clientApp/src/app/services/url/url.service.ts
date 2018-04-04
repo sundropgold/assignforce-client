@@ -6,7 +6,7 @@ import { Batch } from '../../model/batch';
 @Injectable()
 export class UrlService {
   url = 'https://localhost';
-  batchUrl = 'api/batches';
+  batchUrl = 'api/batch';
 
   constructor(private http: HttpClient) {}
 
