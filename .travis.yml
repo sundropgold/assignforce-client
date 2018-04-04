@@ -1,15 +1,16 @@
 language: node_js
 node_js:
 - 8.9.4
-# sudo: required
-# dist: trusty
+sudo: required
+dist: trusty
 before_script:
-- cd clientApp
 - "sudo chown root /opt/google/chrome/chrome-sandbox"
 - "sudo chmod 4755 /opt/google/chrome/chrome-sandbox"
 cache:
   directories:
-  - node_modules
+  - clientApp/node_modules
+before_install:
+- cd clientApp
 addons:
   apt:
     sources:
@@ -18,7 +19,7 @@ addons:
     - google-chrome-stable
 install:
 - npm install
-# - ng build --prod
+- ng build
 scripts:
 - export CHROME_BIN=chromium-browser
 - npm run lint:ci
