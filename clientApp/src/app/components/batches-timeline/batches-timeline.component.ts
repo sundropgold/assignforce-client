@@ -97,6 +97,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     this.batchController.getAllBatches().subscribe(result => {
       this.batches = result;
       this.updateTrainers();
+      this.getBreaks();
     });
   }
 
@@ -402,6 +403,54 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       lines.push({ x1: xpos, y1: this.swimlaneYOfs, x2: xpos, y2: this.height - this.swimlaneYOfs });
     }
     return lines;
+  }
+
+  // get lines that run between the batches
+  getBatchLanes() {
+    const lines = [];
+    for (let i = 0; i < this.trainers.length; i++) {
+      const xpos = this.swimlaneXOfs + (i + 0.5) * this.columnWidth;
+      lines.push({ x1: xpos, y1: this.swimlaneYOfs, x2: xpos, y2: this.height });
+    }
+    return lines;
+  }
+
+  // get durations between batches and their positions
+  getBreaks() {
+    //batches seperated by trainer
+    const trainerBatches = [];
+    for (let i = 0; i < this.trainers.length; i++) {
+      const batchSet = [];
+      for (let j = 0; j < this.batches.length; j++) {
+        if (this.batches[j].trainer === this.trainers[i]) {
+          batchSet.push(this.batches[j]);
+        }
+      }
+      trainerBatches.push(batchSet);
+    }
+    //reorder them by increasing start date
+    for (let k = 0; k < trainerBatches.length; k++) {
+      trainerBatches[k].sort(function(a, b) {
+        return a.startDate - b.startDate;
+      });
+    }
+    const midPoints = [];
+    for (let l = 0; l < trainerBatches.length; l++) {
+      const xpos = this.swimlaneXOfs + (l + 0.5) * this.columnWidth + 5;
+      if (trainerBatches[l].length > 1) {
+        for (let m = 0; m < trainerBatches[l].length - 1; m++) {
+          let dif = trainerBatches[l][m + 1].startDate - trainerBatches[l][m].startDate;
+          const gap = trainerBatches[l][m + 1].startDate - trainerBatches[l][m].endDate;
+          const duration = Math.floor(gap / (1000 * 60 * 60 * 24 * 7));
+          dif = dif / 2;
+          const midDate = trainerBatches[l][m].endDate + dif;
+          const y =
+            (midDate - this.startDate.valueOf()) / (this.endDate.valueOf() - this.startDate.valueOf()) * this.height;
+          midPoints.push({ duration: duration, xPos: xpos, midDatePos: y });
+        }
+      }
+    }
+    return midPoints;
   }
 
   // returns the list of trainers with their positions
