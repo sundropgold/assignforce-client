@@ -139,6 +139,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     this.endDate.setMonth(this.endDate.getMonth() + 6);
 
     this.updateTrainers();
+    this.getBreaks();
   }
 
   // setup page size
@@ -277,6 +278,54 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       lines.push({ x1: xpos, y1: this.swimlane_y_ofs, x2: xpos, y2: this.height - this.swimlane_y_ofs });
     }
     return lines;
+  }
+
+  getBatchLanes() {
+    const lines = [];
+    for (let i = 0; i < this.trainers.length; i++) {
+      const xpos = this.swimlane_x_ofs + (i + 0.5) * this.column_width;
+      lines.push({ x1: xpos, y1: this.swimlane_y_ofs, x2: xpos, y2: this.height });
+    }
+    return lines;
+  }
+
+  getBreaks() {
+    //batches seperated by trainer
+    const trainerBatches = [];
+    for (let i = 0; i < this.trainers.length; i++) {
+      const batchSet = [];
+      for (let j = 0; j < this.batches.length; j++) {
+        if (this.batches[j].trainer === this.trainers[i]) {
+          batchSet.push(this.batches[j]);
+        }
+      }
+      trainerBatches.push(batchSet);
+    }
+    //reorder them by increasing start date
+    for (let k = 0; k < trainerBatches.length; k++) {
+      trainerBatches[k].sort(function(a, b) {
+        return a.startDate.valueOf() - b.startDate.valueOf();
+      });
+    }
+    const midPoints = [];
+    for (let l = 0; l < trainerBatches.length; l++) {
+      const xpos = this.swimlane_x_ofs + (l + 0.5) * this.column_width + 5;
+      if (trainerBatches[l].length > 1) {
+        for (let m = 0; m < trainerBatches[l].length - 1; m++) {
+          let dif = trainerBatches[l][m + 1].startDate.valueOf() - trainerBatches[l][m].startDate.valueOf();
+          const gap = trainerBatches[l][m + 1].startDate.valueOf() - trainerBatches[l][m].endDate.valueOf();
+          const duration = Math.floor(gap / (1000 * 60 * 60 * 24 * 7));
+          dif = dif / 2;
+          const midDate = trainerBatches[l][m].endDate.valueOf() + dif;
+          const y =
+            (midDate.valueOf() - this.startDate.valueOf()) /
+            (this.endDate.valueOf() - this.startDate.valueOf()) *
+            this.height;
+          midPoints.push({ duration: duration, xPos: xpos, midDatePos: y });
+        }
+      }
+    }
+    return midPoints;
   }
 
   // returns the list of trainers with their positions

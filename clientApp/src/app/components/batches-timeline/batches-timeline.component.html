@@ -24,6 +24,11 @@
         [attr.x1]="line.x1" [attr.y1]="line.y1" [attr.x2]="line.x2"
         [attr.y2]="line.y2" stroke="#D3D3D3" stroke-width="1"></line>
     </g>
+    <g class="batchlanes">
+      <line *ngFor="let line of getBatchLanes()" class="batchlane"
+        [attr.x1]="line.x1" [attr.y1]="line.y1" [attr.x2]="line.x2"
+        [attr.y2]="line.y2" stroke="#000000" stroke-width="1"></line>
+    </g>
     <g class="rectangles">
       <g class="rectangle" *ngFor="let rect of getBatchesRectangles()">
         <rect [attr.x]="rect.x" [attr.y]="rect.y" [attr.height]="rect.h"
@@ -36,6 +41,12 @@
           </tspan>
         </text>
       </g>
+    </g>
+    <g class= "gaps" *ngFor="let midPoint of getBreaks()">
+      <text class = "gapLabel" [attr.x]="midPoint.xPos" [attr.y]="midPoint.midDatePos" font-size="14" text-anchor="start"
+      alignment-baseline = "middle">
+        {{midPoint.duration}}
+      </text>
     </g>
     <line class="today"
       [attr.x1]="today_line.x1" [attr.y1]="today_line.y1"
