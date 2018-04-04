@@ -1,8 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
-import { UrlService } from '../../services/url/url.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AuthService } from '../../services/auth/auth.service';
+import { Router } from '@angular/router';
+import { AppRouting } from '../../app.routing';
+import { UrlService } from '../../services/url/url.service';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -13,7 +16,7 @@ describe('LoginComponent', () => {
       TestBed.configureTestingModule({
         imports: [HttpClientTestingModule],
         declarations: [LoginComponent],
-        providers: [UrlService]
+        providers: [AuthService, { provide: Router, useClass: AppRouting }, UrlService]
       }).compileComponents();
     })
   );

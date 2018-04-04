@@ -38,36 +38,37 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   constructor(private urlService: UrlService) {}
 
   ngOnInit() {
-    this.urlService.getAllBatches().subscribe(blist => {
-      blist.forEach(batch => {
-        // This is an object that encapsulates the batch object's properties and a progress number.
-        const batchObj = {
-          name: batch.name,
-          curriculum: batch.curriculum.name,
-          trainer: batch.trainer.firstName + ' ' + batch.trainer.lastName,
-          cotrainer: batch.cotrainer,
-          location: batch.batchLocation.locationName,
-          building: batch.batchLocation.buildingName,
-          room: batch.batchLocation.roomName,
-          startDate: batch.startDate,
-          endDate: batch.endDate,
-          progress: 0
-        };
-        this.batchList.push(batchObj);
-
-        // Calculating and updating the progress of each batch.
-        this.batchList.forEach(batchOb => {
-          batchOb.progress = this.getCurrentProgress(batchOb);
-        });
-
-        // This starts the view on showing All batches.
-        this.applyFilter(0);
-      });
-    });
+    //TODO -- use the batch-controller.service
+    // this.urlService.getAllBatches().subscribe(blist => {
+    //   blist.forEach(batch => {
+    //     // This is an object that encapsulates the batch object's properties and a progress number.
+    //     const batchObj = {
+    //       name: batch.name,
+    //       curriculum: batch.curriculum.name,
+    //       trainer: batch.trainer.firstName + ' ' + batch.trainer.lastName,
+    //       cotrainer: batch.cotrainer,
+    //       location: batch.batchLocation.locationName,
+    //       building: batch.batchLocation.buildingName,
+    //       room: batch.batchLocation.roomName,
+    //       startDate: batch.startDate,
+    //       endDate: batch.endDate,
+    //       progress: 0
+    //     };
+    //     this.batchList.push(batchObj);
+    //
+    //     // Calculating and updating the progress of each batch.
+    //     this.batchList.forEach(batchOb => {
+    //       batchOb.progress = this.getCurrentProgress(batchOb);
+    //     });
+    //
+    //     // This starts the view on showing All batches.
+    //     this.applyFilter(0);
+    //   });
+    // });
   }
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    //   this.dataSource.sort = this.sort;
+    //   this.dataSource.paginator = this.paginator;
   }
   // -------------------------------- PREVIOUS BATCH'S METHODS -------------------------------------------
   exportToCSV(evt) {

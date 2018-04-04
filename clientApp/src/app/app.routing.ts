@@ -9,6 +9,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { ReportsComponent } from './components/reports/reports.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { LoginComponent } from './components/login/login.component';
+import { AuthenticatingComponent } from './components/authenticating/authenticating.component';
 
 const appRoutes: Routes = [
   {
@@ -47,6 +48,10 @@ const appRoutes: Routes = [
   {
     path: 'settings',
     component: SettingsComponent
+  },
+  {
+    path: 'callback',
+    component: AuthenticatingComponent
   }
 ];
 
