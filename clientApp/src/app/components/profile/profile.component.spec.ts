@@ -8,7 +8,7 @@ import { SkillService } from '../../services/skill/skill.service';
 import { S3CredentialService } from '../../services/s3-credential/s3-credential.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable } from 'rxjs/Observable';
-import { Skill } from '../../model/skill';
+import { Skill } from '../../model/Skill';
 import { Component } from '@angular/core';
 import { of } from 'rxjs/Observable/of';
 import 'rxjs/add/observable/of';

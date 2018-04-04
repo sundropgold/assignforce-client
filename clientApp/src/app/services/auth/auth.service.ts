@@ -3,12 +3,22 @@ import { Router } from '@angular/router';
 import { UrlService } from '../url/url.service';
 import { environment } from '../../../environments/environment';
 import Auth0Lock from 'auth0-lock';
+import * as auth0 from 'auth0-js';
 
 @Injectable()
 export class AuthService {
   constructor(private router: Router, private urlService: UrlService) {}
 
   userProfile: any;
+
+  auth0 = new auth0.WebAuth({
+    clientID: environment.auth0.clientId,
+    domain: environment.auth0.domain,
+    apiAudience: environment.auth0.audience,
+    responseType: environment.auth0.responseType,
+    redirectUri: environment.auth0.redirectUri,
+    scope: environment.auth0.scope
+  });
 
   lock = new Auth0Lock(environment.auth0.clientId, environment.auth0.domain, {
     autoclose: true,
@@ -24,18 +34,29 @@ export class AuthService {
   });
 
   public showLogin(): void {
-    if (this.isAuthenticated()) this.router.navigate([this.urlService.getOverviewUrl()]);
-    else this.lock.show();
+    //if (this.isAuthenticated()) this.router.navigate([this.urlService.getOverviewUrl()]);
+    this.lock.show();
+    // this.auth0.authorize();
   }
 
   public handleAuthentication(): void {
+    // this.auth0.parseHash((error, authResult) => {
+    //   if (authResult && authResult.accessToken && authResult.idToken) {
+    //     this.setSession(authResult);
+    //     this.router.navigate([this.urlService.getOverviewUrl()]);
+    //   } else if (error) {
+    //     this.router.navigate([this.urlService.getLoginUrl()]);
+    //   }
+    // });
+
     this.lock.on('authenticated', authResult => {
       this.lock.getUserInfo(authResult.accessToken, (error, profile) => {
         if (authResult && authResult.accessToken && authResult.idToken) {
+          console.log(profile);
           this.setSession(authResult);
           this.router.navigate([this.urlService.getOverviewUrl()]);
         } else if (error) {
-          this.router.navigate([this.urlService.getLoginUrl()]);
+          //this.router.navigate([this.urlService.getLoginUrl()]);
         }
       });
     });
@@ -44,6 +65,7 @@ export class AuthService {
   private setSession(authResult): void {
     // Set the time that the Access Token will expire at
     const expiresAt = JSON.stringify(authResult.expiresIn * 1000 + new Date().getTime());
+
     //Set the scopes to provided scopes || requested scopes || ''
     const scopes = authResult.scope || '';
 
@@ -51,6 +73,8 @@ export class AuthService {
 
     const roles = authResult.idTokenPayload[namespace + 'roles'] || '';
     const groups = authResult.idTokenPayload[namespace + 'groups'] || '';
+
+    console.log(authResult);
 
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
@@ -61,12 +85,9 @@ export class AuthService {
   }
 
   public logout(): void {
-    // Remove tokens and expiry time from localStorage
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('id_token');
-    localStorage.removeItem('expires_at');
-    // Go back to the home route
-    this.router.navigate([this.urlService.getLoginUrl()]);
+    this.lock.logout({
+      returnTo: environment.baseUrl
+    });
   }
 
   public isAuthenticated(): boolean {

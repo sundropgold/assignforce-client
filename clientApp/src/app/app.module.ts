@@ -33,6 +33,16 @@ import { SkillService } from './services/skill/skill.service';
 import { S3CredentialService } from './services/s3-credential/s3-credential.service';
 import { UrlService } from './services/url/url.service';
 
+import { SkillsComponent } from './components/skills/skills.component';
+import { FociComponent } from './components/foci/foci.component';
+import { CoreComponent } from './components/core/core.component';
+import { AddFocusComponent } from './components/add-focus/add-focus.component';
+import { AddSkillComponent } from './components/add-skill/add-skill.component';
+import { EditFocusComponent } from './components/edit-focus/edit-focus.component';
+import { EditSkillComponent } from './components/edit-skill/edit-skill.component';
+
+import { MatSelectModule } from '@angular/material/select';
+import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { BatchesTimelineComponent } from './components/batches-timeline/batches-timeline.component';
 import { BatchesTimelineFilterComponent } from './components/batches-timeline-filter/batches-timeline-filter.component';
@@ -44,6 +54,8 @@ import { InMemDbService } from './mockdb/in-mem-db.service';
 
 import { TrainersAddComponent } from './components/trainers/trainers-add/trainers-add.component';
 import { TrainerItemComponent } from './components/trainers/trainer-item/trainer-item.component';
+import { CurriculaService } from './services/curricula/curricula.service';
+
 import { BatchControllerService } from './services/api/batch-controller/batch-controller.service';
 import { AddressControllerService } from './services/api/address-controller/address-controller.service';
 import { BuildingControllerService } from './services/api/building-controller/building-controller.service';
@@ -55,10 +67,10 @@ import { TrainerControllerService } from './services/api/trainer-controller/trai
 import { UnavailableControllerService } from './services/api/unavailable-controller/unavailable-controller.service';
 import { AuthService } from './services/auth/auth.service';
 import { AuthenticatingComponent } from './components/authenticating/authenticating.component';
-import { SkillsComponent } from './components/skills/skills.component';
 import { CertificationsComponent } from './components/certifications/certifications.component';
 import { MatButtonModule, MatMenuModule, MatToolbarModule, MatIconModule, MatCardModule } from '@angular/material';
 import { SecurityContext } from './services/auth/security-context.service';
+import { CurriculumSkillsComponent } from './components/curriculum-skills/curriculum-skills.component';
 
 @NgModule({
   declarations: [
@@ -82,14 +94,18 @@ import { SecurityContext } from './services/auth/security-context.service';
     LocationDeleteRoomDialogComponent,
     LocationEditRoomDialogComponent,
     LoginComponent,
-    BatchesTimelineComponent,
-    BatchesTimelineFilterComponent,
+    SkillsComponent,
+    FociComponent,
+    CoreComponent,
+    AddFocusComponent,
+    AddSkillComponent,
+    EditFocusComponent,
+    EditSkillComponent,
     TrainersAddComponent,
     TrainerItemComponent,
     AuthenticatingComponent,
-    TrainerItemComponent,
-    SkillsComponent,
-    CertificationsComponent
+    CertificationsComponent,
+    CurriculumSkillsComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 
@@ -126,7 +142,8 @@ import { SecurityContext } from './services/auth/security-context.service';
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,
       multi: true
-    }
+    },
+    CurriculaService
   ],
   bootstrap: [AppComponent],
   entryComponents: [
@@ -139,6 +156,10 @@ import { SecurityContext } from './services/auth/security-context.service';
     LocationAddRoomDialogComponent,
     LocationDeleteRoomDialogComponent,
     LocationEditRoomDialogComponent,
+    AddFocusComponent,
+    EditFocusComponent,
+    AddSkillComponent,
+    EditSkillComponent,
     TrainersAddComponent
   ]
 })

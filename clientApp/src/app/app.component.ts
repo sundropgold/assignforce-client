@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SecurityContext } from './services/auth/security-context.service';
 import { SecurityConfig } from './services/auth/security-config';
 import { environment } from '../environments/environment';
+import { AuthService } from './services/auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ import { environment } from '../environments/environment';
 export class AppComponent implements OnInit {
   private userIsAuthenticated = false;
 
-  constructor(private securityContext: SecurityContext) {
+  constructor(private securityContext: SecurityContext, private auth0: AuthService) {
     const securityConfig = new SecurityConfig();
     securityConfig.roles = environment.security_config.roles;
     securityConfig.permissions = environment.security_config.permissions;
@@ -20,5 +21,7 @@ export class AppComponent implements OnInit {
     this.securityContext.setSecurityConfig(securityConfig);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.auth0.handleAuthentication();
+  }
 }
