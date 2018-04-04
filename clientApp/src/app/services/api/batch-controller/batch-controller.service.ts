@@ -12,38 +12,38 @@ export class BatchControllerService {
   private batchController = environment.apiUrls.batchController;
 
   public createBatch(batch: Batch): Observable<Batch> {
-    return this.http.post<Batch>(this.batchController.createBatch, batch);
+    return this.http.post<Batch>(this.batchController.baseUrl + this.batchController.createBatch, batch);
   }
 
   public deleteBatch(id: number): Observable<Batch> {
-    return this.http.delete<Batch>(this.batchController.deleteBatch + id);
+    return this.http.delete<Batch>(this.batchController.baseUrl + this.batchController.deleteBatch + id);
   }
 
   public updateBatch(batch: Batch): Observable<Batch> {
-    return this.http.put<Batch>(this.batchController.updateBatch, batch);
+    return this.http.put<Batch>(this.batchController.baseUrl + this.batchController.updateBatch, batch);
   }
 
   public findCommonLocations(): Observable<Location[]> {
-    return this.http.get<Location[]>(this.batchController.findCommonLocations);
+    return this.http.get<Location[]>(this.batchController.baseUrl + this.batchController.findCommonLocations);
   }
 
   public getAllBatches(): Observable<Batch[]> {
-    return this.http.get<Batch[]>(this.batchController.getAllBatches);
+    return this.http.get<Batch[]>(this.batchController.baseUrl + this.batchController.getAllBatches);
   }
 
   public findAllBatchesByTrainer(): Observable<Batch[]> {
-    return this.http.get<Batch[]>(this.batchController.findAllBatchesByTrainer);
+    return this.http.get<Batch[]>(this.batchController.baseUrl + this.batchController.findAllBatchesByTrainer);
   }
 
   public createWeek(batchId: number): Observable<Batch> {
-    return this.http.post<Batch>(this.batchController.createWeek + batchId, null);
+    return this.http.post<Batch>(this.batchController.baseUrl + this.batchController.createWeek + batchId, null);
   }
 
   public getAllVpBatches(): Observable<Batch[]> {
-    return this.http.get<Batch[]>(this.batchController.getAllVpBatches);
+    return this.http.get<Batch[]>(this.batchController.baseUrl + this.batchController.getAllVpBatches);
   }
 
   public getAllCurrentBatches(): Observable<Batch[]> {
-    return this.http.get<Batch[]>(this.batchController.getAllCurrentBatches);
+    return this.http.get<Batch[]>(this.batchController.baseUrl + this.batchController.getAllCurrentBatches);
   }
 }
