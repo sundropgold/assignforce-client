@@ -1,27 +1,47 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { Batch } from '../../model/batch';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class UrlService {
-  url = 'https://localhost';
-  batchUrl = 'api/batch';
+  constructor() {}
 
-  constructor(private http: HttpClient) {}
-
-  getUrl() {
-    return this.url;
+  getBaseUrl(): string {
+    return environment.baseUrl;
   }
 
-  testCors1(): Observable<any> {
-    return this.http.get(this.url);
-  }
-  testCors2(): Observable<any> {
-    return this.http.get(this.url + '/auth/userinfo');
+  getLoginUrl(): string {
+    return environment.appRoutes.login;
   }
 
-  getAllBatches(): Observable<Batch[]> {
-    return this.http.get<Batch[]>(this.batchUrl);
+  getOverviewUrl(): string {
+    return environment.appRoutes.overview;
+  }
+
+  getBatchesUrl(): string {
+    return environment.appRoutes.batches;
+  }
+
+  getLocationsUrl(): string {
+    return environment.appRoutes.locations;
+  }
+
+  getCurriculaUrl(): string {
+    return environment.appRoutes.curricula;
+  }
+
+  getTrainersUrl(): string {
+    return environment.appRoutes.trainers;
+  }
+
+  getProfileUrl(): string {
+    return environment.appRoutes.profile;
+  }
+
+  getReportsUrl(): string {
+    return environment.appRoutes.reports;
+  }
+
+  getSettingsUrl(): string {
+    return environment.appRoutes.settings;
   }
 }

@@ -1,13 +1,12 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MenuBarComponent } from './menu-bar.component';
-import { AppMaterialModule } from '../../material.module';
-import { ActivatedRoute, Data, Params, Router } from '@angular/router';
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { AppMaterialModule } from '../../material.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ActivatedRoute } from '@angular/router';
+import { MockAuthService } from '../../services/auth/auth.service.spec';
+import { AuthService } from '../../services/auth/auth.service';
 
 export class MockActivatedRoute {
   private paramsSubject = new BehaviorSubject(this.testParams);
@@ -27,7 +26,9 @@ export class MockActivatedRoute {
 describe('MenuBarComponent', () => {
   let component: MenuBarComponent;
   let fixture: ComponentFixture<MenuBarComponent>;
+
   const activeRoute = new MockActivatedRoute();
+  let authService;
 
   class MockRouter {
     navigate = jasmine.createSpy('navigate');
@@ -38,7 +39,10 @@ describe('MenuBarComponent', () => {
       TestBed.configureTestingModule({
         imports: [AppMaterialModule, RouterTestingModule.withRoutes([]), BrowserAnimationsModule],
         declarations: [MenuBarComponent],
-        providers: [{ provide: ActivatedRoute, useValue: activeRoute }]
+        providers: [
+          { provide: ActivatedRoute, useValue: activeRoute },
+          { provide: AuthService, useValue: authService, useClass: MockAuthService }
+        ]
       }).compileComponents();
     })
   );
@@ -47,6 +51,7 @@ describe('MenuBarComponent', () => {
     fixture = TestBed.createComponent(MenuBarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    authService = TestBed.get(AuthService);
   });
 
   it('should create', () => {

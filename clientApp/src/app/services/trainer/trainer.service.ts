@@ -5,17 +5,14 @@ import { Trainer } from '../../model/Trainer';
 
 @Injectable()
 export class TrainerService {
-  url = 'api/v2/trainer';
+  // url from in memory db
+  url = 'api/trainer';
 
   constructor(private http: HttpClient) {}
 
-  // created an empty Trainer
-  getEmptyTrainer() {
-    // return new Trainer();
-  }
-
   // Gets all trainers in the database
   getAll(): Observable<Trainer[]> {
+    console.log('here');
     return this.http.get<Trainer[]>(`${this.url}`);
   }
 
@@ -23,9 +20,9 @@ export class TrainerService {
     return this.http.get<Trainer>(`${this.url}/${id}`);
   }
 
-  getByFirstNameAndLastName(fName, lName): Observable<Trainer> {
-    return this.http.get<Trainer>(`${this.url}/${fName}/${lName}`);
-  }
+  // getByFirstNameAndLastName(fName, lName): Observable<Trainer> {
+  //   return this.http.get<Trainer>(`${this.url}/${fName}/${lName}`);
+  // }
 
   create(trainer): Observable<any> {
     return this.http.post<any>(`${this.url}`, trainer);

@@ -2,6 +2,7 @@ import { AfterContentInit, Component, ContentChildren, OnInit, QueryList, ViewEn
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 import { MatTab } from '@angular/material';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-menu-bar',
@@ -12,9 +13,9 @@ import { MatTab } from '@angular/material';
 export class MenuBarComponent implements OnInit {
   selectedTab = 0;
 
-  tabs = ['overview', 'batches', 'locations', 'curriculum', 'trainers', 'profile', 'reports', 'settings', 'logout'];
+  tabs = ['overview', 'batches', 'locations', 'curriculum', 'trainers', 'profile', 'reports', 'settings', ''];
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private router: Router, private route: ActivatedRoute, private auth0: AuthService) {}
 
   ngOnInit() {
     this.router.events.subscribe(event => {
@@ -26,76 +27,7 @@ export class MenuBarComponent implements OnInit {
   }
 
   selectTab(evt) {
-    //localStorage.setItem('active', evt.index);
-
+    console.log(evt);
     this.router.navigate([this.tabs[evt.index]]);
-    /*
-          switch (evt.index) {
-          case 0: this.toOverview();
-          break;
-
-          case 1: this.toBatches();
-          break;
-
-          case 2: this.toLocations();
-            break;
-
-          case 3: this.toCurricula();
-            break;
-
-          case 4: this.toTrainers();
-            break;
-
-          case 5: this.toProfile();
-            break;
-
-          case 6: this.toReports();
-            break;
-
-          case 7: this.toSettings();
-            break;
-
-          case 8: this.logout();
-            break;
-        }
-    */
-  }
-
-  /*
-    toOverview() {
-    this.router.navigate([('overview')]);
-  }
-
-  toBatches() {
-    this.router.navigate([('batches')]);
-  }
-
-  toLocations() {
-    this.router.navigate([('locations')]);
-  }
-
-  toCurricula() {
-    this.router.navigate([('curriculum')]);
-  }
-
-  toTrainers() {
-    this.router.navigate([('trainers')]);
-  }
-
-  toProfile() {
-    this.router.navigate([('profile')]);
-  }
-
-  toReports() {
-    this.router.navigate([('reports')]);
-  }
-
-  toSettings() {
-    this.router.navigate([('settings')]);
-  }
-
-*/
-  logout() {
-    //has to redirect to login page
   }
 }
