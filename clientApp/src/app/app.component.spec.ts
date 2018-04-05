@@ -1,4 +1,4 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { MenuBarComponent } from './components/menu-bar/menu-bar.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,6 +7,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AppRouting } from './app.routing';
+import { AuthService } from './services/auth/auth.service';
+import { UrlService } from './services/url/url.service';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { SecurityContext } from './services/auth/security-context.service';
 
 export class MockActivatedRoute {
   private paramsSubject = new BehaviorSubject(this.testParams);
@@ -28,21 +33,30 @@ describe('AppComponent', () => {
     navigate = jasmine.createSpy('navigate');
   }
   const activeRoute = new MockActivatedRoute();
+  let app: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
 
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
         imports: [AppMaterialModule, ReactiveFormsModule, RouterTestingModule.withRoutes([]), BrowserAnimationsModule],
         declarations: [AppComponent, MenuBarComponent],
-        providers: [{ provide: ActivatedRoute, useValue: activeRoute }]
+        schemas: [NO_ERRORS_SCHEMA],
+        providers: [
+          { provide: ActivatedRoute, useValue: activeRoute },
+          { provide: Router, useClass: AppRouting },
+          AuthService,
+          SecurityContext,
+          UrlService
+        ]
       }).compileComponents();
     })
   );
   it(
     'should create the app',
     async(() => {
-      const fixture = TestBed.createComponent(AppComponent);
-      const app = fixture.debugElement.componentInstance;
+      fixture = TestBed.createComponent(AppComponent);
+      app = fixture.debugElement.componentInstance;
       expect(app).toBeTruthy();
     })
   );
