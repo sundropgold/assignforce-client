@@ -3,6 +3,7 @@ import { Batch } from '../../model/batch';
 import { BatchControllerService } from '../../services/api/batch-controller/batch-controller.service';
 import { MatSelectChange, MatCheckboxChange, MatOption } from '@angular/material';
 import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
+import { curriculum } from '../../mockdb/mockdata/curriculum.data';
 
 @Component({
   selector: 'app-batches-timeline',
@@ -24,6 +25,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   // dynamic values
   width = 1536;
   swimlaneXOfs = 100;
+  loading = false;
   // static values
   height = 2067;
   columnWidth = 50;
@@ -124,34 +126,45 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     }
     console.log('got event: ' + id + ': ' + value);
     // handle the event with the specified id
-    if (id === 'startDate') {
+    const filterIds = {
+      startDate: 'startDate',
+      endDate: 'endDate',
+      curriculum: 'curriculum',
+      focus: 'focus',
+      location: 'location',
+      building: 'building',
+      hideConcluded: 'hideconcluded',
+      hideBatchless: 'hidebatchless',
+      hideInactiveTrainers: 'hideinactive'
+    }
+    if (id === filterIds.startDate) {
       this.startDate = new Date(value);
       this.updateTodayLine();
       return;
-    } else if (id === 'endDate') {
+    } else if (id === filterIds.endDate) {
       this.endDate = new Date(value);
       this.updateTodayLine();
       return;
-    } else if (id === 'curriculum') {
+    } else if (id === filterIds.curriculum) {
       // todo filtering
 
       return;
-    } else if (id === 'focus') {
+    } else if (id === filterIds.focus) {
       return;
-    } else if (id === 'location') {
+    } else if (id === filterIds.location) {
       return;
-    } else if (id === 'building') {
+    } else if (id === filterIds.building) {
       return;
-    } else if (id === 'hideconcluded') {
+    } else if (id === filterIds.hideConcluded) {
       this.hideConcludedBatches = value;
       this.updateBatches();
       this.updateTrainers();
       return;
-    } else if (id === 'hidebatchless') {
+    } else if (id === filterIds.hideBatchless) {
       this.hideBatchlessTrainers = value;
       this.updateTrainers();
       return;
-    } else if (id === 'hideinactive') {
+    } else if (id === filterIds.hideInactiveTrainers) {
       this.hideInactiveTrainers = value;
       this.updateTrainers();
       return;
@@ -163,6 +176,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   // gets an updates list of batches
   updateBatches() {
     console.log('updating batches...');
+    this.loading = true;
     this.batchController.getAllBatches().subscribe(result => {
       this.batches = [];
       for (let i = 0; i < result.length; i++) {
@@ -174,6 +188,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         }
         this.batches.push(batch);
       }
+      this.loading = false;
     });
   }
 
@@ -195,6 +210,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   // makes the list of trainers
   updateTrainers() {
     console.log('updating trainers...');
+    this.loading = true;
     this.trainerController.getAllTrainers().subscribe(result => {
       this.trainers = [];
       for (let i = 0; i < result.length; i++) {
@@ -220,6 +236,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         }
         this.trainers.push(trainer);
       }
+      this.loading = false;
     });
   }
 
@@ -584,11 +601,9 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       const xpos = this.swimlaneXOfs + (l + 0.5) * this.columnWidth + 5;
       if (trainerBatches[l].length > 1) {
         for (let m = 0; m < trainerBatches[l].length - 1; m++) {
-          let dif = trainerBatches[l][m + 1].startDate - trainerBatches[l][m].startDate;
           const gap = trainerBatches[l][m + 1].startDate - trainerBatches[l][m].endDate;
-          const duration = Math.floor(gap / (1000 * 60 * 60 * 24 * 7));
-          dif = dif / 2;
-          const midDate = trainerBatches[l][m].endDate + dif;
+          const duration = Math.floor(gap / (1000 * 60 * 60 * 24 * 7));// ms to weeks
+          const midDate = trainerBatches[l][m].endDate + gap / 2;
           const y =
             (midDate - this.startDate.valueOf()) / (this.endDate.valueOf() - this.startDate.valueOf()) * this.height;
           midPoints.push({ duration: duration, xPos: xpos, midDatePos: y });

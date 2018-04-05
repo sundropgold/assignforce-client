@@ -50,7 +50,7 @@ test
       </g>
     </g>
     <g class= "gaps" *ngFor="let midPoint of getBreaks()">
-      <text class = "gapLabel" [attr.x]="midPoint.xPos" [attr.y]="midPoint.midDatePos" font-size="14" text-anchor="start"
+      <text class = "gapLabel unselectable" [attr.x]="midPoint.xPos" [attr.y]="midPoint.midDatePos" font-size="14" text-anchor="start"
       alignment-baseline = "middle">
         {{midPoint.duration}}
       </text>
