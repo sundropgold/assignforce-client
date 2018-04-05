@@ -5,7 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { AppMaterialModule } from '../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { Curriculum } from '../../model/curriculum';
+import { Curriculum } from '../../model/Curriculum';
 import { Skill } from '../../model/Skill';
 import { SkillService } from '../../services/skill/skill.service';
 import { Observable } from 'rxjs/Observable';

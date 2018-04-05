@@ -7,7 +7,7 @@ import { TrainerItemComponent } from './trainer-item/trainer-item.component';
 import { TrainerService } from '../../services/trainer/trainer.service';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { Trainer } from '../../model/trainer';
+import { Trainer } from '../../model/Trainer';
 
 describe('TrainersComponent', () => {
   let component: TrainersComponent;
