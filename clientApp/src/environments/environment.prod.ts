@@ -13,6 +13,12 @@ export const environment = {
     settings: 'settings'
   },
 
+  security_config: {
+    roles: ['SVP of Technology', 'Trainer'],
+    groups: ['Operations'],
+    permissions: []
+  },
+
   auth0: {
     namespace: 'https://revature.com/',
     title: 'AssignForce Login',
