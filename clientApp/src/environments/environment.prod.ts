@@ -16,7 +16,8 @@ export const environment = {
   auth0: {
     namespace: 'https://revature.com/',
     title: 'AssignForce Login',
-    clientId: 'uS5tb62hP8K3CgU00qa38SVnfWvzviiH',
+    //clientId: 'uS5tb62hP8K3CgU00qa38SVnfWvzviiH', //assign-force
+    clientId: 'tjQhcs0O4mRV2iry6SAO0Gy1YQcBrWCa', //hydra
     domain: 'revature.auth0.com',
     responseType: 'token id_token',
     audience: 'https://revature.auth0.com/userinfo',
@@ -24,9 +25,15 @@ export const environment = {
     scope: 'openid'
   },
 
+  security_config: {
+    roles: ['SVP of Technology', 'Trainer'],
+    groups: ['Operations'],
+    permissions: []
+  },
+
   apiUrls: {
     batchController: {
-      baseUrl: 'https://hydra.cfapps.io/api/batch/v0',
+      baseUrl: 'https://hydra.cfapps.io/api/batch',
       createBatch: '/all/batch/create',
       deleteBatch: '/all/batch/delete/',
       updateBatch: '/all/batch/update',
@@ -39,16 +46,17 @@ export const environment = {
     },
 
     addressController: {
-      baseUrl: 'https://hydra.cfapps.io/api/address/v0',
+      baseUrl: 'https://hydra.cfapps.io/api/address',
       createLocation: '/vp/location/create',
       updateLocation: '/vp/location/update',
       getAllLocations: '/all/location/all',
+      getLocation: '',
       removeLocation: '/vp/location/delete',
       reactivateLocation: '/vp/location/reactivate'
     },
 
     buildingController: {
-      baseUrl: 'https://hydra.cfapps.io/api/address/building/v0',
+      baseUrl: 'https://hydra.cfapps.io/api/address/building',
       createBuilding: '',
       retrieveBuilding: '/',
       updateBuilding: '',
@@ -57,7 +65,7 @@ export const environment = {
     },
 
     locationController: {
-      baseUrl: 'https://hydra.cfapps.io/api/address/location/v0',
+      baseUrl: 'https://hydra.cfapps.io/api/address/location',
       createLocation: '',
       retrieveLocation: '/',
       updateLocation: '',
@@ -66,7 +74,7 @@ export const environment = {
     },
 
     curriculumController: {
-      baseUrl: 'https://hydra.cfapps.io/api/curriculum/v0',
+      baseUrl: 'https://hydra.cfapps.io/api/curriculum',
       createCurriculum: '',
       retrieveCurriculum: '/',
       updateCurriculum: '',
@@ -80,7 +88,7 @@ export const environment = {
     },
 
     settingController: {
-      baseUrl: 'https://hydra.cfapps.io/api/setting/v0',
+      baseUrl: 'https://hydra.cfapps.io/api/setting',
       createSetting: '',
       retrieveSetting: '/',
       getGlobalSetting: '',
@@ -89,7 +97,7 @@ export const environment = {
     },
 
     skillController: {
-      baseUrl: 'https://hydra.cfapps.io/api/skill/v0',
+      baseUrl: 'https://hydra.cfapps.io/api/skill',
       findAllActive: '/skill/all',
       findAll: '/vp/skill',
       findSkillById: '/skill/',
@@ -104,7 +112,7 @@ export const environment = {
     },
 
     trainerController: {
-      baseUrl: 'https://hydra.cfapps.io/api/trainer/v0',
+      baseUrl: 'https://hydra.cfapps.io/api/trainer',
       createTrainer: '/vp/trainer/create',
       updateTrainer: '/vp/trainer/update',
       findTrainer: '/training/trainer/byemail/',
@@ -114,7 +122,7 @@ export const environment = {
     },
 
     unavailableController: {
-      baseUrl: 'https://hydra.cfapps.io/api/unavailable/v0',
+      baseUrl: 'https://hydra.cfapps.io/api/unavailable',
       createUnavailability: '',
       retrieveUnavailability: '/',
       deleteUnavailability: '',
