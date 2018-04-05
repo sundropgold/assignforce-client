@@ -1,5 +1,17 @@
+# emacs backup files
+*~
+\#*\#
+
+# compiled output
+/dist
+/tmp
+/out-tsc
+
+# dependencies
+/node_modules
+
 # IDEs and editors
-.idea/
+/.idea
 .project
 .classpath
 .c9/
@@ -14,32 +26,20 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+testem.log
+/typings
+/package-lock.json
+
+# e2e
+/e2e/*.js
+/e2e/*.map
+
 # System Files
 .DS_Store
 Thumbs.db
-
-# emacs backup files
-*~
-\#*\#
-
-# compiled output
-dist/
-tmp/
-out-tsc/
-
-# dependencies
-node_modules/
-
-# misc
-.sass-cache/
-connect.lock
-coverage/
-libpeerconnection.log
-npm-debug.log
-testem.log
-typings/
-package-lock.json
-
-# e2e
-e2e/*.js
-e2e/*.map
