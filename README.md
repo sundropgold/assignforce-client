@@ -18,7 +18,7 @@ npm run dev
 
 ## Allow Insecure in Chrome
 
-In order to get chrome to play nicely with SSL, navigate to [chrome://flags/#allow-insecure-localhost](chrome://flags/#allow-insecure-localhost) and set `Allow invalid certificates for resources loaded from localhost` to `enabled`. You will need to relaunch Chrome after setting this.
+In order to get chrome to play nicely with SSL, navigate to `[chrome://flags/#allow-insecure-localhost](chrome://flags/#allow-insecure-localhost)` and set `Allow invalid certificates for resources loaded from localhost` to `enabled`. You will need to relaunch Chrome after setting this.
 
 ## Syncing of Upstream forks
 
@@ -26,13 +26,13 @@ Makes it a little bit easier to sync a forked repository with its upstream count
 
 > This tool is compatible with Linux, MacOS, and Windows Subsystem Linux only.
 
-1. Change to `clientApp` directory
+1.  Change to `clientApp` directory
 
 ```bash
 cd clientApp
 ```
 
-2. To view all commands
+2.  To view all commands
 
 ```bash
 sh fsync
@@ -46,7 +46,7 @@ sh fsync sync    --> sync with upstream
 sh fsync merge   --> sync with upstream, push and merge with current branch (use with caution)
 ```
 
-3. `fsync init`
+3.  `fsync init`
 
 Use this option when this is your first time syncing your fork with the parent repository.
 
@@ -54,7 +54,7 @@ Use this option when this is your first time syncing your fork with the parent r
 sh fsync init
 ```
 
-4. `fsync sync`
+4.  `fsync sync`
 
 Use this option each time aftwards.
 
@@ -64,7 +64,7 @@ sh fsync sync
 
 This option will _not_ push the new changes to GitHub... Use option 5 for that.
 
-5. `fsync merge`
+5.  `fsync merge`
 
 If you're feeling confident, this command will fetch from upstream, commit to the forked repository, switch to the branch you were working on, and merge staging into your branch. (use carefully)
 
@@ -73,4 +73,3 @@ sh fsync merge
 ```
 
 > The `sync` and `merge` commands will stash any uncommitted files, and then unstash them when it completes its task.
-
