@@ -9,7 +9,10 @@ describe('LocationService', () => {
     });
   });
 
-  it('should be created', inject([LocationService], (service: LocationService) => {
-    expect(service).toBeTruthy();
-  }));
+  it(
+    'should be created',
+    inject([LocationService], (service: LocationService) => {
+      expect(service).toBeTruthy();
+    })
+  );
 });

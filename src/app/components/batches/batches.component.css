@@ -1,4 +1,5 @@
-#check, #checkcell{
+#check,
+#checkcell {
   max-width: 25px;
 }
 .mat-expansion-panel {

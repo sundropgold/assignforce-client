@@ -1,19 +1,18 @@
 .fill-space {
   flex: 1 1 auto;
 }
-.container-curricula{
+.container-curricula {
   margin-top: 5%;
 }
-.toolbar-curricula{
-  background-color: #38464E;
+.toolbar-curricula {
+  background-color: #38464e;
   color: white;
   max-height: 50px;
 }
 /* #38464E #3D5360*/
-.toolbar-curricula-sub{
-  background-color:#3D5360;
+.toolbar-curricula-sub {
+  background-color: #3d5360;
   color: white;
-
 }
 
 .toolbar-mat-buttons {
@@ -28,17 +27,15 @@
   padding-top: 8px;
 }
 .icon-margin-fix {
-  margin:0px;
+  margin: 0px;
 }
 .button-orange {
-  background-color: #FB8C00;
+  background-color: #fb8c00;
   margin: 5px;
 }
-.item-detail{
+.item-detail {
   margin: 2%;
 }
-[hidden]{
+[hidden] {
   display: none;
 }
-
-
