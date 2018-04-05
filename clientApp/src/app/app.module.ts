@@ -44,6 +44,9 @@ import { EditSkillComponent } from './components/edit-skill/edit-skill.component
 import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
+import { BatchesTimelineComponent } from './components/batches-timeline/batches-timeline.component';
+import { BatchesTimelineFilterComponent } from './components/batches-timeline-filter/batches-timeline-filter.component';
+
 import { AppMaterialModule } from './material.module';
 
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -94,6 +97,8 @@ import { CurriculumSkillsComponent } from './components/curriculum-skills/curric
     SkillsComponent,
     FociComponent,
     CoreComponent,
+    BatchesTimelineComponent,
+    BatchesTimelineFilterComponent,
     AddFocusComponent,
     AddSkillComponent,
     EditFocusComponent,
@@ -101,8 +106,6 @@ import { CurriculumSkillsComponent } from './components/curriculum-skills/curric
     TrainersAddComponent,
     TrainerItemComponent,
     AuthenticatingComponent,
-    TrainerItemComponent,
-    SkillsComponent,
     CertificationsComponent,
     CurriculumSkillsComponent
   ],
