@@ -49,5 +49,6 @@
       <mat-checkbox id="hidebatchless" (change)="onFilterChange($event)" color="primary">Hide Batchless Trainers</mat-checkbox>
       <mat-checkbox id="hideinactive" (change)="onFilterChange($event)" color="primary">Hide Inactive Trainers</mat-checkbox>
     </div>
+    <mat-progress-bar mode="buffer" *ngIf="loading"></mat-progress-bar>
   </div>
 </form>

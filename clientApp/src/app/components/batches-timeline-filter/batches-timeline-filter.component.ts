@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 
 @Component({
   selector: 'app-batches-timeline-filter',
@@ -7,6 +7,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class BatchesTimelineFilterComponent implements OnInit {
   constructor() {}
+
+  @Input() loading = false;
 
   private startDate: Date;
   private endDate: Date;
