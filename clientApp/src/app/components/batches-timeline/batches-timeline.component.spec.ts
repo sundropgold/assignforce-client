@@ -8,11 +8,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BatchesTimelineFilterComponent } from '../batches-timeline-filter/batches-timeline-filter.component';
 import { BatchControllerService } from '../../services/api/batch-controller/batch-controller.service';
 import { HttpClient } from '@angular/common/http';
+import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
 
 describe('BatchesTimelineComponent', () => {
   let component: BatchesTimelineComponent;
   let fixture: ComponentFixture<BatchesTimelineComponent>;
   let batchControllerService: BatchControllerService;
+  // let trainerControllerService: TrainerControllerService;
 
   beforeEach(
     async(() => {
@@ -25,7 +27,7 @@ describe('BatchesTimelineComponent', () => {
           BrowserAnimationsModule
         ],
         declarations: [BatchesTimelineComponent, BatchesTimelineFilterComponent],
-        providers: [BatchControllerService]
+        providers: [TrainerControllerService, BatchControllerService]
       }).compileComponents();
     })
   );
@@ -34,6 +36,7 @@ describe('BatchesTimelineComponent', () => {
     fixture = TestBed.createComponent(BatchesTimelineComponent);
     component = fixture.componentInstance;
     batchControllerService = TestBed.get(BatchControllerService);
+    // trainerControllerService = TestBed.get(trainerControllerService);
     fixture.detectChanges();
   });
 

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ViewChildren }
 import { Batch } from '../../model/batch';
 import { BatchControllerService } from '../../services/api/batch-controller/batch-controller.service';
 import { MatSelectChange, MatCheckboxChange, MatOption } from '@angular/material';
+import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
 
 @Component({
   selector: 'app-batches-timeline',
@@ -9,11 +10,7 @@ import { MatSelectChange, MatCheckboxChange, MatOption } from '@angular/material
   styleUrls: ['./batches-timeline.component.css']
 })
 export class BatchesTimelineComponent implements OnInit, AfterViewInit {
-  // width and height will be updated when page loads
-  width = 1536;
-  height = 2067;
-  minWidth = 400;
-
+  // local copy of batches to show
   batches = [];
 
   // root element of the timeline. used for getting the relative mouse position
@@ -24,14 +21,22 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   @ViewChildren('tooltiptext') tooltipTexts;
 
   // default values for formatting
-  columnWidth = 50;
+  // dynamic values
+  width = 1536;
   swimlaneXOfs = 100;
+  // static values
+  height = 2067;
+  columnWidth = 50;
+  minWidth = 400;
   swimlaneYOfs = 20;
   timescaleXOfs = 80;
 
   // editable data
   startDate: Date;
   endDate: Date;
+  hideBatchlessTrainers = false;
+  hideConcludedBatches = false;
+  hideInactiveTrainers = false;
   trainersPerPage = 0;
 
   // zooming
@@ -60,7 +65,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   trainers = [];
   todayLine = { x1: 0, x2: 0, y1: 0, y2: 0 };
 
-  constructor(private batchController: BatchControllerService) {}
+  constructor(private batchController: BatchControllerService, private trainerController: TrainerControllerService) {}
 
   // initialize data
   ngOnInit() {
@@ -79,6 +84,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     console.log('batches timeline component init');
     setTimeout(() => {
       this.updateBatches();
+      this.updateTrainers();
     }, 0);
   }
 
@@ -116,7 +122,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         value = event.target.value;
       }
     }
-    // console.log('got event: '+id+': '+value);
+    console.log('got event: ' + id + ': ' + value);
     // handle the event with the specified id
     if (id === 'startDate') {
       this.startDate = new Date(value);
@@ -136,9 +142,18 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       return;
     } else if (id === 'building') {
       return;
-    } else if (id === 'hidefinished') {
+    } else if (id === 'hideconcluded') {
+      this.hideConcludedBatches = value;
+      this.updateBatches();
+      this.updateTrainers();
       return;
     } else if (id === 'hidebatchless') {
+      this.hideBatchlessTrainers = value;
+      this.updateTrainers();
+      return;
+    } else if (id === 'hideinactive') {
+      this.hideInactiveTrainers = value;
+      this.updateTrainers();
       return;
     }
     // unknown event!
@@ -149,9 +164,16 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   updateBatches() {
     console.log('updating batches...');
     this.batchController.getAllBatches().subscribe(result => {
-      this.batches = result;
-      this.updateTrainers();
-      this.getBreaks();
+      this.batches = [];
+      for (let i = 0; i < result.length; i++) {
+        const batch = result[i];
+        if (this.hideConcludedBatches) {
+          if (batch.endDate < Date.now()) {
+            continue;
+          }
+        }
+        this.batches.push(batch);
+      }
     });
   }
 
@@ -160,27 +182,45 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     // set width to be the same size as the trainernames div, as it scales with the page
     this.width = this.trainernamesElement.nativeElement.getBoundingClientRect().width;
     this.width = Math.max(this.minWidth, this.width);
-    // - event.target.offsetWidth * 2;
     // todo determine height ?
     this.swimlaneXOfs = (this.width - this.timescaleXOfs) / 2 - this.trainers.length / 2 * this.columnWidth;
     this.swimlaneXOfs = Math.max(this.timescaleXOfs + 10, this.swimlaneXOfs);
-    // this.height = event.target.innerHeight * 2;
+
+    // todo update column width
+
     // console.log(this.width + ' ' + this.height);
     this.updateTodayLine();
   }
 
   // makes the list of trainers
   updateTrainers() {
-    this.trainers = [];
-    // add all unique trainers found in the batches
-    for (let i = 0; i < this.batches.length; i++) {
-      const batch = this.batches[i];
-      const trainer = batch.trainer;
-      // '(' + batch.trainer.id + ') ' +
-      if (!this.trainers.includes(trainer)) {
+    console.log('updating trainers...');
+    this.trainerController.getAllTrainers().subscribe(result => {
+      this.trainers = [];
+      for (let i = 0; i < result.length; i++) {
+        const trainer = result[i];
+        // filter batchless trainers
+        if (this.hideBatchlessTrainers) {
+          let hasBatch = false;
+          for (const batch of this.batches) {
+            if (batch.trainer.trainerId === trainer.trainerId) {
+              hasBatch = true;
+              break;
+            }
+          }
+          if (!hasBatch) {
+            continue;
+          }
+        }
+        // filter inactive trainers
+        if (this.hideInactiveTrainers) {
+          if (!trainer.active) {
+            continue;
+          }
+        }
         this.trainers.push(trainer);
       }
-    }
+    });
   }
 
   // updates the line for today
@@ -439,8 +479,11 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       const color = this.getColorForcurriculum(batch.curriculum.currId);
 
       // get the column this batch will be in
-      const trainer_index = this.trainers.findIndex(t => t === batch.trainer);
-
+      const trainer_index = this.trainers.findIndex(t => t.trainerId === batch.trainer.trainerId);
+      if (trainer_index < 0) {
+        // this batch has no trainer, it may have been filtered
+        continue;
+      }
       // todo set width dynamically ?
       const w = 25;
 
@@ -519,18 +562,18 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
   // get durations between batches and their positions
   getBreaks() {
-    //batches seperated by trainer
+    // batches seperated by trainer
     const trainerBatches = [];
     for (let i = 0; i < this.trainers.length; i++) {
       const batchSet = [];
       for (let j = 0; j < this.batches.length; j++) {
-        if (this.batches[j].trainer === this.trainers[i]) {
+        if (this.batches[j].trainer.trainerId === this.trainers[i].trainerId) {
           batchSet.push(this.batches[j]);
         }
       }
       trainerBatches.push(batchSet);
     }
-    //reorder them by increasing start date
+    // reorder them by increasing start date
     for (let k = 0; k < trainerBatches.length; k++) {
       trainerBatches[k].sort(function(a, b) {
         return a.startDate - b.startDate;
@@ -559,15 +602,18 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   getTrainers() {
     const spacing = 2;
     const width = this.columnWidth - spacing;
+
     // if there are no trainers, show it
     if (this.trainers.length === 0) {
-      return [{ name: 'No batches with trainers', left: spacing, width: this.minWidth }];
+      return [{ name: 'No trainers', left: spacing, width: this.minWidth }];
     }
+
     // add each trainer and position to array
     const trainerposs = [];
     for (let i = 0; i < this.trainers.length; i++) {
-      // get trainer name
       const trainer = this.trainers[i];
+
+      // get trainer name
       const name = trainer.firstName + ' ' + trainer.lastName;
       // get left offset of this trainer
       let left = spacing;
@@ -576,6 +622,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       }
       trainerposs.push({ name: name, left: left, width: width });
     }
+
     return trainerposs;
   }
 

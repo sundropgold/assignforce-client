@@ -169,5 +169,82 @@ export const trainers: Trainer[] = [
     skills: [],
     certifications: [],
     active: false
+  },
+  {
+    trainerId: 11,
+    firstName: 'Nicholas',
+    lastName: 'Jurczak',
+    resume: null,
+    unavailabilities: [
+      {
+        startDate: 1507521600000,
+        endDate: 1513314000000,
+        id: 473
+      },
+      {
+        startDate: 1519621200000,
+        endDate: 1525406400000,
+        id: 553
+      },
+      {
+        startDate: 1499659200000,
+        endDate: 1505448000000,
+        id: 257
+      }
+    ],
+    skills: [],
+    certifications: [],
+    active: true
+  },
+  {
+    trainerId: 7,
+    firstName: 'Yuvi',
+    lastName: 'Damodaran',
+    resume: null,
+    unavailabilities: [
+      {
+        startDate: 1522641600000,
+        endDate: 1528430400000,
+        id: 615
+      },
+      {
+        startDate: 1499054400000,
+        endDate: 1504843200000,
+        id: 272
+      },
+      {
+        startDate: 1494216000000,
+        endDate: 1501214400000,
+        id: 32
+      },
+      {
+        startDate: 1493006400000,
+        endDate: 1495166400000,
+        id: 67
+      },
+      {
+        startDate: 1512968400000,
+        endDate: 1519362000000,
+        id: 492
+      },
+      {
+        startDate: 1505102400000,
+        endDate: 1510894800000,
+        id: 527
+      },
+      {
+        startDate: 1494216000000,
+        endDate: 1500004800000,
+        id: 529
+      },
+      {
+        startDate: 1493006400000,
+        endDate: 1493956800000,
+        id: 531
+      }
+    ],
+    skills: [],
+    certifications: [],
+    active: true
   }
 ];

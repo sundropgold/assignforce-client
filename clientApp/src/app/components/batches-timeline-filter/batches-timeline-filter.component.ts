@@ -45,19 +45,19 @@ export class BatchesTimelineFilterComponent implements OnInit {
   }
 
   loadCurriculumData() {
-    //todo httprequest
+    //todo CurriculumControllerService getall
   }
 
   loadFocusData() {
-    //todo httprequest
+    //todo
   }
 
   loadLocationData() {
-    //todo httprequest
+    //todo
   }
 
   loadBuildingData() {
-    //todo httprequest
+    //todo
   }
 
   onFilterChange(evt: Event) {

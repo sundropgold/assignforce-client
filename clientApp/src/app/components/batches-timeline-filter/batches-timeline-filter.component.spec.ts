@@ -7,6 +7,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BatchControllerService } from '../../services/api/batch-controller/batch-controller.service';
 import { batches } from '../../mockdb/mockdata/batch.data';
+import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
 
 describe('BatchesTimelineFilterComponent', () => {
   let component: BatchesTimelineFilterComponent;
@@ -23,7 +24,7 @@ describe('BatchesTimelineFilterComponent', () => {
           BrowserAnimationsModule
         ],
         declarations: [BatchesTimelineFilterComponent],
-        providers: [BatchControllerService]
+        providers: [TrainerControllerService, BatchControllerService]
       }).compileComponents();
     })
   );
