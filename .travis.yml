@@ -30,4 +30,4 @@ deploy:
   space: development
   on:
     repo: revaturelabs/assignforce-client
-    branch: peter
+    branch: develop
