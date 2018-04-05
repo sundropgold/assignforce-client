@@ -113,7 +113,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
 
   computeNumOfWeeksBetween(startDate: number, endDate: number): number {
     const numberOfDays = Math.abs(<any>endDate - <any>startDate) / (1000 * 60 * 60 * 24);
-    const numberOfWeeks = Math.round(numberOfDays / 7);
+    const numberOfWeeks = Math.floor(numberOfDays / 7);
     return numberOfWeeks;
   }
 
@@ -122,7 +122,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   getCurrentWeekOfBatch(startDate: number): number {
     const currentDate = new Date(Date.now());
     const numberOfDays = (<any>currentDate - <any>startDate) / (1000 * 60 * 60 * 24);
-    const weekNumber = Math.round(numberOfDays / 7);
+    const weekNumber = Math.floor(numberOfDays / 7);
     return weekNumber;
   }
 
