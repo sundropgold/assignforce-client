@@ -14,7 +14,7 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   //--------------------------------------------------Temporary---------------------------------------------------
   skillsList = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
   curriculums = [
-    { value: 'java-0', viewValue: 'JAVA' },
+    { value: 'Java', viewValue: 'JAVA' },
     { value: 'c++-1', viewValue: 'C++' },
     { value: 'angular-2', viewValue: 'ANGULAR 4' }
   ];
@@ -168,7 +168,8 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   computeNumOfWeeksBetween(startDate: number, endDate: number): number {
     if (startDate && endDate) {
       const numberOfDays = Math.abs(<any>startDate - <any>endDate) / (1000 * 60 * 60 * 24);
-      const numberOfWeeks = Math.round(numberOfDays / 7);
+      const numberOfWeeks = Math.floor(numberOfDays / 7);
+      // const numberOfWeeks = numberOfDays/7;
 
       return numberOfWeeks;
     }
