@@ -243,10 +243,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   // updates the line for today
   updateTodayLine() {
     // calculate position of today_line
-    const y =
-      (new Date(Date.now()).valueOf() - this.startDate.valueOf()) /
-      (this.endDate.valueOf() - this.startDate.valueOf()) *
-      this.height;
+    const y = this.dateToYPos(Date.now());
     this.todayLine = { x1: this.timescaleXOfs, x2: this.width, y1: y, y2: y };
   }
 
@@ -506,9 +503,9 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
       // get the top left position of the rectangle
       const x = this.swimlaneXOfs + trainer_index * this.columnWidth + (this.columnWidth - w) * 0.5;
-      const y = (batch.startDate - this.startDate.valueOf()) / full_duration * this.height;
+      const y = this.dateToYPos(batch.startDate);
       // calculate height from the top and bottom of the rectangle
-      const endy = (batch.endDate - this.startDate.valueOf()) / full_duration * this.height;
+      const endy = this.dateToYPos(batch.endDate);
       const h = endy - y;
 
       // change label based on height of rectangle
@@ -604,8 +601,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
           const gap = trainerBatches[l][m + 1].startDate - trainerBatches[l][m].endDate;
           const duration = Math.floor(gap / (1000 * 60 * 60 * 24 * 7));// ms to weeks
           const midDate = trainerBatches[l][m].endDate + gap / 2;
-          const y =
-            (midDate - this.startDate.valueOf()) / (this.endDate.valueOf() - this.startDate.valueOf()) * this.height;
+          const y = this.dateToYPos(midDate);
           midPoints.push({ duration: duration, xPos: xpos, midDatePos: y });
         }
       }
@@ -649,9 +645,8 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     const start_year = this.startDate.getFullYear();
 
     // get distance between months (px) to determine which scale to use
-    const ys0 = (new Date(start_year, start_month).valueOf() - this.startDate.valueOf()) / full_duration * this.height;
-    const ys1 =
-      (new Date(start_year, start_month + 1).valueOf() - this.startDate.valueOf()) / full_duration * this.height;
+    const ys0 = this.dateToYPos(new Date(start_year, start_month).valueOf());
+    const ys1 = this.dateToYPos(new Date(start_year, start_month + 1).valueOf());
     const dist_between_months = ys1 - ys0;
     // console.log(dist_between_months);
 
@@ -799,7 +794,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         name = '' + date.getFullYear();
       }
       // calculate the position of the text
-      const y = this.swimlaneYOfs + (date.valueOf() - this.startDate.valueOf()) / full_duration * this.height;
+      const y = this.swimlaneYOfs + this.dateToYPos(date.valueOf());
       if (y < this.swimlaneYOfs) {
         continue;
       } else if (y > this.height - this.swimlaneYOfs) {
@@ -811,13 +806,24 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     return timescale;
   }
 
+  // returns the pixel value on the vertical axis this date would appear on the timeline
+  dateToYPos(dateValue: number) {
+    const ypos = (dateValue - this.startDate.valueOf()) / (this.endDate.valueOf() - this.startDate.valueOf()) * this.height;
+    return ypos;
+  }
+
+  // returns the date value from the vertical axis position on the timeline 
+  yPosToDate(ypos: number) {
+    const dateValue = ypos * (this.endDate.valueOf() - this.startDate.valueOf()) / this.height + this.startDate.valueOf();
+    return dateValue;
+  }
+
   startZoom(mouseposy) {
     // calculate values needed for zooming from the mousepos
     this.zoomingFrom = mouseposy;
     this.zoomingLine = { x1: this.timescaleXOfs, x2: this.width, y1: mouseposy, y2: mouseposy };
     // position (px) to date
-    this.zoomingFromDate =
-      mouseposy / this.height * (this.endDate.valueOf() - this.startDate.valueOf()) + this.startDate.valueOf();
+    this.zoomingFromDate = this.yPosToDate(mouseposy);
     // get duration before and after zoom line
     // console.log(new Date(this.zoomingFromDate));
     this.preZoomBeforeDuration = this.zoomingFromDate - this.startDate.valueOf();
