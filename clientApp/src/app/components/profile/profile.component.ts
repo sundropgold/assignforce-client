@@ -48,6 +48,11 @@ export class ProfileComponent implements OnInit {
   constructor(private trainerService: TrainerService, private s3Service: S3CredentialService) {}
 
   ngOnInit() {
+    // this.trainerService.getById(+this.route.snapshot.paramMap.get('id')).subscribe(
+    //  trainerData => {
+    //    this.trainer = trainerData;
+    //   }
+    // );
     //this.populateSkillList();
     // data gathering
     // id is hard coded for testing. unless you click on a trainer in the trainer page.

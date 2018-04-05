@@ -47,7 +47,8 @@ const appRoutes: Routes = [
   {
     path: 'settings',
     component: SettingsComponent
-  }
+  },
+  { path: 'profile/:id', component: ProfileComponent }
 ];
 
 @NgModule({

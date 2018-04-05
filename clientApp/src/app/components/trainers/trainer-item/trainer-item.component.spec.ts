@@ -5,6 +5,7 @@ import { TrainersComponent } from '../trainers.component';
 import { Skill } from '../../../model/Skill';
 import { AppMaterialModule } from '../../../material.module';
 import { Trainer } from '../../../model/Trainer';
+import { Router } from '@angular/router';
 
 describe('TrainerItemComponent', () => {
   let component: TrainerItemComponent;
@@ -14,7 +15,8 @@ describe('TrainerItemComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [AppMaterialModule],
-        declarations: [TrainerItemComponent, TrainersComponent]
+        declarations: [TrainerItemComponent, TrainersComponent],
+        providers: [{ provide: Router }]
       }).compileComponents();
     })
   );
