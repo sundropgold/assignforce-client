@@ -16,6 +16,14 @@ You can also run the following command to achieve the same thing.
 npm run dev
 ```
 
+## Dev Server using Production Environment
+
+Run the following command
+
+```bash
+npm run dev:prod
+```
+
 ## Allow Insecure in Chrome
 
 In order to get chrome to play nicely with SSL, navigate to `chrome://flags/#allow-insecure-localhost` in the address bar. Then, set `Allow invalid certificates for resources loaded from localhost` to `enabled`.
