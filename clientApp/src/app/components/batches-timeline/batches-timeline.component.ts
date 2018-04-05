@@ -1,9 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ViewChildren } from '@angular/core';
-import { Batch } from '../../model/batch';
+import { Batch } from '../../model/Batch';
 import { BatchControllerService } from '../../services/api/batch-controller/batch-controller.service';
 import { MatSelectChange, MatCheckboxChange, MatOption } from '@angular/material';
 import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
 import { curriculum } from '../../mockdb/mockdata/curriculum.data';
+import { BatchLocation } from '../../model/BatchLocation';
+import { Trainer } from '../../model/Trainer';
+import { Curriculum } from '../../model/Curriculum';
 
 @Component({
   selector: 'app-batches-timeline',
@@ -42,6 +45,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   trainersPerPage = 0;
 
   // zooming
+  zoomingEnabled = true;
   zooming = false;
   zoomingFrom: number;
   zoomingFromDate: number;
@@ -49,6 +53,37 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   preZoomBeforeDuration: number;
   preZoomAfterDuration: number;
   zoomScale = 0.01; // px to zoom scale
+
+  // this.keycodes
+  keycodes = {
+    up: 38,
+    down: 40,
+    left: 37,
+    right: 39,
+    space: 32,
+    primary: 66,
+    secondary: 65,
+    z: 90,
+    enter: 13,
+    tab: 9,
+    plus: 187,
+    minus: 189,
+    esc: 27
+  };
+  keyBoardScrollEnabled = true;
+  keyScrollSpeed = 0.01;
+
+  // swimmer
+  swimActive = false;
+  swimPos = { x: 0, y: 0, color: '#000000', r: 0, points: { x: 0, y: 0 }, highpoints: { x: 0, y: 0 } };
+  swimGauge = { value: 0, y1: 0, y2: 0, bgy1: 0, bgy2: 0, x1: 0, x2: 0, bgx1: 0, bgx2: 0, w: 0 };
+  swimDots = [];
+  swimLane = 0;
+  swimStartProgress = 0;
+  swimDown = false;
+  swimPoints = 0;
+  swimHigh = 0;
+  swimPaused = false;
 
   // tooltip
   tooltipActive = false;
@@ -67,7 +102,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   trainers = [];
   todayLine = { x1: 0, x2: 0, y1: 0, y2: 0 };
 
-  constructor(private batchController: BatchControllerService, private trainerController: TrainerControllerService) {}
+  constructor(private batchController: BatchControllerService, private trainerController: TrainerControllerService) { }
 
   // initialize data
   ngOnInit() {
@@ -136,7 +171,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       hideConcluded: 'hideconcluded',
       hideBatchless: 'hidebatchless',
       hideInactiveTrainers: 'hideinactive'
-    }
+    };
     if (id === filterIds.startDate) {
       this.startDate = new Date(value);
       this.updateTodayLine();
@@ -589,7 +624,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     }
     // reorder them by increasing start date
     for (let k = 0; k < trainerBatches.length; k++) {
-      trainerBatches[k].sort(function(a, b) {
+      trainerBatches[k].sort(function (a, b) {
         return a.startDate - b.startDate;
       });
     }
@@ -599,7 +634,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       if (trainerBatches[l].length > 1) {
         for (let m = 0; m < trainerBatches[l].length - 1; m++) {
           const gap = trainerBatches[l][m + 1].startDate - trainerBatches[l][m].endDate;
-          const duration = Math.floor(gap / (1000 * 60 * 60 * 24 * 7));// ms to weeks
+          const duration = Math.floor(gap / (1000 * 60 * 60 * 24 * 7)); // ms to weeks
           const midDate = trainerBatches[l][m].endDate + gap / 2;
           const y = this.dateToYPos(midDate);
           midPoints.push({ duration: duration, xPos: xpos, midDatePos: y });
@@ -635,6 +670,250 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     }
 
     return trainerposs;
+  }
+
+  // start alternate control mode
+  startSwimMode() {
+    // setup variables that are reset at start of swim mode
+    this.swimActive = true;
+    this.zoomingEnabled = false;
+    this.batches = [];
+    this.todayLine.x1 = this.todayLine.x2 = -10;
+    this.swimPoints = 0;
+    this.swimDown = false;
+    this.swimDots = [];
+
+    // setup posiitons
+    const defDur = 1000 * 60 * 60 * 24 * 365 * 4; // 4 yrs
+    this.endDate = new Date(this.startDate.valueOf() + defDur);
+    const swimposy = this.dateToYPos(this.startDate.valueOf() + defDur / 8);
+    const pointsRect = { x: this.width, y: swimposy };
+    const highpointsRect = { x: this.width, y: swimposy + 50 };
+    const leftlanex = this.swimlaneXOfs + 0 * this.columnWidth + this.columnWidth * 0.5;
+    const swimColor = '#122555';
+    this.swimPos = {
+      x: leftlanex,
+      y: swimposy,
+      color: swimColor + 'ff',
+      r: this.columnWidth / 4,
+      points: pointsRect,
+      highpoints: highpointsRect
+    };
+    
+    // setup gauge position
+    const gaugex = leftlanex - this.columnWidth;
+    const gaugeh = this.columnWidth * 2;
+    const gaugey = swimposy - gaugeh / 2;
+    const gaugey2 = swimposy + gaugeh / 2;
+    const gaugew = 8;
+    this.swimGauge = {
+      value: 0,
+      y1: gaugey,
+      y2: gaugey2,
+      bgy1: gaugey,
+      bgy2: gaugey2,
+      x1: gaugex,
+      x2: gaugex,
+      bgx1: gaugex,
+      bgx2: gaugex,
+      w: gaugew
+    };
+
+    // setup local variables for loop
+    const gaugeMax = 1;
+    const gaugeDepleteRate = 0.02;
+    const gaugeFillRate = 0.05;
+
+    const startMoveSpeed = defDur / 8 / 30;
+    const maxMoveSpeed = defDur / 30;
+    const maxMoveMaxScore = 10000;
+    let moveSpeed = startMoveSpeed;
+
+    const addBuffer = defDur / 4;
+    let addBatchTimer = 0;
+    const addBatchRate = 1000;
+    const minAddBatchRate = 80;
+    const minBatchAddMaxScore = 7500;
+    let addDotTimer = 0;
+    const addDotRate = 1000;
+
+    let gotHit = false;
+    let restartPauseTimer = 3000;
+    const intervalRate = 1000 / 30; // 30 fps
+    let time = 0;
+    const loop = setInterval(() => {
+      // stop
+      if (!this.swimActive) {
+        clearInterval(loop);
+        return;
+      }
+
+      // wait until not paused
+      if (this.swimPaused) {
+        return;
+      }
+
+      // check collision
+      if (gotHit) {
+        if (restartPauseTimer > 0) {
+          restartPauseTimer -= intervalRate;
+        } else {
+          console.log('completed with ' + this.swimPoints + '!');
+          if (this.swimPoints > this.swimHigh) {
+            console.log('new highscore!');
+            this.swimHigh = this.swimPoints;
+          }
+          console.log('restarting...');
+          clearInterval(loop);
+          this.startSwimMode();
+        }
+        return;
+      }
+      time += intervalRate;
+
+      // update lane 
+      this.swimPos.x = leftlanex + this.columnWidth * this.swimLane;
+
+      // update gauge
+      if (this.swimDown) {
+        if (this.swimGauge.value > 0) {
+          this.swimGauge.value -= gaugeDepleteRate;
+        } else {
+          this.swimGauge.value = 0;
+          this.swimDown = false;
+        }
+        // transparent
+        this.swimPos.color = swimColor + '99';
+      }
+      if (!this.swimDown) {
+        if (this.swimGauge.value < gaugeMax) {
+          this.swimGauge.value += gaugeFillRate;
+        } else {
+          this.swimGauge.value = gaugeMax;
+        }
+        // solid
+        this.swimPos.color = swimColor + 'ff';
+      }
+      this.swimGauge.y1 = gaugey2 - gaugeh * (gaugeMax - (1 - this.swimGauge.value));
+
+      // check swim pos
+      if (!this.swimDown) {
+        for (let i = 0; i < this.batches.length; i++) {
+          const batch = this.batches[i];
+          // remove old ones
+          if (batch.endDate < this.startDate.valueOf() - 1000 - moveSpeed) {
+            // console.log('removing batch ' + i + ' '+ batch.endDate + ' ' + this.startDate.valueOf());
+            this.batches.splice(i, 1);
+            i--;
+            continue;
+          }
+          // check overlap
+          const batchlane = this.trainers.findIndex(t => t.trainerId === batch.trainer.trainerId);
+          if (this.swimLane === batchlane) {
+            const py = this.yPosToDate(this.swimPos.y);
+            if (py > batch.startDate.valueOf() && py < batch.endDate.valueOf()) {
+              console.log('hit!');
+              gotHit = true;
+              return;
+            }
+          }
+        }
+      }
+
+      // add random batches
+      addBatchTimer -= intervalRate;
+      if (addBatchTimer <= 0) {
+        this.addRandomBatch(this.endDate.valueOf() + addBuffer);
+        addBatchTimer = this.linearInterpolation(
+          addBatchRate,
+          minAddBatchRate,
+          Math.min(1, this.swimPoints / minBatchAddMaxScore)
+        );
+      }
+
+      // add random dots
+      addDotTimer -= intervalRate;
+      if (addDotTimer <= 0) {
+        const randX = leftlanex + this.columnWidth * Math.floor(Math.random() * this.trainers.length);
+        const randy = Math.random() * (1000 * 60 * 60 * 24 * 7 * 5); // ms to 5 weeks
+        const y = this.dateToYPos(this.endDate.valueOf() + addBuffer - randy);
+        // console.log('making dot ' + this.swimDots.length + ' at ' + randX + ' ' + y);
+        this.swimDots.push({ x: randX, y: y, r: this.columnWidth / 10, color: '#eedd20ee' });
+        addDotTimer = addDotRate;
+      }
+      for (let i = 0; i < this.swimDots.length; i++) {
+        // check collision
+        if (this.swimPos.x > this.swimDots[i].x - this.swimDots[i].r && this.swimPos.x < this.swimDots[i].x + this.swimDots[i].r) {
+          if (
+            this.swimPos.y > this.swimDots[i].y - this.swimDots[i].r &&
+            this.swimPos.y < this.swimDots[i].y + this.swimDots[i].r) {
+            this.swimPoints += 100;
+            console.log('got a dot! +100');
+            this.swimDots.splice(i, 1);
+            i--;
+            continue;
+          }
+        }
+        this.swimDots[i].y = this.dateToYPos(this.yPosToDate(this.swimDots[i].y) - moveSpeed);
+        if (this.swimDots[i].y <= -100) {
+          // console.log('removing dot '+i);
+          this.swimDots.splice(i, 1);
+          i--;
+          continue;
+        }
+      }
+
+      // update pos
+      const preStartDatePos = this.dateToYPos(this.startDate.valueOf());
+      this.startDate = new Date(this.startDate.valueOf() + moveSpeed);
+      this.endDate = new Date(this.endDate.valueOf() + moveSpeed);
+
+      // increase speed
+      moveSpeed = this.linearInterpolation(startMoveSpeed, maxMoveSpeed, Math.min(1, this.swimPoints / maxMoveMaxScore));
+
+      this.swimPoints += 1;
+      // console.log(this.swimPoints);
+    }, intervalRate);
+  }
+
+  // interpolates over from-to by d
+  linearInterpolation(from, to, d) {
+    return d * (to - from) + from;
+  }
+
+  // reset to normal mode
+  finishSwimMode() {
+    this.swimActive = false;
+    this.swimStartProgress = 0;
+    this.zoomingEnabled = true;
+    this.updateBatches();
+    this.updateTodayLine();
+  }
+
+  // adds a random batch that starts at the specified date
+  addRandomBatch(startdate: number) {
+    const baseDur = 1000 * 60 * 60 * 24 * 7 * 2; // 2 weeks
+    const maxDur = 1000 * 60 * 60 * 24 * 7 * 16; // 16 weeks
+    const ranEndDate = startdate + Math.random() * maxDur + baseDur;
+    const randRow = Math.floor(Math.random() * this.trainers.length);
+    const trId = this.trainers[randRow].trainerId;
+    // console.log('adding random batch at col:' + randRow + ' enddate: ' + ranEndDate);
+    const currId = Math.floor(Math.random() * 4);
+    this.batches.push(
+      new Batch(
+        -1,
+        'randomly generated',
+        startdate,
+        ranEndDate,
+        new Curriculum(currId, null, true, true, null),
+        null,
+        new Trainer(trId, null, null, null, null, true, null, null),
+        null,
+        null,
+        null,
+        new BatchLocation(-1, -1, null, -1, null, -1, null)
+      )
+    );
   }
 
   // returns the list of months to display and their position
@@ -808,13 +1087,15 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
   // returns the pixel value on the vertical axis this date would appear on the timeline
   dateToYPos(dateValue: number) {
-    const ypos = (dateValue - this.startDate.valueOf()) / (this.endDate.valueOf() - this.startDate.valueOf()) * this.height;
+    const ypos =
+      (dateValue - this.startDate.valueOf()) / (this.endDate.valueOf() - this.startDate.valueOf()) * this.height;
     return ypos;
   }
 
-  // returns the date value from the vertical axis position on the timeline 
+  // returns the date value from the vertical axis position on the timeline
   yPosToDate(ypos: number) {
-    const dateValue = ypos * (this.endDate.valueOf() - this.startDate.valueOf()) / this.height + this.startDate.valueOf();
+    const dateValue =
+      ypos * (this.endDate.valueOf() - this.startDate.valueOf()) / this.height + this.startDate.valueOf();
     return dateValue;
   }
 
@@ -862,8 +1143,10 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
   // start zoom at mouse pos on mousedown
   bgmousedown(event) {
-    const mousey = event.clientY - this.timelineRootElement.nativeElement.getBoundingClientRect().top;
-    this.startZoom(mousey);
+    if (this.zoomingEnabled) {
+      const mousey = event.clientY - this.timelineRootElement.nativeElement.getBoundingClientRect().top;
+      this.startZoom(mousey);
+    }
   }
   // finish zoom on mouseup
   bgmouseup(event) {
@@ -886,6 +1169,141 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       this.zoomBy(zoomFactor);
     }
     this.updateTooltipVisibility();
+    if (this.width !== this.trainernamesElement.nativeElement.getBoundingClientRect().width) {
+      this.updateSize();
+    }
+  }
+
+  keydown(event: KeyboardEvent) {
+    // console.log(event.keyCode + ' pressed');
+
+    if (event.keyCode === this.keycodes.esc) {
+      // escape pressed
+    }
+    if (this.swimActive) {
+      if (
+        event.keyCode === this.keycodes.tab ||
+        event.keyCode === this.keycodes.enter ||
+        event.keyCode === this.keycodes.esc
+      ) {
+        this.finishSwimMode();
+      }
+      if (
+        event.keyCode === this.keycodes.primary ||
+        event.keyCode === this.keycodes.secondary ||
+        event.keyCode === this.keycodes.z ||
+        event.keyCode === this.keycodes.down ||
+        event.keyCode === this.keycodes.up
+      ) {
+        if (this.swimGauge.value >= 0.6) {
+          this.swimDown = true;
+        }
+      }
+      if (event.keyCode === this.keycodes.left) {
+        this.swimLane = Math.max(0, this.swimLane - 1);
+      }
+      if (event.keyCode === this.keycodes.right) {
+        this.swimLane = Math.min(this.trainers.length - 1, this.swimLane + 1);
+      }
+      if (event.keyCode === this.keycodes.space) {
+        this.swimPaused = !this.swimPaused;
+        event.preventDefault();
+      }
+    } else {
+      switch (event.keyCode) {
+        case this.keycodes.plus:
+          this.startZoom((this.dateToYPos(this.endDate.valueOf()) - this.dateToYPos(this.startDate.valueOf()))/2);
+          this.zoomBy(0.75);
+          this.finishZoom();
+          break;
+        case this.keycodes.minus:
+          this.startZoom((this.dateToYPos(this.endDate.valueOf()) - this.dateToYPos(this.startDate.valueOf()))/2);
+          this.zoomBy(1.5);
+          this.finishZoom();
+          break;
+        case this.keycodes.up:
+          if (event.shiftKey && this.keyBoardScrollEnabled) {
+            // scroll up
+            event.preventDefault();
+            const dur = this.endDate.valueOf() - this.startDate.valueOf();
+            const shiftBy = dur * this.keyScrollSpeed;
+            this.startDate = new Date(this.startDate.valueOf() + shiftBy);
+            this.endDate = new Date(this.endDate.valueOf() + shiftBy);
+            this.updateTodayLine();
+          }
+          if (this.swimStartProgress === 0 || this.swimStartProgress === 1) {
+            this.swimStartProgress += 1;
+          } else {
+            this.swimStartProgress = 0;
+          }
+          break;
+        case this.keycodes.down:
+          if (event.shiftKey && this.keyBoardScrollEnabled) {
+            // scroll down
+            event.preventDefault();
+            const dur = this.endDate.valueOf() - this.startDate.valueOf();
+            const shiftBy = -dur * this.keyScrollSpeed;
+            this.startDate = new Date(this.startDate.valueOf() + shiftBy);
+            this.endDate = new Date(this.endDate.valueOf() + shiftBy);
+            this.updateTodayLine();
+          }
+          if (this.swimStartProgress === 2 || this.swimStartProgress === 3) {
+            this.swimStartProgress += 1;
+          } else {
+            this.swimStartProgress = 0;
+          }
+          break;
+        case this.keycodes.left:
+          if (this.swimStartProgress === 4 || this.swimStartProgress === 6) {
+            this.swimStartProgress += 1;
+          } else {
+            this.swimStartProgress = 0;
+          }
+          break;
+        case this.keycodes.right:
+          if (this.swimStartProgress === 5 || this.swimStartProgress === 7) {
+            this.swimStartProgress += 1;
+          } else {
+            this.swimStartProgress = 0;
+          }
+          break;
+        case this.keycodes.primary:
+          if (this.swimStartProgress === 8) {
+            this.swimStartProgress += 1;
+          } else {
+            this.swimStartProgress = 0;
+          }
+          break;
+        case this.keycodes.secondary:
+          if (this.swimStartProgress === 9) {
+            this.swimStartProgress += 1;
+          } else {
+            this.swimStartProgress = 0;
+          }
+          break;
+        case this.keycodes.enter:
+          if (this.swimStartProgress === 10) {
+            event.preventDefault();
+            this.swimStartProgress += 1;
+            this.startSwimMode();
+          } else {
+            this.swimStartProgress = 0;
+          }
+          break;
+      }
+    }
+  }
+
+  keyup(event: KeyboardEvent) {
+    if (this.swimActive) {
+      if (
+        event.keyCode === this.keycodes.primary ||
+        event.keyCode === this.keycodes.secondary ||
+        event.keyCode === this.keycodes.z
+      ) {
+        this.swimDown = false;
+      }
+    }
   }
 
   // show tooltip at mouse on mouse move on batch
