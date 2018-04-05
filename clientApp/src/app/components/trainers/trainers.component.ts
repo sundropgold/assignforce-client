@@ -4,7 +4,6 @@ import { Skill } from '../../model/Skill';
 import { TrainersAddComponent } from './trainers-add/trainers-add.component';
 import { TrainerItemComponent } from './trainer-item/trainer-item.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { TrainerService } from '../../services/trainer/trainer.service';
 @Component({
   selector: 'app-trainers',
   templateUrl: './trainers.component.html',
@@ -19,7 +18,7 @@ export class TrainersComponent implements OnInit {
 
   isManager = true;
 
-  constructor(public dialog: MatDialog, private trainerService: TrainerService) {}
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit() {
     this.isManager = true;

@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppMaterialModule } from '../../material.module';
 import { Skill } from '../../model/Skill';
-import { SkillService } from '../../services/skill/skill.service';
 import { Trainer } from '../../model/Trainer';
-import { TrainerService } from '../../services/trainer/trainer.service';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -33,16 +31,14 @@ export class SkillsComponent implements OnInit {
   };
   skill: Skill;
 
-  constructor(private skillService: SkillService, private trainerService: TrainerService) {}
+  constructor() {}
 
   ngOnInit() {
     this.populateSkillList();
   }
 
   // called to save the current state of the trainers skills
-  saveTSkills() {
-    this.trainerService.update(this.trainer).subscribe(() => {});
-  }
+  saveTSkills() {}
 
   // add a skill to the current trainer
   addSkill(skill) {
@@ -79,22 +75,22 @@ export class SkillsComponent implements OnInit {
 
   // grab all the skills and create a skill list
   getAllSkills() {
-    this.skillService.getAll().subscribe(response => {
-      this.skills = response;
-      let status = true;
-      for (let i = 0; i < this.skills.length; i++) {
-        for (let j = 0; j < this.trainer.skills.length; j++) {
-          if (this.skills[j].skillId === this.skills[i].skillId) {
-            status = false;
-            break;
-          }
-        }
-        if (status) {
-          this.skillsList.push(this.skills[i].name);
-        }
-        status = true;
-      }
-    });
+    // this.skillService.getAll().subscribe(response => {
+    //   this.skills = response;
+    //   let status = true;
+    //   for (let i = 0; i < this.skills.length; i++) {
+    //     for (let j = 0; j < this.trainer.skills.length; j++) {
+    //       if (this.skills[j].skillId === this.skills[i].skillId) {
+    //         status = false;
+    //         break;
+    //       }
+    //     }
+    //     if (status) {
+    //       this.skillsList.push(this.skills[i].name);
+    //     }
+    //     status = true;
+    //   }
+    // });
   }
   populateSkillList() {
     for (let i = 0; i < this.skills.length; i++) {
