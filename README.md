@@ -18,7 +18,9 @@ npm run dev
 
 ## Allow Insecure in Chrome
 
-In order to get chrome to play nicely with SSL, navigate to `[chrome://flags/#allow-insecure-localhost](chrome://flags/#allow-insecure-localhost)` and set `Allow invalid certificates for resources loaded from localhost` to `enabled`. You will need to relaunch Chrome after setting this.
+In order to get chrome to play nicely with SSL, navigate to `chrome://flags/#allow-insecure-localhost` in the address bar. Then, set `Allow invalid certificates for resources loaded from localhost` to `enabled`.
+
+You will need to relaunch Chrome changing this setting.
 
 ## Syncing of Upstream forks
 
