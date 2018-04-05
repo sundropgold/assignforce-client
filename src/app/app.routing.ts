@@ -52,7 +52,8 @@ const appRoutes: Routes = [
   {
     path: 'callback',
     component: AuthenticatingComponent
-  }
+  },
+  { path: 'profile/:id', component: ProfileComponent }
 ];
 
 @NgModule({

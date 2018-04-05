@@ -57,7 +57,8 @@ export class TrainersComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         //  this.addTrainer(result);
-        this.trainers.push(result);
+        // this.trainers.push(result);
+        this.trainerService.create(result);
       }
     });
   }
