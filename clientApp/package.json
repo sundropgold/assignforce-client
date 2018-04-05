@@ -5,6 +5,7 @@
   "scripts": {
     "ng": "ng",
     "dev": "ng serve -o --ssl",
+    "dev:prod": "ng serve -o --ssl --environment=prod",
     "start": "node server.js",
     "build": "ng build",
     "test": "ng test --browsers=ChromeHeadless",
