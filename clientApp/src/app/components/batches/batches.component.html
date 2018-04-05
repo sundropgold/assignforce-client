@@ -3,28 +3,26 @@
   <!--------Create New Batch ------->
   <!-- Only Appears if they are admin ------>
   <mat-accordion>
-    <mat-expansion-panel>
+    <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
           {{firstTabHeader}}
         </mat-panel-title>
-        <mat-icon svgIcon="thumbs-up"></mat-icon>
-        <mat-icon svgIcon="thumbs-up"></mat-icon>
       </mat-expansion-panel-header>
 
-      <form class="example-form">
-        <div class="example-container">
-          <div>
-            <mat-form-field>
-            <mat-select placeholder="Core Curriculum" >
-              <mat-option *ngFor="let Curriculum of Curriculums" [value]="Curriculum.value" >
-                {{ Curriculum.viewValue }}
+      <!-- Batch Form -->
+      <form [formGroup]="batchForm" (ngSubmit)="onSubmit(batchForm.value)">
+        <div>
+          <mat-form-field>
+            <mat-select formControlName="curriculum" placeholder="Core Curriculum" >
+              <mat-option *ngFor="let curriculum of curriculums" [value]="curriculum.value" >
+                {{ curriculum.viewValue }}
               </mat-option>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-select placeholder="Focus">
+            <mat-select formControlName="focus" placeholder="Focus">
               <mat-option *ngFor="let focus of focuses" [value]="focus.value">
                 {{ focus.viewValue }}
               </mat-option>
@@ -32,37 +30,37 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-select placeholder="Skills" [formControl]="skills" multiple>
+            <mat-select formControlName="skills" placeholder="Skills" multiple>
               <mat-option *ngFor="let skill of skillsList" [value]="skill">{{skill}}</mat-option>
             </mat-select>
           </mat-form-field>
+        </div>
 
-          </div>
-          <div>
+        <div>
           <mat-form-field>
-            <input matInput [matDatepicker]="picker1" placeholder="Choose a start date">
+            <input formControlName="startDate" matInput [min]="currentDate" [matDatepicker]="picker1" placeholder="Choose a start date" readonly>
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field>
-            <input matInput [matDatepicker]="picker2" placeholder="Choose an end date">
+            <input formControlName="endDate" matInput [min]="batchForm.controls.startDate.value" [matDatepicker]="picker2" placeholder="Choose an end date" readonly>
             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field>
-            <input matInput placeholder="spans {{datebetween}} weeks" readonly>
+            <input matInput placeholder="spans {{numOfWeeksBetween}} weeks" readonly>
           </mat-form-field>
 
           <mat-form-field>
-            <input matInput placeholder="Name">
+            <input formControlName="batchName" matInput placeholder="Name" [ngModel]="genBatchName" readonly>
           </mat-form-field>
-
-          </div>
-          <div>
+        </div>
+        
+        <div>
           <mat-form-field>
-            <mat-select placeholder="Trainer">
+            <mat-select formControlName="trainer" placeholder="Trainer">
               <mat-option *ngFor="let trainer of trainers" [value]="trainer.value">
                 {{ trainer.viewValue }}
               </mat-option>
@@ -70,25 +68,26 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-select placeholder="Co-Trainer">
+            <mat-select formControlName="cotrainer" placeholder="Co-Trainer">
               <mat-option *ngFor="let trainer of trainers" [value]="trainer.value">
                 {{ trainer.viewValue }}
               </mat-option>
             </mat-select>
           </mat-form-field>
-            </div>
+        </div>
 
+        <div>
           <mat-form-field>
-            <mat-select placeholder="Location">
+            <mat-select formControlName="location" placeholder="Location">
               <mat-option *ngFor="let location of locations" [value]="location">
                 {{ location.location.toString().valueOf() }}
               </mat-option>
             </mat-select>
           </mat-form-field>
-
-
+  
+  
           <mat-form-field>
-            <mat-select placeholder="Building">
+            <mat-select formControlName="building" placeholder="Building">
               <mat-option *ngFor="let building of buildings" [value]="building.value">
                 {{ building.viewValue}}
               </mat-option>
@@ -96,19 +95,26 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-select placeholder="Room">
+            <mat-select formControlName="room" placeholder="Room">
               <mat-option *ngFor="let room of rooms" [value]="room.value">
                 {{ room.viewValue }}
               </mat-option>
             </mat-select>
           </mat-form-field>
-
-
         </div>
-        <!--Coriculum <input type="text" name="coriculum">-->
+
+        <div><button mat-raised-button [disabled]="!batchForm.valid">Submit</button></div>
       </form>
 
+      <!-- Batch Projection Form-->
+
+      <!-- Batch Totals -->
+
     </mat-expansion-panel>
+
+    <!-- for testing purpose -->
+  <p>Form value: {{ batchForm.value | json }}</p>
+
 
 
 

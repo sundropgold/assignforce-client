@@ -1,9 +1,8 @@
 import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatSort, MatTableDataSource, MatCheckbox, MatSelect } from '@angular/material';
 import { Batch } from '../../model/Batch';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
-import { MatIconRegistry } from '@angular/material';
+import { ReactiveFormsModule, FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
+import { Curriculum } from '../../model/Curriculum';
 
 @Component({
   selector: 'app-batches',
@@ -12,10 +11,9 @@ import { MatIconRegistry } from '@angular/material';
   encapsulation: ViewEncapsulation.None
 })
 export class BatchesComponent implements OnInit, AfterViewInit {
-  // FAKE VALUES FOR THE FIRST TAB
-  datebetween = 0;
-
-  Curriculums = [
+  //--------------------------------------------------Temporary---------------------------------------------------
+  skillsList = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+  curriculums = [
     { value: 'java-0', viewValue: 'JAVA' },
     { value: 'c++-1', viewValue: 'C++' },
     { value: 'angular-2', viewValue: 'ANGULAR 4' }
@@ -26,11 +24,6 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     { value: 'focus2-1', viewValue: 'Focus 2' },
     { value: 'focus3-2', viewValue: 'Focus 3' }
   ];
-
-  skills = new FormControl();
-
-  skillsList = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
-
   trainers = [
     { value: 'trainer-0', viewValue: 'August Duet' },
     { value: 'trainer-1', viewValue: 'Emily Higgins' },
@@ -74,12 +67,22 @@ export class BatchesComponent implements OnInit, AfterViewInit {
     { value: 'trainer-2', viewValue: 'Steven Kelsey' }
   ];
   rooms = [{ value: 'room-0', viewValue: '201' }, { value: 'room-1', viewValue: '301' }];
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-    iconRegistry.addSvgIcon(
-      'thumbs-up',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/img/examples/thumbup-icon.svg')
-    );
-  }
+
+  //--------------------------------------------------VALUES FOR CREATE BATCHES----------------------------------------
+
+  batchForm: FormGroup;
+
+  // //Object for storing batch form data
+  // batchObj: Batch;
+
+  // //Look up data for the form fields
+  // curriculums: Curriculum;
+  // locations: Location;
+
+  //number of weeks between two of the selected dates
+  numOfWeeksBetween = 0;
+  //generated batch name based on the selected Curriculum/Focus and start date
+  genBatchName = '';
 
   firstTabHeader = 'Create New Batch';
 
@@ -99,23 +102,105 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   ];
   // batchData = new MatTableDataSource(BatchData);
 
+  //default for current date
+  currentDate: Date = new Date();
+
+  // constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+  //   iconRegistry.addSvgIcon(
+  //     'thumbs-up',
+  //     sanitizer.bypassSecurityTrustResourceUrl('assets/img/examples/thumbup-icon.svg')
+  //   );
+  // }
+  constructor(private fb: FormBuilder) {}
+
   @ViewChild(MatSort) sort: MatSort;
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.batchForm = this.fb.group({
+      curriculum: [null, Validators.required],
+      focus: [null],
+      skills: [null, Validators.required],
+      startDate: [null, Validators.required],
+      endDate: [null, Validators.required],
+      batchName: [null],
+      trainer: [null, Validators.required],
+      cotrainer: [null, Validators.required],
+      location: [null, Validators.required],
+      building: [null, Validators.required],
+      room: [null, Validators.required]
+    });
+
+    this.batchForm.valueChanges.subscribe(data => {
+      const startDate = data.startDate;
+      const endDate = data.endDate;
+      const curriculum = data.curriculum;
+      this.numOfWeeksBetween = this.computeNumOfWeeksBetween(startDate, endDate);
+      this.genBatchName = this.createBatchName(curriculum, startDate);
+    });
+  }
 
   ngAfterViewInit() {
     // this.batchData.sort = this.sort;
   }
 
-  EditBatch() {
-    this.firstTabHeader = 'Edit Batch';
+  //initialize form group
+  createBatch() {
+    this.firstTabHeader = 'Create New Batch';
   }
 
-  CloneBatch() {
-    this.firstTabHeader = 'Clone Batch';
+  editBatch() {
+    // this.firstTabHeader = 'Edit Batch';
   }
 
-  DeleteBatch() {}
+  cloneBatch() {
+    // this.firstTabHeader = 'Clone Batch';
+  }
 
-  SynchronizeBatch() {}
+  deleteBatch() {}
+
+  //Insert a new batch using provided form data
+  onSubmit(form: NgForm) {
+    //for testing
+    console.log(form);
+  }
+
+  //Calculate number of weeks between two dates
+  computeNumOfWeeksBetween(startDate: number, endDate: number): number {
+    if (startDate && endDate) {
+      const numberOfDays = Math.abs(<any>startDate - <any>endDate) / (1000 * 60 * 60 * 24);
+      const numberOfWeeks = Math.round(numberOfDays / 7);
+
+      return numberOfWeeks;
+    }
+    return 0;
+  }
+
+  //Generate Batch Name
+  createBatchName(curriculum: string, startDate: number): string {
+    if (curriculum && startDate) {
+      const date = new Date(startDate);
+
+      const year = date
+        .getFullYear()
+        .toString()
+        .substr(-2);
+      let day = date.getDate().toString();
+      let month = (date.getMonth() + 1).toString();
+      const monthName = date.toLocaleString('en-us', { month: 'short' });
+
+      if (date.getDate() < 10) {
+        day = '0' + day;
+      }
+
+      if (date.getMonth() < 10) {
+        month = '0' + month;
+      }
+
+      return year + '' + month + ' ' + monthName + '' + day + ' ' + curriculum;
+    }
+
+    return '';
+  }
+
+  // SynchronizeBatch() {}
 }
