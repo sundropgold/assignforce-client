@@ -63,7 +63,7 @@
         </text>
       </g>
     </g>
-    <g class="gaps">
+    <g class="gaps" *ngIf="!swimActive">
       <g class="gap" *ngFor="let midPoint of getBreaks()">
         <text class="gapLabel unselectable" [attr.x]="midPoint.xPos"
           [attr.y]="midPoint.midDatePos" font-size="14" text-anchor="start"

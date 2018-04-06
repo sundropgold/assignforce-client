@@ -52,6 +52,9 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   currentPage = 0;
   maxPages = 1;
 
+  startValue: number;
+  endValue: number;
+
   // zooming
   zoomingEnabled = true;
   zooming = false;
@@ -133,13 +136,14 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     // start date
     const preceedingDate = new Date();
     preceedingDate.setMonth(preceedingDate.getMonth() - this.DEFAULT_PRECEEDING_MONTHS);
-    this.startDate = preceedingDate;
+    this.startValue = preceedingDate.valueOf();
     // console.log(this.startDate);
     // end date
     const proceedingDate = new Date();
     proceedingDate.setMonth(proceedingDate.getMonth() + this.DEFAULT_PROCEEDING_MONTHS);
-    this.endDate = proceedingDate;
+    this.endValue = proceedingDate.valueOf();
     // console.log(this.endDate);
+    this.updateDateFilters();
   }
 
   // setup page size
@@ -190,11 +194,11 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       hideInactiveTrainers: 'hideinactive'
     };
     if (id === filterIds.startDate) {
-      this.startDate = new Date(value);
+      this.startValue = value;
       this.updateTodayLine();
       return;
     } else if (id === filterIds.endDate) {
-      this.endDate = new Date(value);
+      this.endValue = value;
       this.updateTodayLine();
       return;
     } else if (id === filterIds.curriculum) {
@@ -244,13 +248,19 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     });
   }
 
+  // updates the start and end date filters
+  updateDateFilters() {
+    this.startDate = new Date(this.startValue);
+    this.endDate = new Date(this.endValue);
+  }
+
   // sets size of the svg graphic to fit the screen
   updateSize() {
     // set width to be the same size as the trainernames div, as it scales with the page
     this.width = this.trainernamesElement.nativeElement.getBoundingClientRect().width;
     this.width = Math.max(this.minWidth, this.width);
-    // todo determine height ?
-    this.swimlaneXOfs = (this.width - this.timescaleXOfs) / 2 - this.trainers.length / 2 * this.columnWidth;
+    this.height = this.width * 2;
+    this.swimlaneXOfs = this.width * 0.5 - this.trainers.length * 0.5 * this.columnWidth;
     this.swimlaneXOfs = Math.max(this.timescaleXOfs + 10, this.swimlaneXOfs);
 
     // todo update column width
@@ -295,6 +305,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   // updates the line for today
   updateTodayLine() {
     // calculate position of today_line
+    this.updateDateFilters();
     const y = this.dateToYPos(Date.now());
     this.todayLine = { x1: this.timescaleXOfs, x2: this.width, y1: y, y2: y };
   }
@@ -533,7 +544,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     if (this.batches.length === 0) {
       return rects;
     }
-    const full_duration = this.endDate.valueOf() - this.startDate.valueOf();
+    const full_duration = this.endValue - this.startValue;
     // make a rectangle for each batch
     for (let i = 0; i < this.batches.length; i++) {
       const batch = this.batches[i];
@@ -702,8 +713,8 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
     // setup posiitons
     const defDur = 1000 * 60 * 60 * 24 * 0.71 * this.height; // 0.7 days per pixel
-    this.endDate = new Date(this.startDate.valueOf() + defDur);
-    const swimposy = this.dateToYPos(this.startDate.valueOf() + defDur / 8);
+    this.endValue = this.startValue + defDur;
+    const swimposy = this.dateToYPos(this.startValue + defDur / 8);
     const pointsRect = { x: this.width, y: swimposy };
     const highpointsRect = { x: this.width, y: swimposy + 50 };
     const leftlanex = this.swimlaneXOfs + 0 * this.columnWidth + this.columnWidth * 0.5;
@@ -823,8 +834,8 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
           for (let i = 0; i < this.batches.length; i++) {
             const batch = this.batches[i];
             // remove old ones
-            if (batch.endDate < this.startDate.valueOf() - 1000 - moveSpeed) {
-              // console.log('removing batch ' + i + ' '+ batch.endDate + ' ' + this.startDate.valueOf());
+            if (batch.endDate < this.startValue - 1000 - moveSpeed) {
+              // console.log('removing batch ' + i + ' '+ batch.endDate + ' ' + this.startValue);
               this.batches.splice(i, 1);
               i--;
               continue;
@@ -846,7 +857,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         addBatchTimer -= intervalRate;
         if (addBatchTimer <= 0) {
           const randy = Math.random() * oneWeekMs * 4;
-          this.addRandomBatch(this.endDate.valueOf() + addBuffer + randy);
+          this.addRandomBatch(this.endValue + addBuffer + randy);
           addBatchTimer = this.linearInterpolation(
             addBatchRate,
             minAddBatchRate,
@@ -859,7 +870,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         if (addDotTimer <= 0) {
           const randX = leftlanex + this.columnWidth * Math.floor(Math.random() * this.trainers.length);
           const randy = Math.random() * oneWeekMs * 5;
-          const y = this.dateToYPos(this.endDate.valueOf() + addBuffer - randy);
+          const y = this.dateToYPos(this.endValue + addBuffer - randy);
           // console.log('making dot ' + this.swimDots.length + ' at ' + randX + ' ' + y);
           this.swimDots.push({ x: randX, y: y, r: this.columnWidth / 10, color: '#eedd20ee' });
           addDotTimer = addDotRate;
@@ -893,8 +904,8 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         }
 
         // update pos
-        this.startDate = new Date(this.startDate.valueOf() + moveSpeed);
-        this.endDate = new Date(this.endDate.valueOf() + moveSpeed);
+        this.startValue = this.startValue + moveSpeed;
+        this.endValue = this.endValue + moveSpeed;
 
         // increase speed
         moveSpeed = this.linearInterpolation(
@@ -919,6 +930,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     this.swimActive = false;
     this.swimStartProgress = 0;
     this.zoomingEnabled = true;
+    this.loadInitialDates();
     this.updateBatches();
     this.updateTodayLine();
   }
@@ -952,7 +964,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   // returns the list of months to display and their position
   getTimescale() {
     // cache some common values
-    const full_duration = this.endDate.valueOf() - this.startDate.valueOf();
+    const full_duration = this.endValue - this.startValue;
     const start_month = this.startDate.getMonth();
     const start_year = this.startDate.getFullYear();
 
@@ -1120,15 +1132,13 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
   // returns the pixel value on the vertical axis this date would appear on the timeline
   dateToYPos(dateValue: number) {
-    const startDateValue = this.startDate.valueOf();
-    const ypos = (dateValue - startDateValue) / (this.endDate.valueOf() - startDateValue) * this.height;
+    const ypos = (dateValue - this.startValue) / (this.endValue - this.startValue) * this.height;
     return ypos;
   }
 
   // returns the date value from the vertical axis position on the timeline
   yPosToDate(ypos: number) {
-    const startDateValue = this.startDate.valueOf();
-    const dateValue = ypos * (this.endDate.valueOf() - startDateValue) / this.height + startDateValue;
+    const dateValue = ypos * (this.endValue - this.startValue) / this.height + this.startValue;
     return dateValue;
   }
 
@@ -1140,8 +1150,8 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     this.zoomingFromDate = this.yPosToDate(mouseposy);
     // get duration before and after zoom line
     // console.log(new Date(this.zoomingFromDate));
-    this.preZoomBeforeDuration = this.zoomingFromDate - this.startDate.valueOf();
-    this.preZoomAfterDuration = this.endDate.valueOf() - this.zoomingFromDate;
+    this.preZoomBeforeDuration = this.zoomingFromDate - this.startValue;
+    this.preZoomAfterDuration = this.endValue - this.zoomingFromDate;
     this.zooming = true;
 
     // hide tooltip
@@ -1164,8 +1174,8 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       return;
     }
     // set start and end dates
-    this.startDate = new Date(newStart);
-    this.endDate = new Date(newEnd);
+    this.startValue = newStart;
+    this.endValue = newEnd;
     this.updateTodayLine();
   }
 
@@ -1250,12 +1260,12 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     } else {
       switch (event.keyCode) {
         case this.keycodes.plus:
-          this.startZoom((this.dateToYPos(this.endDate.valueOf()) - this.dateToYPos(this.startDate.valueOf())) / 2);
+          this.startZoom((this.dateToYPos(this.endValue) - this.dateToYPos(this.startValue)) / 2);
           this.zoomBy(0.75);
           this.finishZoom();
           break;
         case this.keycodes.minus:
-          this.startZoom((this.dateToYPos(this.endDate.valueOf()) - this.dateToYPos(this.startDate.valueOf())) / 2);
+          this.startZoom((this.dateToYPos(this.endValue) - this.dateToYPos(this.startValue)) / 2);
           this.zoomBy(1.5);
           this.finishZoom();
           break;
@@ -1263,10 +1273,10 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
           if (event.shiftKey && this.keyBoardScrollEnabled) {
             // scroll up
             event.preventDefault();
-            const dur = this.endDate.valueOf() - this.startDate.valueOf();
+            const dur = this.endValue - this.startValue;
             const shiftBy = dur * this.keyScrollSpeed;
-            this.startDate = new Date(this.startDate.valueOf() + shiftBy);
-            this.endDate = new Date(this.endDate.valueOf() + shiftBy);
+            this.startValue = this.startValue + shiftBy;
+            this.endValue = this.endValue + shiftBy;
             this.updateTodayLine();
           }
           if (this.swimStartProgress === 0 || this.swimStartProgress === 1) {
@@ -1279,10 +1289,10 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
           if (event.shiftKey && this.keyBoardScrollEnabled) {
             // scroll down
             event.preventDefault();
-            const dur = this.endDate.valueOf() - this.startDate.valueOf();
+            const dur = this.endValue - this.startValue;
             const shiftBy = -dur * this.keyScrollSpeed;
-            this.startDate = new Date(this.startDate.valueOf() + shiftBy);
-            this.endDate = new Date(this.endDate.valueOf() + shiftBy);
+            this.startValue = this.startValue + shiftBy;
+            this.endValue = this.endValue + shiftBy;
             this.updateTodayLine();
           }
           if (this.swimStartProgress === 2 || this.swimStartProgress === 3) {
