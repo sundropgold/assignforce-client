@@ -49,6 +49,7 @@ export const environment = {
       createLocation: '/vp/location/create',
       updateLocation: '/vp/location/update',
       getAllLocations: '/all/location/all',
+      getLocation: '/all/location',
       removeLocation: '/vp/location/delete',
       reactivateLocation: '/vp/location/reactivate'
     },

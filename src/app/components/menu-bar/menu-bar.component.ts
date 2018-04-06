@@ -17,6 +17,10 @@ export class MenuBarComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute, private auth0: AuthService) {}
 
+  logout() {
+    this.auth0.logout();
+  }
+
   ngOnInit() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
