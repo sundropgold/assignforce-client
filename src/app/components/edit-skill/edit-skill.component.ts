@@ -18,7 +18,7 @@ export class EditSkillComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.newSkill();
+    this.skill = this.data;
   }
 
   closeDialog() {
