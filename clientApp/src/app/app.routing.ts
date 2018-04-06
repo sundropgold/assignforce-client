@@ -10,6 +10,8 @@ import { ReportsComponent } from './components/reports/reports.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthenticatingComponent } from './components/authenticating/authenticating.component';
+import { UrlService } from './services/url/url.service';
+
 
 const appRoutes: Routes = [
   {
