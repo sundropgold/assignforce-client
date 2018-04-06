@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ViewChildren } from '@angular/core';
-import { Batch } from '../../model/batch';
+import { Batch } from '../../model/Batch';
 import { BatchControllerService } from '../../services/api/batch-controller/batch-controller.service';
 import { MatSelectChange, MatCheckboxChange, MatOption } from '@angular/material';
 import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
