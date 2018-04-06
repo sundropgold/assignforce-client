@@ -16,7 +16,6 @@ describe('BatchesTimelineComponent', () => {
   let component: BatchesTimelineComponent;
   let fixture: ComponentFixture<BatchesTimelineComponent>;
   let batchControllerService: BatchControllerService;
-  // let trainerControllerService: TrainerControllerService;
 
   beforeEach(
     async(() => {
@@ -118,7 +117,7 @@ describe('BatchesTimelineComponent', () => {
 
   it('should set the tooltip', () => {
     component.updateTooltip(0, { x: 1, y: 1 });
-    // todo more testing here
     expect(component.tooltipRect.x < 0);
+    // expect(component. < 0);
   });
 });

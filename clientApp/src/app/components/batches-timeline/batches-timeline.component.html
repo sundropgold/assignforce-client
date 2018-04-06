@@ -15,7 +15,7 @@
  (filterChangeEmitter)="onFilterChange($event)"></app-batches-timeline-filter>
 <div (window:resize)="windowResize($event)" (window:keydown)="keydown($event)"
   (window:keyup)="keyup($event)" id="full-timeline">
-  <div id="trainer-names-bg" #trainernames>
+  <div id="trainer-names-bg" #trainernames [style.min-width.px]="minWidth">
     <span class="trainer-names" *ngFor="let trainer of getTrainers()"
       [style.margin-left.px]="trainer.left"
       [style.width.px]="trainer.width">

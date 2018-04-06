@@ -14,9 +14,6 @@ import { Curriculum } from '../../model/Curriculum';
   styleUrls: ['./batches-timeline.component.css']
 })
 export class BatchesTimelineComponent implements OnInit, AfterViewInit {
-  // local copy of batches to show
-  batches = [];
-
   // root element of the timeline. used for getting the relative mouse position
   @ViewChild('timelineroot') timelineRootElement: ElementRef;
   // trainer name. used to set the width
@@ -24,19 +21,20 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   // trainer name. used to set the width
   @ViewChildren('tooltiptext') tooltipTexts;
 
-  // default values for formatting
-  // dynamic values
+  // dynamic values for formatting
   width = 1536;
   swimlaneXOfs = 100;
-  loading = false;
-  // static values
-  height = 2067;
   columnWidth = 50;
+  loading = false;
+  // static values for formatting
+  height = 2067;
+  minColumnWidth = 26;
+  maxColumnWidth = 150;
   minWidth = 400;
   swimlaneYOfs = 20;
   timescaleXOfs = 80;
-  private DEFAULT_PRECEEDING_MONTHS = 3;
-  private DEFAULT_PROCEEDING_MONTHS = 6;
+  DEFAULT_PRECEEDING_MONTHS = 3;
+  DEFAULT_PROCEEDING_MONTHS = 6;
 
   // editable data
   startDate: Date;
@@ -51,9 +49,11 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   trainersPerPage = 0;
   currentPage = 0;
   maxPages = 1;
+  trainersOnThisPage = 0;
 
   startValue: number;
   endValue: number;
+  todayLine = { x1: 0, x2: 0, y1: 0, y2: 0 };
 
   // zooming
   zoomingEnabled = true;
@@ -113,19 +113,16 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   tooltipMidSectionColor = '#FFD700';
   tooltipNoneColor = '#FF6347';
 
-  // other generated data
+  // cached data
+  batches = [];
   trainers = [];
-  todayLine = { x1: 0, x2: 0, y1: 0, y2: 0 };
 
   constructor(private batchController: BatchControllerService, private trainerController: TrainerControllerService) {}
 
   // initialize data
   ngOnInit() {
-    if (this.trainersPerPage === 0) {
-      this.trainersPerPage = this.batches.length;
-    }
     this.loadInitialDates();
-
+    this.currentPage = 0;
     setTimeout(() => {
       this.updateBatches();
       this.updateTrainers();
@@ -192,15 +189,23 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       building: 'building',
       hideConcluded: 'hideconcluded',
       hideBatchless: 'hidebatchless',
-      hideInactiveTrainers: 'hideinactive'
+      hideInactiveTrainers: 'hideinactive',
+      trainersPerPage: 'trainersperpage',
+      currentPage: 'currentpage',
+      firstPage: 'firstpage',
+      lastPage: 'lastpage',
+      prevPage: 'previouspage',
+      nextPage: 'nextpage'
     };
     if (id === filterIds.startDate) {
+      // date filters
       this.startValue = value;
       this.updateTodayLine();
     } else if (id === filterIds.endDate) {
       this.endValue = value;
       this.updateTodayLine();
     } else if (id === filterIds.curriculum) {
+      // batch type filters
       this.curriculumFilter = value;
       this.updateBatches();
     } else if (id === filterIds.focus) {
@@ -213,6 +218,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       this.buildingFilter = value;
       this.updateBatches();
     } else if (id === filterIds.hideConcluded) {
+      // hide filters
       this.hideConcludedBatches = value;
       this.updateBatches();
       this.updateTrainers();
@@ -222,13 +228,49 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     } else if (id === filterIds.hideInactiveTrainers) {
       this.hideInactiveTrainers = value;
       this.updateTrainers();
+    } else if (id === filterIds.trainersPerPage) {
+      // page filters
+      this.trainersPerPage = value;
+      this.updatePage();
+    } else if (id === filterIds.currentPage) {
+      this.currentPage = Math.min(this.maxPages, Math.max(0, this.currentPage + 1));
+      this.updatePage();
+    } else if (id === filterIds.firstPage) {
+      this.currentPage = 0;
+      this.updatePage();
+    } else if (id === filterIds.lastPage) {
+      this.currentPage = this.maxPages;
+      this.updatePage();
+    } else if (id === filterIds.prevPage) {
+      this.currentPage = Math.max(0, this.currentPage - 1);
+      this.updatePage();
+    } else if (id === filterIds.nextPage) {
+      this.currentPage = Math.min(this.maxPages, this.currentPage + 1);
+      this.updatePage();
     } else {
       // unknown event!
       console.log('unknown event filter triggered! ' + event + '\n' + event.target);
     }
   }
 
-  // gets an updates list of batches
+  // updates the max pages
+  updatePage() {
+    console.log('update page');
+    if (this.trainersPerPage === 0) {
+      this.trainersPerPage = this.trainers.length;
+    }
+    // update max page value
+    this.maxPages = Math.floor(this.trainers.length / this.trainersPerPage);
+    this.currentPage = Math.min(this.currentPage, this.maxPages);
+    // find the number of trainers on the current page
+    this.trainersOnThisPage = Math.min(
+      this.trainers.length - this.currentPage * this.trainersPerPage,
+      this.trainersPerPage
+    );
+    this.updateSize();
+  }
+
+  // gets an updated list of batches
   updateBatches() {
     console.log('updating batches...');
     this.loading = true;
@@ -282,10 +324,12 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     this.width = this.trainernamesElement.nativeElement.getBoundingClientRect().width;
     this.width = Math.max(this.minWidth, this.width);
     this.height = this.width * 2;
-    this.swimlaneXOfs = this.width * 0.5 - this.trainers.length * 0.5 * this.columnWidth;
+    this.swimlaneXOfs = this.width * 0.5 - this.trainersOnThisPage * 0.5 * this.columnWidth;
     this.swimlaneXOfs = Math.max(this.timescaleXOfs + 10, this.swimlaneXOfs);
 
-    // todo update column width
+    // update column width
+    const col_wid = (this.width - this.timescaleXOfs) / this.trainersOnThisPage - 5;
+    this.columnWidth = Math.min(this.maxColumnWidth, Math.max(this.minColumnWidth, col_wid));
 
     // console.log(this.width + ' ' + this.height);
     this.updateTodayLine();
@@ -320,6 +364,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         }
         this.trainers.push(trainer);
       }
+      this.updatePage();
       this.loading = false;
     });
   }
@@ -578,11 +623,17 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       const color = this.getColorForcurriculum(batch.curriculum.currId);
 
       // get the column this batch will be in
-      const trainer_index = this.trainers.findIndex(t => t.trainerId === batch.trainer.trainerId);
+      let trainer_index = this.trainers.findIndex(t => t.trainerId === batch.trainer.trainerId);
       if (trainer_index < 0) {
         // this batch has no trainer, it may have been filtered
         continue;
       }
+      // only show batches on this page
+      trainer_index -= this.currentPage * this.trainersPerPage;
+      if (trainer_index < 0 || trainer_index >= this.trainersOnThisPage) {
+        continue;
+      }
+
       // todo set width dynamically ?
       const w = 25;
 
@@ -642,7 +693,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   getSwimlanes() {
     const lines = [];
     // make 1 more swimlane than the amount of trainers
-    for (let i = 0; i < this.trainers.length + 1; i++) {
+    for (let i = 0; i < this.trainersOnThisPage + 1; i++) {
       const xpos = this.swimlaneXOfs + i * this.columnWidth;
       lines.push({ x1: xpos, y1: this.swimlaneYOfs, x2: xpos, y2: this.height - this.swimlaneYOfs });
     }
@@ -652,7 +703,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   // get lines that run between the batches
   getBatchLanes() {
     const lines = [];
-    for (let i = 0; i < this.trainers.length; i++) {
+    for (let i = 0; i < this.trainersOnThisPage; i++) {
       const xpos = this.swimlaneXOfs + (i + 0.5) * this.columnWidth;
       lines.push({ x1: xpos, y1: this.swimlaneYOfs, x2: xpos, y2: this.height });
     }
@@ -680,7 +731,11 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     }
     const midPoints = [];
     for (let l = 0; l < trainerBatches.length; l++) {
-      const xpos = this.swimlaneXOfs + (l + 0.5) * this.columnWidth + 5;
+      const xindex = l - this.trainersPerPage * this.currentPage;
+      if (xindex < 0 || xindex >= this.trainersOnThisPage) {
+        continue;
+      }
+      const xpos = this.swimlaneXOfs + (xindex + 0.5) * this.columnWidth + 5;
       if (trainerBatches[l].length > 1) {
         for (let m = 0; m < trainerBatches[l].length - 1; m++) {
           const gap = trainerBatches[l][m + 1].startDate - trainerBatches[l][m].endDate;
@@ -706,8 +761,8 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
     // add each trainer and position to array
     const trainerposs = [];
-    for (let i = 0; i < this.trainers.length; i++) {
-      const trainer = this.trainers[i];
+    for (let i = 0; i < this.trainersOnThisPage; i++) {
+      const trainer = this.trainers[this.trainersPerPage * this.currentPage + i];
 
       // get trainer name
       const name = trainer.firstName + ' ' + trainer.lastName;
@@ -890,7 +945,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         // add random dots
         addDotTimer -= intervalRate;
         if (addDotTimer <= 0) {
-          const randX = leftlanex + this.columnWidth * Math.floor(Math.random() * this.trainers.length);
+          const randX = leftlanex + this.columnWidth * Math.floor(Math.random() * this.trainersOnThisPage);
           const randy = Math.random() * oneWeekMs * 5;
           const y = this.dateToYPos(this.endValue + addBuffer - randy);
           // console.log('making dot ' + this.swimDots.length + ' at ' + randX + ' ' + y);
@@ -962,7 +1017,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     const baseDur = 1000 * 60 * 60 * 24 * 7 * 2; // 2 weeks
     const maxDur = 1000 * 60 * 60 * 24 * 7 * 16; // 16 weeks
     const ranEndDate = startdate + Math.random() * maxDur + baseDur;
-    const randRow = Math.floor(Math.random() * this.trainers.length);
+    const randRow = Math.floor(Math.random() * this.trainersOnThisPage);
     const trId = this.trainers[randRow].trainerId;
     // console.log('adding random batch at col:' + randRow + ' enddate: ' + ranEndDate);
     const currId = Math.floor(Math.random() * 4);
@@ -1300,7 +1355,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
           this.swimLane = Math.max(0, this.swimLane - 1);
         }
         if (event.keyCode === this.keycodes.right) {
-          this.swimLane = Math.min(this.trainers.length - 1, this.swimLane + 1);
+          this.swimLane = Math.min(this.trainersOnThisPage - 1, this.swimLane + 1);
         }
       }
       if (event.keyCode === this.keycodes.p) {
