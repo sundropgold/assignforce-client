@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
 import { LocationControllerService } from '../../services/api/location-controller/location-controller.service';
 import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
+import { Trainer } from '../../model/Trainer';
 
 describe('BatchesTimelineComponent', () => {
   let component: BatchesTimelineComponent;
@@ -115,9 +116,56 @@ describe('BatchesTimelineComponent', () => {
     expect(component.endDate.valueOf() - component.startDate.valueOf()).toEqual(zoomFactor * prezoom);
   });
 
+  it('should change the mode', () => {
+    component.startSwimMode();
+    expect(component.swimActive).toBeTruthy();
+    expect(component.swimPoints).toEqual(0);
+    expect(component.swimPos.x).toBeGreaterThan(0);
+    component.finishSwimMode();
+    expect(component.swimActive).toBeFalsy();
+  });
+
   it('should set the tooltip', () => {
     component.updateTooltip(0, { x: 1, y: 1 });
-    expect(component.tooltipRect.x < 0);
-    // expect(component. < 0);
+    expect(component.tooltipRect.x).toEqual(0);
+  });
+  it('should interpolate', () => {
+    expect(component.linearInterpolation(10, 20, 0.5)).toEqual(15);
+    expect(component.linearInterpolation(10000, 2000, 0.75)).toEqual(4000);
+    expect(component.linearInterpolation(-20, 0, 1)).toEqual(0);
+  });
+  it('should add a batch', () => {
+    component.batches = [];
+    component.trainers.push(new Trainer(4, null, null, null, null, null, null, null));
+    component.addRandomBatch(10000);
+    expect(component.batches.length).toBeGreaterThan(0);
+  });
+  it('should convert the date to a position', () => {
+    const ypos = component.dateToYPos(Date.now() + 1000 * 60 * 60 * 24 * 7 * 3); // now + 3 weeks
+    expect(ypos).toBeGreaterThan(0); // should return a positive value
+  });
+  it('should convert the date to a position', () => {
+    const dateval = component.yPosToDate(20);
+    expect(dateval).toBeLessThan(Date.now()); // should return a value before today
+    expect(dateval).toBeGreaterThan(component.startValue); // and after graph start
+  });
+  it('should get the timescale', () => {
+    const ts = component.getTimescale();
+    expect(ts.length).toBeGreaterThan(0);
+  });
+  it('should get the line breaks', () => {
+    const lb = component.getBreaks();
+    expect(lb.length).toEqual(component.trainersOnThisPage);
+  });
+  it('should get the lines between batches', () => {
+    const bl = component.getBatchLanes();
+    expect(bl.length).toEqual(component.trainersOnThisPage);
+  });
+  it('should shift the graph', () => {
+    const predate = component.startValue;
+    component.shiftBy(50);
+    expect(component.startValue).toBeGreaterThan(predate);
+    component.shiftBy(-50);
+    expect(component.startValue).toEqual(predate);
   });
 });
