@@ -33,8 +33,8 @@ describe('AppComponent', () => {
     navigate = jasmine.createSpy('navigate');
   }
   const activeRoute = new MockActivatedRoute();
-  // const app: AppComponent;
-  // const fixture: ComponentFixture<AppComponent>;
+  // let app: AppComponent;
+  // let fixture: ComponentFixture<AppComponent>;
 
   beforeEach(
     async(() => {
