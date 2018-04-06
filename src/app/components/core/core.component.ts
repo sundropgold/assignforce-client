@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Curriculum } from '../../model/Curriculum';
-import { CurriculaService } from '../../services/curricula/curricula.service';
 import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
 
 @Component({

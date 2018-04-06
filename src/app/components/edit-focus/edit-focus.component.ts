@@ -3,7 +3,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Skill } from '../../model/Skill';
 import { Curriculum } from '../../model/Curriculum';
 import { FormControl, FormGroup } from '@angular/forms';
-import { SkillService } from '../../services/skill/skill.service';
 import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
 import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
 

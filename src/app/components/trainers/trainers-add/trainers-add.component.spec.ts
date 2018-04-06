@@ -7,7 +7,6 @@ import { AppMaterialModule } from '../../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { TrainersComponent } from '../trainers.component';
-import { TrainerService } from '../../../services/trainer/trainer.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { Trainer } from '../../../model/Trainer';
 import { Skill } from '../../../model/Skill';
@@ -25,10 +24,10 @@ describe('TrainersAddComponent', () => {
         declarations: [TrainersAddComponent],
         providers: [
           // TrainerService,
-          {
-            provide: TrainerService,
-            useClass: MockTrainerService
-          },
+          // {
+          //   provide: TrainerService,
+          //   useClass: MockTrainerService
+          // },
           {
             provide: MatDialogRef,
             useValue: {
