@@ -26,7 +26,7 @@ export const environment = {
     domain: 'revature.auth0.com',
     responseType: 'token id_token',
     audience: 'https://revature.auth0.com/userinfo',
-    redirectUri: 'https://assignforce.revaturelabs.com/callback',
+    redirectUri: 'https://assignforce.cfapps.io/callback',
     scope: 'openid'
   },
 
