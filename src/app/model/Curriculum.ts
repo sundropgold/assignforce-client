@@ -1,14 +1,14 @@
 import { Skill } from './Skill';
 
 export class Curriculum {
-  currId: number;
+  id: number;
   name: string;
   core: boolean;
   active: boolean;
   skills: Skill[];
 
-  constructor(currId: number, name: string, core: boolean, active: boolean, skills: Skill[]) {
-    this.currId = currId;
+  constructor(id: number, name: string, core: boolean, active: boolean, skills: Skill[]) {
+    this.id = id;
     this.name = name;
     this.core = core;
     this.active = active;

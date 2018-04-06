@@ -1,4 +1,4 @@
-export class Unavailability {
+export class Unavailable {
   id: number;
   startDate: number;
   endDate: number;

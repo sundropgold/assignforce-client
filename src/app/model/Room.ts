@@ -1,17 +1,17 @@
-import { Unavailability } from './Unavailability';
+import { Unavailable } from './Unavailable';
 
 export class Room {
-  roomID: number;
+  id: number;
   active: boolean;
   roomName: string;
   building: number;
-  unavailabilities: Unavailability[];
+  // unavailabilities: Unavailability[];
 
-  constructor(roomID: number, active: boolean, roomName: string, building: number, unavailabilities: Unavailability[]) {
-    this.roomID = roomID;
+  constructor(id: number, active: boolean, roomName: string, building: number) {
+    this.id = id;
     this.active = active;
     this.roomName = roomName;
     this.building = building;
-    this.unavailabilities = unavailabilities;
+    // this.unavailabilities = unavailabilities;
   }
 }
