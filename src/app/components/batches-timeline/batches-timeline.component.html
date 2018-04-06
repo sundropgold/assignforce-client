@@ -1,0 +1,43 @@
+<app-batches-timeline-filter (filterChangeEmitter)="onFilterChange($event)"></app-batches-timeline-filter>
+<div>
+  <div id="trainer-names-bg">
+    <span class="trainer-names" *ngFor="let trainer of getTrainers()"
+      [style.margin-left.px]="trainer.left"
+      [style.width.px]="trainer.width">
+      {{trainer.name}}
+    </span>
+  </div>
+  <svg id="timeline" [attr.width]="width" [attr.height]="height" (mousedown)="bgmousedown($event)" (mouseup)="bgmouseup($event)" (mousemove)="bgmousemove($event)">
+    <rect id="bg" [attr.width]="width" [attr.height]="height" x="0" y="0"
+          fill="#FAFAFA"></rect>
+      <g class="months">
+        <text class="month-text" *ngFor="let month of getMonths()" [attr.x]="month.x" [attr.y]="month.y">{{month.name}}</text>
+        <line></line>
+      </g>
+      <g class="swimlanes">
+        <line *ngFor="let line of getSwimlanes()" class="swimlane"
+          [attr.x1]="line.x1" [attr.y1]="line.y1" [attr.x2]="line.x2"
+          [attr.y2]="line.y2" stroke="#D3D3D3" stroke-width="1"></line>
+      </g>
+      <g class="rectangles">
+        <g class="rectangle" *ngFor="let rect of getBatchesRectangles()">
+          <rect [attr.x]="rect.x" [attr.y]="rect.y" [attr.height]="rect.h"
+            [attr.width]="rect.w" [attr.fill]="rect.color"
+            (mousemove)="batchmousemove($event)" (mouseleave)="batchmouseleave()"
+            ></rect>
+          <text [attr.x]="rect.x+2" [attr.y]="rect.y+2" font-size="14">
+            <tspan *ngFor="let d of rect.dur; let i= index" [attr.x]="rect.x+2"
+              [attr.y]="rect.y+20+i*15">
+              {{d}}
+            </tspan>
+          </text>
+        </g>
+      </g>
+      <line class="today"
+      [attr.x1]="today_line.x1" [attr.y1]="today_line.y1" [attr.x2]="today_line.x2"
+      [attr.y2]="today_line.y2" stroke="#f26a25" stroke-width="1"></line>
+      <line class="zoom-line" *ngIf="zooming"
+      [attr.x1]="zoomingLine.x1" [attr.y1]="zoomingLine.y1" [attr.x2]="zoomingLine.x2"
+      [attr.y2]="zoomingLine.y2" stroke="#000000" stroke-width="1"></line>
+    </svg>
+  </div>
