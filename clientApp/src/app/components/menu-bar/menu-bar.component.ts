@@ -26,8 +26,9 @@ export class MenuBarComponent implements OnInit {
     });
   }
 
+  
   selectTab(evt) {
     console.log(evt);
-    this.router.navigate([this.tabs[evt.index]]);
+    this.router.navigate([evt.tab.textLabel.toLowerCase()]);
   }
 }
