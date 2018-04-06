@@ -125,8 +125,8 @@ export const environment = {
       baseUrl: 'https://hydra.cfapps.io/api/unavailable',
       createUnavailability: '',
       retrieveUnavailability: '/',
-      deleteUnavailability: '',
-      retrieveAllUnavailabilities: '/'
+      deleteUnavailability: '/',
+      retrieveAllUnavailabilities: ''
     }
   },
 
