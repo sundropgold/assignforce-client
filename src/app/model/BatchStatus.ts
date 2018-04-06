@@ -1,9 +1,9 @@
 export class BatchStatus {
-  id: number;
+  batchStatusID: number;
   batchStatusName: string;
 
-  constructor(id: number, batchStatusName: string) {
-    this.id = id;
+  constructor(batchStatusID: number, batchStatusName: string) {
+    this.batchStatusID = batchStatusID;
     this.batchStatusName = batchStatusName;
   }
 }

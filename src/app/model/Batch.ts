@@ -3,69 +3,43 @@ import { Trainer } from './Trainer';
 import { Skill } from './Skill';
 import { BatchStatus } from './BatchStatus';
 import { BatchLocation } from './BatchLocation';
-import { Address } from './Address';
-import {SkillType} from "./SkillType";
-import {TrainingType} from "./TrainingType";
-import {Trainee} from "./Trainee";
-import {Note} from "./Note";
 
 export class Batch {
   id: number;
-  resourceId: string;
-  trainingName: string;
-  skillType: SkillType;
-  trainingType: TrainingType;
+  name: string;
   startDate: number;
   endDate: number;
-  location: string;
-  address: Address;
-  goodGradeThreshold: number;
-  borderlineGradeThreshold: number;
-  trainees: Trainee;
-  weeks: number;
-  gradedWeeks: number;
-  notes: Note[];
+  curriculum: Curriculum;
+  focus: Curriculum;
+  trainer: Trainer;
+  cotrainer: Trainer;
+  skills: Skill[];
+  batchStatus: BatchStatus;
+  batchLocation: BatchLocation;
 
   constructor(
     id: number,
-    resourceId: string,
-    trainingName: string,
-    skillType: SkillType,
-    trainingType: TrainingType,
+    name: string,
     startDate: number,
     endDate: number,
-    location: string,
-    address: Address,
-    goodGradeThreshold: number,
-    borderlineGradeThreshold: number,
-    trainees: Trainee,
-    weeks: number,
-    gradedWeeks: number,
-    notes: Note[]
+    curriculum: Curriculum,
+    focus: Curriculum,
+    trainer: Trainer,
+    cotrainer: Trainer,
+    skills: Skill[],
+    batchStatus: BatchStatus,
+    batchLocation: BatchLocation
   ) {
     this.id = id;
-    this.resourceId = resourceId;
-    this.trainingName = trainingName;
-    this.skillType = skillType;
-    this.trainingType = trainingType;
+    this.name = name;
     this.startDate = startDate;
     this.endDate = endDate;
-    this.location = location;
-    this.address = address;
-    this.goodGradeThreshold = goodGradeThreshold;
-    this.borderlineGradeThreshold = borderlineGradeThreshold;
-    this.trainees = trainees;
-    this.weeks = weeks;
-    this.gradedWeeks = gradedWeeks;
-    this.notes = notes;
+    this.curriculum = curriculum;
+    this.focus = focus;
+    this.trainer = trainer;
+    this.cotrainer = cotrainer;
+    this.skills = skills;
+    this.batchStatus = batchStatus;
+    this.batchLocation = batchLocation;
   }
 }
-
-// name: string;
-// curriculum: Curriculum;
-// focus: Curriculum;
-// trainer: Trainer;
-// cotrainer: Trainer;
-// skills: Skill[];
-// batchStatus: BatchStatus;
-// batchLocation: BatchLocation;
