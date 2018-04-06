@@ -1,11 +1,15 @@
+import { Assessment } from './Assessment';
+
 export class Skill {
   skillId: number;
-  name: string;
+  skillName: string;
   active: boolean;
+  assessments: Assessment;
 
-  constructor(skillId: number, name: string, active: boolean) {
+  constructor(skillId: number, skillName: string, active: boolean, assessments: Assessment) {
     this.skillId = skillId;
-    this.name = name;
+    this.skillName = skillName;
     this.active = active;
+    this.assessments = assessments;
   }
 }

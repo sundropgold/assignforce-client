@@ -2,14 +2,14 @@ import { Room } from './Room';
 
 export class Building {
   active: boolean;
-  id: number;
+  buildingId: number;
   location: number;
   name: string;
   rooms: Room[];
 
-  constructor(active: boolean, id: number, location: number, name: string, rooms: Room[]) {
+  constructor(active: boolean, buildingId: number, location: number, name: string, rooms: Room[]) {
     this.active = active;
-    this.id = id;
+    this.buildingId = buildingId;
     this.location = location;
     this.name = name;
     this.rooms = rooms;

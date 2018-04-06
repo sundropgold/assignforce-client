@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
-import { Unavailability } from '../../../model/Unavailability';
+import { Unavailability } from '../../../model/Unavailable';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
