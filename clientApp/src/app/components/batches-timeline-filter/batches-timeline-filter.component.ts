@@ -11,7 +11,7 @@ export class BatchesTimelineFilterComponent implements OnInit {
   constructor(
     private curriculumControllerService: CurriculumControllerService,
     private locationControllerService: LocationControllerService
-  ) {}
+  ) { }
 
   @Input() loading = false;
 
@@ -52,7 +52,10 @@ export class BatchesTimelineFilterComponent implements OnInit {
       this.curriculumData.push('Any');
       for (let i = 0; i < result.length; i++) {
         const curriculum = result[i];
-        this.curriculumData.push(curriculum.name);
+        const value = curriculum.name;
+        if (value != null) {
+          this.curriculumData.push(value);
+        }
       }
       this.curriculumFilter = 'Any';
       this.loading = false;
@@ -66,7 +69,10 @@ export class BatchesTimelineFilterComponent implements OnInit {
       this.focusData.push('Any');
       for (let i = 0; i < result.length; i++) {
         const focus = result[i];
-        this.focusData.push(focus.name);
+        const value = focus.name;
+        if (value != null) {
+          this.focusData.push(value);
+        }
       }
       this.focusFilter = 'Any';
       this.loading = false;
@@ -80,7 +86,11 @@ export class BatchesTimelineFilterComponent implements OnInit {
       this.locationData.push('Any');
       for (let i = 0; i < result.length; i++) {
         const location = result[i];
-        this.locationData.push(location.locationName);
+        console.log('got location:' + location.id + ' ' + location.locationId + ' ' + location.locationName + ' ' + location.buildingId + ' ' + location.buildingName);
+        const value = location.locationName;
+        if (value != null) {
+          this.locationData.push(value);
+        }
       }
       this.locationFilter = 'Any';
       this.loading = false;
@@ -90,11 +100,14 @@ export class BatchesTimelineFilterComponent implements OnInit {
   loadBuildingData() {
     this.loading = true;
     this.locationControllerService.retrieveAllLocation().subscribe(result => {
-      this.locationData = [];
-      this.locationData.push('Any');
+      this.buildingData = [];
+      this.buildingData.push('Any');
       for (let i = 0; i < result.length; i++) {
         const location = result[i];
-        this.locationData.push(location.buildingName);
+        const value = location.buildingName;
+        if (value != null) {
+          this.buildingData.push(value);
+        }
       }
       this.buildingFilter = 'Any';
       this.loading = false;

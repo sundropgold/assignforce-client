@@ -118,13 +118,11 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
   // initialize data
   ngOnInit() {
-    // todo get values from batches timeline component instead
     if (this.trainersPerPage === 0) {
       this.trainersPerPage = this.batches.length;
     }
     this.loadInitialDates();
 
-    console.log('batches timeline component init');
     setTimeout(() => {
       this.updateBatches();
       this.updateTrainers();
@@ -148,7 +146,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
   // setup page size
   ngAfterViewInit() {
-    // causes exception if done without a short timeout
+    // causes exception if done without a delay
     setTimeout(() => {
       this.updateSize();
     }, 0);
@@ -196,37 +194,35 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     if (id === filterIds.startDate) {
       this.startValue = value;
       this.updateTodayLine();
-      return;
     } else if (id === filterIds.endDate) {
       this.endValue = value;
       this.updateTodayLine();
-      return;
     } else if (id === filterIds.curriculum) {
-      // todo filtering
-
-      return;
+      this.curriculumFilter = value;
+      this.updateBatches();
     } else if (id === filterIds.focus) {
-      return;
+      this.focusFilter = value;
+      this.updateBatches();
     } else if (id === filterIds.location) {
-      return;
+      this.locationFilter = value;
+      this.updateBatches();
     } else if (id === filterIds.building) {
-      return;
+      this.buildingFilter = value;
+      this.updateBatches();
     } else if (id === filterIds.hideConcluded) {
       this.hideConcludedBatches = value;
       this.updateBatches();
       this.updateTrainers();
-      return;
     } else if (id === filterIds.hideBatchless) {
       this.hideBatchlessTrainers = value;
       this.updateTrainers();
-      return;
     } else if (id === filterIds.hideInactiveTrainers) {
       this.hideInactiveTrainers = value;
       this.updateTrainers();
-      return;
+    } else {
+      // unknown event!
+      console.log('unknown event filter triggered! ' + event + '\n' + event.target);
     }
-    // unknown event!
-    console.log('unknown event filter triggered! ' + event + '\n' + event.target);
   }
 
   // gets an updates list of batches
@@ -237,11 +233,34 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       this.batches = [];
       for (let i = 0; i < result.length; i++) {
         const batch = result[i];
+        // filter concluded batches
         if (this.hideConcludedBatches) {
           if (batch.endDate < Date.now()) {
             continue;
           }
         }
+        // filter by type
+        if (this.curriculumFilter!=='Any') {
+          if (batch.curriculum.name !== this.curriculumFilter) {
+            continue;
+          }
+        }
+        if (this.focusFilter!=='Any') {
+          if (batch.focus.name !== this.focusFilter) {
+            continue;
+          }
+        }
+        if (this.locationFilter!=='Any') {
+          if (batch.batchLocation.locationName !== this.locationFilter) {
+            continue;
+          }
+        }
+        if (this.buildingFilter!=='Any') {
+          if (batch.batchLocation.buildingName !== this.buildingFilter) {
+            continue;
+          }
+        }
+        // add it
         this.batches.push(batch);
       }
       this.loading = false;

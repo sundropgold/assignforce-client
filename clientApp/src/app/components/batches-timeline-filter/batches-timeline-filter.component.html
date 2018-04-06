@@ -16,7 +16,7 @@
       <mat-form-field>
         <mat-label>Curriculum</mat-label>
         <mat-select id="curriculum" (change)="onFilterChange($event)" [(ngModel)]="curriculumFilter" name="curriculum">
-          <mat-option *ngFor="let cur of curriculumData" value="{{curr}}">
+          <mat-option *ngFor="let cur of curriculumData" value="{{cur}}">
             {{cur}}
           </mat-option>
         </mat-select>
