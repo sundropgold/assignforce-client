@@ -47,6 +47,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   hideConcludedBatches = false;
   hideInactiveTrainers = false;
   trainersPerPage = 0;
+  actualTrainersPerPage = 0;
   currentPage = 0;
   maxPages = 1;
   trainersOnThisPage = 0;
@@ -233,7 +234,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       this.trainersPerPage = value;
       this.updatePage();
     } else if (id === filterIds.currentPage) {
-      this.currentPage = Math.min(this.maxPages, Math.max(0, this.currentPage + 1));
+      this.currentPage = Math.max(0, value);
       this.updatePage();
     } else if (id === filterIds.firstPage) {
       this.currentPage = 0;
@@ -245,7 +246,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       this.currentPage = Math.max(0, this.currentPage - 1);
       this.updatePage();
     } else if (id === filterIds.nextPage) {
-      this.currentPage = Math.min(this.maxPages, this.currentPage + 1);
+      this.currentPage = this.currentPage + 1;
       this.updatePage();
     } else {
       // unknown event!
@@ -255,17 +256,19 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
   // updates the max pages
   updatePage() {
-    console.log('update page');
     if (this.trainersPerPage === 0) {
-      this.trainersPerPage = this.trainers.length;
+      this.actualTrainersPerPage = this.trainers.length;
+    } else {
+      this.actualTrainersPerPage = this.trainersPerPage;
     }
+
     // update max page value
-    this.maxPages = Math.floor(this.trainers.length / this.trainersPerPage);
+    this.maxPages = Math.floor((this.trainers.length - 0.5) / this.actualTrainersPerPage);
     this.currentPage = Math.min(this.currentPage, this.maxPages);
     // find the number of trainers on the current page
     this.trainersOnThisPage = Math.min(
-      this.trainers.length - this.currentPage * this.trainersPerPage,
-      this.trainersPerPage
+      this.trainers.length - this.currentPage * this.actualTrainersPerPage,
+      this.actualTrainersPerPage
     );
     this.updateSize();
   }
@@ -629,7 +632,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         continue;
       }
       // only show batches on this page
-      trainer_index -= this.currentPage * this.trainersPerPage;
+      trainer_index -= this.currentPage * this.actualTrainersPerPage;
       if (trainer_index < 0 || trainer_index >= this.trainersOnThisPage) {
         continue;
       }
@@ -731,7 +734,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     }
     const midPoints = [];
     for (let l = 0; l < trainerBatches.length; l++) {
-      const xindex = l - this.trainersPerPage * this.currentPage;
+      const xindex = l - this.actualTrainersPerPage * this.currentPage;
       if (xindex < 0 || xindex >= this.trainersOnThisPage) {
         continue;
       }
@@ -762,7 +765,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     // add each trainer and position to array
     const trainerposs = [];
     for (let i = 0; i < this.trainersOnThisPage; i++) {
-      const trainer = this.trainers[this.trainersPerPage * this.currentPage + i];
+      const trainer = this.trainers[this.actualTrainersPerPage * this.currentPage + i];
 
       // get trainer name
       const name = trainer.firstName + ' ' + trainer.lastName;

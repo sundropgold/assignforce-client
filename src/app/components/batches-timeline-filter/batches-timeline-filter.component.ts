@@ -30,13 +30,10 @@ export class BatchesTimelineFilterComponent implements OnInit {
 
   @Output() public filterChangeEmitter = new EventEmitter<Event>();
 
-  private curriculumData = ['Any', '.NET', 'Java', 'SDET', 'Custom'];
-
-  private focusData = ['Any', 'Appian', 'Capitol One', 'Big Data'];
-
-  private locationData = ['Revature HQ', 'Tempe', 'New York City'];
-
-  private buildingData = ['Any', '11730 Plaza Drive'];
+  curriculumData = ['Any', '.NET', 'Java', 'SDET', 'Custom'];
+  focusData = ['Any', 'Appian', 'Capitol One', 'Big Data'];
+  locationData = ['Revature HQ', 'Tempe', 'New York City'];
+  buildingData = ['Any', '11730 Plaza Drive'];
 
  
 
