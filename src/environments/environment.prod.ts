@@ -10,7 +10,8 @@ export const environment = {
     trainers: 'trainers',
     profile: 'profile',
     reports: 'reports',
-    settings: 'settings'
+    settings: 'settings',
+    callback: 'callback'
   },
 
   security_config: {
@@ -125,8 +126,8 @@ export const environment = {
       baseUrl: 'https://hydra.cfapps.io/api/unavailable',
       createUnavailability: '',
       retrieveUnavailability: '/',
-      deleteUnavailability: '',
-      retrieveAllUnavailabilities: '/'
+      deleteUnavailability: '/',
+      retrieveAllUnavailabilities: ''
     }
   },
 

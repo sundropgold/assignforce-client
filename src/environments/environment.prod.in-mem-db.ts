@@ -4,9 +4,9 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false,
+  production: true,
 
-  baseUrl: 'https://localhost:4200',
+  baseUrl: 'https://assignforce.revaturelabs.com',
   baseApiUrl: 'api',
 
   //routers
@@ -26,12 +26,12 @@ export const environment = {
   auth0: {
     namespace: 'https://revature.com/',
     title: 'AssignForce Login',
-    //clientId: 'uS5tb62hP8K3CgU00qa38SVnfWvzviiH', //assign force
+    //clientId: 'uS5tb62hP8K3CgU00qa38SVnfWvzviiH', //assign-force
     clientId: 'tjQhcs0O4mRV2iry6SAO0Gy1YQcBrWCa', //hydra
     domain: 'revature.auth0.com',
     responseType: 'token id_token',
     audience: 'hydra-gateway',
-    redirectUri: 'https://localhost:4200/callback',
+    redirectUri: 'https://assignforce.cfapps.io/callback',
     scope: 'openid profile'
   },
 

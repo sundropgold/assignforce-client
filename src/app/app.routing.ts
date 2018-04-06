@@ -11,14 +11,15 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthenticatingComponent } from './components/authenticating/authenticating.component';
 import { GuardService as AuthGuard } from './services/auth/guard.service';
+import { environment } from '../environments/environment';
 
 const appRoutes: Routes = [
   {
-    path: 'login',
+    path: environment.appRoutes.login,
     component: LoginComponent
   },
   {
-    path: 'callback',
+    path: environment.appRoutes.callback,
     component: AuthenticatingComponent
   },
   {
@@ -26,42 +27,46 @@ const appRoutes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
-        path: 'overview',
+        path: environment.appRoutes.overview,
         component: OverviewComponent
       },
       {
-        path: 'batches',
+        path: environment.appRoutes.batches,
         component: BatchesComponent
       },
       {
-        path: 'locations',
+        path: environment.appRoutes.locations,
         component: LocationsComponent
       },
       {
-        path: 'curriculum',
+        path: environment.appRoutes.curricula,
         component: CurriculaComponent
       },
       {
-        path: 'trainers',
+        path: environment.appRoutes.trainers,
         component: TrainersComponent
       },
       {
-        path: 'profile',
+        path: environment.appRoutes.profile,
         component: ProfileComponent
       },
       {
-        path: 'reports',
+        path: environment.appRoutes.reports,
         component: ReportsComponent
       },
       {
-        path: 'settings',
+        path: environment.appRoutes.settings,
         component: SettingsComponent
+      },
+      {
+        path: '**',
+        redirectTo: environment.appRoutes.overview
       }
     ]
   },
   {
     path: '**',
-    redirectTo: ''
+    redirectTo: environment.appRoutes.login
   }
 ];
 
