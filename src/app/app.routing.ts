@@ -56,16 +56,12 @@ const appRoutes: Routes = [
       {
         path: 'settings',
         component: SettingsComponent
+      },
+      {
+        path: 'profile/:id',
+        component: ProfileComponent
       }
     ]
-  },
-  {
-    path: 'callback',
-    component: AuthenticatingComponent
-  },
-  {
-    path: 'profile/:id',
-    component: ProfileComponent
   },
   {
     path: '**',
