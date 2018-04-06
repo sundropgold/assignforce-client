@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { Curriculum } from '../../model/Curriculum';
 import { Skill } from '../../model/Skill';
-import { SkillService } from '../../services/skill/skill.service';
 import { Observable } from 'rxjs/Observable';
 import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
 import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
