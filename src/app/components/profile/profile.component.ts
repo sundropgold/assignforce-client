@@ -53,9 +53,13 @@ export class ProfileComponent implements OnInit {
   constructor(private s3Service: S3CredentialService) {}
 
   ngOnInit() {
-    this.populateSkillList();
+    // this.trainerService.getById(+this.route.snapshot.paramMap.get('id')).subscribe(
+    //  trainerData => {
+    //    this.trainer = trainerData;
+    //   }
+    // );
+    //this.populateSkillList();
     // data gathering
-
     // id is hard coded for testing. unless you click on a trainer in the trainer page.
     // if (this.tId > -1) {
     //   this.lockProfile = false;

@@ -17,7 +17,7 @@ export const environment = {
     locations: 'locations',
     curricula: 'curricula',
     trainers: 'trainers',
-    profile: 'profile',
+    profile: 'profile/:id',
     reports: 'reports',
     settings: 'settings',
     callback: 'callback'
