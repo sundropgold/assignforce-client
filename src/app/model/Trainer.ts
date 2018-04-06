@@ -1,30 +1,33 @@
 import { Skill } from './Skill';
-import { Unavailable } from './Unavailable';
-import { Batch } from './Batch';
-import {TrainerRole} from "./TrainerRole";
+import { Unavailability } from './Unavailability';
 
 export class Trainer {
-  id: number;
-  name: string;
-  title: string;
-  email: string;
-  tier: TrainerRole;
-  batches: Batch[];
+  trainerId: number;
+  firstName: string;
+  lastName: string;
+  skills: Skill[];
+  certifications: any;
+  active: boolean;
+  resume: any;
+  unavailabilities: Unavailability[];
 
-  constructor(id: number, name: string, title: string, email: string, tier: TrainerRole, batches: Batch[]) {
-    this.id = id;
-    this.name = name;
-    this.title = title;
-    this.email = email;
-    this.tier = tier;
-    this.batches = batches;
+  constructor(
+    trainerId: number,
+    firstName: string,
+    lastName: string,
+    skills: Skill[],
+    certifications: any,
+    active: boolean,
+    resume: any,
+    unavailabilities: Unavailability[]
+  ) {
+    this.trainerId = trainerId;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.skills = skills;
+    this.certifications = certifications;
+    this.active = active;
+    this.resume = resume;
+    this.unavailabilities = unavailabilities;
   }
 }
-
-// firstName: string;
-// lastName: string;
-// skills: Skill[];
-// certifications: any;
-// active: boolean;
-// resume: any;
-// unavailabilities: Unavailability[];
