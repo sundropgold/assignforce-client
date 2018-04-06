@@ -10,7 +10,8 @@ export const environment = {
     trainers: 'trainers',
     profile: 'profile',
     reports: 'reports',
-    settings: 'settings'
+    settings: 'settings',
+    callback: 'callback'
   },
 
   security_config: {
