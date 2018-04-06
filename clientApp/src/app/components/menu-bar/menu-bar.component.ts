@@ -13,7 +13,7 @@ import { AuthService } from '../../services/auth/auth.service';
 export class MenuBarComponent implements OnInit {
   selectedTab = 0;
 
-  tabs = ['overview', 'batches', 'locations', 'curriculum', 'trainers', 'profile', 'reports', 'settings', ''];
+  tabs = ['overview', 'batches', 'locations', 'curricula', 'trainers', 'profile', 'reports', 'settings'];
 
   constructor(private router: Router, private route: ActivatedRoute, private auth0: AuthService) {}
 
