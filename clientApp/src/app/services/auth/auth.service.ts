@@ -117,4 +117,8 @@ export class AuthService {
       cb(error, profile);
     });
   }
+
+  public getToken(): string {
+    return localStorage.getItem('access_token');
+  }
 }
