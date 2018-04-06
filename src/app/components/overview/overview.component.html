@@ -1,169 +1,107 @@
 <div style="margin-top: 5%">
-  <mat-accordion>
-    <mat-expansion-panel [expanded]="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          All Batches
-        </mat-panel-title>
-        <mat-panel-description>
-          <span class="fill-space"></span>
-          <mat-icon title="Export to CSV" (click)="exportToCSV($event)">get_app</mat-icon>
-
-          <mat-icon [matMenuTriggerFor]="menu" (click)="openMenu($event)">
-            menu
-          </mat-icon>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item>
-              <span>In Progress</span>
-            </button>
-            <button mat-menu-item>
-              <span>Beginging within two weeks</span>
-            </button>
-            <button mat-menu-item>
-              <span>All</span>
-            </button>
-          </mat-menu>
-
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-
-      <div class="example-container mat-elevation-z8">
-        <mat-table #table [dataSource]="dataSource" matSort>
-
-          <!-- Name Column -->
-          <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-            <mat-cell *matCellDef="let batch"> {{batch.name}}</mat-cell>
-          </ng-container>
-
-          <!-- Start Date Column -->
-          <ng-container matColumnDef="startDate">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </mat-header-cell>
-            <mat-cell *matCellDef="let batch"> {{batch.startDate | date: 'mediumDate'}}</mat-cell>
-          </ng-container>
-
-          <!-- End Date Column -->
-          <ng-container matColumnDef="endDate">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> End Date </mat-header-cell>
-            <mat-cell *matCellDef="let batch"> {{batch.endDate | date: 'mediumDate'}}</mat-cell>
-          </ng-container>
-
-          <!-- Curriculum Column -->
-          <ng-container matColumnDef="curriculum">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Curriculum </mat-header-cell>
-            <mat-cell *matCellDef="let batch"> {{batch.curriculum}}</mat-cell>
-          </ng-container>
-          
-          <!-- Focus Column -->
-          <ng-container matColumnDef="focus">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Focus </mat-header-cell>
-            <mat-cell *matCellDef="let batch"> {{batch.focus}}</mat-cell>
-          </ng-container>
-
-          <!-- Trainer Column -->
-          <ng-container matColumnDef="trainer">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Trainer </mat-header-cell>
-            <mat-cell *matCellDef="let batch"> {{batch.trainer}}</mat-cell>
-          </ng-container>
-
-          <!-- CoTrainer Column -->
-          <ng-container matColumnDef="cotrainer">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Trainer </mat-header-cell>
-            <mat-cell *matCellDef="let batch"> {{batch.cotrainer}}</mat-cell>
-          </ng-container>
-
-          <!-- Location Column -->
-          <ng-container matColumnDef="location">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Location </mat-header-cell>
-            <mat-cell *matCellDef="let batch"> {{batch.location}}</mat-cell>
-          </ng-container>
-
-          <!-- Building Column -->
-          <ng-container matColumnDef="building">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Building </mat-header-cell>
-            <mat-cell *matCellDef="let batch"> {{batch.building}}</mat-cell>
-          </ng-container>
-
-          <!-- Room Column -->
-          <ng-container matColumnDef="room">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Room </mat-header-cell>
-            <mat-cell *matCellDef="let batch"> {{batch.room}}</mat-cell>
-          </ng-container>
-
-
-          <!-- Progress Bar -->
-          <ng-container matColumnDef="progress">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Progress </mat-header-cell>
-            <mat-cell *matCellDef="let batch"> <mat-card>
-              <mat-card-content>
-                  <mat-progress-bar
-                    class="example-margin"
-                    [color]="color"
-                    [mode]="mode"
-                    [value]="value"
-                    [bufferValue]="bufferValue">
-                  </mat-progress-bar>
-              </mat-card-content>
-            </mat-card>
-            </mat-cell>
-          </ng-container>
-
-          <!-- Header rows of the Display -->
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-      </div>
-
-  <!-- COMMENTING OUT PREVIOUS HARD CODED ELEMENTS TABLE -->
-
-      <!-- <div class="example-container mat-elevation-z8">
-        <mat-table #table [dataSource]="dataSource" matSort> -->
-
-          <!-- Position Column -->
-          <!-- <ng-container matColumnDef="position">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
-          </ng-container> -->
-
-          <!-- Name Column -->
-          <!-- <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-          </ng-container> -->
-
-          <!-- Weight Column -->
-          <!-- <ng-container matColumnDef="weight">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Weight </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
-          </ng-container> -->
-
-          <!-- Symbol Column -->
-          <!-- <ng-container matColumnDef="symbol">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="progress">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Progress </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-              <mat-card>
+    <mat-accordion>
+      <mat-expansion-panel [expanded]="true" [disabled]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title style="color: white">
+            All Batches
+          </mat-panel-title>
+          <mat-panel-description>
+            <span class="fill-space"></span>
+            <mat-icon title="Export to CSV" (click)="exportToCSV($event)">get_app</mat-icon>
+  
+            <mat-icon [matMenuTriggerFor]="menu" (click)="openMenu($event)">
+              menu
+            </mat-icon>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="applyFilter(0)" [disabled]="selectedFilter === 0">
+                <span>All</span>
+              </button>
+              <button mat-menu-item (click)="applyFilter(1)" [disabled]="selectedFilter === 1">
+                <span>In Progress</span>
+              </button>
+              <button mat-menu-item (click)="applyFilter(2)" [disabled]="selectedFilter === 2">
+                <span>Beginning within two weeks</span>
+              </button>
+            </mat-menu>
+  
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+  
+        <div class="example-container mat-elevation-z8">
+          <mat-table #table [dataSource]="dataSource" matSort>
+  
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+              <mat-cell *matCellDef="let batchObj"> {{batchObj.name}}</mat-cell>
+            </ng-container>
+  
+            <!-- Curriculum Column -->
+            <ng-container matColumnDef="curriculum">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Curriculum </mat-header-cell>
+              <mat-cell *matCellDef="let batchObj"> {{batchObj.curriculum}}</mat-cell>
+            </ng-container>
+  
+            <!-- Trainers/CoTrainer Column -->
+            <ng-container matColumnDef="trainer">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Trainer/Co-Trainer </mat-header-cell>
+              <mat-cell *matCellDef="let batchObj">{{batchObj.trainer}}<br>
+                <div *ngIf="batchObj.cotrainer">{{batchObj.cotrainer.firstName}} {{batchObj.cotrainer.lastName}}</div></mat-cell>
+            </ng-container>
+  
+            <!-- Location Column -->
+            <ng-container matColumnDef="location">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Location </mat-header-cell>
+              <mat-cell *matCellDef="let batchObj"> {{batchObj.location}}</mat-cell>
+            </ng-container>
+  
+            <!-- Building Column -->
+            <ng-container matColumnDef="building">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Building </mat-header-cell>
+              <mat-cell *matCellDef="let batchObj"> {{batchObj.building}}</mat-cell>
+            </ng-container>
+  
+            <!-- Room Column -->
+            <ng-container matColumnDef="room">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Room </mat-header-cell>
+              <mat-cell *matCellDef="let batchObj"> {{batchObj.room}}</mat-cell>
+            </ng-container>
+  
+            <!-- Start Date Column -->
+            <ng-container matColumnDef="startDate">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </mat-header-cell>
+              <mat-cell *matCellDef="let batchObj"> {{batchObj.startDate | date: 'mediumDate'}}</mat-cell>
+            </ng-container>
+  
+            <!-- End Date Column -->
+            <ng-container matColumnDef="endDate">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> End Date </mat-header-cell>
+              <mat-cell *matCellDef="let batchObj"> {{batchObj.endDate | date: 'mediumDate'}}</mat-cell>
+            </ng-container>
+  
+            <!-- Progress Bar -->
+            <ng-container matColumnDef="progress">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Progress </mat-header-cell>
+              <mat-cell *matCellDef="let batchObj"> <mat-card>
                 <mat-card-content>
-                  <mat-progress-bar class="example-margin" [color]="color" [mode]="mode" [value]="value" [bufferValue]="bufferValue">
-                  </mat-progress-bar>
+                    <mat-progress-bar
+                      class="example-margin"
+                      color="warn"
+                      mode="determinate"
+                      [value]="batchObj.progress"
+                      [bufferValue]="bufferValue">
+                    </mat-progress-bar>
                 </mat-card-content>
               </mat-card>
-            </mat-cell>
-          </ng-container>
-
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-
-        <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
-        </mat-paginator>
-
-      </div> -->
+              </mat-cell>
+            </ng-container>
+  
+            <!-- Header rows of the Display -->
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+        </div>
     
-    </mat-expansion-panel>
-  </mat-accordion>
-</div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>

@@ -2,7 +2,8 @@ import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Angular2Csv } from 'angular2-csv/Angular2-csv';
 import { Batch } from '../../model/Batch';
-import { UrlService } from '../../services/url/url.service';
+import { BatchControllerService } from '../../services/api/batch-controller/batch-controller.service';
+
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
@@ -10,11 +11,6 @@ import { UrlService } from '../../services/url/url.service';
   encapsulation: ViewEncapsulation.None
 })
 export class OverviewComponent implements OnInit, AfterViewInit {
-  color = 'warn';
-  mode = 'determinate';
-  value = 0;
-  bufferValue = 75;
-
   // ----------------------- NEW CODE FROM NEW HOPE -----------------------------------
   selectedFilter: number;
   batchList: any[] = [];
@@ -35,40 +31,40 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private urlService: UrlService) {}
+  constructor(private batchController: BatchControllerService) {}
 
   ngOnInit() {
     //TODO -- use the batch-controller.service
-    // this.urlService.getAllBatches().subscribe(blist => {
-    //   blist.forEach(batch => {
-    //     // This is an object that encapsulates the batch object's properties and a progress number.
-    //     const batchObj = {
-    //       name: batch.name,
-    //       curriculum: batch.curriculum.name,
-    //       trainer: batch.trainer.firstName + ' ' + batch.trainer.lastName,
-    //       cotrainer: batch.cotrainer,
-    //       location: batch.batchLocation.locationName,
-    //       building: batch.batchLocation.buildingName,
-    //       room: batch.batchLocation.roomName,
-    //       startDate: batch.startDate,
-    //       endDate: batch.endDate,
-    //       progress: 0
-    //     };
-    //     this.batchList.push(batchObj);
-    //
-    //     // Calculating and updating the progress of each batch.
-    //     this.batchList.forEach(batchOb => {
-    //       batchOb.progress = this.getCurrentProgress(batchOb);
-    //     });
-    //
-    //     // This starts the view on showing All batches.
-    //     this.applyFilter(0);
-    //   });
-    // });
+    this.batchController.getAllBatches().subscribe(blist => {
+      blist.forEach(batch => {
+        // This is an object that encapsulates the batch object's properties and a progress number.
+        const batchObj = {
+          name: batch.name,
+          curriculum: batch.curriculum.name,
+          trainer: batch.trainer.firstName + ' ' + batch.trainer.lastName,
+          cotrainer: batch.cotrainer,
+          location: batch.batchLocation.locationName,
+          building: batch.batchLocation.buildingName,
+          room: batch.batchLocation.roomName,
+          startDate: batch.startDate,
+          endDate: batch.endDate,
+          progress: 0
+        };
+        this.batchList.push(batchObj);
+
+        // Calculating and updating the progress of each batch.
+        this.batchList.forEach(batchOb => {
+          batchOb.progress = this.getCurrentProgress(batchOb);
+        });
+
+        // This starts the view on showing All batches.
+        this.applyFilter(0);
+      });
+    });
   }
   ngAfterViewInit() {
-    //   this.dataSource.sort = this.sort;
-    //   this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
   // -------------------------------- PREVIOUS BATCH'S METHODS -------------------------------------------
   exportToCSV(evt) {
@@ -136,7 +132,11 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     if (batch_current_week <= 0) {
       return 0;
     }
-    const progress = batch_current_week / training_duration;
-    return progress * 100;
+    let progress = batch_current_week / training_duration;
+    progress = progress * 100;
+    if (progress > 100) {
+      return 100;
+    }
+    return progress;
   }
 }
