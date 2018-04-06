@@ -1,4 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
+import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
+import { LocationControllerService } from '../../services/api/location-controller/location-controller.service';
 
 @Component({
   selector: 'app-batches-timeline-filter',
@@ -6,21 +8,25 @@ import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
   styleUrls: ['./batches-timeline-filter.component.css']
 })
 export class BatchesTimelineFilterComponent implements OnInit {
-  constructor() {}
+  constructor(
+    private curriculumControllerService: CurriculumControllerService,
+    private locationControllerService: LocationControllerService
+  ) {}
 
   @Input() loading = false;
 
-  private startDate: Date;
-  private endDate: Date;
-  private curriculum: string;
-  private focus: string;
-  private location: string;
-  private building: string;
-  private hideConcludedBatches: boolean;
-  private hideBatchlessTrainer: boolean;
-
-  private DEFAULT_PRECEEDING_MONTHS = 3;
-  private DEFAULT_PROCEEDING_MONTHS = 6;
+  @Input() startDate: Date;
+  @Input() endDate: Date;
+  @Input() curriculumFilter = 'Any';
+  @Input() focusFilter = 'Any';
+  @Input() locationFilter = 'Any';
+  @Input() buildingFilter = 'Any';
+  @Input() hideConcludedBatches: boolean;
+  @Input() hideBatchlessTrainers: boolean;
+  @Input() hideInactiveTrainers: boolean;
+  @Input() trainersPerPage: number;
+  @Input() currentPage: number;
+  @Input() maxPages: number;
 
   @Output() public filterChangeEmitter = new EventEmitter<Event>();
 
@@ -32,42 +38,70 @@ export class BatchesTimelineFilterComponent implements OnInit {
 
   private buildingData = ['Any', '11730 Plaza Drive'];
 
-  loadStartDate() {
-    const preceedingDate = new Date();
-    preceedingDate.setMonth(preceedingDate.getMonth() - this.DEFAULT_PRECEEDING_MONTHS);
-    this.startDate = preceedingDate;
-    console.log(this.startDate);
-  }
-
-  loadEndDate() {
-    const proceedingDate = new Date();
-    proceedingDate.setMonth(proceedingDate.getMonth() + this.DEFAULT_PROCEEDING_MONTHS);
-    this.endDate = proceedingDate;
-    console.log(this.endDate);
+  ngOnInit() {
+    this.loadCurriculumData();
+    this.loadFocusData();
+    this.loadLocationData();
+    this.loadBuildingData();
   }
 
   loadCurriculumData() {
-    //todo CurriculumControllerService getall
+    this.loading = true;
+    this.curriculumControllerService.retrieveAllCore().subscribe(result => {
+      this.curriculumData = [];
+      this.curriculumData.push('Any');
+      for (let i = 0; i < result.length; i++) {
+        const curriculum = result[i];
+        this.curriculumData.push(curriculum.name);
+      }
+      this.curriculumFilter = 'Any';
+      this.loading = false;
+    });
   }
 
   loadFocusData() {
-    //todo
+    this.loading = true;
+    this.curriculumControllerService.retrieveAllFocus().subscribe(result => {
+      this.focusData = [];
+      this.focusData.push('Any');
+      for (let i = 0; i < result.length; i++) {
+        const focus = result[i];
+        this.focusData.push(focus.name);
+      }
+      this.focusFilter = 'Any';
+      this.loading = false;
+    });
   }
 
   loadLocationData() {
-    //todo
+    this.loading = true;
+    this.locationControllerService.retrieveAllLocation().subscribe(result => {
+      this.locationData = [];
+      this.locationData.push('Any');
+      for (let i = 0; i < result.length; i++) {
+        const location = result[i];
+        this.locationData.push(location.locationName);
+      }
+      this.locationFilter = 'Any';
+      this.loading = false;
+    });
   }
 
   loadBuildingData() {
-    //todo
+    this.loading = true;
+    this.locationControllerService.retrieveAllLocation().subscribe(result => {
+      this.locationData = [];
+      this.locationData.push('Any');
+      for (let i = 0; i < result.length; i++) {
+        const location = result[i];
+        this.locationData.push(location.buildingName);
+      }
+      this.buildingFilter = 'Any';
+      this.loading = false;
+    });
   }
 
   onFilterChange(evt: Event) {
     this.filterChangeEmitter.emit(evt);
-  }
-
-  ngOnInit() {
-    this.loadStartDate();
-    this.loadEndDate();
   }
 }

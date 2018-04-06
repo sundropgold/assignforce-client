@@ -1,4 +1,18 @@
-<app-batches-timeline-filter [loading]="loading" (filterChangeEmitter)="onFilterChange($event)"></app-batches-timeline-filter>
+<app-batches-timeline-filter 
+[loading]="loading"
+[startDate]="startDate" 
+[endDate]="endDate" 
+[curriculumFilter]="curriculumFilter" 
+[focusFilter]="focusFilter" 
+[locationFilter]="locationFilter" 
+[buildingFilter]="buildingFilter" 
+[hideBatchlessTrainers]="hideBatchlessTrainers" 
+[hideConcludedBatches]="hideConcludedBatches" 
+[hideInactiveTrainers]="hideInactiveTrainers" 
+[trainersPerPage]="trainersPerPage" 
+[currentPage]="currentPage" 
+[maxPages]="maxPages" 
+ (filterChangeEmitter)="onFilterChange($event)"></app-batches-timeline-filter>
 <div (window:resize)="windowResize($event)" (window:keydown)="keydown($event)"
   (window:keyup)="keyup($event)" id="full-timeline">
   <div id="trainer-names-bg" #trainernames>
@@ -61,10 +75,10 @@
     <g id="swim" *ngIf="swimActive">
       <ellipse id="swimmer" [attr.cx]="swimPos.x" [attr.cy]="swimPos.y" [attr.rx]="swimPos.r" [attr.ry]="swimPos.r" [attr.fill]="swimPos.color"></ellipse>
       <text class="unselectable" [attr.x]="swimPos.points.x"
-        [attr.y]="swimPos.points.y" text-anchor="end">{{swimPoints}}</text>
+        [attr.y]="swimPos.points.y" text-anchor="end">Score: {{swimPoints}}</text>
       <text class="unselectable" *ngIf="swimHigh>0"
         [attr.x]="swimPos.highpoints.x" [attr.y]="swimPos.highpoints.y"
-        text-anchor="end">{{swimHigh}}</text>
+        text-anchor="end">Highest: {{swimHigh}}</text>
       <line class="gauge-bg" [attr.x1]="swimGauge.bgx1"
         [attr.y1]="swimGauge.bgy1" [attr.x2]="swimGauge.bgx2"
         [attr.y2]="swimGauge.bgy2" stroke="#767b84" [attr.stroke-width]="swimGauge.w"></line>

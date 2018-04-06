@@ -15,7 +15,7 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Curriculum</mat-label>
-        <mat-select id="curriculum" (change)="onFilterChange($event)" [(ngModel)]="curriculum" name="curriculum">
+        <mat-select id="curriculum" (change)="onFilterChange($event)" [(ngModel)]="curriculumFilter" name="curriculum">
           <mat-option *ngFor="let cur of curriculumData" value="{{curr}}">
             {{cur}}
           </mat-option>
@@ -23,15 +23,15 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Focus</mat-label>
-        <mat-select id="focus" (change)="onFilterChange($event)" [(ngModel)]="focus" name="focus">
+        <mat-select id="focus" (change)="onFilterChange($event)" [(ngModel)]="focusFilter" name="focus">
           <mat-option *ngFor="let foc of focusData" value="{{foc}}">
             {{foc}}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <mat-label id="location">Location</mat-label>
-        <mat-select (change)="onFilterChange($event)" [(ngModel)]="location" name="location">
+        <mat-label>Location</mat-label>
+        <mat-select id="location" (change)="onFilterChange($event)" [(ngModel)]="locationFilter" name="location">
           <mat-option *ngFor="let loc of locationData" value="{{loc}}">
             {{loc}}
           </mat-option>
@@ -39,7 +39,7 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Building</mat-label>
-        <mat-select id="building" (change)="onFilterChange($event)" [(ngModel)]="building" name="building">
+        <mat-select id="building" (change)="onFilterChange($event)" [(ngModel)]="buildingFilter" name="building">
           <mat-option *ngFor="let build of buildingData" value="{{build}}">
             {{build}}
           </mat-option>
