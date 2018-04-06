@@ -1,4 +1,5 @@
 import { Assessment } from './Assessment';
+import {Trainee} from "./Trainee";
 
 export class Grade {
   id: number;

@@ -1,3 +1,9 @@
+import {Trainee} from "./Trainee";
+import {Trainer} from "./Trainer";
+import {PanelFeedback} from "./PanelFeedback";
+import {PanelStatus} from "./PanelStatus";
+import {InterviewFormat} from "./InterviewFormat";
+
 export class Panel {
   id: number;
   trainee: Trainee;

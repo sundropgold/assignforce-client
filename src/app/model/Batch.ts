@@ -4,6 +4,10 @@ import { Skill } from './Skill';
 import { BatchStatus } from './BatchStatus';
 import { BatchLocation } from './BatchLocation';
 import { Address } from './Address';
+import {SkillType} from "./SkillType";
+import {TrainingType} from "./TrainingType";
+import {Trainee} from "./Trainee";
+import {Note} from "./Note";
 
 export class Batch {
   id: number;

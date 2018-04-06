@@ -1,6 +1,7 @@
 import { Skill } from './Skill';
 import { Unavailable } from './Unavailable';
 import { Batch } from './Batch';
+import {TrainerRole} from "./TrainerRole";
 
 export class Trainer {
   id: number;

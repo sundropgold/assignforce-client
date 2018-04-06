@@ -1,5 +1,6 @@
 import { Skill } from './Skill';
 import { Panel } from './Panel';
+import {PanelStatus} from "./PanelStatus";
 
 export class PanelFeedback {
   id: number;

@@ -1,4 +1,8 @@
 import { Batch } from './Batch';
+import {Trainee} from "./Trainee";
+import {TrainerRole} from "./TrainerRole";
+import {NoteType} from "./NoteType";
+import {QCStatus} from "./QCStatus";
 
 export class Note {
   id: number;

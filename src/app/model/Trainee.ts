@@ -2,6 +2,7 @@ import { Batch } from './Batch';
 import { Grade } from './Grade';
 import { Note } from './Note';
 import { Panel } from './Panel';
+import {TrainingStatus} from "./TrainingStatus";
 
 export class Trainee {
   id: number;

@@ -1,3 +1,8 @@
+import {Batch} from "./Batch";
+import {Category} from "./Category";
+import {Grade} from "./Grade";
+import {AssessmentType} from "./AssessmentType";
+
 export class Assessment {
   id: number;
   title: string;
