@@ -4,6 +4,7 @@ import { Skill } from '../../model/Skill';
 import { TrainersAddComponent } from './trainers-add/trainers-add.component';
 import { TrainerItemComponent } from './trainer-item/trainer-item.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
+import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
 
 @Component({
   selector: 'app-trainers',
@@ -19,12 +20,12 @@ export class TrainersComponent implements OnInit {
 
   isManager = true;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private trainerService: TrainerControllerService) {}
 
   ngOnInit() {
     this.isManager = true;
 
-    this.trainerService.getAll().subscribe(t => {
+    this.trainerService.getAllTrainers().subscribe(t => {
       this.trainers = t;
     });
   }
@@ -59,7 +60,7 @@ export class TrainersComponent implements OnInit {
       if (result) {
         //  this.addTrainer(result);
         // this.trainers.push(result);
-        this.trainerService.create(result);
+        this.trainerService.createTrainer(result);
       }
     });
   }

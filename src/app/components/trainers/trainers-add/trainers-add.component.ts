@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatIconRegistry } from '@angular/material';
 import { Trainer } from '../../../model/Trainer';
 import { Skill } from '../../../model/Skill';
+import { TrainerControllerService } from '../../../services/api/trainer-controller/trainer-controller.service';
 
 @Component({
   selector: 'app-trainers-add',
@@ -32,7 +33,11 @@ export class TrainersAddComponent implements OnInit {
     trainer: this.trainer
   };
 
-  constructor(public dialogRef: MatDialogRef<TrainersAddComponent>, @Inject(MAT_DIALOG_DATA) public dataP: any) {}
+  constructor(
+    public dialogRef: MatDialogRef<TrainersAddComponent>,
+    @Inject(MAT_DIALOG_DATA) public dataP: any,
+    private trainerService: TrainerControllerService
+  ) {}
 
   ngOnInit() {}
 
@@ -76,7 +81,7 @@ export class TrainersAddComponent implements OnInit {
 
       this.trainer.lastName = l;
 
-      // this.trainerService.create(this.trainer).subscribe();
+      this.trainerService.createTrainer(this.trainer).subscribe();
       console.log(this.trainer);
     }
   }

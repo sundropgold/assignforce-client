@@ -6,6 +6,7 @@ import { Skill } from '../../../model/Skill';
 import { AppMaterialModule } from '../../../material.module';
 import { Trainer } from '../../../model/Trainer';
 import { Router } from '@angular/router';
+import { TrainerControllerService } from '../../../services/api/trainer-controller/trainer-controller.service';
 
 describe('TrainerItemComponent', () => {
   let component: TrainerItemComponent;
@@ -16,7 +17,7 @@ describe('TrainerItemComponent', () => {
       TestBed.configureTestingModule({
         imports: [AppMaterialModule],
         declarations: [TrainerItemComponent, TrainersComponent],
-        providers: [{ provide: Router }]
+        providers: [TrainerControllerService, { provide: Router }]
       }).compileComponents();
     })
   );
@@ -31,51 +32,54 @@ describe('TrainerItemComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
   // test trainer deactivation
-  // it('should switch trainer to deactivated condition', () => {
-  //   const Skillz: Skill[] = [
-  //     {
-  //       skillId: 1,
-  //       name: 'Java',
-  //       active: true
-  //     }
-  //   ];
+  it('should switch trainer to deactivated condition', () => {
+    const Skillz: Skill[] = [
+      {
+        skillId: 1,
+        name: 'Java',
+        active: true
+      }
+    ];
 
-  //   const dummy = {
-  //     trainerId: 1,
-  //     firstName: 'James',
-  //     lastName: 'Smith',
-  //     skills: Skillz,
-  //     certifications: 'Certs',
-  //     active: true,
-  //     resume: 'Resume'
-  //   };
+    const dummy = {
+      trainerId: 1,
+      firstName: 'James',
+      lastName: 'Smith',
+      skills: Skillz,
+      certifications: 'Certs',
+      active: true,
+      resume: 'Resume',
+      unavailabilities: []
+    };
 
-  //   component.removeTrainer(dummy);
-  //   expect(dummy.active).toBe(false);
-  // });
+    component.removeTrainer(dummy);
+    expect(dummy.active).toBe(false);
+  });
 
   // test trainer reactivation
-  // it('should switch trainer to active condition', () => {
-  //   const Skillz: Skill[] = [
-  //     {
-  //       skillId: 1,
-  //       name: 'Java',
-  //       active: true
-  //     }
-  //   ];
+  it('should switch trainer to active condition', () => {
+    const Skillz: Skill[] = [
+      {
+        skillId: 1,
+        name: 'Java',
+        active: true
+      }
+    ];
 
-  //   const dummy = {
-  //     trainerId: 1,
-  //     firstName: 'James',
-  //     lastName: 'Smith',
-  //     skills: Skillz,
-  //     certifications: 'Certs',
-  //     active: true,
-  //     resume: 'Resume'
-  //   };
+    const dummy = {
+      trainerId: 1,
+      firstName: 'James',
+      lastName: 'Smith',
+      skills: Skillz,
+      certifications: 'Certs',
+      active: true,
+      resume: 'Resume',
+      unavailabilities: []
+    };
 
-  //   component.activateTrainer(dummy);
-  //   expect(dummy.active).toBe(true);
-  // });
+    component.activateTrainer(dummy);
+    expect(dummy.active).toBe(true);
+  });
 });
