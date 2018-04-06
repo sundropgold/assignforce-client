@@ -38,7 +38,9 @@ export class SkillsComponent implements OnInit {
   }
 
   // called to save the current state of the trainers skills
-  saveTSkills() {}
+  saveTSkills() {
+    // this.trainerService.update(this.trainer).subscribe(() => {});
+  }
 
   // add a skill to the current trainer
   addSkill(skill) {
