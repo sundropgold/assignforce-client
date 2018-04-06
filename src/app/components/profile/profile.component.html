@@ -12,6 +12,9 @@ The second md-card/ng-show is for other users to look at other trainers profiles
       <mat-toolbar class="md-toolbar" layout="columns">
           <span>Profile</span>
           <span class="md-toolbar-spacer"></span>
+          <button mat-icon-button (click)="toggleEdit()">
+            <mat-icon matTooltip="Save" class="material-icons">save</mat-icon>
+          </button>
           <button mat-icon-button (click)="updateName()">
             <mat-icon matTooltip="Save" class="material-icons">save</mat-icon>
           </button>
@@ -28,7 +31,7 @@ The second md-card/ng-show is for other users to look at other trainers profiles
         <div class="col-lg-10">
           <div>
             <h1>{{this.trainer.firstName}} {{this.trainer.lastName}}</h1>
-            <form [formGroup]="nameForm">
+            <form [formGroup]="nameForm" *ngIf="edit">
               <mat-form-field flex>
                 <input matInput class="formControl" placeholder="First Name" formControlName="firstName" required>
               </mat-form-field>
