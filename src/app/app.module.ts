@@ -60,6 +60,7 @@ import { SkillControllerService } from './services/api/skill-controller/skill-co
 import { TrainerControllerService } from './services/api/trainer-controller/trainer-controller.service';
 import { UnavailableControllerService } from './services/api/unavailable-controller/unavailable-controller.service';
 import { AuthService } from './services/auth/auth.service';
+import { GuardService as AuthGuard, GuardService } from './services/auth/guard.service';
 import { AuthenticatingComponent } from './components/authenticating/authenticating.component';
 import { CertificationsComponent } from './components/certifications/certifications.component';
 import { MatButtonModule, MatMenuModule, MatToolbarModule, MatIconModule, MatCardModule } from '@angular/material';
@@ -131,6 +132,7 @@ import { CurriculumSkillsComponent } from './components/curriculum-skills/curric
     TrainerControllerService,
     UnavailableControllerService,
     AuthService,
+    GuardService,
     SecurityContext,
     {
       provide: HTTP_INTERCEPTORS,

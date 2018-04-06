@@ -10,50 +10,67 @@ import { ReportsComponent } from './components/reports/reports.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthenticatingComponent } from './components/authenticating/authenticating.component';
+import { GuardService as AuthGuard } from './services/auth/guard.service';
 
 const appRoutes: Routes = [
   {
-    path: '',
-    component: LoginComponent,
-    pathMatch: 'full'
-  },
-  {
-    path: 'overview',
-    component: OverviewComponent
-  },
-  {
-    path: 'batches',
-    component: BatchesComponent
-  },
-  {
-    path: 'locations',
-    component: LocationsComponent
-  },
-  {
-    path: 'curriculum',
-    component: CurriculaComponent
-  },
-  {
-    path: 'trainers',
-    component: TrainersComponent
-  },
-  {
-    path: 'profile',
-    component: ProfileComponent
-  },
-  {
-    path: 'reports',
-    component: ReportsComponent
-  },
-  {
-    path: 'settings',
-    component: SettingsComponent
+    path: 'login',
+    component: LoginComponent
   },
   {
     path: 'callback',
     component: AuthenticatingComponent
   },
-  { path: 'profile/:id', component: ProfileComponent }
+  {
+    path: '',
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'overview',
+        component: OverviewComponent
+      },
+      {
+        path: 'batches',
+        component: BatchesComponent
+      },
+      {
+        path: 'locations',
+        component: LocationsComponent
+      },
+      {
+        path: 'curriculum',
+        component: CurriculaComponent
+      },
+      {
+        path: 'trainers',
+        component: TrainersComponent
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent
+      },
+      {
+        path: 'reports',
+        component: ReportsComponent
+      },
+      {
+        path: 'settings',
+        component: SettingsComponent
+      }
+    ]
+  },
+  {
+    path: 'callback',
+    component: AuthenticatingComponent
+  },
+  {
+    path: 'profile/:id',
+    component: ProfileComponent
+  },
+  {
+    path: '**',
+    redirectTo: ''
+  }
 ];
 
 @NgModule({
