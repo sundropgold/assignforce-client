@@ -4,6 +4,7 @@ import { Skill } from '../../model/Skill';
 import { TrainersAddComponent } from './trainers-add/trainers-add.component';
 import { TrainerItemComponent } from './trainer-item/trainer-item.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
+
 @Component({
   selector: 'app-trainers',
   templateUrl: './trainers.component.html',

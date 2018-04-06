@@ -25,6 +25,7 @@ describe('TrainersAddComponent', () => {
         providers: [
           // TrainerService,
           // {
+          //   provide: TrainerService,
           //   useClass: MockTrainerService
           // },
           {

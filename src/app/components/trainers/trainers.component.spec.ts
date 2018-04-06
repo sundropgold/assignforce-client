@@ -11,6 +11,7 @@ import { Trainer } from '../../model/Trainer';
 describe('TrainersComponent', () => {
   let component: TrainersComponent;
   let fixture: ComponentFixture<TrainersComponent>;
+  // let trainerService: TrainerService;
 
   class MockTrainerService {
     getAll() {}
@@ -23,7 +24,10 @@ describe('TrainersComponent', () => {
     TestBed.configureTestingModule({
       declarations: [TrainersComponent, TrainerItemComponent],
       imports: [AppMaterialModule],
-      providers: [{ provide: HttpClient, useValue: mockClient }]
+      providers: [
+        // { provide: TrainerService, useClass: MockTrainerService },
+        { provide: HttpClient, useValue: mockClient }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TrainersComponent);
@@ -77,11 +81,11 @@ describe('TrainersComponent', () => {
   //         observer.next(trainers);
   //       })
   //     );
-  //     const dataServiceSpy = spyOn(trainerService, 'getAll').and.returnValue(
-  //       Observable.create(observer => {
-  //         observer.next(trainers);
-  //       })
-  //     );
+  // const dataServiceSpy = spyOn(trainerService, 'getAll').and.returnValue(
+  //   Observable.create(observer => {
+  //     observer.next(trainers);
+  //   })
+  // );
 
   //     fixture.detectChanges();
 
