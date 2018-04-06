@@ -58,12 +58,15 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   // zooming
   zoomingEnabled = true;
   zooming = false;
+  minZoom = 1000 * 60 * 60 * 12; // 1/2 a day
+  maxZoom = 1000 * 60 * 60 * 24 * 365 * 2000; // 2000 years
   zoomingFrom: number;
   zoomingFromDate: number;
   zoomingLine = { x1: 0, x2: 0, y1: 0, y2: 0 };
   preZoomBeforeDuration: number;
   preZoomAfterDuration: number;
   zoomScale = 0.01; // px to zoom scale
+  shifting = false;
 
   // this.keycodes
   keycodes = {
@@ -1151,17 +1154,15 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
   // returns the pixel value on the vertical axis this date would appear on the timeline
   dateToYPos(dateValue: number) {
-    const ypos = (dateValue - this.startValue) / (this.endValue - this.startValue) * this.height;
-    return ypos;
+    return (dateValue - this.startValue) / (this.endValue - this.startValue) * this.height;
   }
 
   // returns the date value from the vertical axis position on the timeline
   yPosToDate(ypos: number) {
-    const dateValue = ypos * (this.endValue - this.startValue) / this.height + this.startValue;
-    return dateValue;
+    return ypos * (this.endValue - this.startValue) / this.height + this.startValue;
   }
 
-  startZoom(mouseposy) {
+  startZoom(mouseposy: number) {
     // calculate values needed for zooming from the mousepos
     this.zoomingFrom = mouseposy;
     this.zoomingLine = { x1: this.timescaleXOfs, x2: this.width, y1: mouseposy, y2: mouseposy };
@@ -1177,17 +1178,21 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     this.tooltipActive = false;
   }
 
-  zoomBy(amount) {
+  zoomBy(amount: number) {
     // must be zooming to zoom
     if (!this.zooming) {
       return;
     }
     // scale the durations before and after the zoom line
     const newBeforeDuration = this.preZoomBeforeDuration * amount;
-    const newStart = this.zoomingFromDate - newBeforeDuration;
+    let newStart = this.zoomingFromDate - newBeforeDuration;
     const newAfterDuration = this.preZoomAfterDuration * amount;
-    const newEnd = this.zoomingFromDate + newAfterDuration;
+    let newEnd = this.zoomingFromDate + newAfterDuration;
     // console.log(new Date(newStart) + ', ' + new Date(this.endDate));
+    if (newEnd - newStart < this.minZoom || newEnd - newStart > this.maxZoom) {
+      newStart = this.startValue;
+      newEnd = this.endValue;
+    }
     if (newStart >= newEnd) {
       console.log('start date is after end date!');
       return;
@@ -1203,22 +1208,48 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     this.zooming = false;
   }
 
+  shiftBy(amount: number) {
+    const dur = this.endValue - this.startValue;
+    const shiftBy = amount * dur;
+    this.startValue = this.startValue + shiftBy;
+    this.endValue = this.endValue + shiftBy;
+    this.updateTodayLine();
+  }
+
   // start zoom at mouse pos on mousedown
-  bgmousedown(event) {
+  bgmousedown(event: MouseEvent) {
     if (this.zoomingEnabled) {
-      const mousey = event.clientY - this.timelineRootElement.nativeElement.getBoundingClientRect().top;
-      this.startZoom(mousey);
+      const mx = event.clientX - this.timelineRootElement.nativeElement.getBoundingClientRect().left;
+      const my = event.clientY - this.timelineRootElement.nativeElement.getBoundingClientRect().top;
+      if (mx <= this.timescaleXOfs) {
+        this.shifting = true;
+      } else {
+        this.startZoom(my);
+      }
     }
   }
   // finish zoom on mouseup
-  bgmouseup(event) {
+  bgmouseup(event: MouseEvent) {
     this.finishZoom();
+    this.shifting = false;
   }
   // hide popup and update zoom by delta on mouse move
-  bgmousemove(event) {
+  bgmousemove(event: MouseEvent) {
     const my = event.clientY - this.timelineRootElement.nativeElement.getBoundingClientRect().top;
     const mx = event.clientX - this.timelineRootElement.nativeElement.getBoundingClientRect().left;
+    const mdy = event.movementY;
+    if (this.shifting) {
+      event.preventDefault();
+      // stop shifting if mouse is up (happens when mouse is released outside of the timeline and returns)
+      if (event.buttons !== 1) {
+        this.shifting = false;
+      }
+      // get the factor to zoom by from the relative mouse position
+      const shiftFactor = -mdy / this.height;
+      this.shiftBy(shiftFactor);
+    }
     if (this.zooming) {
+      event.preventDefault();
       // stop zooming if mouse is up (happens when mouse is released outside of the timeline and returns)
       if (event.buttons !== 1) {
         this.finishZoom();
@@ -1292,11 +1323,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
           if (event.shiftKey && this.keyBoardScrollEnabled) {
             // scroll up
             event.preventDefault();
-            const dur = this.endValue - this.startValue;
-            const shiftBy = dur * this.keyScrollSpeed;
-            this.startValue = this.startValue + shiftBy;
-            this.endValue = this.endValue + shiftBy;
-            this.updateTodayLine();
+            this.shiftBy(this.keyScrollSpeed);
           }
           if (this.swimStartProgress === 0 || this.swimStartProgress === 1) {
             this.swimStartProgress += 1;
@@ -1308,11 +1335,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
           if (event.shiftKey && this.keyBoardScrollEnabled) {
             // scroll down
             event.preventDefault();
-            const dur = this.endValue - this.startValue;
-            const shiftBy = -dur * this.keyScrollSpeed;
-            this.startValue = this.startValue + shiftBy;
-            this.endValue = this.endValue + shiftBy;
-            this.updateTodayLine();
+            this.shiftBy(-this.keyScrollSpeed);
           }
           if (this.swimStartProgress === 2 || this.swimStartProgress === 3) {
             this.swimStartProgress += 1;
