@@ -34,21 +34,11 @@ export class AuthService {
   });
 
   public showLogin(): void {
-    //if (this.isAuthenticated()) this.router.navigate([this.urlService.getOverviewUrl()]);
-    this.lock.show();
-    // this.auth0.authorize();
+    if (this.isAuthenticated()) this.router.navigate([this.urlService.getOverviewUrl()]);
+    else this.lock.show();
   }
 
   public handleAuthentication(): void {
-    // this.auth0.parseHash((error, authResult) => {
-    //   if (authResult && authResult.accessToken && authResult.idToken) {
-    //     this.setSession(authResult);
-    //     this.router.navigate([this.urlService.getOverviewUrl()]);
-    //   } else if (error) {
-    //     this.router.navigate([this.urlService.getLoginUrl()]);
-    //   }
-    // });
-
     this.lock.on('authenticated', authResult => {
       this.lock.getUserInfo(authResult.accessToken, (error, profile) => {
         if (authResult && authResult.accessToken && authResult.idToken) {
@@ -56,7 +46,7 @@ export class AuthService {
           this.setSession(authResult);
           this.router.navigate([this.urlService.getOverviewUrl()]);
         } else if (error) {
-          //this.router.navigate([this.urlService.getLoginUrl()]);
+          this.router.navigate([this.urlService.getLoginUrl()]);
         }
       });
     });
@@ -79,14 +69,14 @@ export class AuthService {
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
-    localStorage.setItem('scopes', JSON.stringify(scopes));
-    localStorage.setItem('roles', JSON.stringify(roles));
-    localStorage.setItem('groups', JSON.stringify(groups));
   }
 
   public logout(): void {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('expires_at');
     this.lock.logout({
-      returnTo: environment.baseUrl
+      returnTo: environment.baseUrl + '/' + environment.appRoutes.login
     });
   }
 

@@ -8,27 +8,27 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class BatchesTimelineFilterComponent implements OnInit {
   constructor() {}
 
-  private startDate: Date;
-  private endDate: Date;
-  private curriculum: string;
-  private focus: string;
-  private location: string;
-  private building: string;
-  private hideConcludedBatches: boolean;
-  private hideBatchlessTrainer: boolean;
+  public startDate: Date;
+  public endDate: Date;
+  public curriculum: string;
+  public focus: string;
+  public location: string;
+  public building: string;
+  public hideConcludedBatches: boolean;
+  public hideBatchlessTrainer: boolean;
 
   private DEFAULT_PRECEEDING_MONTHS = 3;
   private DEFAULT_PROCEEDING_MONTHS = 6;
 
   @Output() public filterChangeEmitter = new EventEmitter<Event>();
 
-  private curriculumData = ['Any', '.NET', 'Java', 'SDET', 'Custom'];
+  public curriculumData = ['Any', '.NET', 'Java', 'SDET', 'Custom'];
 
-  private focusData = ['Any', 'Appian', 'Capitol One', 'Big Data'];
+  public focusData = ['Any', 'Appian', 'Capitol One', 'Big Data'];
 
-  private locationData = ['Revature HQ', 'Tempe', 'New York City'];
+  public locationData = ['Revature HQ', 'Tempe', 'New York City'];
 
-  private buildingData = ['Any', '11730 Plaza Drive'];
+  public buildingData = ['Any', '11730 Plaza Drive'];
 
   loadStartDate() {
     const preceedingDate = new Date();
