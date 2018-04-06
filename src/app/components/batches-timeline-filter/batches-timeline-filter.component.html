@@ -53,11 +53,20 @@
         <mat-label>TrainersPerPage</mat-label>
         <input matInput placeholder="Trainers Per Page (0 to see all)" (change)="onFilterChange($event)" id="trainersperpage" value="{{trainersPerPage}}" type="number" min="0">
       </mat-form-field>
-      <button mat-mini-fab id="firstpage" (click)="onFilterChange($event)" color="warn"> <<< </button>
-      <button mat-mini-fab id="previouspage" (click)="onFilterChange($event)" color="warn"> < </button>
-      Viewing All Trainers' Batches
-      <button mat-mini-fab id="nextpage" (click)="onFilterChange($event)" color="warn"> > </button>
-      <button mat-mini-fab id="lastpage" (click)="onFilterChange($event)" color="warn"> >>> </button>
+      <button mat-mini-fab id="diabled-firstpage" *ngIf="currentPage === 0" color="disabled"> |&lt; </button>
+      <button mat-mini-fab id="diabled-previouspage" *ngIf="currentPage === 0" color="disabled"> &lt; </button>
+      <button mat-mini-fab id="firstpage" *ngIf="currentPage > 0" (click)="onFilterChange({target:{id:'firstpage'}})" color="warn"> |&lt; </button>
+      <button mat-mini-fab id="previouspage" *ngIf="currentPage > 0" (click)="onFilterChange({target:{id:'previouspage'}})" color="warn"> &lt; </button>
+      <span *ngIf="trainersPerPage === 0">
+        Viewing All Trainers' Batches
+      </span>
+      <span *ngIf="trainersPerPage != 0" id="viewpagespan">
+        Viewing Page {{currentPage+1}} / {{maxPages+1}}
+      </span>
+      <button mat-mini-fab id="nextpage" *ngIf="currentPage < maxPages" (click)="onFilterChange({target:{id:'nextpage'}})" color="warn"> &gt; </button>
+      <button mat-mini-fab id="lastpage" *ngIf="currentPage < maxPages" (click)="onFilterChange({target:{id:'lastpage'}})" color="warn"> &gt;| </button>
+      <button mat-mini-fab id="diabled-nextpage" *ngIf="currentPage >= maxPages" color="disabled"> &gt; </button>
+      <button mat-mini-fab id="diabled-lastpage" *ngIf="currentPage >= maxPages" color="disabled"> &gt;| </button>
     </div>
     <mat-progress-bar mode="buffer" *ngIf="loading"></mat-progress-bar>
   </div>

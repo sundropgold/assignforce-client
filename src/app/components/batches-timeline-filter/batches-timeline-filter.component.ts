@@ -35,8 +35,6 @@ export class BatchesTimelineFilterComponent implements OnInit {
   locationData = ['Revature HQ', 'Tempe', 'New York City'];
   buildingData = ['Any', '11730 Plaza Drive'];
 
- 
-
   ngOnInit() {
     this.loadCurriculumData();
     this.loadFocusData();
@@ -118,6 +116,4 @@ export class BatchesTimelineFilterComponent implements OnInit {
   onFilterChange(evt: Event) {
     this.filterChangeEmitter.emit(evt);
   }
-
-  
 }

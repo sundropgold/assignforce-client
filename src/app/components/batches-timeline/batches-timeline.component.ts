@@ -29,7 +29,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   // static values for formatting
   height = 2067;
   minColumnWidth = 26;
-  maxColumnWidth = 150;
+  maxColumnWidth = 100;
   minWidth = 400;
   swimlaneYOfs = 20;
   timescaleXOfs = 80;
@@ -167,6 +167,9 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     } else if (event instanceof MatCheckboxChange) {
       id = event.source.id;
       value = event.checked;
+    } else if (event instanceof MatCheckboxChange) {
+      id = event.source.id;
+      value = event.checked;
     } else if (event.targetElement != null) {
       // mat input date event
       id = event.targetElement.id;
@@ -179,7 +182,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         value = event.target.value;
       }
     }
-    console.log('got event: ' + id + ': ' + value);
+    console.log('update filter ' + id + ': ' + value);
     // handle the event with the specified id
     const filterIds = {
       startDate: 'startDate',
@@ -231,7 +234,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       this.updateTrainers();
     } else if (id === filterIds.trainersPerPage) {
       // page filters
-      this.trainersPerPage = value;
+      this.trainersPerPage = Math.max(0, Number.parseInt(value));
       this.updatePage();
     } else if (id === filterIds.currentPage) {
       this.currentPage = Math.max(0, value);
@@ -256,15 +259,20 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
   // updates the max pages
   updatePage() {
+    if (this.trainersPerPage > this.trainers.length) {
+      this.trainersPerPage = this.trainers.length;
+    }
     if (this.trainersPerPage === 0) {
       this.actualTrainersPerPage = this.trainers.length;
+      this.maxPages = 0;
+      this.currentPage = 0;
     } else {
       this.actualTrainersPerPage = this.trainersPerPage;
+      // update max page value
+      this.maxPages = Math.floor((this.trainers.length - 0.5) / this.actualTrainersPerPage);
+      this.currentPage = Math.min(this.currentPage, this.maxPages);
     }
 
-    // update max page value
-    this.maxPages = Math.floor((this.trainers.length - 0.5) / this.actualTrainersPerPage);
-    this.currentPage = Math.min(this.currentPage, this.maxPages);
     // find the number of trainers on the current page
     this.trainersOnThisPage = Math.min(
       this.trainers.length - this.currentPage * this.actualTrainersPerPage,
@@ -335,6 +343,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     this.columnWidth = Math.min(this.maxColumnWidth, Math.max(this.minColumnWidth, col_wid));
 
     // console.log(this.width + ' ' + this.height);
+    this.finishSwimMode();
     this.updateTodayLine();
   }
 
@@ -803,14 +812,14 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       x: leftlanex,
       y: swimposy,
       color: swimColor + 'ff',
-      r: this.columnWidth / 4,
+      r: 15,
       points: pointsRect,
       highpoints: highpointsRect
     };
 
     // setup gauge position
     const gaugex = leftlanex - this.columnWidth;
-    const gaugeh = this.columnWidth * 2;
+    const gaugeh = this.swimPos.r * 4;
     const gaugey = swimposy - gaugeh / 2;
     const gaugey2 = swimposy + gaugeh / 2;
     const gaugew = 8;
@@ -853,6 +862,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     const intervalRate = 1000 / numFrames;
     let time = 0;
     const startIn = 1000;
+    // start
     setTimeout(() => {
       const loop = setInterval(() => {
         // stop
@@ -873,7 +883,6 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
           } else {
             console.log('completed with ' + this.swimPoints + '!');
             if (this.swimPoints > this.swimHigh) {
-              console.log('new highscore!');
               this.swimHigh = this.swimPoints;
             }
             console.log('restarting...');
@@ -933,7 +942,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
           }
         }
 
-        // add random batches
+        // add batches
         addBatchTimer -= intervalRate;
         if (addBatchTimer <= 0) {
           const randy = Math.random() * oneWeekMs * 4;
@@ -945,14 +954,14 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
           );
         }
 
-        // add random dots
+        // add dots
         addDotTimer -= intervalRate;
         if (addDotTimer <= 0) {
           const randX = leftlanex + this.columnWidth * Math.floor(Math.random() * this.trainersOnThisPage);
           const randy = Math.random() * oneWeekMs * 5;
           const y = this.dateToYPos(this.endValue + addBuffer - randy);
           // console.log('making dot ' + this.swimDots.length + ' at ' + randX + ' ' + y);
-          this.swimDots.push({ x: randX, y: y, r: this.columnWidth / 10, color: '#eedd20ee' });
+          this.swimDots.push({ x: randX, y: y, r: this.swimPos.r / 2, color: '#eedd20ee' });
           addDotTimer = addDotRate;
         }
         for (let i = 0; i < this.swimDots.length; i++) {
@@ -972,14 +981,12 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
               this.swimPos.x < this.swimDots[i].x + this.swimDots[i].r
             ) {
               this.swimPoints += 100;
-              console.log('got a dot! +100');
+              console.log('+100');
               this.swimDots.splice(i, 1);
               i--;
               continue;
             }
           }
-          // const movespeedpx = moveSpeed * defDur / this.height;
-          // this.swimDots[i].y -= movespeedpx;
           this.swimDots[i].y = this.dateToYPos(this.yPosToDate(this.swimDots[i].y) - moveSpeed);
         }
 
@@ -1007,6 +1014,9 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
   // reset to normal mode
   finishSwimMode() {
+    if (this.swimPoints > this.swimHigh) {
+      this.swimHigh = this.swimPoints;
+    }
     this.swimActive = false;
     this.swimStartProgress = 0;
     this.zoomingEnabled = true;
