@@ -12,6 +12,7 @@ import 'rxjs/add/observable/of';
 import { CompileNgModuleMetadata } from '@angular/compiler';
 import { SkillsComponent } from '../skills/skills.component';
 import { CertificationsComponent } from '../certifications/certifications.component';
+import { ActivatedRoute } from '@angular/router';
 
 //creates a fake skill service to pass test values
 class MockSkillService {
