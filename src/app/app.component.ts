@@ -24,7 +24,8 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.auth0.handleAuthentication();
   }
-   logout(){
+
+  logout() {
     this.auth0.logout();
   }
 }
