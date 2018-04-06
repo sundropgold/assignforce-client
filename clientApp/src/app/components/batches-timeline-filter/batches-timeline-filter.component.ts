@@ -11,7 +11,7 @@ export class BatchesTimelineFilterComponent implements OnInit {
   constructor(
     private curriculumControllerService: CurriculumControllerService,
     private locationControllerService: LocationControllerService
-  ) { }
+  ) {}
 
   @Input() loading = false;
 
@@ -53,7 +53,7 @@ export class BatchesTimelineFilterComponent implements OnInit {
       for (let i = 0; i < result.length; i++) {
         const curriculum = result[i];
         const value = curriculum.name;
-        if (value != null) {
+        if (curriculum.core && value != null) {
           this.curriculumData.push(value);
         }
       }
@@ -70,7 +70,7 @@ export class BatchesTimelineFilterComponent implements OnInit {
       for (let i = 0; i < result.length; i++) {
         const focus = result[i];
         const value = focus.name;
-        if (value != null) {
+        if (!focus.core && value != null) {
           this.focusData.push(value);
         }
       }
@@ -86,8 +86,7 @@ export class BatchesTimelineFilterComponent implements OnInit {
       this.locationData.push('Any');
       for (let i = 0; i < result.length; i++) {
         const location = result[i];
-        console.log('got location:' + location.id + ' ' + location.locationId + ' ' + location.locationName + ' ' + location.buildingId + ' ' + location.buildingName);
-        const value = location.locationName;
+        const value = location.name;
         if (value != null) {
           this.locationData.push(value);
         }
@@ -104,9 +103,12 @@ export class BatchesTimelineFilterComponent implements OnInit {
       this.buildingData.push('Any');
       for (let i = 0; i < result.length; i++) {
         const location = result[i];
-        const value = location.buildingName;
-        if (value != null) {
-          this.buildingData.push(value);
+        for (let j = 0; j < location.buildings.length; j++) {
+          const building = location.buildings[j];
+          const value = building.name;
+          if (value != null) {
+            this.buildingData.push(value);
+          }
         }
       }
       this.buildingFilter = 'Any';

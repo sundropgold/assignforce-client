@@ -240,22 +240,22 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
           }
         }
         // filter by type
-        if (this.curriculumFilter!=='Any') {
+        if (this.curriculumFilter !== 'Any') {
           if (batch.curriculum.name !== this.curriculumFilter) {
             continue;
           }
         }
-        if (this.focusFilter!=='Any') {
-          if (batch.focus.name !== this.focusFilter) {
+        if (this.focusFilter !== 'Any') {
+          if (batch.focus != null && batch.focus.name !== this.focusFilter) {
             continue;
           }
         }
-        if (this.locationFilter!=='Any') {
+        if (this.locationFilter !== 'Any') {
           if (batch.batchLocation.locationName !== this.locationFilter) {
             continue;
           }
         }
-        if (this.buildingFilter!=='Any') {
+        if (this.buildingFilter !== 'Any') {
           if (batch.batchLocation.buildingName !== this.buildingFilter) {
             continue;
           }
