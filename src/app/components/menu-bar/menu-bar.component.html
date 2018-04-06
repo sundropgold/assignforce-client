@@ -1,3 +1,4 @@
+<<<<<<< HEAD:src/app/components/menu-bar/menu-bar.component.html
 
   <button mat-raised-button (click)="logout()">Logout</button>
 
@@ -19,3 +20,9 @@
     <mat-tab label="SETTINGS">
     </mat-tab>
   </mat-tab-group>
+=======
+<mat-tab-group  (selectChange)="selectTab($event)" [(selectedIndex)]="selectedTab" >
+<mat-tab *ngFor="let d of tabs" label={{d}}>
+</mat-tab>
+</mat-tab-group>
+>>>>>>> a2525fddb88278d67b444361836dac34879e9744:clientApp/src/app/components/menu-bar/menu-bar.component.html
