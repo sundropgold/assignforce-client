@@ -17,17 +17,21 @@ export class AddSkillComponent implements OnInit {
   skill: Skill;
 
   ngOnInit() {
-    this.skill = new Skill(0, '', true);
+    this.newSkill();
   }
 
   closeDialog(): void {
     this.dialogRef.close();
   }
 
+  newSkill(): void {
+    this.skill = new Skill(0, '', true);
+  }
+
   addSkill(): void {
     console.log('We are Adding a skill ' + this.skill.name);
     this.skillControllerService.saveSkill(this.skill);
-    this.skill = new Skill(0, '', true);
+    this.newSkill();
     this.closeDialog();
   }
 }

@@ -67,9 +67,4 @@ describe('FociComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('mat-panel-title').textContent).toContain('Focuses');
   });
-
-  it('should add a focus when the add focus function is called', () => {
-    fixture.detectChanges();
-    component.addFocus("This doesn't matter");
-  });
 });

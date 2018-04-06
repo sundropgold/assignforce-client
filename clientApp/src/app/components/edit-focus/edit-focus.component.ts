@@ -22,16 +22,7 @@ export class EditFocusComponent implements OnInit {
     private curriculaControllerService: CurriculumControllerService
   ) {}
 
-  skills: Skill[] = [
-    // { skillId: 1, name: 'Core JAVA', active: true },
-    // { skillId: 2, name: '.Net', active: true },
-    // { skillId: 3, name: 'Spring', active: true },
-    // { skillId: 4, name: 'REST', active: true },
-    // { skillId: 5, name: 'JUnit', active: true },
-    // { skillId: 6, name: 'MVC', active: true },
-    // { skillId: 7, name: 'SOAP', active: true },
-    // { skillId: 8, name: 'Pega', active: true }
-  ];
+  skills: Skill[] = [];
 
   selectedSkills: Skill[] = [];
 

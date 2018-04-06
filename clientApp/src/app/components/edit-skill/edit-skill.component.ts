@@ -18,17 +18,21 @@ export class EditSkillComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.skill = this.data;
+    this.newSkill();
   }
 
   closeDialog() {
     this.dialogRef.close();
   }
 
+  newSkill(): void {
+    this.skill = new Skill(0, '', true);
+  }
+
   editSkill(): void {
     console.log('We are Editing a skill ' + this.data.name);
     this.skillControllerService.updateSkillCaliber(this.skill);
-    this.skill = new Skill(0, '', true);
+    this.newSkill();
     this.closeDialog();
   }
 }

@@ -17,7 +17,7 @@ export class CoreComponent implements OnInit {
     this.curriculumControllerService.retrieveAllActiveCore().subscribe(data => {
       const tempData: Curriculum[] = data;
       for (let i = 0; i < tempData.length; i++) {
-        if (tempData[i].core === true) {
+        if (tempData[i].core) {
           this.coreData.push(tempData[i]);
         }
       }

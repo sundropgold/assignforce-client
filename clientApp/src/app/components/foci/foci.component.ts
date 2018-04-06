@@ -27,18 +27,6 @@ export class FociComponent implements OnInit {
     });
   }
 
-  addFocus(e) {
-    console.log('Adding Focus');
-  }
-
-  editFocus(e) {
-    console.log('Editing Focus');
-  }
-
-  removeFocus(e) {
-    console.log('Removing Focus');
-  }
-
   openAddFocusDialog() {
     const dialogRef = this.dialog.open(AddFocusComponent, {});
   }
