@@ -22,12 +22,12 @@ export const environment = {
   auth0: {
     namespace: 'https://revature.com/',
     title: 'AssignForce Login',
-    clientId: 'uS5tb62hP8K3CgU00qa38SVnfWvzviiH',
+    clientId: 'tjQhcs0O4mRV2iry6SAO0Gy1YQcBrWCa',
     domain: 'revature.auth0.com',
     responseType: 'token id_token',
-    audience: 'https://revature.auth0.com/userinfo',
+    audience: 'hydra-gateway',
     redirectUri: 'https://assignforce.cfapps.io/callback',
-    scope: 'openid'
+    scope: 'openid profile'
   },
 
   apiUrls: {
