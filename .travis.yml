@@ -14,7 +14,7 @@ addons:
     - google-chrome-stable
 install:
 - npm install
-# - ng build --prod
+- ng build --prod
 scripts:
 - export CHROME_BIN=chromium-browser
 - npm run lint:ci
@@ -30,4 +30,5 @@ deploy:
   space: development
   on:
     repo: revaturelabs/assignforce-client
-    branch: peter
+    branch: develop
+
