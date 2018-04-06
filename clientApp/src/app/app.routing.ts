@@ -18,35 +18,35 @@ const appRoutes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'overview',
+    path: new UrlService().getOverviewUrl(),
     component: OverviewComponent
   },
   {
-    path: 'batches',
+    path: new UrlService().getBatchesUrl(),
     component: BatchesComponent
   },
   {
-    path: 'locations',
+    path: new UrlService().getLocationsUrl(),
     component: LocationsComponent
   },
   {
-    path: 'curriculum',
+    path: new UrlService().getCurriculaUrl(),
     component: CurriculaComponent
   },
   {
-    path: 'trainers',
+    path: new UrlService().getTrainersUrl(),
     component: TrainersComponent
   },
   {
-    path: 'profile',
+    path: new UrlService().getProfileUrl(),
     component: ProfileComponent
   },
   {
-    path: 'reports',
+    path: new UrlService().getReportsUrl(),
     component: ReportsComponent
   },
   {
-    path: 'settings',
+    path: new UrlService().getSettingsUrl(),
     component: SettingsComponent
   },
   {
