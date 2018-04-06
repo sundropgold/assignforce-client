@@ -4,7 +4,7 @@ import { Note } from './Note';
 import { Panel } from './Panel';
 
 export class Trainee {
-  traineeId: number;
+  id: number;
   resourceId: string;
   name: string;
   email: string;
@@ -24,7 +24,7 @@ export class Trainee {
   panelInterviews: Panel[];
 
   constructor(
-    traineeId: number,
+    id: number,
     resourceId: string,
     name: string,
     email: string,
@@ -43,7 +43,7 @@ export class Trainee {
     notes: Note[],
     panelInterviews: Panel[]
   ) {
-    this.traineeId = traineeId;
+    this.id = id;
     this.resourceId = resourceId;
     this.name = name;
     this.email = email;

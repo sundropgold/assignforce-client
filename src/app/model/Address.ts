@@ -1,5 +1,5 @@
 export class Address {
-  addressId: number;
+  id: number;
   street: string;
   city: string;
   state: string;
@@ -8,7 +8,7 @@ export class Address {
   active: boolean;
 
   constructor(
-    addressId: number,
+    id: number,
     street: string,
     city: string,
     state: string,
@@ -16,7 +16,7 @@ export class Address {
     company: string,
     active: boolean
   ) {
-    this.addressId = addressId;
+    this.id = id;
     this.street = street;
     this.city = city;
     this.state = state;

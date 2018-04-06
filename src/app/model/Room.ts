@@ -1,14 +1,14 @@
 import { Unavailable } from './Unavailable';
 
 export class Room {
-  roomId: number;
+  id: number;
   active: boolean;
   roomName: string;
   building: number;
   // unavailabilities: Unavailability[];
 
-  constructor(roomId: number, active: boolean, roomName: string, building: number) {
-    this.roomId = roomId;
+  constructor(id: number, active: boolean, roomName: string, building: number) {
+    this.id = id;
     this.active = active;
     this.roomName = roomName;
     this.building = building;

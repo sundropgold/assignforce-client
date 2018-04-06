@@ -1,10 +1,10 @@
 export class Unavailable {
-  unavailableId: number;
+  id: number;
   startDate: number;
   endDate: number;
 
-  constructor(unavailableId: number, startDate: number, endDate: number) {
-    this.unavailableId = unavailableId;
+  constructor(id: number, startDate: number, endDate: number) {
+    this.id = id;
     this.startDate = startDate;
     this.endDate = endDate;
   }

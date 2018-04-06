@@ -6,7 +6,7 @@ import { BatchLocation } from './BatchLocation';
 import { Address } from './Address';
 
 export class Batch {
-  batchId: number;
+  id: number;
   resourceId: string;
   trainingName: string;
   skillType: SkillType;
@@ -23,7 +23,7 @@ export class Batch {
   notes: Note[];
 
   constructor(
-    batchId: number,
+    id: number,
     resourceId: string,
     trainingName: string,
     skillType: SkillType,
@@ -39,7 +39,7 @@ export class Batch {
     gradedWeeks: number,
     notes: Note[]
   ) {
-    this.batchId = batchId;
+    this.id = id;
     this.resourceId = resourceId;
     this.trainingName = trainingName;
     this.skillType = skillType;

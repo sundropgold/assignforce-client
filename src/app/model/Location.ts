@@ -1,15 +1,15 @@
 import { Building } from './Building';
 
 export class Location {
-  locationId: number;
+  id: number;
   name: string;
   city: string;
   state: string;
   active: boolean;
   buildings: Building[];
 
-  constructor(locationId: number, name: string, city: string, state: string, active: boolean, buildings: Building[]) {
-    this.locationId = locationId;
+  constructor(id: number, name: string, city: string, state: string, active: boolean, buildings: Building[]) {
+    this.id = id;
     this.name = name;
     this.city = city;
     this.state = state;

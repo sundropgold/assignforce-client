@@ -1,5 +1,5 @@
 export class Panel {
-  panelId: number;
+  id: number;
   trainee: Trainee;
   panelList: Trainer;
   interviewDate: string;
@@ -19,7 +19,7 @@ export class Panel {
   overall: string;
 
   constructor(
-    panelId: number,
+    id: number,
     trainee: Trainee,
     panelList: Trainer,
     interviewDate: string,
@@ -38,7 +38,7 @@ export class Panel {
     communicationSkills: string,
     overall: string
   ) {
-    this.panelId = panelId;
+    this.id = id;
     this.trainee = trainee;
     this.panelList = panelList;
     this.interviewDate = interviewDate;

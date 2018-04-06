@@ -1,7 +1,7 @@
 import { Batch } from './Batch';
 
 export class Note {
-  noteId: number;
+  id: number;
   content: string;
   week: number;
   batch: Batch;
@@ -12,7 +12,7 @@ export class Note {
   qcStatus: QCStatus;
 
   constructor(
-    noteId: number,
+    id: number,
     content: string,
     week: number,
     batch: Batch,
@@ -22,7 +22,7 @@ export class Note {
     qcFeedback: boolean,
     qcStatus: QCStatus
   ) {
-    this.noteId = noteId;
+    this.id = id;
     this.content = content;
     this.week = week;
     this.batch = batch;

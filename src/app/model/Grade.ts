@@ -1,14 +1,14 @@
 import { Assessment } from './Assessment';
 
 export class Grade {
-  gradeId: number;
+  id: number;
   assessment: Assessment[];
   trainee: Trainee;
   dateReceived: string;
   score: number;
 
-  constructor(gradeId: number, assessment: Assessment[], trainee: Trainee, dateReceived: string, score: number) {
-    this.gradeId = gradeId;
+  constructor(id: number, assessment: Assessment[], trainee: Trainee, dateReceived: string, score: number) {
+    this.id = id;
     this.assessment = assessment;
     this.trainee = trainee;
     this.dateReceived = dateReceived;

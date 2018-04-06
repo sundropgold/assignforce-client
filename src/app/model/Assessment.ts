@@ -1,5 +1,5 @@
 export class Assessment {
-  assessmentId: number;
+  id: number;
   title: string;
   batch: Batch;
   rawScore: number;
@@ -9,7 +9,7 @@ export class Assessment {
   grades: Grade[];
 
   constructor(
-    assessmentId: number,
+    id: number,
     title: string,
     batch: Batch,
     rawScore: number,
@@ -18,7 +18,7 @@ export class Assessment {
     category: Category,
     grades: Grade[]
   ) {
-    this.assessmentId = assessmentId;
+    this.id = id;
     this.title = title;
     this.batch = batch;
     this.rawScore = rawScore;

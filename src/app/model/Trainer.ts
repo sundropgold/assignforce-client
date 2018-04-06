@@ -3,15 +3,15 @@ import { Unavailable } from './Unavailable';
 import { Batch } from './Batch';
 
 export class Trainer {
-  trainerId: number;
+  id: number;
   name: string;
   title: string;
   email: string;
   tier: TrainerRole;
   batches: Batch[];
 
-  constructor(trainerId: number, name: string, title: string, email: string, tier: TrainerRole, batches: Batch[]) {
-    this.trainerId = trainerId;
+  constructor(id: number, name: string, title: string, email: string, tier: TrainerRole, batches: Batch[]) {
+    this.id = id;
     this.name = name;
     this.title = title;
     this.email = email;
