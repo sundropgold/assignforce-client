@@ -46,10 +46,6 @@ const appRoutes: Routes = [
         component: TrainersComponent
       },
       {
-        path: 'profile',
-        component: ProfileComponent
-      },
-      {
         path: 'reports',
         component: ReportsComponent
       },
