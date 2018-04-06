@@ -1,0 +1,53 @@
+<form>
+  <div>
+    <div>
+        <mat-form-field>
+          <mat-label>Start Date</mat-label>
+          <input matInput id="startDate" (change)="onFilterChange($event)" (dateChange)="onFilterChange($event)" [matDatepicker]="picker1" [(ngModel)]="startDate" name="startDate">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+      <mat-form-field>
+        <mat-label>End Date</mat-label>
+        <input matInput id="endDate" (change)="onFilterChange($event)" (dateChange)="onFilterChange($event)" [matDatepicker]="picker2" [(ngModel)]="endDate" name="endDate">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Curriculum</mat-label>
+        <mat-select id="curriculum" (change)="onFilterChange($event)" [(ngModel)]="curriculum" name="curriculum">
+          <mat-option *ngFor="let cur of curriculumData" value="{{curr}}">
+            {{cur}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Focus</mat-label>
+        <mat-select id="focus" (change)="onFilterChange($event)" [(ngModel)]="focus" name="focus">
+          <mat-option *ngFor="let foc of focusData" value="{{foc}}">
+            {{foc}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label id="location">Location</mat-label>
+        <mat-select (change)="onFilterChange($event)" [(ngModel)]="location" name="location">
+          <mat-option *ngFor="let loc of locationData" value="{{loc}}">
+            {{loc}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Building</mat-label>
+        <mat-select id="building" (change)="onFilterChange($event)" [(ngModel)]="building" name="building">
+          <mat-option *ngFor="let build of buildingData" value="{{build}}">
+            {{build}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-checkbox id="hideconcluded" (change)="onFilterChange($event)" color="primary">Hide Concluded Batches</mat-checkbox>
+      <mat-checkbox id="hidebatchless" (change)="onFilterChange($event)" color="primary">Hide Batchless Trainers</mat-checkbox>
+      <mat-checkbox id="hideinactive" (change)="onFilterChange($event)" color="primary">Hide Inactive Trainers</mat-checkbox>
+    </div>
+  </div>
+</form>
