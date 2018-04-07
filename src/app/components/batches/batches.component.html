@@ -6,7 +6,7 @@
     <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          {{firstTabHeader}}
+          Create New Batch
         </mat-panel-title>
       </mat-expansion-panel-header>
 
@@ -114,14 +114,10 @@
 
     <!-- for testing purpose -->
   <p>Form value: {{ batchForm.value | json }}</p>
-
-
-
-
   </mat-accordion>
 
-  <!------All Batches------->
-  <!------This has some Admin properties------->
+  <!--All Batches-->
+  <!--This has some Admin properties-->
   <mat-accordion>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
@@ -130,7 +126,7 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="example-container_mat-elevation-z8">
-        <mat-table #table [dataSource]="batchData" matSort>
+        <mat-table #table [dataSource]="dataSource" matSort>
 
           <!-- Checkbox Column -->
           <ng-container matColumnDef="Checkbox">
@@ -216,8 +212,8 @@
             </mat-cell>
           </ng-container>
 
-          <mat-header-row *matHeaderRowDef="batchValues"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: batchValues;"></mat-row>
+          <mat-header-row *matHeaderRowDef="batchColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: batchColumns;"></mat-row>
         </mat-table>
       </div>
 
