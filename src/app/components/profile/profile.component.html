@@ -1,31 +1,24 @@
-<!--&lt;!&ndash;&lt;!&ndash; IMPORTANT READ HERE FIRST  &ndash;&gt;&ndash;&gt;-->
-<!--
-I have created two ng-shows with two different md-cards, find the section where there are  many empty comment blocks
-The top one is only for the user to change their profileCtrl
-The second md-card/ng-show is for other users to look at other trainers profiles but arent allowed to make a change.
- -->
 <div style="margin-top: 5%">
-  <!--<mat-card *ngIf="tId == -1" md-whiteframe="8" ng-cloak>-->
   <mat-card>
     <mat-toolbar-row>
       <mat-toolbar class="md-toolbar" layout="columns">
         <span>Profile</span>
         <span class="md-toolbar-spacer"></span>
-        <button mat-icon-button (click)="updateName()" *ngIf="this.trainer.trainerId === 1">
+        <button mat-icon-button (click)="updateName()">
           <mat-icon matTooltip="Save" class="material-icons" *ngIf="!lockProfile">save</mat-icon>
           <mat-icon matTooltip="Edit" class="material-icons" *ngIf="lockProfile">edit</mat-icon>
         </button>
       </mat-toolbar>
     </mat-toolbar-row>
     <!--info section-->
-    <mat-card-content *ngIf="trainer != undefined">
+    <mat-card-content *ngIf="trainer != undefined && skills != undefined">
       <div class="row">
         <div class="col-lg-2">
           <img layout="column" style="border-radius: 50%;" alt="" ng-src="https://app.revature.com/core/resources/download/default/interns/image?t=1486138020884"
             id="displayImage" class="width-200 height-200" src="https://app.revature.com/core/resources/download/default/interns/image?t=1486138020884">
         </div>
         <div class="col-lg-10">
-          <h1>{{trainer.firstName}} {{trainer.lastName}}</h1>
+          <h1>{{this.trainer.firstName}} {{this.trainer.lastName}}</h1>
           <div *ngIf="!lockProfile">
             <form [formGroup]="nameForm">
               <mat-form-field flex>

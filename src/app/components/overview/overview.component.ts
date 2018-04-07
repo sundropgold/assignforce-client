@@ -12,11 +12,6 @@ import { BatchControllerService } from '../../services/api/batch-controller/batc
   encapsulation: ViewEncapsulation.None
 })
 export class OverviewComponent implements OnInit, AfterViewInit {
-  color = 'warn';
-  mode = 'determinate';
-  value = 0;
-  bufferValue = 75;
-
   // ----------------------- NEW CODE FROM NEW HOPE -----------------------------------
   selectedFilter: number;
   batchList: any[] = [];
@@ -37,11 +32,11 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private urlService: UrlService, private batchService: BatchControllerService) {}
+  constructor(private batchController: BatchControllerService) {}
 
   ngOnInit() {
     //TODO -- use the batch-controller.service
-    this.batchService.getAllBatches().subscribe(blist => {
+    this.batchController.getAllBatches().subscribe(blist => {
       blist.forEach(batch => {
         // This is an object that encapsulates the batch object's properties and a progress number.
         const batchObj = {
@@ -68,8 +63,8 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     });
   }
   ngAfterViewInit() {
-    //   this.dataSource.sort = this.sort;
-    //   this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
   // -------------------------------- PREVIOUS BATCH'S METHODS -------------------------------------------
   exportToCSV(evt) {
@@ -138,7 +133,11 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     if (batch_current_week <= 0) {
       return 0;
     }
-    const progress = batch_current_week / training_duration;
-    return progress * 100;
+    let progress = batch_current_week / training_duration;
+    progress = progress * 100;
+    if (progress > 100) {
+      return 100;
+    }
+    return progress;
   }
 }

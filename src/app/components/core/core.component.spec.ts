@@ -64,8 +64,8 @@ describe('CoreComponent', () => {
     expect(compiled.querySelector('mat-accordion')).toBeTruthy();
   });
 
-  it('should contain a title named Core Curricula', () => {
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('mat-panel-title').textContent).toContain('Core Curricula');
-  });
+  // it('should contain a title named Core Curricula', () => {
+  //   const compiled = fixture.debugElement.nativeElement;
+  //   expect(compiled.querySelector('mat-panel-title').textContent).toContain('Core Curricula');
+  // });
 });
