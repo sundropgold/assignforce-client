@@ -4,7 +4,7 @@
       <mat-toolbar class="md-toolbar" layout="columns">
         <span>Profile</span>
         <span class="md-toolbar-spacer"></span>
-        <button mat-icon-button (click)="updateName()" *ngIf="trainer.trainerId == id">
+        <button mat-icon-button (click)="updateTrainerInfo()">
           <mat-icon matTooltip="Save" class="material-icons" *ngIf="!lockProfile">save</mat-icon>
           <mat-icon matTooltip="Edit" class="material-icons" *ngIf="lockProfile">edit</mat-icon>
         </button>
@@ -18,8 +18,15 @@
             id="displayImage" class="width-200 height-200" src="https://app.revature.com/core/resources/download/default/interns/image?t=1486138020884">
         </div>
         <div class="col-lg-10">
-          <h1>{{this.trainer.firstName}} {{this.trainer.lastName}}</h1>
-          <div *ngIf="!lockProfile">
+            <h1>{{this.trainer.firstName}} {{this.trainer.lastName}}</h1>
+            <div layout="row">
+              <!--need to figure out accessing the file, as far as permissions go-->
+              <label> Current Resume: </label>
+              <label *ngIf="trainer.resume != null">{{trainer.resume}}</label>
+              <label *ngIf="trainer.resume == null">No resume on file</label>
+              <br>
+            </div>
+            <div *ngIf="!lockProfile">
             <form [formGroup]="nameForm">
               <mat-form-field flex>
                 <input matInput class="formControl" placeholder="First Name" formControlName="firstName" required>
@@ -28,25 +35,18 @@
                 <input matInput class="formControl" placeholder="Last Name" name="lastLast" formControlName="lastName" required>
               </mat-form-field>
             </form>
-            <div layout="row">
-              <!--need to figure out accessing the file, as far as permissions go-->
-              <label> Current Resume: </label>
-              <label *ngIf="trainer.resume != null">{{trainer.resume}}</label>
-              <label *ngIf="trainer.resume == null">No resume on file</label>
-              <br>
-            </div>
             <div class="row">
-              <div class="col-lg-1">
-                <button mat-icon-button (click)="inputResume.click()">
+              <div class="col-lg-2">
+                <label for="addResume">Add Resume:</label>
+                <button name="addResume" mat-icon-button (click)="inputResume.click()">
                   <input class="inputFile" #inputResume type="file" (change)="getFiles($event)">
                   <mat-icon matTooltip="Add/Update Resume" position="below" class="material-icons revOrange">add_circle</mat-icon>
                 </button>
               </div>
               <div class="col-lg-11" *ngIf="myFile != undefined">
                 <label>{{myFile[0].name}}</label>
-                <button mat-button (click)="uploadResume()">Update</button>
               </div>
-            </div>
+          </div>
           </div>
         </div>
       </div>
