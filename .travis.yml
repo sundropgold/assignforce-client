@@ -18,8 +18,7 @@ script:
 - export CHROME_BIN=chromium-browser
 - xvfb-run -a npm run lint:ci
 - xvfb-run -a npm run test:ci
-before_deploy:
-- ng build --prod
+- xvfb-run -a npm run prod
 deploy:
   skip_cleanup: true
   provider: cloudfoundry
