@@ -1,7 +1,10 @@
 .revOrange {
   color: #f26a25;
 }
-
+.center {
+  margin: auto;
+  width: 10%;
+}
 .md-toolbar-spacer {
   flex: 1 1 auto;
 }
