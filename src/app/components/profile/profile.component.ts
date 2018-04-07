@@ -50,11 +50,20 @@ export class ProfileComponent implements OnInit {
   constructor(private s3Service: S3CredentialService) {}
 
   ngOnInit() {
-    //this.populateSkillList();
-  }
-
-  toggleEdit() {
-    this.edit = !this.edit;
+    // data gathering
+    // id is hard coded for testing. unless you click on a trainer in the trainer page.
+    // if (this.tId > -1) {
+    //   this.lockProfile = false;
+    //   this.trainerService.getById(this.tId).subscribe(response => {this.trainer = response; this.getAllSkills(); },
+    //     () => this.showToast('Could not fetch trainer.'));
+    // } else {
+    //   this.trainerService.getByFirstNameAndLastName(this.fName, this.lName).subscribe(response => {this.trainer = response; this.getAllSkills(); },
+    //     () => this.showToast('Could not fetch trainer.'));
+    //   this.lockProfile = true;
+    // }
+    //
+    // // grab credentials for s3
+    // this.s3Service.getCreds().subscribe( response => this.creds = response, () => this.showToast('Failed to fetch Credentials'));
   }
 
   getFiles(event) {
@@ -62,13 +71,6 @@ export class ProfileComponent implements OnInit {
     console.log(this.myFile);
   }
 
-  getCert(event) {
-    this.certFile = event.target.files;
-  }
-
-  // showToast(message) {
-
-  // }
   showToast(message) {
     // this.aCtrl.showToast( message );
   }
@@ -80,18 +82,27 @@ export class ProfileComponent implements OnInit {
 
   //Updates user's name
   updateName() {
-    this.lockProfile = !this.lockProfile;
-    if (this.lockProfile) {
+    if (!this.lockProfile) {
       console.log(this.nameForm.value.firstName);
 
       this.nameFound = true;
       this.trainer.firstName = this.nameForm.value.firstName;
       this.trainer.lastName = this.nameForm.value.lastName;
     }
+    this.lockProfile = !this.lockProfile;
   }
+
+  // queries the database for skills. to be called after a change to the skills array
+  // rePullSkills() {
+  //   this.skillsList = undefined;
+  //   this.skillService.getAll().subscribe( response => this.skillsList = response, () => this.showToast('Could not fetch skills.'));
+  // }
 
   // queries the database for the trainer. to be called after a change to the trainer's properties
   pullTrainer() {
     this.trainer = undefined;
+    // this.trainerService
+    //   .getById(this.tId)
+    //   .subscribe(response => (this.trainer = response), () => this.showToast('Could not fetch trainer.'));
   }
 }

@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-
 import { AppMaterialModule } from '../../material.module';
 import { TrainerItemComponent } from './trainer-item/trainer-item.component';
 import { TrainersComponent } from './trainers.component';

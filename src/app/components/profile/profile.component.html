@@ -26,8 +26,7 @@ The second md-card/ng-show is for other users to look at other trainers profiles
         </div>
         <div class="col-lg-10">
             <h1>{{this.trainer.firstName}} {{this.trainer.lastName}}</h1>
-            <div *ngIf="!lockProfile">
-            <form [formGroup]="nameForm">
+            <form [formGroup]="nameForm" *ngIf="!lockProfile">
               <mat-form-field flex>
                 <input matInput class="formControl" placeholder="First Name" formControlName="firstName" required>
               </mat-form-field>
@@ -53,7 +52,6 @@ The second md-card/ng-show is for other users to look at other trainers profiles
                 <label>{{myFile[0].name}}</label>
                 <button mat-button (click)="uploadResume()">Update</button>
               </div>
-          </div>
           </div>
         </div>
       </div>
