@@ -12,7 +12,6 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthenticatingComponent } from './components/authenticating/authenticating.component';
 import { UrlService } from './services/url/url.service';
 
-
 const appRoutes: Routes = [
   {
     path: '',

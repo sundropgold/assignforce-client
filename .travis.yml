@@ -14,11 +14,11 @@ addons:
     - google-chrome-stable
 install:
 - npm install
-- ng build --prod
-scripts:
+script:
 - export CHROME_BIN=chromium-browser
-- npm run lint:ci
-- npm run test:ci -- --watch false --single-run true
+- xvfb-run -a npm run lint:ci
+- xvfb-run -a npm run test:ci
+- xvfb-run -a npm run prod
 deploy:
   skip_cleanup: true
   provider: cloudfoundry

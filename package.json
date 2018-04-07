@@ -4,11 +4,12 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
+    "prod": "ng build --prod",
     "dev": "ng serve -o --ssl",
     "dev:prod": "ng serve -o --ssl --environment=prod",
     "start": "node server.js",
     "build": "ng build",
-    "test": "ng test --browsers=ChromeHeadless",
+    "test": "ng test --browsers=Chrome",
     "test:once": "ng test --single-run --browsers=ChromeHeadless",
     "lint": "ng lint",
     "format:fix": "pretty-quick --staged",
@@ -16,7 +17,9 @@
     "format:check":
       "prettier --config ./.prettierrc --list-different \"src/{app,environments,assets}/**/*{.ts,.js,.json,.css,.scss}\"",
     "e2e": "cypress open",
-    "e2e:run": "cypress run"
+    "e2e:run": "cypress run",
+    "test:ci": "ng test --single-run --browsers=ChromeHeadless",
+    "lint:ci": "ng lint --fix"
   },
   "private": true,
   "dependencies": {
