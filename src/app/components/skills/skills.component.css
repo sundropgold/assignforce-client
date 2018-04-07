@@ -1,3 +1,11 @@
+/* ---------- SKILLS STYLING ----------- */
+
+/* ---------- ICONS ----------- */
+.material-icons {
+  color: #fb8c00;
+}
+
+/* ---------- MAT TOOLBAR ----------- */
 .md-toolbar-spacer {
   flex: 1 1 auto;
 }
@@ -8,19 +16,14 @@
   color: inherit;
 }
 
-/* ---------- DISPLAY SKILLS ----------- */
+/* ---------- MAT LIST ITEM DISPLAY SKILLS ----------- */
 .md-list-item {
   border-radius: 10px;
   margin: 6px 8px;
   padding: 0 6px;
 }
 
-img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
+/* ---------- MAT CARD ----------- */
 mat-card {
   margin: 0 16px;
   padding: 0;

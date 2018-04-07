@@ -1,13 +1,13 @@
-/* ---------- BATCHES STYLES ----------- */
+/* ---------- BATCHES STYLING ----------- */
 #batchesDiv {
   margin-top: 5%;
 }
 
-/*
+/* ---------- BUTTON STYLING ----------- */
 .mat-icon-button {
   line-height: 5.6rem;
   min-width: 0;
   width: 5.6rem;
   height: 5.6rem;
   border-radius: 50%;
-} */
+}

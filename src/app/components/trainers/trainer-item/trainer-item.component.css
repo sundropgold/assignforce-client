@@ -3,22 +3,19 @@
   color: #000;
 }
 
+mat-icon {
+  margin: 0;
+}
+
+/* ---------- MAT TOOLBAR ----------- */
 .md-toolbar-spacer {
   flex: 1 1 auto;
 }
 
+/* ---------- MAT CARD ----------- */
 mat-card {
   margin: 0 16px;
   padding: 0;
-}
-
-mat-list-item {
-  margin-right: 7px;
-  transition: background 0.3s linear;
-}
-
-mat-list-item:hover {
-  background-color: #dddddd;
 }
 
 mat-card-content {
@@ -26,12 +23,12 @@ mat-card-content {
   padding: 16px;
 }
 
-mat-icon {
-  margin: 0;
+/* ---------- MAT LIST ITEM ----------- */
+mat-list-item {
+  margin-right: 7px;
+  transition: background 0.3s linear;
 }
 
-i {
-  margin: 0px;
-  display: inline-flex;
-  vertical-align: middle;
+mat-list-item:hover {
+  background-color: #dddddd;
 }

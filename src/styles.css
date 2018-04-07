@@ -26,16 +26,16 @@
 }
 
 /* ----------- MAT TOOLBAR STYLING ----------- */
-mat-toolbar-row {
-  background-color: #37474f;
-  color: #e0e4e6;
-  display: flex;
-}
-
 mat-toolbar {
   padding: 0px 16px;
   background-color: #37474f;
   color: #e0e4e6;
+}
+
+mat-toolbar-row {
+  background-color: #37474f;
+  color: #e0e4e6;
+  display: flex;
 }
 
 /* ----------- BUTTON ----------- */
