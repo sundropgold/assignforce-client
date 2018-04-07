@@ -6,6 +6,8 @@ import { BatchesTimelineComponent } from '../batches-timeline/batches-timeline.c
 import { BatchesTimelineFilterComponent } from '../batches-timeline-filter/batches-timeline-filter.component';
 import { BatchControllerService } from '../../services/api/batch-controller/batch-controller.service';
 import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
+import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
+import { LocationControllerService } from '../../services/api/location-controller/location-controller.service';
 
 import { AppMaterialModule } from '../../material.module';
 import { BatchesComponent } from './batches.component';
@@ -25,7 +27,12 @@ describe('BatchesComponent', () => {
           BrowserAnimationsModule
         ],
         declarations: [BatchesComponent, BatchesTimelineComponent, BatchesTimelineFilterComponent],
-        providers: [BatchControllerService, TrainerControllerService]
+        providers: [
+          BatchControllerService,
+          TrainerControllerService,
+          LocationControllerService,
+          CurriculumControllerService
+        ]
       }).compileComponents();
     })
   );
