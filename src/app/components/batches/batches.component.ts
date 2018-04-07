@@ -2,8 +2,8 @@ import { AfterViewInit, Component, DoCheck, OnInit, ViewChild, ViewEncapsulation
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { MatSort, MatTableDataSource } from '@angular/material';
 
-import { BatchLocation } from '../../model/BatchLocation';
 import { Curriculum } from '../../model/Curriculum';
+import { Location } from '../../model/Location';
 import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
 import { LocationControllerService } from '../../services/api/location-controller/location-controller.service';
 import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
@@ -24,7 +24,7 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
   trainers = [];
 
   curriculums: Curriculum[] = [];
-  locations: BatchLocation[] = [];
+  locations: Location[] = [];
   buildings = [];
   rooms = [];
   selectedLocation = null;

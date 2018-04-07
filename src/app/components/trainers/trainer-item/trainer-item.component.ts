@@ -39,7 +39,7 @@ export class TrainerItemComponent implements OnInit, DoCheck {
     const skillsArray = [];
 
     for (let i = 0; i < skills.length; i++) {
-      this.skillsList += skills[i].name += ' ';
+      skillsArray.push(skills[i].name);
     }
 
     this.skillsList = skillsArray.join(', ');

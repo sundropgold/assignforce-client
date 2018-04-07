@@ -14,6 +14,7 @@ import { SkillsComponent } from '../skills/skills.component';
 import { ProfileComponent } from './profile.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 //creates a fake skill service to pass test values
 class MockSkillService {
@@ -26,6 +27,8 @@ class MockSkillService {
     ]);
   }
 }
+
+class MockAuthService {}
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
@@ -43,7 +46,7 @@ describe('ProfileComponent', () => {
           RouterTestingModule
         ], //sets imports
         declarations: [ProfileComponent, SkillsComponent, CertificationsComponent], //sets declarations
-        providers: [S3CredentialService, TrainerControllerService] //set providers, using our fake service instead of the real one
+        providers: [S3CredentialService, TrainerControllerService, { provide: AuthService, useClass: MockAuthService }] //set providers, using our fake service instead of the real one
       }).compileComponents();
     })
   );

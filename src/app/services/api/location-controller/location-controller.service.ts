@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
-import { BatchLocation } from '../../../model/BatchLocation';
+import { Location } from '../../../model/Location';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
@@ -10,35 +10,23 @@ export class LocationControllerService {
 
   private locationController = environment.apiUrls.locationController;
 
-  public createLocation(location: BatchLocation): Observable<BatchLocation> {
-    return this.http.post<BatchLocation>(
-      this.locationController.baseUrl + this.locationController.createLocation,
-      location
-    );
+  public createLocation(location: Location): Observable<Location> {
+    return this.http.post<Location>(this.locationController.baseUrl + this.locationController.createLocation, location);
   }
 
-  public updateLocation(location: BatchLocation): Observable<BatchLocation> {
-    return this.http.put<BatchLocation>(
-      this.locationController.baseUrl + this.locationController.updateLocation,
-      location
-    );
+  public updateLocation(location: Location): Observable<Location> {
+    return this.http.put<Location>(this.locationController.baseUrl + this.locationController.updateLocation, location);
   }
 
-  public retrieveLocation(id: number): Observable<BatchLocation> {
-    return this.http.get<BatchLocation>(
-      this.locationController.baseUrl + this.locationController.retrieveLocation + id
-    );
+  public retrieveLocation(id: number): Observable<Location> {
+    return this.http.get<Location>(this.locationController.baseUrl + this.locationController.retrieveLocation + id);
   }
 
-  public deleteLocation(id: number): Observable<BatchLocation> {
-    return this.http.delete<BatchLocation>(
-      this.locationController.baseUrl + this.locationController.deleteLocation + id
-    );
+  public deleteLocation(id: number): Observable<Location> {
+    return this.http.delete<Location>(this.locationController.baseUrl + this.locationController.deleteLocation + id);
   }
 
-  public retrieveAllLocation(): Observable<BatchLocation[]> {
-    return this.http.get<BatchLocation[]>(
-      this.locationController.baseUrl + this.locationController.retrieveAllLocation
-    );
+  public retrieveAllLocation(): Observable<Location[]> {
+    return this.http.get<Location[]>(this.locationController.baseUrl + this.locationController.retrieveAllLocation);
   }
 }

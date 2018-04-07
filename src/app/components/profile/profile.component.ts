@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { S3CredentialService } from '../../services/s3-credential/s3-credential.service';
 import { Router } from '@angular/router';
 import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -14,7 +15,6 @@ export class ProfileComponent implements OnInit {
   @Input() fName: string;
   @Input() lName: string;
 
-  tId: -1;
   lockProfile = true;
   fb: FormBuilder = new FormBuilder();
   nameForm = this.fb.group({
@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit {
   edit = false;
 
   trainer = {
-    trainerId: 1,
+    trainerId: -1,
     firstName: 'Joseph',
     lastName: 'Wong',
     skills: [],
@@ -41,28 +41,16 @@ export class ProfileComponent implements OnInit {
     active: true
   };
 
+  readonly id = this.router.url.split('/')[this.router.url.split('/').length - 1];
+
   constructor(
     private s3Service: S3CredentialService,
     private router: Router,
-    private trainerService: TrainerControllerService
+    private trainerService: TrainerControllerService,
+    private authService: AuthService
   ) {}
 
-  ngOnInit() {
-    const thisUrl = this.router.url.split('/');
-    const id = thisUrl[thisUrl.length - 1];
-    this.trainerService
-      .getAllTrainers()
-      .toPromise()
-      .then(trainers => {
-        for (const trainer of trainers) {
-          if (trainer.trainerId.toString() === id) {
-            this.trainer = trainer;
-          }
-        }
-        // console.log(this.trainer[id]);
-      });
-    console.log(this.router.url.split('/')[this.router.url.split('/').length - 1]);
-  }
+  ngOnInit() {}
 
   toggleEdit() {
     this.edit = !this.edit;
@@ -104,5 +92,13 @@ export class ProfileComponent implements OnInit {
   // queries the database for the trainer. to be called after a change to the trainer's properties
   pullTrainer() {
     this.trainer = undefined;
+  }
+
+  getUser() {
+    this.authService.getProfile((error, profile) => {
+      if (!error) {
+        this.trainer = profile;
+      }
+    });
   }
 }

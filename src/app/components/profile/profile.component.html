@@ -4,7 +4,7 @@
       <mat-toolbar class="md-toolbar" layout="columns">
         <span>Profile</span>
         <span class="md-toolbar-spacer"></span>
-        <button mat-icon-button (click)="updateName()">
+        <button mat-icon-button (click)="updateName()" *ngIf="trainer.trainerId == id">
           <mat-icon matTooltip="Save" class="material-icons" *ngIf="!lockProfile">save</mat-icon>
           <mat-icon matTooltip="Edit" class="material-icons" *ngIf="lockProfile">edit</mat-icon>
         </button>
