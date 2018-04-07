@@ -1,6 +1,6 @@
 import { Building } from './Building';
 
-export class Location {
+export class Address {
   id: number;
   name: string;
   city: string;

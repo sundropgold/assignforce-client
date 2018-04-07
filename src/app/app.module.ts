@@ -47,7 +47,6 @@ import { AddressControllerService } from './services/api/address-controller/addr
 import { BatchControllerService } from './services/api/batch-controller/batch-controller.service';
 import { BuildingControllerService } from './services/api/building-controller/building-controller.service';
 import { CurriculumControllerService } from './services/api/curriculum-controller/curriculum-controller.service';
-import { LocationControllerService } from './services/api/location-controller/location-controller.service';
 import { SettingControllerService } from './services/api/setting-controller/setting-controller.service';
 import { SkillControllerService } from './services/api/skill-controller/skill-controller.service';
 import { TrainerControllerService } from './services/api/trainer-controller/trainer-controller.service';
@@ -59,6 +58,8 @@ import { S3CredentialService } from './services/s3-credential/s3-credential.serv
 import { UrlService } from './services/url/url.service';
 import { BatchesTimelineComponent } from './components/batches-timeline/batches-timeline.component';
 import { BatchesTimelineFilterComponent } from './components/batches-timeline-filter/batches-timeline-filter.component';
+import { FocusControllerService } from './services/api/focus-controller/focus-controller.service';
+import { RoomControllerService } from './services/api/room-controller/room-controller.service';
 
 @NgModule({
   declarations: [
@@ -118,12 +119,13 @@ import { BatchesTimelineFilterComponent } from './components/batches-timeline-fi
     BatchControllerService,
     AddressControllerService,
     BuildingControllerService,
-    LocationControllerService,
     CurriculumControllerService,
     SettingControllerService,
     SkillControllerService,
     TrainerControllerService,
     UnavailableControllerService,
+    FocusControllerService,
+    RoomControllerService,
     AuthService,
     GuardService,
     SecurityContext,
