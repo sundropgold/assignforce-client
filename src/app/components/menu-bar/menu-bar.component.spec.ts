@@ -1,12 +1,13 @@
-import { MenuBarComponent } from './menu-bar.component';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppMaterialModule } from '../../material.module';
-import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
-import { MockAuthService } from '../../services/auth/auth.service.spec';
+import { RouterTestingModule } from '@angular/router/testing';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+
+import { AppMaterialModule } from '../../material.module';
 import { AuthService } from '../../services/auth/auth.service';
+import { MockAuthService } from '../../services/auth/auth.service.spec';
+import { MenuBarComponent } from './menu-bar.component';
 
 export class MockActivatedRoute {
   private paramsSubject = new BehaviorSubject(this.testParams);

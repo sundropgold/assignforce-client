@@ -1,15 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { EditFocusComponent } from './edit-focus.component';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { AppMaterialModule } from '../../material.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Observable } from 'rxjs/Observable';
+
+import { AppMaterialModule } from '../../material.module';
 import { Curriculum } from '../../model/Curriculum';
 import { Skill } from '../../model/Skill';
-import { Observable } from 'rxjs/Observable';
 import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
 import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
+import { EditFocusComponent } from './edit-focus.component';
 
 describe('EditFocusComponent', () => {
   let component: EditFocusComponent;

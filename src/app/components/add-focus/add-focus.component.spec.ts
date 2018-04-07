@@ -1,12 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { AddFocusComponent } from './add-focus.component';
-import { MatDialogRef } from '@angular/material';
-import { AppMaterialModule } from '../../material.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
+import { MatDialogRef } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { AppMaterialModule } from '../../material.module';
 import { Curriculum } from '../../model/Curriculum';
+import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
+import { AddFocusComponent } from './add-focus.component';
 
 describe('AddFocusComponent', () => {
   let component: AddFocusComponent;

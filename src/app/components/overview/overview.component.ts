@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Angular2Csv } from 'angular2-csv/Angular2-csv';
-import { Batch } from '../../model/Batch';
+
 import { UrlService } from '../../services/url/url.service';
+
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
