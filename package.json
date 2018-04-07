@@ -16,7 +16,9 @@
     "format:check":
       "prettier --config ./.prettierrc --list-different \"src/{app,environments,assets}/**/*{.ts,.js,.json,.css,.scss}\"",
     "e2e": "cypress open",
-    "e2e:run": "cypress run"
+    "e2e:run": "cypress run",
+    "test:ci": "./node_modules/@angular/cli/bin/ng test --single-run --browsers=Chrome",
+    "lint:ci": "./node_modules/@angular/cli/bin/ng lint --fix"
   },
   "private": true,
   "dependencies": {
