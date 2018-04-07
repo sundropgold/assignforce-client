@@ -13,6 +13,7 @@ import { BatchControllerService } from '../../services/api/batch-controller/batc
 export class OverviewComponent implements OnInit, AfterViewInit {
   // ----------------------- NEW CODE FROM NEW HOPE -----------------------------------
   selectedFilter: number;
+  panelTitle: string;
   batchList: any[] = [];
   displayedBatchList: any[];
   displayedColumns = [
@@ -90,20 +91,33 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     this.displayedBatchList = [];
     if (filterType === 0) {
       this.displayedBatchList = this.batchList;
+      this.panelTitle = 'All Batches';
     } else if (filterType === 1) {
       this.batchList.forEach(batchObj => {
         if (batchObj.progress > 0 && batchObj.progress < 100) {
           this.displayedBatchList.push(batchObj);
         }
       });
+
+      if (this.displayedBatchList.length < 1) {
+        this.panelTitle = 'No Batches In Progress';
+      } else {
+        this.panelTitle = 'Batches In Progress';
+      }
     } else if (filterType === 2) {
       this.batchList.forEach(batchObj => {
         if (batchObj.progress === 0) {
-          if (this.getCurrentWeekOfBatch(batchObj.batch.startDate) > -2) {
+          if (this.getCurrentWeekOfBatch(batchObj.startDate) > -2) {
             this.displayedBatchList.push(batchObj);
           }
         }
       });
+
+      if (this.displayedBatchList.length < 1) {
+        this.panelTitle = 'No Batches Beginning in Two Weeks';
+      } else {
+        this.panelTitle = 'Batches Beginning in Two Weeks';
+      }
     }
     this.dataSource.data = this.displayedBatchList;
   }

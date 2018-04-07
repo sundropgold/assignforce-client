@@ -3,7 +3,7 @@
       <mat-expansion-panel [expanded]="true" [disabled]="true">
         <mat-expansion-panel-header>
           <mat-panel-title style="color: white">
-            All Batches
+            {{panelTitle}}
           </mat-panel-title>
           <mat-panel-description>
             <span class="fill-space"></span>
@@ -101,7 +101,6 @@
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
           </mat-table>
         </div>
-    
       </mat-expansion-panel>
     </mat-accordion>
   </div>
