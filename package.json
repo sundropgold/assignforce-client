@@ -8,7 +8,7 @@
     "dev:prod": "ng serve -o --ssl --environment=prod",
     "start": "node server.js",
     "build": "ng build",
-    "test": "ng test --browsers=ChromeHeadless",
+    "test": "ng test --browsers=Chrome",
     "test:once": "ng test --single-run --browsers=ChromeHeadless",
     "lint": "ng lint",
     "format:fix": "pretty-quick --staged",
