@@ -33,7 +33,7 @@ export class ProfileComponent implements OnInit {
 
   myFile: FileList;
   creds: any;
-  certFile: FileList = null;
+  //certFile: FileList = null;
   certName: string;
   skillsList: string[] = [];
   edit = false;
@@ -63,9 +63,9 @@ export class ProfileComponent implements OnInit {
     console.log(this.myFile[0].size);
   }
 
-  getCert(event) {
-    this.certFile = event.target.files;
-  }
+  // getCert(event) {
+  //   this.certFile = event.target.files;
+  // }
 
   // showToast(message) {
 
