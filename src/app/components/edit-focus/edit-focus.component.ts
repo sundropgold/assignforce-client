@@ -1,8 +1,8 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Skill } from '../../model/Skill';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+
 import { Curriculum } from '../../model/Curriculum';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Skill } from '../../model/Skill';
 import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
 import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
 

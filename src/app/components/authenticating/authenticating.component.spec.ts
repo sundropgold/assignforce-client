@@ -1,12 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { AuthenticatingComponent } from './authenticating.component';
 import { MatProgressSpinnerModule } from '@angular/material';
-import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
+
 import { AppRouting } from '../../app.routing';
-import { UrlService } from '../../services/url/url.service';
+import { AuthService } from '../../services/auth/auth.service';
 import { MockAuthService } from '../../services/auth/auth.service.spec';
+import { UrlService } from '../../services/url/url.service';
+import { AuthenticatingComponent } from './authenticating.component';
 
 describe('AuthenticatingComponent', () => {
   let component: AuthenticatingComponent;
