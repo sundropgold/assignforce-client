@@ -3,6 +3,7 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Angular2Csv } from 'angular2-csv/Angular2-csv';
 
 import { UrlService } from '../../services/url/url.service';
+import { BatchControllerService } from '../../services/api/batch-controller/batch-controller.service';
 
 @Component({
   selector: 'app-overview',
@@ -36,36 +37,35 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private urlService: UrlService) {}
+  constructor(private urlService: UrlService, private batchService: BatchControllerService) {}
 
   ngOnInit() {
     //TODO -- use the batch-controller.service
-    // this.urlService.getAllBatches().subscribe(blist => {
-    //   blist.forEach(batch => {
-    //     // This is an object that encapsulates the batch object's properties and a progress number.
-    //     const batchObj = {
-    //       name: batch.name,
-    //       curriculum: batch.curriculum.name,
-    //       trainer: batch.trainer.firstName + ' ' + batch.trainer.lastName,
-    //       cotrainer: batch.cotrainer,
-    //       location: batch.batchLocation.locationName,
-    //       building: batch.batchLocation.buildingName,
-    //       room: batch.batchLocation.roomName,
-    //       startDate: batch.startDate,
-    //       endDate: batch.endDate,
-    //       progress: 0
-    //     };
-    //     this.batchList.push(batchObj);
-    //
-    //     // Calculating and updating the progress of each batch.
-    //     this.batchList.forEach(batchOb => {
-    //       batchOb.progress = this.getCurrentProgress(batchOb);
-    //     });
-    //
-    //     // This starts the view on showing All batches.
-    //     this.applyFilter(0);
-    //   });
-    // });
+    this.batchService.getAllBatches().subscribe(blist => {
+      blist.forEach(batch => {
+        // This is an object that encapsulates the batch object's properties and a progress number.
+        const batchObj = {
+          name: batch.name,
+          curriculum: batch.curriculum.name,
+          trainer: batch.trainer.firstName + ' ' + batch.trainer.lastName,
+          cotrainer: batch.cotrainer,
+          location: batch.batchLocation.locationName,
+          building: batch.batchLocation.buildingName,
+          room: batch.batchLocation.roomName,
+          startDate: batch.startDate,
+          endDate: batch.endDate,
+          progress: 0
+        };
+        this.batchList.push(batchObj);
+
+        // Calculating and updating the progress of each batch.
+        this.batchList.forEach(batchOb => {
+          batchOb.progress = this.getCurrentProgress(batchOb);
+        });
+        // This starts the view on showing All batches.
+        this.applyFilter(0);
+      });
+    });
   }
   ngAfterViewInit() {
     //   this.dataSource.sort = this.sort;
@@ -89,7 +89,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
      *  FILTER TYPE!!!
      *  0 - By All
      *  1 - In Progress
-     *  2 - Beginging in two weeks
+     *  2 - Beginning in two weeks
      */
     this.selectedFilter = filterType;
     this.displayedBatchList = [];
@@ -104,7 +104,8 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     } else if (filterType === 2) {
       this.batchList.forEach(batchObj => {
         if (batchObj.progress === 0) {
-          if (this.getCurrentWeekOfBatch(batchObj.batch.startDate) > -2) {
+          const currentWeek = this.getCurrentWeekOfBatch(batchObj.startDate);
+          if (currentWeek < 0 && currentWeek >= -2) {
             this.displayedBatchList.push(batchObj);
           }
         }

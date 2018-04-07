@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppMaterialModule } from '../../material.module';
 import { LocationsComponent } from './locations.component';
+import { LocationControllerService } from '../../services/api/location-controller/location-controller.service';
 
 describe('LocationsComponent', () => {
   let component: LocationsComponent;
@@ -13,7 +14,8 @@ describe('LocationsComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [AppMaterialModule, HttpClientTestingModule, BrowserAnimationsModule],
-        declarations: [LocationsComponent]
+        declarations: [LocationsComponent],
+        providers: [LocationControllerService]
       }).compileComponents();
     })
   );

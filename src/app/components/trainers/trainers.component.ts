@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material';
 import { Skill } from '../../model/Skill';
 import { Trainer } from '../../model/Trainer';
 import { TrainersAddComponent } from './trainers-add/trainers-add.component';
+import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-trainers',
@@ -19,14 +21,17 @@ export class TrainersComponent implements OnInit {
 
   isManager = true;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private trainerService: TrainerControllerService, private router: Router) {}
 
   ngOnInit() {
     this.isManager = true;
 
-    this.trainerService.getAll().subscribe(t => {
-      this.trainers = t;
-    });
+    this.trainerService
+      .getAllTrainers()
+      .toPromise()
+      .then(t => {
+        this.trainers = t;
+      });
   }
 
   showCalendar() {}
@@ -65,5 +70,10 @@ export class TrainersComponent implements OnInit {
 
   activateTrainer(trainer: Trainer) {
     trainer.active = true;
+  }
+
+  gotoTrainer(id: number) {
+    console.log(`/profile/${id}`);
+    this.router.navigate([`/profile/${id}`]);
   }
 }

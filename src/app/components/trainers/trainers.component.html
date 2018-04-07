@@ -5,7 +5,7 @@
     <mat-toolbar-row>
       <span> Trainers </span>
       <span class="md-toolbar-spacer"> </span>
-      <button mat-icon-button *ngIf="isManager==true" (click)="addTrainer()"  matTooltip="Add Trainer">
+      <button mat-icon-button *ngIf="isManager==true" (click)="addTrainer()" matTooltip="Add Trainer">
         <mat-icon>add_circle</mat-icon>
       </button>
       <button mat-icon-button (click)="showCalendar()" matTooltip="View PTO Calendar">
@@ -20,9 +20,9 @@
   </mat-toolbar>
   <!--shows a list of all the active trainers-->
   <mat-card-content *ngIf="trainers != undefined">
-      <mat-list *ngFor="let trainer of trainers">
-          <app-trainer-item [trainer]="trainer" *ngIf="trainer.active"></app-trainer-item>
-         </mat-list>
+    <mat-list *ngFor="let trainer of trainers">
+      <app-trainer-item [trainer]="trainer" *ngIf="trainer.active" (click)="gotoTrainer(trainer.trainerId)"></app-trainer-item>
+    </mat-list>
   </mat-card-content>
   <!--displays a loading circle if trainers is undefined-->
   <div *ngIf="trainers == undefined">
@@ -42,7 +42,7 @@
   <!--shows a list of all inactive trainers-->
   <mat-card-content class="md-padding" *ngIf="trainers != undefined">
     <mat-list *ngFor=" let trainer of trainers">
-     <app-trainer-item [trainer]="trainer" *ngIf="!trainer.active"></app-trainer-item>
+      <app-trainer-item [trainer]="trainer" *ngIf="!trainer.active"></app-trainer-item>
     </mat-list>
   </mat-card-content>
   <!--shows a loading circle if trainers is undefined-->
@@ -52,4 +52,3 @@
     <div fxFlex="100"> &nbsp;</div>
   </div>
 </mat-card>
-

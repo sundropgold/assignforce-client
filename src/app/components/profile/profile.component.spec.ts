@@ -12,6 +12,8 @@ import { S3CredentialService } from '../../services/s3-credential/s3-credential.
 import { CertificationsComponent } from '../certifications/certifications.component';
 import { SkillsComponent } from '../skills/skills.component';
 import { ProfileComponent } from './profile.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
 
 //creates a fake skill service to pass test values
 class MockSkillService {
@@ -33,9 +35,15 @@ describe('ProfileComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [AppMaterialModule, FormsModule, HttpClientTestingModule, BrowserAnimationsModule], //sets imports
+        imports: [
+          AppMaterialModule,
+          FormsModule,
+          HttpClientTestingModule,
+          BrowserAnimationsModule,
+          RouterTestingModule
+        ], //sets imports
         declarations: [ProfileComponent, SkillsComponent, CertificationsComponent], //sets declarations
-        providers: [S3CredentialService] //set providers, using our fake service instead of the real one
+        providers: [S3CredentialService, TrainerControllerService] //set providers, using our fake service instead of the real one
       }).compileComponents();
     })
   );

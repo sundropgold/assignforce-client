@@ -1,7 +1,13 @@
-import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
-import { MatIconRegistry, MatSort, MatTableDataSource } from '@angular/material';
-import { DomSanitizer } from '@angular/platform-browser';
+import { AfterViewInit, Component, DoCheck, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { MatSort, MatTableDataSource } from '@angular/material';
+
+import { BatchLocation } from '../../model/BatchLocation';
+import { Curriculum } from '../../model/Curriculum';
+import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
+import { LocationControllerService } from '../../services/api/location-controller/location-controller.service';
+import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
+import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
 
 @Component({
   selector: 'app-batches',
@@ -9,66 +15,23 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./batches.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class BatchesComponent implements OnInit, AfterViewInit {
+export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
   //--------------------------------------------------Temporary---------------------------------------------------
-  skillsList = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
-  curriculums = [
-    { value: 'Java', viewValue: 'JAVA' },
-    { value: 'c++-1', viewValue: 'C++' },
-    { value: 'angular-2', viewValue: 'ANGULAR 4' }
-  ];
+  skillsList = [];
 
-  focuses = [
-    { value: 'microservices-0', viewValue: 'Microservices' },
-    { value: 'focus2-1', viewValue: 'Focus 2' },
-    { value: 'focus3-2', viewValue: 'Focus 3' }
-  ];
-  trainers = [
-    { value: 'trainer-0', viewValue: 'August Duet' },
-    { value: 'trainer-1', viewValue: 'Emily Higgins' },
-    { value: 'trainer-2', viewValue: 'Steven Kelsey' }
-  ];
+  focuses = [];
 
-  // locations = [
-  //   {value: 'location-0', viewValue: 'Revature HQ - Reston,VA'},
-  //   {value: 'location-1', viewValue: 'CUNY - SPS,NY'}
-  // ];
+  trainers = [];
 
-  locations: any[] = [
-    {
-      location: 'Reston HQ - Reston, VA',
-      building: [
-        {
-          name: 'Douglas  Pace',
-          rooms: [{ name: '101' }]
-        },
-        {
-          name: 'Mcleod  Mueller'
-        }
-      ]
-    },
-    {
-      location: 'CUNY - New York, NY',
-      building: [
-        {
-          name: 'SPS'
-        },
-        {
-          name: 'QUEENS COLLEGE'
-        }
-      ]
-    }
-  ];
-
-  buildings = [
-    { value: 'building-0', viewValue: 'Reston' },
-    { value: 'trainer-1', viewValue: 'CSPS' },
-    { value: 'trainer-2', viewValue: 'Steven Kelsey' }
-  ];
-  rooms = [{ value: 'room-0', viewValue: '201' }, { value: 'room-1', viewValue: '301' }];
+  curriculums: Curriculum[] = [];
+  locations: BatchLocation[] = [];
+  buildings = [];
+  rooms = [];
+  selectedLocation = null;
+  selectedBuilding = null;
+  selectedCurriculum = null;
 
   //--------------------------------------------------VALUES FOR CREATE BATCHES----------------------------------------
-
   batchForm: FormGroup;
 
   // //Object for storing batch form data
@@ -111,15 +74,52 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   //     sanitizer.bypassSecurityTrustResourceUrl('assets/img/examples/thumbup-icon.svg')
   //   );
   // }
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private curriculumService: CurriculumControllerService,
+    private locationService: LocationControllerService,
+    private skillService: SkillControllerService,
+    private trainerService: TrainerControllerService
+  ) {}
 
   @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit() {
+    this.curriculumService
+      .retrieveAllActiveCore()
+      .toPromise()
+      .then(response => {
+        this.curriculums = response;
+      });
+    this.locationService
+      .retrieveAllLocation()
+      .toPromise()
+      .then(response => {
+        this.locations = response;
+      });
+    this.skillService
+      .findAll()
+      .toPromise()
+      .then(response => {
+        this.skillsList = response;
+      });
+    this.curriculumService
+      .retrieveAllActiveFocus()
+      .toPromise()
+      .then(response => {
+        this.focuses = response;
+      });
+    this.trainerService
+      .getAllTrainers()
+      .toPromise()
+      .then(response => {
+        this.trainers = response;
+        console.log(this.trainers);
+      });
     this.batchForm = this.fb.group({
       curriculum: [null, Validators.required],
       focus: [null],
-      skills: [null, Validators.required],
+      skills: [[], Validators.required],
       startDate: [null, Validators.required],
       endDate: [null, Validators.required],
       batchName: [null],
@@ -137,6 +137,28 @@ export class BatchesComponent implements OnInit, AfterViewInit {
       this.numOfWeeksBetween = this.computeNumOfWeeksBetween(startDate, endDate);
       this.genBatchName = this.createBatchName(curriculum, startDate);
     });
+  }
+
+  ngDoCheck() {
+    if (this.batchForm.value.location) {
+      const locationName = this.batchForm.value.location.name;
+      if (locationName && locationName !== this.selectedLocation) {
+        this.selectedLocation = locationName;
+        this.buildings = this.batchForm.value.location.buildings;
+      }
+    }
+    if (this.batchForm.value.building) {
+      const buildingName = this.batchForm.value.building.name;
+      if (buildingName && buildingName !== this.selectedBuilding) {
+        this.selectedBuilding = buildingName;
+        this.rooms = this.batchForm.value.building.rooms;
+      }
+    }
+    if (this.batchForm.value.curriculum) {
+      this.selectedCurriculum = this.batchForm.value.curriculum;
+    }
+    if (this.batchForm.value.trainer) {
+    }
   }
 
   ngAfterViewInit() {

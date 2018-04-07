@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppMaterialModule } from '../../material.module';
 import { UrlService } from '../../services/url/url.service';
 import { OverviewComponent } from './overview.component';
+import { BatchControllerService } from '../../services/api/batch-controller/batch-controller.service';
 
 describe('OverviewComponent', () => {
   let component: OverviewComponent;
@@ -14,7 +15,7 @@ describe('OverviewComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [AppMaterialModule, BrowserAnimationsModule, HttpClientTestingModule],
-        providers: [UrlService],
+        providers: [UrlService, BatchControllerService],
         declarations: [OverviewComponent]
       }).compileComponents();
     })

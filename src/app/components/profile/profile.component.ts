@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Skill } from '../../model/Skill';
+
 import { S3CredentialService } from '../../services/s3-credential/s3-credential.service';
+import { Router } from '@angular/router';
+import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
 
 @Component({
   selector: 'app-profile',
@@ -19,14 +21,6 @@ export class ProfileComponent implements OnInit {
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required)
   });
-
-  // data
-  skills: Skill[] = [
-    { skillId: 1, name: 'Java', active: true },
-    { skillId: 2, name: 'SQL', active: true },
-    { skillId: 3, name: 'Angular', active: true },
-    { skillId: 4, name: 'C++', active: true }
-  ];
 
   nameFound = false;
 
@@ -47,10 +41,27 @@ export class ProfileComponent implements OnInit {
     active: true
   };
 
-  constructor(private s3Service: S3CredentialService) {}
+  constructor(
+    private s3Service: S3CredentialService,
+    private router: Router,
+    private trainerService: TrainerControllerService
+  ) {}
 
   ngOnInit() {
-    //this.populateSkillList();
+    const thisUrl = this.router.url.split('/');
+    const id = thisUrl[thisUrl.length - 1];
+    this.trainerService
+      .getAllTrainers()
+      .toPromise()
+      .then(trainers => {
+        for (const trainer of trainers) {
+          if (trainer.trainerId.toString() === id) {
+            this.trainer = trainer;
+          }
+        }
+        // console.log(this.trainer[id]);
+      });
+    console.log(this.router.url.split('/')[this.router.url.split('/').length - 1]);
   }
 
   toggleEdit() {

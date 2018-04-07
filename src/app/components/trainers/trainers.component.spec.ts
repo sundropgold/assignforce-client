@@ -4,6 +4,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppMaterialModule } from '../../material.module';
 import { TrainerItemComponent } from './trainer-item/trainer-item.component';
 import { TrainersComponent } from './trainers.component';
+import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('TrainersComponent', () => {
   let component: TrainersComponent;
@@ -20,8 +22,9 @@ describe('TrainersComponent', () => {
     mockClient = jasmine.createSpyObj('HttpClient', ['get', 'post', 'put', 'delete']);
     TestBed.configureTestingModule({
       declarations: [TrainersComponent, TrainerItemComponent],
-      imports: [AppMaterialModule],
+      imports: [AppMaterialModule, RouterTestingModule],
       providers: [
+        TrainerControllerService,
         // { provide: TrainerService, useClass: MockTrainerService },
         { provide: HttpClient, useValue: mockClient }
       ]
