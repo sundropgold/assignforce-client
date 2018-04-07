@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Curriculum } from '../../model/Curriculum';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Skill } from '../../model/Skill';
 
 @Component({

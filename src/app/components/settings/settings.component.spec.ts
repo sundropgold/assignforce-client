@@ -1,21 +1,20 @@
-import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
-
-import { SettingsComponent } from './settings.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import {
   MatExpansionModule,
   MatFormFieldModule,
-  MatInputModule,
   MatGridListModule,
-  MatSelectModule,
-  MatProgressBarModule
+  MatInputModule,
+  MatProgressBarModule,
+  MatSelectModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SettingControllerService } from '../../services/api/setting-controller/setting-controller.service';
+
 import { AddressControllerService } from '../../services/api/address-controller/address-controller.service';
 import { BuildingControllerService } from '../../services/api/building-controller/building-controller.service';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { Observable } from 'rxjs/Observable';
+import { SettingControllerService } from '../../services/api/setting-controller/setting-controller.service';
+import { SettingsComponent } from './settings.component';
 
 describe('SettingsComponent', () => {
   let component: SettingsComponent;

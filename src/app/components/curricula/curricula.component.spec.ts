@@ -1,17 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { CurriculaComponent } from './curricula.component';
-import { CoreComponent } from '../core/core.component';
-import { FociComponent } from '../foci/foci.component';
-import { SkillsComponent } from '../skills/skills.component';
-import { AppMaterialModule } from '../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Curriculum } from '../../model/Curriculum';
 import { Observable } from 'rxjs/Observable';
+
+import { AppMaterialModule } from '../../material.module';
+import { Curriculum } from '../../model/Curriculum';
 import { Skill } from '../../model/Skill';
-import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
 import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
+import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
+import { CoreComponent } from '../core/core.component';
 import { CurriculumSkillsComponent } from '../curriculum-skills/curriculum-skills.component';
+import { FociComponent } from '../foci/foci.component';
+import { CurriculaComponent } from './curricula.component';
 
 describe('CurriculaComponent', () => {
   let component: CurriculaComponent;

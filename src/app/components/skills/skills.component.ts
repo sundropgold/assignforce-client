@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AppMaterialModule } from '../../material.module';
 import { Skill } from '../../model/Skill';
 import { Trainer } from '../../model/Trainer';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-skills',
@@ -18,6 +16,8 @@ export class SkillsComponent implements OnInit {
     { skillId: 4, name: 'C++', active: true }
   ];
 
+  lockSkills = true;
+  disabled = true;
   skillsList: string[] = [];
   trainer: Trainer = {
     trainerId: 1,
@@ -35,6 +35,10 @@ export class SkillsComponent implements OnInit {
 
   ngOnInit() {
     this.populateSkillList();
+  }
+
+  updateSkills() {
+    this.lockSkills = !this.lockSkills;
   }
 
   // called to save the current state of the trainers skills
