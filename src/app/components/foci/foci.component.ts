@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Curriculum } from '../../model/Curriculum';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { AddFocusComponent } from '../add-focus/add-focus.component';
-import { Skill } from '../../model/Skill';
-import { EditFocusComponent } from '../edit-focus/edit-focus.component';
+
+import { Curriculum } from '../../model/Curriculum';
 import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
+import { AddFocusComponent } from '../add-focus/add-focus.component';
+import { EditFocusComponent } from '../edit-focus/edit-focus.component';
 
 @Component({
   selector: 'app-foci',

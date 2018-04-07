@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
+
+import { Curriculum } from '../../model/Curriculum';
 import { Skill } from '../../model/Skill';
 import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
-import { Curriculum } from '../../model/Curriculum';
 
 @Component({
   selector: 'app-add-focus',
