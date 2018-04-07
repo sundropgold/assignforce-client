@@ -74,7 +74,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     this.getAllBatches();
     this.getAllTrainer();
     // this.getDefaultSetting();
-    this.skills.retrieveAllSkills().subscribe(skill => {
+    this.skills.findAll().subscribe(skill => {
       this.skillList = skill;
     });
     //this.skills.getTrainerList();
@@ -200,7 +200,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     this.dataSource.sort = this.sort;
     // this.skills.getElement();
     // this.skills.getTrainerList();
-    this.skills.retrieveAllSkills();
+    this.skills.findAll();
   }
 
   ngAfterViewInit() {
@@ -241,7 +241,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   }*/
   // get all batches
   getAllBatches() {
-    this.batchService.getAllBatches().subscribe(
+    this.batchService.findAll().subscribe(
       batch => {
         this.batch = batch;
         for (const x of Object.keys(this.batch)) {
@@ -258,7 +258,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   }
   // get all curriculum
   getAllCurriculum() {
-    this.curriculaService.retrieveAllCurricula().subscribe(
+    this.curriculaService.findAll().subscribe(
       curricula => {
         this.curricula = curricula;
         // for (const x of Object.keys(this.curricula)) {
@@ -274,7 +274,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
   }
   // get all trainer
   getAllTrainer() {
-    this.trainerService.getAllTrainers().subscribe(
+    this.trainerService.findAll().subscribe(
       trainer => {
         this.trainer = trainer;
         console.log(this.trainer);
@@ -513,7 +513,7 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
       this.newBatch.batchStatus = {};
       console.log(this.newBatch);
       for (let i = 0; i < batch.requiredBatches; i++) {
-        this.batchService.createBatch(this.newBatch).subscribe(
+        this.batchService.create(this.newBatch).subscribe(
           data => {
             console.log('batch created sucessfully');
             this.showToast('batch created sucessfully');
