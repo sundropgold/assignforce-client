@@ -14,7 +14,7 @@ export class ProfileComponent implements OnInit {
   @Input() lName: string;
 
   tId: -1;
-  lockProfile: true;
+  lockProfile = true;
   fb: FormBuilder = new FormBuilder();
   nameForm = this.fb.group({
     firstName: new FormControl('', Validators.required),
@@ -51,9 +51,7 @@ export class ProfileComponent implements OnInit {
   constructor(private s3Service: S3CredentialService) {}
 
   ngOnInit() {
-    this.populateSkillList();
     // data gathering
-
     // id is hard coded for testing. unless you click on a trainer in the trainer page.
     // if (this.tId > -1) {
     //   this.lockProfile = false;
@@ -72,10 +70,6 @@ export class ProfileComponent implements OnInit {
   getFiles(event) {
     this.myFile = event.target.files;
     console.log(this.myFile);
-  }
-
-  getCert(event) {
-    this.certFile = event.target.files;
   }
 
   showToast(message) {
@@ -124,117 +118,14 @@ export class ProfileComponent implements OnInit {
 
   //Updates user's name
   updateName() {
-    console.log(this.nameForm.value.firstName);
+    this.lockProfile = !this.lockProfile;
+    if (!this.lockProfile) {
+      console.log(this.nameForm.value.firstName);
 
-    this.nameFound = true;
-    this.trainer.firstName = this.nameForm.value.firstName;
-    this.trainer.lastName = this.nameForm.value.lastName;
-  }
-
-  // called to save the current state of the trainers skills
-  saveTSkills() {
-    // this.trainerService
-    //   .update(this.trainer)
-    //   .subscribe(
-    //     () => {},
-    //     () => this.showToast('Could not save your skills.'),
-    //     () => this.showToast('Skills have been saved!')
-    //   );
-  }
-
-  // add a skill to the current trainer
-  addSkill(skill) {
-    // add the skill to the trainer skill array
-    for (let i = 0; i < this.skills.length; i++) {
-      if (this.skills[i].name === skill) {
-        this.trainer.skills.push(this.skills[i]);
-        break;
-      }
+      this.nameFound = true;
+      this.trainer.firstName = this.nameForm.value.firstName;
+      this.trainer.lastName = this.nameForm.value.lastName;
     }
-
-    this.remove(skill);
-  }
-
-  // remove the same skill from the skill list array
-  remove(skill: any): void {
-    const index = this.skillsList.indexOf(skill);
-
-    if (index >= 0) {
-      this.skillsList.splice(index, 1);
-    }
-  }
-
-  // remove a trainer skill on the bottom
-  removeSkill(skill) {
-    for (let i = 0; i < this.trainer.skills.length; i++) {
-      if (this.trainer.skills[i] === skill) {
-        this.skillsList.push(skill.name);
-        this.trainer.skills.splice(i, 1);
-        break;
-      }
-    }
-  }
-
-  // // func to upload a resume to the s3 bucket
-  uploadCertification() {
-    // set the path to certifications folder and use trainer id with the file name
-    const path = 'Certifications/' + this.trainer.trainerId + '_' + this.certFile[0].name;
-    //
-    //   // create a certification object to save in the database
-    const certification = {
-      file: path,
-      name: this.certName,
-      trainer: this.trainer.trainerId
-    };
-    //
-    this.trainer.certifications.push(certification); // add the certification to the trainer
-    //
-    //   // update trainer
-    //   this.trainerService.update(this.trainer).subscribe( () => {},
-    //     () => this.showToast('Failed saving Certification.'),
-    //     () => this.showToast('Certification has been saved.'));
-    //
-    //   // create a aws s3 bucket
-    //   const bucket = new AWS.S3({
-    //     apiVersion: '2006-03-01',
-    //     accessKeyId: this.creds.ID,
-    //     secretAccessKey: this.creds.SecretKey,
-    //     region: 'us-east-1',
-    //     sslEnabled: false,
-    //     httpOptions: {
-    //       proxy: 'http://dev.assignforce.revature.pro/'
-    //     }
-    //   });
-    //
-    //   // set the parameters needed to put an object in the aws s3 bucket
-    //   const params = {
-    //     Bucket: this.creds.BucketName,
-    //     Key: path,
-    //     Body: this.certFile
-    //   };
-    //
-    //   // putting an object in the s3 bucket
-    //   bucket.putObject(params, function (err) {
-    //     if (err) {
-    //       this.showToast('File could not be uploaded.');
-    //     }
-    //   });
-    //
-    this.certFile = undefined;
-    this.certName = undefined;
-  }
-
-  // remove a certification from a trainer(need to remove the certification from the certification Table)
-  removeCertification(cert) {
-    for (let i = 0; i < this.trainer.certifications.length; i++) {
-      if (cert.name === this.trainer.certifications[i].name) {
-        this.trainer.certifications.splice(i, 1);
-      }
-    }
-
-    // this.trainerService
-    //   .update(this.trainer)
-    //   .subscribe(() => {}, err => this.showToast(err), () => this.showToast('Removed Certification Successfully'));
   }
 
   // queries the database for skills. to be called after a change to the skills array
@@ -249,34 +140,5 @@ export class ProfileComponent implements OnInit {
     // this.trainerService
     //   .getById(this.tId)
     //   .subscribe(response => (this.trainer = response), () => this.showToast('Could not fetch trainer.'));
-  }
-
-  // grab all the skills and create a skill list
-  getAllSkills() {
-    // this.skillService.getAll().subscribe(
-    //   response => {
-    //     this.skills = response;
-    //     let status = true;
-    //     for (let i = 0; i < this.skills.length; i++) {
-    //       for (let j = 0; j < this.trainer.skills.length; j++) {
-    //         if (this.skills[j].skillId === this.skills[i].skillId) {
-    //           status = false;
-    //           break;
-    //         }
-    //       }
-    //       if (status) {
-    //         this.skillsList.push(this.skills[i].name);
-    //       }
-    //       status = true;
-    //     }
-    //   },
-    //   () => this.showToast('Could not fetch skills.')
-    // );
-  }
-
-  populateSkillList() {
-    for (let i = 0; i < this.skills.length; i++) {
-      this.skillsList.push(this.skills[i].name);
-    }
   }
 }
