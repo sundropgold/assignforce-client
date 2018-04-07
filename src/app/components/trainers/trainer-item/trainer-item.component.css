@@ -1,5 +1,6 @@
-.revOrange {
-  color: #f26a25;
+/* ---------- ICONS ---------- */
+.peopleIcon {
+  color: #000;
 }
 
 .md-toolbar-spacer {
@@ -9,12 +10,6 @@
 mat-card {
   margin: 0 16px;
   padding: 0;
-}
-
-mat-toolbar {
-  padding: 0px 16px;
-  background-color: #37474f;
-  color: #e0e4e6;
 }
 
 mat-list-item {

@@ -1,4 +1,13 @@
-.btn-orange,
+/* ---------- SETTINGS STYLING ---------- */
+.padding-top {
+  padding-top: 10%;
+  max-width: 600px;
+  padding-left: 10%;
+  padding-right: 10%;
+  margin: 0 auto;
+}
+
+/* .btn-orange,
 btn .btn-orange:hover,
 btn .btn-orange:active,
 btn .btn-orange:focus {
@@ -7,20 +16,12 @@ btn .btn-orange:focus {
   border-color: #fb8c00;
 }
 
-.btn-white {
-  /* color: #000000;
+.btn-white { */
+/* color: #000000;
     background-color: #ffffff; */
-  border-color: #000000;
-}
-
-.padding-top {
-  padding-top: 10%;
-  max-width: 600px;
-  /*padding-left: 10%;*/
-  /*padding-right: 10%;*/
-  margin: 0 auto;
+/* border-color: #000000;
 }
 
 .leftAlign {
   text-align: left;
-}
+} */

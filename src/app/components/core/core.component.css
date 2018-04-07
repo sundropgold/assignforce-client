@@ -1,6 +1,4 @@
-.fill-space {
-  flex: 1 1 auto;
-}
+/* ---------- CORE STYLING ----------- */
 .container-curricula {
   margin-top: 5%;
 }
@@ -15,7 +13,7 @@
   color: white;
 }
 
-#mat-expansion-panel-header-0:hover mat-panel-title {
+/* #mat-expansion-panel-header-0:hover mat-panel-title {
   color: black;
 }
 
@@ -33,7 +31,7 @@
 .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled='true']).cdk-program-focused,
 .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled='true']):hover {
   background: white;
-}
+} */
 
 .toolbar-mat-buttons {
   margin: 12px 6px;
