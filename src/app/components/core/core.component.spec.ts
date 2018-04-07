@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { CoreComponent } from './core.component';
-import { AppMaterialModule } from '../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable } from 'rxjs/Observable';
+
+import { AppMaterialModule } from '../../material.module';
 import { Curriculum } from '../../model/Curriculum';
 import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
+import { CoreComponent } from './core.component';
 
 describe('CoreComponent', () => {
   let component: CoreComponent;

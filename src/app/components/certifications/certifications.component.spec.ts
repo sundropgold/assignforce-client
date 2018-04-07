@@ -1,9 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { CertificationsComponent } from './certifications.component';
+
 import { AppMaterialModule } from '../../material.module';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatCardModule, MatCardContent } from '@angular/material/card';
+import { CertificationsComponent } from './certifications.component';
 
 describe('CertificationsComponent', () => {
   let component: CertificationsComponent;

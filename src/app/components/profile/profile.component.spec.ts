@@ -1,17 +1,17 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ProfileComponent } from './profile.component';
-import { AppMaterialModule } from '../../material.module';
-import { FormsModule } from '@angular/forms';
+import 'rxjs/add/observable/of';
+
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { S3CredentialService } from '../../services/s3-credential/s3-credential.service';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable } from 'rxjs/Observable';
+
+import { AppMaterialModule } from '../../material.module';
 import { Skill } from '../../model/Skill';
-import { Component } from '@angular/core';
-import 'rxjs/add/observable/of';
-import { CompileNgModuleMetadata } from '@angular/compiler';
-import { SkillsComponent } from '../skills/skills.component';
+import { S3CredentialService } from '../../services/s3-credential/s3-credential.service';
 import { CertificationsComponent } from '../certifications/certifications.component';
+import { SkillsComponent } from '../skills/skills.component';
+import { ProfileComponent } from './profile.component';
 
 //creates a fake skill service to pass test values
 class MockSkillService {

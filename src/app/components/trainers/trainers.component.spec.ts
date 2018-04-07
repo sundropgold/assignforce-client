@@ -1,12 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClient } from '@angular/common/http';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TrainersComponent } from './trainers.component';
 import { AppMaterialModule } from '../../material.module';
-import { Skill } from '../../model/Skill';
 import { TrainerItemComponent } from './trainer-item/trainer-item.component';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { Trainer } from '../../model/Trainer';
+import { TrainersComponent } from './trainers.component';
 
 describe('TrainersComponent', () => {
   let component: TrainersComponent;

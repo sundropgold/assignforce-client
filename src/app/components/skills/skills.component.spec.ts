@@ -1,15 +1,12 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { AppMaterialModule } from '../../material.module';
-import { SkillsComponent } from './skills.component';
-import { MatListModule } from '@angular/material/list';
-import { MatCardModule, MatCardContent } from '@angular/material/card';
-import { MatToolbarModule, MatToolbarRow } from '@angular/material/toolbar';
-import { HttpClient, HttpHandler, HttpClientModule } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
+
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Observable } from 'rxjs/Observable';
+
+import { AppMaterialModule } from '../../material.module';
 import { Skill } from '../../model/Skill';
-import { TrainersComponent } from '../trainers/trainers.component';
-import { Trainer } from '../../model/Trainer';
+import { SkillsComponent } from './skills.component';
 
 class MockSkillService {
   getAll(): Observable<Skill[]> {

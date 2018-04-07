@@ -1,10 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { BatchesComponent } from './batches.component';
-import { AppMaterialModule } from '../../material.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { AppMaterialModule } from '../../material.module';
+import { BatchesComponent } from './batches.component';
 
 describe('BatchesComponent', () => {
   let component: BatchesComponent;
