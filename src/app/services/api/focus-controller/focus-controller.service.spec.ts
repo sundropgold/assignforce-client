@@ -1,18 +1,18 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { LocationControllerService } from './location-controller.service';
+import { FocusControllerService } from './focus-controller.service';
 import { HttpClient, HttpHandler } from '@angular/common/http';
 
-describe('LocationControllerService', () => {
+describe('FocusControllerService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [LocationControllerService, HttpClient, HttpHandler]
+      providers: [FocusControllerService, HttpClient, HttpHandler]
     });
   });
 
   it(
     'should be created',
-    inject([LocationControllerService], (service: LocationControllerService) => {
+    inject([FocusControllerService], (service: FocusControllerService) => {
       expect(service).toBeTruthy();
     })
   );

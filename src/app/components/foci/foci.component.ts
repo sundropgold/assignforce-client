@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
-import { Curriculum } from '../../model/Curriculum';
-import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
 import { AddFocusComponent } from '../add-focus/add-focus.component';
 import { EditFocusComponent } from '../edit-focus/edit-focus.component';
+import { FocusControllerService } from '../../services/api/focus-controller/focus-controller.service';
+import { Focus } from '../../model/Focus';
 
 @Component({
   selector: 'app-foci',
@@ -12,17 +12,15 @@ import { EditFocusComponent } from '../edit-focus/edit-focus.component';
   styleUrls: ['./foci.component.css']
 })
 export class FociComponent implements OnInit {
-  focusData: Curriculum[] = [];
+  focusData: Focus[] = [];
 
-  constructor(private dialog: MatDialog, private curriculumControllerService: CurriculumControllerService) {}
+  constructor(private dialog: MatDialog, private focusControllerService: FocusControllerService) {}
 
   ngOnInit() {
-    this.curriculumControllerService.retrieveAllActiveFocus().subscribe(data => {
-      const tempData: Curriculum[] = data;
+    this.focusControllerService.findAll().subscribe(data => {
+      const tempData: Focus[] = data;
       for (let i = 0; i < tempData.length; i++) {
-        if (tempData[i].core === false) {
-          this.focusData.push(tempData[i]);
-        }
+        this.focusData.push(tempData[i]);
       }
     });
   }
@@ -51,7 +49,7 @@ export class FociComponent implements OnInit {
 
   confirmRemoveFocus(focus) {
     if (confirm('Are you sure you want to remove ' + focus.name + '?')) {
-      this.curriculumControllerService.deleteCurriculum(focus.id);
+      this.focusControllerService.remove(focus.id);
     }
   }
 }

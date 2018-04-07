@@ -48,7 +48,7 @@ export class CurriculumSkillsComponent implements OnInit {
 
   confirmRemoveFocus(skill) {
     if (confirm('Are you sure you want to remove ' + skill.name + '?')) {
-      this.skillControllerService.deleteSkill(skill.id);
+      this.skillControllerService.remove(skill.id);
     }
   }
 }

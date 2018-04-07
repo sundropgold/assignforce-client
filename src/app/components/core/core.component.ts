@@ -14,12 +14,10 @@ export class CoreComponent implements OnInit {
   constructor(private curriculumControllerService: CurriculumControllerService) {}
 
   ngOnInit() {
-    this.curriculumControllerService.retrieveAllActiveCore().subscribe(data => {
+    this.curriculumControllerService.findAll().subscribe(data => {
       const tempData: Curriculum[] = data;
       for (let i = 0; i < tempData.length; i++) {
-        if (tempData[i].core === true) {
-          this.coreData.push(tempData[i]);
-        }
+        this.coreData.push(tempData[i]);
       }
     });
   }

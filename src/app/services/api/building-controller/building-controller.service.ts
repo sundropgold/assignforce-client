@@ -10,26 +10,23 @@ export class BuildingControllerService {
 
   private buildingController = environment.apiUrls.buildingController;
 
-  public createBuilding(building: Building): Observable<Building> {
-    return this.http.post<Building>(
-      this.buildingController.baseUrl + this.buildingController.createBuilding,
-      this.buildingController
+  public create(building: Building): Observable<Building> {
+    return this.http.post<Building>(this.buildingController.baseUrl + this.buildingController.create, building);
+  }
+  public update(building: Building): Observable<Building> {
+    return this.http.put<Building>(
+      this.buildingController.baseUrl + this.buildingController.update + building.id,
+      building
     );
   }
-
-  public retrieveBuilding(id: number): Observable<Building> {
-    return this.http.get<Building>(this.buildingController.baseUrl + this.buildingController.retrieveBuilding + id);
+  public findAll(): Observable<Building[]> {
+    return this.http.get<Building[]>(this.buildingController.baseUrl + this.buildingController.findAll);
+  }
+  public remove(id: number): Observable<Building> {
+    return this.http.delete<Building>(this.buildingController.baseUrl + this.buildingController.remove + id);
   }
 
-  public updateBuilding(building: Building): Observable<Building> {
-    return this.http.put<Building>(this.buildingController.baseUrl + this.buildingController.updateBuilding, building);
-  }
-
-  public deleteBuilding(id: number): Observable<Building> {
-    return this.http.delete<Building>(this.buildingController.baseUrl + this.buildingController.deleteBuilding + id);
-  }
-
-  public retrieveAllBuildings(): Observable<Building[]> {
-    return this.http.get<Building[]>(this.buildingController.baseUrl + this.buildingController.retrieveAllBuildings);
+  public find(id: number): Observable<Building> {
+    return this.http.get<Building>(this.buildingController.baseUrl + this.buildingController.find + id);
   }
 }
