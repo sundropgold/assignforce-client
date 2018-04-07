@@ -1,19 +1,16 @@
 /* ---------- CURRICULA STYLES ---------- */
 .container-curricula {
   margin-top: 5%;
+  width: 100%;
 }
-
-/* 
 
 .toolbar-curricula {
   background-color: #38464e;
   color: white;
   max-height: 50px;
-} */
-/* #38464E #3D5360*/
-/* .toolbar-curricula-sub {
-  background-color: #3d5360;
-  color: white;
+
+  background-color: inherit;
+  color: inherit;
 }
 
 .toolbar-mat-buttons {
@@ -39,4 +36,4 @@
 
 [hidden] {
   display: none;
-} */
+}
