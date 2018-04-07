@@ -1,18 +1,17 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { BatchesTimelineFilterComponent } from './batches-timeline-filter.component';
+import { AppMaterialModule } from '../../material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BatchesTimelineComponent } from '../batches-timeline/batches-timeline.component';
-import { BatchesTimelineFilterComponent } from '../batches-timeline-filter/batches-timeline-filter.component';
 import { BatchControllerService } from '../../services/api/batch-controller/batch-controller.service';
+import { batches } from '../../mockdb/mockdata/batch.data';
 import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
 
-import { AppMaterialModule } from '../../material.module';
-import { BatchesComponent } from './batches.component';
-
-describe('BatchesComponent', () => {
-  let component: BatchesComponent;
-  let fixture: ComponentFixture<BatchesComponent>;
+describe('BatchesTimelineFilterComponent', () => {
+  let component: BatchesTimelineFilterComponent;
+  let fixture: ComponentFixture<BatchesTimelineFilterComponent>;
 
   beforeEach(
     async(() => {
@@ -24,14 +23,14 @@ describe('BatchesComponent', () => {
           HttpClientTestingModule,
           BrowserAnimationsModule
         ],
-        declarations: [BatchesComponent, BatchesTimelineComponent, BatchesTimelineFilterComponent],
-        providers: [BatchControllerService, TrainerControllerService]
+        declarations: [BatchesTimelineFilterComponent],
+        providers: [TrainerControllerService, BatchControllerService]
       }).compileComponents();
     })
   );
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BatchesComponent);
+    fixture = TestBed.createComponent(BatchesTimelineFilterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

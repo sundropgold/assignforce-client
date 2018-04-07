@@ -57,6 +57,8 @@ import { GuardService } from './services/auth/guard.service';
 import { SecurityContext } from './services/auth/security-context.service';
 import { S3CredentialService } from './services/s3-credential/s3-credential.service';
 import { UrlService } from './services/url/url.service';
+import { BatchesTimelineComponent } from './components/batches-timeline/batches-timeline.component';
+import { BatchesTimelineFilterComponent } from './components/batches-timeline-filter/batches-timeline-filter.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +85,8 @@ import { UrlService } from './services/url/url.service';
     SkillsComponent,
     FociComponent,
     CoreComponent,
+    BatchesTimelineComponent,
+    BatchesTimelineFilterComponent,
     AddFocusComponent,
     AddSkillComponent,
     EditFocusComponent,
@@ -90,8 +94,6 @@ import { UrlService } from './services/url/url.service';
     TrainersAddComponent,
     TrainerItemComponent,
     AuthenticatingComponent,
-    TrainerItemComponent,
-    SkillsComponent,
     CertificationsComponent,
     CurriculumSkillsComponent
   ],
