@@ -14,7 +14,7 @@ addons:
     - google-chrome-stable
 install:
 - npm install
-scripts:
+script:
 - export CHROME_BIN=chromium-browser
 - xvfb-run -a npm run lint:ci
 - xvfb-run -a npm run test:ci
