@@ -11,11 +11,11 @@ import { TrainerControllerService } from '../../../services/api/trainer-controll
 })
 export class TrainersAddComponent implements OnInit {
   Skillz: Skill[] = [
-    {
-      skillId: 1,
-      name: 'Java',
-      active: true
-    }
+    // {
+    //   skillId: 1,
+    //   name: 'None',
+    //   active: true
+    // }
   ];
 
   trainer: Trainer = {
