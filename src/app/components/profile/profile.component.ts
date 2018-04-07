@@ -118,7 +118,6 @@ export class ProfileComponent implements OnInit {
 
   //Updates user's name
   updateName() {
-    this.lockProfile = !this.lockProfile;
     if (!this.lockProfile) {
       console.log(this.nameForm.value.firstName);
 
@@ -126,6 +125,7 @@ export class ProfileComponent implements OnInit {
       this.trainer.firstName = this.nameForm.value.firstName;
       this.trainer.lastName = this.nameForm.value.lastName;
     }
+    this.lockProfile = !this.lockProfile;
   }
 
   // queries the database for skills. to be called after a change to the skills array
