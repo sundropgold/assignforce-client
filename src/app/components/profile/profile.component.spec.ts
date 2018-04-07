@@ -13,15 +13,16 @@ import { CertificationsComponent } from '../certifications/certifications.compon
 import { ActivatedRoute } from '@angular/router';
 import { SkillsComponent } from '../skills/skills.component';
 import { ProfileComponent } from './profile.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 //creates a fake skill service to pass test values
 class MockSkillService {
   getAll(): Observable<Skill[]> {
     return Observable.of([
-      { skillId: 1, name: 'Java', active: true },
-      { skillId: 2, name: 'SQL', active: true },
-      { skillId: 3, name: 'Angular', active: true },
-      { skillId: 4, name: 'C++', active: true }
+      { id: 1, name: 'Java', active: true },
+      { id: 2, name: 'SQL', active: true },
+      { id: 3, name: 'Angular', active: true },
+      { id: 4, name: 'C++', active: true }
     ]);
   }
 }
@@ -35,7 +36,8 @@ describe('ProfileComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [AppMaterialModule, FormsModule, HttpClientTestingModule, BrowserAnimationsModule], //sets imports
-        declarations: [ProfileComponent, SkillsComponent, CertificationsComponent], //sets declarations
+        declarations: [ProfileComponent, CertificationsComponent], //sets declarations
+        schemas: [NO_ERRORS_SCHEMA],
         providers: [S3CredentialService] //set providers, using our fake service instead of the real one
       }).compileComponents();
     })

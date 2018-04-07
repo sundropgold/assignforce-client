@@ -28,7 +28,7 @@ export class EditSkillComponent implements OnInit {
 
   editSkill(): void {
     console.log('We are Editing a skill ' + this.data.name);
-    this.skillControllerService.updateSkillCaliber(this.skill);
+    this.skillControllerService.update(this.skill);
     this.skill = new Skill(0, '', true);
     this.closeDialog();
   }

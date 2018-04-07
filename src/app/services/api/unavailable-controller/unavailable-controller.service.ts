@@ -10,28 +10,28 @@ export class UnavailableControllerService {
 
   private unavailableController = environment.apiUrls.unavailableController;
 
-  public createUnavailability(unavailability: Unavailability): Observable<Unavailability> {
+  public create(unavailable: Unavailability): Observable<Unavailability> {
     return this.http.post<Unavailability>(
-      this.unavailableController.baseUrl + this.unavailableController.createUnavailability,
-      unavailability
+      this.unavailableController.baseUrl + this.unavailableController.create,
+      unavailable
     );
   }
-
-  public retrieveUnavailability(id: number): Observable<Unavailability> {
-    return this.http.get<Unavailability>(
-      this.unavailableController.baseUrl + this.unavailableController.retrieveUnavailability + id
+  public update(unavailable: Unavailability): Observable<Unavailability> {
+    return this.http.put<Unavailability>(
+      this.unavailableController.baseUrl + this.unavailableController.update + unavailable.id,
+      unavailable
     );
   }
-
-  public deleteUnavailability(id: number): Observable<Unavailability> {
+  public findAll(): Observable<Unavailability[]> {
+    return this.http.get<Unavailability[]>(this.unavailableController.baseUrl + this.unavailableController.findAll);
+  }
+  public remove(id: number): Observable<Unavailability> {
     return this.http.delete<Unavailability>(
-      this.unavailableController.baseUrl + this.unavailableController.deleteUnavailability + id
+      this.unavailableController.baseUrl + this.unavailableController.remove + id
     );
   }
 
-  public retrieveAllUnavailabilities(): Observable<Unavailability[]> {
-    return this.http.get<Unavailability[]>(
-      this.unavailableController.baseUrl + this.unavailableController.retrieveAllUnavailabilities
-    );
+  public find(id: number): Observable<Unavailability> {
+    return this.http.get<Unavailability>(this.unavailableController.baseUrl + this.unavailableController.find + id);
   }
 }

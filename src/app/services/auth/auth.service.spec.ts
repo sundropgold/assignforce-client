@@ -6,6 +6,7 @@ import { AppRouting } from '../../app.routing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 export class MockAuthService {
   lock = null;
@@ -20,7 +21,7 @@ export class MockAuthService {
 describe('AuthService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientModule],
+      imports: [RouterTestingModule, HttpClientTestingModule],
       providers: [
         { provide: AuthService, useClass: MockAuthService },
         UrlService,
