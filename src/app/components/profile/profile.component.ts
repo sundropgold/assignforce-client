@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-
+import { Skill } from '../../model/Skill';
 import { S3CredentialService } from '../../services/s3-credential/s3-credential.service';
+import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
 import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
-import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -15,6 +15,7 @@ export class ProfileComponent implements OnInit {
   @Input() fName: string;
   @Input() lName: string;
 
+  tId: -1;
   lockProfile = true;
   fb: FormBuilder = new FormBuilder();
   nameForm = this.fb.group({
@@ -22,17 +23,25 @@ export class ProfileComponent implements OnInit {
     lastName: new FormControl('', Validators.required)
   });
 
+  // data
+  skills: Skill[] = [
+    { skillId: 1, name: 'Java', active: true },
+    { skillId: 2, name: 'SQL', active: true },
+    { skillId: 3, name: 'Angular', active: true },
+    { skillId: 4, name: 'C++', active: true }
+  ];
+
   nameFound = false;
 
   myFile: FileList;
   creds: any;
-  certFile: FileList = null;
+  //certFile: FileList = null;
   certName: string;
   skillsList: string[] = [];
   edit = false;
 
   trainer = {
-    trainerId: -1,
+    trainerId: 1,
     firstName: 'Joseph',
     lastName: 'Wong',
     skills: [],
@@ -71,12 +80,12 @@ export class ProfileComponent implements OnInit {
 
   getFiles(event) {
     this.myFile = event.target.files;
-    console.log(this.myFile);
+    console.log(this.myFile[0].size);
   }
 
-  getCert(event) {
-    this.certFile = event.target.files;
-  }
+  // getCert(event) {
+  //   this.certFile = event.target.files;
+  // }
 
   // showToast(message) {
 
@@ -91,20 +100,18 @@ export class ProfileComponent implements OnInit {
   }
 
   //Updates user's name
-  updateName() {
-    if (!this.lockProfile) {
-      console.log(this.nameForm.value.firstName);
-
-      this.nameFound = true;
-      this.trainer.firstName = this.nameForm.value.firstName;
-      this.trainer.lastName = this.nameForm.value.lastName;
-    }
+  updateTrainerInfo() {
     this.lockProfile = !this.lockProfile;
-  }
-
-  // queries the database for the trainer. to be called after a change to the trainer's properties
-  pullTrainer() {
-    this.trainer = undefined;
+    if (this.lockProfile) {
+      if (this.nameForm.valid) {
+        this.nameFound = true;
+        this.trainer.firstName = this.nameForm.value.firstName;
+        this.trainer.lastName = this.nameForm.value.lastName;
+      }
+      if (this.myFile[0] !== undefined) {
+        this.uploadResume();
+      }
+    }
   }
 
   getUser() {
