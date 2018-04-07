@@ -4,18 +4,18 @@ import { TrainersComponent } from './trainers.component';
 import { AppMaterialModule } from '../../material.module';
 import { Skill } from '../../model/Skill';
 import { TrainerItemComponent } from './trainer-item/trainer-item.component';
-import { TrainerService } from '../../services/trainer/trainer.service';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Trainer } from '../../model/Trainer';
+import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
 
 describe('TrainersComponent', () => {
   let component: TrainersComponent;
   let fixture: ComponentFixture<TrainersComponent>;
-  let trainerService: TrainerService;
+  let trainerService: TrainerControllerService;
 
   class MockTrainerService {
-    getAll() {}
+    getAllTrainers() {}
   }
 
   let mockClient;
@@ -26,53 +26,22 @@ describe('TrainersComponent', () => {
       declarations: [TrainersComponent, TrainerItemComponent],
       imports: [AppMaterialModule],
       providers: [
-        { provide: TrainerService, useClass: MockTrainerService },
+        { provide: TrainerControllerService, useClass: MockTrainerService },
         { provide: HttpClient, useValue: mockClient }
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TrainersComponent);
     component = fixture.componentInstance;
-    trainerService = TestBed.get(TrainerService);
+    trainerService = TestBed.get(TrainerControllerService);
     mockClient = TestBed.get(HttpClient);
-    console.log(mockClient);
   });
-
-  // beforeEach(
-  //   async(() => {
-  //     TestBed.configureTestingModule({
-  //       imports: [AppMaterialModule, HttpClientModule],
-  //       declarations: [TrainersComponent, TrainerItemComponent],
-  //       providers: [TrainerService]
-  //     }).compileComponents();
-  //   })
-  // );
-
-  // beforeEach(() => {
-
-  //   fixture = TestBed.createComponent(TrainersComponent);
-  //   component = fixture.componentInstance;
-  //   fixture.detectChanges();
-  // });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
   // add trainer
-  // // it('should receive trainer data', () => {});
-  // it('should get all trainers from the database', () =>{
-  //    this.trainerService.getAll();
-  //   let trainerServiceSpy = spyOn(trainerService,'getAll').and
-  //   .returnValue(Observable.create(observer=>{
-  //     observer.next();
-  //   }));
-  //   fixture.detectChanges();
-  //   fixture.whenStable().then(() => {
-  //     expect(component.data).toBe(undefined);
-  //   });
-  // });
-
   it(
     'should receive all of the trainers data',
     async(() => {
@@ -82,7 +51,7 @@ describe('TrainersComponent', () => {
           observer.next(trainers);
         })
       );
-      const dataServiceSpy = spyOn(trainerService, 'getAll').and.returnValue(
+      const dataServiceSpy = spyOn(trainerService, 'getAllTrainers').and.returnValue(
         Observable.create(observer => {
           observer.next(trainers);
         })
@@ -95,10 +64,4 @@ describe('TrainersComponent', () => {
       });
     })
   );
-
-  // submitting the form to the service
-  // download the resume
-  // retrieve all the trainers from database
-
-  // test routing
 });

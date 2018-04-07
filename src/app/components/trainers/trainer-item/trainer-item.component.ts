@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, DoCheck } from '@angular/core';
 import { Trainer } from '../../../model/Trainer';
 import { Skill } from '../../../model/Skill';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-trainer-item',
@@ -13,7 +14,7 @@ export class TrainerItemComponent implements OnInit, DoCheck {
   check = false;
   skillsList = '';
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
     this.isManager = true;
@@ -33,11 +34,18 @@ export class TrainerItemComponent implements OnInit, DoCheck {
   activateTrainer(trainer: Trainer) {
     trainer.active = true;
   }
-
+  goToprofile(id: number) {
+    console.log('check go to profile');
+    this.router.navigateByUrl(`profile/${id}`);
+  }
   listSkills(skills: Skill[]) {
     this.skillsList = '';
     for (let i = 0; i < skills.length; i++) {
-      this.skillsList += skills[i].name += ' ';
+      if (i === skills.length - 1) {
+        this.skillsList += skills[i].name += ' ';
+      } else {
+        this.skillsList += skills[i].name += ', ';
+      }
     }
 
     if (this.skillsList === '' || skills.length === 0) {

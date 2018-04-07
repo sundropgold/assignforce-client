@@ -28,8 +28,6 @@ import { ReportsComponent } from './components/reports/reports.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { AppRouting } from './app.routing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TrainerService } from './services/trainer/trainer.service';
-import { SkillService } from './services/skill/skill.service';
 import { S3CredentialService } from './services/s3-credential/s3-credential.service';
 import { UrlService } from './services/url/url.service';
 
@@ -54,7 +52,6 @@ import { InMemDbService } from './mockdb/in-mem-db.service';
 
 import { TrainersAddComponent } from './components/trainers/trainers-add/trainers-add.component';
 import { TrainerItemComponent } from './components/trainers/trainer-item/trainer-item.component';
-import { CurriculaService } from './services/curricula/curricula.service';
 
 import { BatchControllerService } from './services/api/batch-controller/batch-controller.service';
 import { AddressControllerService } from './services/api/address-controller/address-controller.service';
@@ -125,8 +122,6 @@ import { CurriculumSkillsComponent } from './components/curriculum-skills/curric
   exports: [AppMaterialModule],
 
   providers: [
-    TrainerService,
-    SkillService,
     S3CredentialService,
     HttpClient,
     UrlService,
@@ -146,8 +141,7 @@ import { CurriculumSkillsComponent } from './components/curriculum-skills/curric
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,
       multi: true
-    },
-    CurriculaService
+    }
   ],
   bootstrap: [AppComponent],
   entryComponents: [

@@ -2,9 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProfileComponent } from './profile.component';
 import { AppMaterialModule } from '../../material.module';
 import { FormsModule } from '@angular/forms';
-import { TrainerService } from '../../services/trainer/trainer.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { SkillService } from '../../services/skill/skill.service';
 import { S3CredentialService } from '../../services/s3-credential/s3-credential.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable } from 'rxjs/Observable';
@@ -14,6 +12,7 @@ import 'rxjs/add/observable/of';
 import { CompileNgModuleMetadata } from '@angular/compiler';
 import { SkillsComponent } from '../skills/skills.component';
 import { CertificationsComponent } from '../certifications/certifications.component';
+import { ActivatedRoute } from '@angular/router';
 
 //creates a fake skill service to pass test values
 class MockSkillService {
@@ -37,7 +36,7 @@ describe('ProfileComponent', () => {
       TestBed.configureTestingModule({
         imports: [AppMaterialModule, FormsModule, HttpClientTestingModule, BrowserAnimationsModule], //sets imports
         declarations: [ProfileComponent, SkillsComponent, CertificationsComponent], //sets declarations
-        providers: [TrainerService, { provide: SkillService, useClass: MockSkillService }, S3CredentialService] //set providers, using our fake service instead of the real one
+        providers: [S3CredentialService] //set providers, using our fake service instead of the real one
       }).compileComponents();
     })
   );
