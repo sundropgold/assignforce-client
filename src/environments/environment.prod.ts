@@ -23,7 +23,6 @@ export const environment = {
   auth0: {
     namespace: 'https://revature.com/',
     title: 'AssignForce Login',
-    //clientId: 'uS5tb62hP8K3CgU00qa38SVnfWvzviiH', //assign-force
     clientId: 'tjQhcs0O4mRV2iry6SAO0Gy1YQcBrWCa', //hydra
     domain: 'revature.auth0.com',
     responseType: 'token id_token',
@@ -132,5 +131,5 @@ export const environment = {
   },
 
   //base url
-  baseUrl: 'https://assignforce.revaturelabs.com'
+  baseUrl: 'https://assignforce.cfapps.io'
 };
