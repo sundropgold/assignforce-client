@@ -47,10 +47,10 @@ export class ProfileComponent implements OnInit {
     active: true
   };
 
-  constructor(private s3Service: S3CredentialService) {}
+  constructor() {}
 
   ngOnInit() {
-    //this.populateSkillList();
+    // this.populateSkillList();
   }
 
   toggleEdit() {
