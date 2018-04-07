@@ -84,13 +84,8 @@
               <mat-header-cell *matHeaderCellDef mat-sort-header> Progress </mat-header-cell>
               <mat-cell *matCellDef="let batchObj"> <mat-card>
                 <mat-card-content>
-                    <mat-progress-bar
-                      class="example-margin"
-                      color="warn"
-                      mode="determinate"
-                      [value]="batchObj.progress"
-                      [bufferValue]="bufferValue">
-                    </mat-progress-bar>
+                  <mat-progress-bar class="example-margin" color="warn" mode="determinate" [value]="batchObj.progress" [bufferValue]="bufferValue">
+                  </mat-progress-bar>
                 </mat-card-content>
               </mat-card>
               </mat-cell>

@@ -84,7 +84,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
      *  FILTER TYPE!!!
      *  0 - By All
      *  1 - In Progress
-     *  2 - Beginging in two weeks
+     *  2 - Beginning in two weeks
      */
     this.selectedFilter = filterType;
     this.displayedBatchList = [];

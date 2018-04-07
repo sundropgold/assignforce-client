@@ -1,7 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Skill } from '../../model/Skill';
+
 import { S3CredentialService } from '../../services/s3-credential/s3-credential.service';
+import { Router } from '@angular/router';
+import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -12,21 +16,12 @@ export class ProfileComponent implements OnInit {
   @Input() fName: string;
   @Input() lName: string;
 
-  tId: -1;
   lockProfile = true;
   fb: FormBuilder = new FormBuilder();
   nameForm = this.fb.group({
     firstName: new FormControl('', Validators.required),
     lastName: new FormControl('', Validators.required)
   });
-
-  // data
-  skills: Skill[] = [
-    { skillId: 1, name: 'Java', active: true },
-    { skillId: 2, name: 'SQL', active: true },
-    { skillId: 3, name: 'Angular', active: true },
-    { skillId: 4, name: 'C++', active: true }
-  ];
 
   nameFound = false;
 
@@ -38,7 +33,7 @@ export class ProfileComponent implements OnInit {
   edit = false;
 
   trainer = {
-    trainerId: 1,
+    trainerId: -1,
     firstName: 'Joseph',
     lastName: 'Wong',
     skills: [],
@@ -47,23 +42,19 @@ export class ProfileComponent implements OnInit {
     active: true
   };
 
-  constructor(private s3Service: S3CredentialService) {}
+  readonly id = this.router.url.split('/')[this.router.url.split('/').length - 1];
 
-  ngOnInit() {
-    // data gathering
-    // id is hard coded for testing. unless you click on a trainer in the trainer page.
-    // if (this.tId > -1) {
-    //   this.lockProfile = false;
-    //   this.trainerService.getById(this.tId).subscribe(response => {this.trainer = response; this.getAllSkills(); },
-    //     () => this.showToast('Could not fetch trainer.'));
-    // } else {
-    //   this.trainerService.getByFirstNameAndLastName(this.fName, this.lName).subscribe(response => {this.trainer = response; this.getAllSkills(); },
-    //     () => this.showToast('Could not fetch trainer.'));
-    //   this.lockProfile = true;
-    // }
-    //
-    // // grab credentials for s3
-    // this.s3Service.getCreds().subscribe( response => this.creds = response, () => this.showToast('Failed to fetch Credentials'));
+  constructor(
+    private s3Service: S3CredentialService,
+    private router: Router,
+    private trainerService: TrainerControllerService,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit() {}
+
+  toggleEdit() {
+    this.edit = !this.edit;
   }
 
   getFiles(event) {
@@ -71,6 +62,13 @@ export class ProfileComponent implements OnInit {
     console.log(this.myFile);
   }
 
+  getCert(event) {
+    this.certFile = event.target.files;
+  }
+
+  // showToast(message) {
+
+  // }
   showToast(message) {
     // this.aCtrl.showToast( message );
   }
@@ -92,17 +90,16 @@ export class ProfileComponent implements OnInit {
     this.lockProfile = !this.lockProfile;
   }
 
-  // queries the database for skills. to be called after a change to the skills array
-  // rePullSkills() {
-  //   this.skillsList = undefined;
-  //   this.skillService.getAll().subscribe( response => this.skillsList = response, () => this.showToast('Could not fetch skills.'));
-  // }
-
   // queries the database for the trainer. to be called after a change to the trainer's properties
   pullTrainer() {
     this.trainer = undefined;
-    // this.trainerService
-    //   .getById(this.tId)
-    //   .subscribe(response => (this.trainer = response), () => this.showToast('Could not fetch trainer.'));
+  }
+
+  getUser() {
+    this.authService.getProfile((error, profile) => {
+      if (!error) {
+        this.trainer = profile;
+      }
+    });
   }
 }

@@ -9,6 +9,9 @@ import { TrainerControllerService } from '../../services/api/trainer-controller/
 
 import { AppMaterialModule } from '../../material.module';
 import { BatchesComponent } from './batches.component';
+import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
+import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
+import { AddressControllerService } from '../../services/api/address-controller/address-controller.service';
 
 describe('BatchesComponent', () => {
   let component: BatchesComponent;
@@ -25,7 +28,13 @@ describe('BatchesComponent', () => {
           BrowserAnimationsModule
         ],
         declarations: [BatchesComponent, BatchesTimelineComponent, BatchesTimelineFilterComponent],
-        providers: [BatchControllerService, TrainerControllerService]
+        providers: [
+          BatchControllerService,
+          TrainerControllerService,
+          SkillControllerService,
+          CurriculumControllerService,
+          AddressControllerService
+        ]
       }).compileComponents();
     })
   );

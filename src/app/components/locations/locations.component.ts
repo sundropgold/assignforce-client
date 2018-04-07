@@ -6,6 +6,7 @@ import { Building } from '../../model/Building';
 import { Location } from '../../model/Location';
 import { Room } from '../../model/Room';
 import { LocationAddDialogComponent } from './add-dialog/location-add-dialog.component';
+import { LocationControllerService } from '../../services/api/location-controller/location-controller.service';
 
 @Component({
   selector: 'app-location-delete-location-dialog',
@@ -150,70 +151,14 @@ export class LocationEditRoomDialogComponent {
 })
 export class LocationsComponent implements OnInit {
   expanded: boolean[] = [];
-  locations = [
-    {
-      id: '13F',
-      name: 'Revature HQ',
-      city: 'Reaston',
-      state: 'VA',
-      buildings: [
-        {
-          name: 'Building 1',
-          rooms: [
-            {
-              name: 'Room 101'
-            },
-            {
-              name: 'Room 102'
-            }
-          ]
-        },
-        {
-          name: 'Building 2',
-          rooms: [
-            {
-              name: 'Room 201'
-            },
-            {
-              name: 'Room 202'
-            }
-          ]
-        }
-      ]
-    },
-    {
-      id: '13E',
-      name: 'CUNY',
-      city: 'New York',
-      state: 'NY',
-      buildings: [
-        {
-          name: 'SPS',
-          rooms: [
-            {
-              name: 'Room 216'
-            },
-            {
-              name: 'Room 220'
-            }
-          ]
-        },
-        {
-          name: 'Queens College',
-          rooms: [
-            {
-              name: 'Room 301'
-            },
-            {
-              name: 'Room 302'
-            }
-          ]
-        }
-      ]
-    }
-  ];
+  locations = [];
 
-  constructor(private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer, public dialog: MatDialog) {
+  constructor(
+    private iconRegistry: MatIconRegistry,
+    private sanitizer: DomSanitizer,
+    public dialog: MatDialog,
+    private locationService: LocationControllerService
+  ) {
     for (const location of this.locations) {
       this.expanded[location.id] = false;
     }
@@ -228,7 +173,14 @@ export class LocationsComponent implements OnInit {
     );
     iconRegistry.addSvgIcon('room', sanitizer.bypassSecurityTrustResourceUrl('assets/img/ic_business_black_48px.svg'));
   }
-  ngOnInit() {}
+  ngOnInit() {
+    this.locationService
+      .retrieveAllLocation()
+      .toPromise()
+      .then(response => {
+        this.locations = response;
+      });
+  }
   collapseAll(id: any) {
     this.expanded[id] = !this.expanded[id];
 

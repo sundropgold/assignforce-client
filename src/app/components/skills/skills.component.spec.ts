@@ -39,9 +39,9 @@ describe('SkillsComponent', () => {
     fixture.detectChanges();
   });
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 
   //should populate the component's skills array with skills from the service
   it('should populate component.skills', () => {
