@@ -53,3 +53,7 @@ mat-icon {
   display: inline-flex;
   vertical-align: middle;
 }
+
+mat-select {
+  width: 300px;
+}

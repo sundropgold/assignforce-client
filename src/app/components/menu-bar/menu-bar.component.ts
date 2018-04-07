@@ -1,7 +1,6 @@
-import { AfterContentInit, Component, ContentChildren, OnInit, QueryList, ViewEncapsulation } from '@angular/core';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { Subject } from 'rxjs/Subject';
-import { MatTab } from '@angular/material';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+
 import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
@@ -30,7 +29,6 @@ export class MenuBarComponent implements OnInit {
     });
   }
 
-  
   selectTab(evt) {
     console.log(evt);
     this.router.navigate([evt.tab.textLabel.toLowerCase()]);

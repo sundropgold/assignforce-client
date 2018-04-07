@@ -8,6 +8,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BatchControllerService } from '../../services/api/batch-controller/batch-controller.service';
 import { batches } from '../../mockdb/mockdata/batch.data';
 import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
+import { LocationControllerService } from '../../services/api/location-controller/location-controller.service';
+import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
 
 describe('BatchesTimelineFilterComponent', () => {
   let component: BatchesTimelineFilterComponent;
@@ -24,7 +26,7 @@ describe('BatchesTimelineFilterComponent', () => {
           BrowserAnimationsModule
         ],
         declarations: [BatchesTimelineFilterComponent],
-        providers: [TrainerControllerService, BatchControllerService]
+        providers: [LocationControllerService, CurriculumControllerService]
       }).compileComponents();
     })
   );
