@@ -1,9 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { S3CredentialService } from '../../services/s3-credential/s3-credential.service';
-
 import { Trainer } from '../../model/Trainer';
 import { Skill } from '../../model/Skill';
-
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -38,7 +36,7 @@ export class ProfileComponent implements OnInit {
   certFile: FileList = null;
   certName: string;
   skillsList: string[] = [];
-  hidden: true;
+  edit = false;
 
   trainer = {
     trainerId: 1,
@@ -54,6 +52,10 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     //this.populateSkillList();
+  }
+
+  toggleEdit() {
+    this.edit = !this.edit;
   }
 
   getFiles(event) {
