@@ -3,8 +3,6 @@ import { Batch } from '../../model/Batch';
 import { BatchControllerService } from '../../services/api/batch-controller/batch-controller.service';
 import { MatSelectChange, MatCheckboxChange, MatOption } from '@angular/material';
 import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
-import { curriculum } from '../../mockdb/mockdata/curriculum.data';
-import { BatchLocation } from '../../model/BatchLocation';
 import { Trainer } from '../../model/Trainer';
 import { Curriculum } from '../../model/Curriculum';
 
@@ -285,7 +283,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   updateBatches() {
     console.log('updating batches...');
     this.loading = true;
-    this.batchController.getAllBatches().subscribe(result => {
+    this.batchController.findAll().subscribe(result => {
       this.batches = [];
       for (let i = 0; i < result.length; i++) {
         const batch = result[i];
@@ -307,12 +305,12 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
           }
         }
         if (this.locationFilter !== 'Any') {
-          if (batch.batchLocation.locationName !== this.locationFilter) {
+          if (batch.address.name !== this.locationFilter) {
             continue;
           }
         }
         if (this.buildingFilter !== 'Any') {
-          if (batch.batchLocation.buildingName !== this.buildingFilter) {
+          if (batch.building.name !== this.buildingFilter) {
             continue;
           }
         }
@@ -351,7 +349,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   updateTrainers() {
     console.log('updating trainers...');
     this.loading = true;
-    this.trainerController.getAllTrainers().subscribe(result => {
+    this.trainerController.findAll().subscribe(result => {
       this.trainers = [];
       for (let i = 0; i < result.length; i++) {
         const trainer = result[i];
@@ -359,7 +357,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         if (this.hideBatchlessTrainers) {
           let hasBatch = false;
           for (const batch of this.batches) {
-            if (batch.trainer.trainerId === trainer.trainerId) {
+            if (batch.trainer.id === trainer.id) {
               hasBatch = true;
               break;
             }
@@ -478,22 +476,20 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
       lines.push([{ text: '----------', color: this.tooltipDefaultColor }]);
 
-      if (batch.batchLocation != null) {
-        if (batch.batchLocation.locationName != null) {
-          lines.push(this.getTooltipExists('Location', batch.batchLocation.locationName));
-        } else {
-          lines.push(this.getTooltipNone('Location'));
-        }
-        if (batch.batchLocation.buildingName != null) {
-          lines.push(this.getTooltipExists('Building', batch.batchLocation.buildingName));
-        } else {
-          lines.push(this.getTooltipNone('Building'));
-        }
-        if (batch.batchLocation.roomName != null) {
-          lines.push(this.getTooltipExists('Room', batch.batchLocation.roomName));
-        } else {
-          lines.push(this.getTooltipNone('Room'));
-        }
+      if (batch.address != null) {
+        lines.push(this.getTooltipExists('Location', batch.address.name));
+      } else {
+        lines.push(this.getTooltipNone('Location'));
+      }
+      if (batch.building != null) {
+        lines.push(this.getTooltipExists('Building', batch.building.name));
+      } else {
+        lines.push(this.getTooltipNone('Building'));
+      }
+      if (batch.room != null) {
+        lines.push(this.getTooltipExists('Room', batch.room.roomName));
+      } else {
+        lines.push(this.getTooltipNone('Room'));
       }
 
       // dynamic width
@@ -632,10 +628,10 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       duration = Math.floor(duration / (1000 * 60 * 60 * 24 * 7)); // ms to weeks
 
       // get the correct color
-      const color = this.getColorForcurriculum(batch.curriculum.currId);
+      const color = this.getColorForcurriculum(batch.curriculum.id);
 
       // get the column this batch will be in
-      let trainer_index = this.trainers.findIndex(t => t.trainerId === batch.trainer.trainerId);
+      let trainer_index = this.trainers.findIndex(t => t.id === batch.trainer.id);
       if (trainer_index < 0) {
         // this batch has no trainer, it may have been filtered
         continue;
@@ -729,7 +725,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     for (let i = 0; i < this.trainers.length; i++) {
       const batchSet = [];
       for (let j = 0; j < this.batches.length; j++) {
-        if (this.batches[j].trainer.trainerId === this.trainers[i].trainerId) {
+        if (this.batches[j].trainer.id === this.trainers[i].id) {
           batchSet.push(this.batches[j]);
         }
       }
@@ -932,7 +928,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
             // check overlap
             const py = this.yPosToDate(this.swimPos.y);
             if (py > batch.startDate.valueOf() && py < batch.endDate.valueOf()) {
-              const batchlane = this.trainers.findIndex(t => t.trainerId === batch.trainer.trainerId);
+              const batchlane = this.trainers.findIndex(t => t.id === batch.trainer.id);
               if (this.swimLane === batchlane) {
                 console.log('hit!');
                 gotHit = true;
@@ -1031,7 +1027,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     const maxDur = 1000 * 60 * 60 * 24 * 7 * 16; // 16 weeks
     const ranEndDate = startdate + Math.random() * maxDur + baseDur;
     const randRow = Math.floor(Math.random() * this.trainersOnThisPage);
-    const trId = this.trainers[randRow].trainerId;
+    const trId = this.trainers[randRow].id;
     // console.log('adding random batch at col:' + randRow + ' enddate: ' + ranEndDate);
     const currId = Math.floor(Math.random() * 4);
     this.batches.push(
@@ -1040,13 +1036,15 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         'randomly generated',
         startdate,
         ranEndDate,
-        new Curriculum(currId, null, true, true, null),
+        new Curriculum(currId, null, true, [], []),
         null,
         new Trainer(trId, null, null, null, null, true, null, null),
         null,
         null,
         null,
-        new BatchLocation(-1, -1, null, -1, null, -1, null)
+        null,
+        null,
+        null
       )
     );
   }

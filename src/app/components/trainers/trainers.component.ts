@@ -25,7 +25,7 @@ export class TrainersComponent implements OnInit {
   ngOnInit() {
     this.isManager = true;
 
-    this.trainerService.getAllTrainers().subscribe(t => {
+    this.trainerService.findAll().subscribe(t => {
       this.trainers = t;
     });
   }
@@ -39,27 +39,17 @@ export class TrainersComponent implements OnInit {
   addTrainer(): void {
     //add trainer
 
-    const trainer: Trainer = {
-      trainerId: 0,
-      firstName: '',
-      lastName: '',
-      skills: Skill[1],
-      certifications: '',
-      active: true,
-      resume: '',
-      unavailabilities: []
-    };
     const dialogRef = this.dialog.open(TrainersAddComponent, {
       width: '450px',
       data: {
-        trainer: trainer
+        trainer: null
       }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.trainers.push(result);
-        this.trainerService.createTrainer(result);
+        this.trainerService.create(result);
       }
     });
   }

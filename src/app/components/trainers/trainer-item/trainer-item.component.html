@@ -1,5 +1,5 @@
 
-  <mat-list-item mat-ripple="#ff0000" *ngIf="trainer.active" (click)="goToprofile(trainer.trainerId)">
+  <mat-list-item mat-ripple="#ff0000" *ngIf="trainer.active" (click)="goToprofile(trainer.id)">
     <mat-icon matListIcon style="color: #000;">people</mat-icon>
     <h4 matLine> {{ trainer.firstName }} {{ trainer.lastName }} </h4>
     <p *ngIf="trainer.skills.length > 0" matLine>Skills: {{skillsList}}</p>

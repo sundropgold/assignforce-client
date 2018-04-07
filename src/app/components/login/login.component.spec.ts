@@ -6,6 +6,7 @@ import { AppRouting } from '../../app.routing';
 import { AuthService } from '../../services/auth/auth.service';
 import { UrlService } from '../../services/url/url.service';
 import { LoginComponent } from './login.component';
+import { MockAuthService } from '../../services/auth/auth.service.spec';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -16,7 +17,14 @@ describe('LoginComponent', () => {
       TestBed.configureTestingModule({
         imports: [HttpClientTestingModule],
         declarations: [LoginComponent],
-        providers: [AuthService, { provide: Router, useClass: AppRouting }, UrlService]
+        providers: [
+          {
+            provide: AuthService,
+            useClass: MockAuthService
+          },
+          { provide: Router, useClass: AppRouting },
+          UrlService
+        ]
       }).compileComponents();
     })
   );

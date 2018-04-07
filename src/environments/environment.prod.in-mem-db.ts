@@ -5,13 +5,10 @@
 
 export const environment = {
   production: true,
+  baseUrl: 'https://assignforce.cfapps.io',
 
-  baseUrl: 'https://assignforce.revaturelabs.com',
-  baseApiUrl: 'api',
-
-  //routers
   appRoutes: {
-    login: 'login',
+    login: '',
     overview: 'overview',
     batches: 'batches',
     locations: 'locations',
@@ -23,10 +20,15 @@ export const environment = {
     callback: 'callback'
   },
 
+  security_config: {
+    roles: ['SVP of Technology', 'Trainer'],
+    groups: ['Operations'],
+    permissions: []
+  },
+
   auth0: {
     namespace: 'https://revature.com/',
     title: 'AssignForce Login',
-    //clientId: 'uS5tb62hP8K3CgU00qa38SVnfWvzviiH', //assign-force
     clientId: 'tjQhcs0O4mRV2iry6SAO0Gy1YQcBrWCa', //hydra
     domain: 'revature.auth0.com',
     responseType: 'token id_token',
@@ -35,108 +37,95 @@ export const environment = {
     scope: 'openid profile'
   },
 
-  security_config: {
-    roles: ['SVP of Technology', 'Trainer'],
-    groups: ['Operations'],
-    permissions: []
-  },
-
   apiUrls: {
-    batchController: {
-      baseUrl: 'api/batch',
-      createBatch: '',
-      deleteBatch: '/',
-      updateBatch: '',
-      findCommonLocations: '',
-      getAllBatches: '',
-      findAllBatchesByTrainer: '/',
-      createWeek: '',
-      getAllVpBatches: '',
-      getAllCurrentBatches: ''
+    addressController: {
+      baseUrl: 'https://hydra.cfapps.io/api/address/addresses',
+      create: '',
+      update: '/',
+      findAll: '',
+      find: '/',
+      remove: '/'
     },
 
-    addressController: {
-      baseUrl: 'api/location',
-      createLocation: '',
-      updateLocation: '',
-      getAllLocations: '',
-      removeLocation: '/',
-      getLocation: '/',
-      reactivateLocation: ''
+    batchController: {
+      baseUrl: 'https://hydra.cfapps.io/api/batch/batches',
+      create: '',
+      update: '/',
+      findAll: '',
+      find: '/',
+      remove: '/'
     },
 
     buildingController: {
-      baseUrl: 'api/building',
-      createBuilding: '',
-      retrieveBuilding: '/',
-      updateBuilding: '',
-      deleteBuilding: '/',
-      retrieveAllBuildings: ''
+      baseUrl: 'https://hydra.cfapps.io/api/address/buildings',
+      create: '',
+      update: '/',
+      findAll: '',
+      find: '/',
+      remove: '/'
     },
 
     locationController: {
-      baseUrl: 'api/location',
-      createLocation: '',
-      retrieveLocation: '/',
-      updateLocation: '',
-      deleteLocation: '/',
-      retrieveAllLocation: ''
+      baseUrl: 'https://hydra.cfapps.io/api/address/locations',
+      create: '',
+      update: '/',
+      findAll: '',
+      find: '/',
+      remove: '/'
+    },
+
+    roomController: {
+      baseUrl: 'https://hydra.cfapps.io/api/address/rooms',
+      create: '',
+      update: '/',
+      findAll: '',
+      find: '/',
+      remove: '/'
     },
 
     curriculumController: {
-      baseUrl: 'api/curricula',
-      createCurriculum: '',
-      retrieveCurriculum: '/',
-      updateCurriculum: '',
-      deleteCurriculum: '/',
-      retrieveAllCurricula: '',
-      retrieveAllActiveCurricula: '',
-      retrieveAllCore: '',
-      retrieveAllActiveCore: '',
-      retrieveAllFocus: '',
-      retrieveAllActiveFocus: ''
+      baseUrl: 'https://hydra.cfapps.io/api/curriculum/curricula',
+      create: '',
+      update: '/',
+      findAll: '',
+      find: '/',
+      remove: '/'
     },
 
-    settingController: {
-      baseUrl: 'api/setting',
-      createSetting: '',
-      retrieveSetting: '/',
-      getGlobalSetting: '',
-      updateSetting: '',
-      deleteSetting: '/'
+    focusController: {
+      baseUrl: 'https://hydra.cfapps.io/api/curriculum/curricula',
+      create: '',
+      update: '/',
+      findAll: '',
+      find: '/',
+      remove: '/'
     },
 
     skillController: {
-      baseUrl: 'api/skill',
-      findAllActive: '',
+      baseUrl: 'https://hydra.cfapps.io/api/skill/skills',
+      create: '',
+      update: '/',
       findAll: '',
-      findSkillById: '/',
-      updateSkillCaliber: '',
-      saveSkill: '',
-      createSkill: '',
-      retrieveSkill: '/',
-      updateSkillMinerva: '',
-      deleteSkill: '/',
-      retrieveAllSkills: '',
-      retrieveSkillsByIds: ''
+      find: '/',
+      remove: '/'
     },
 
     trainerController: {
-      baseUrl: 'api/trainer',
-      createTrainer: '',
-      updateTrainer: '',
-      findTrainer: '/',
-      makeInactive: '/',
-      getAllTrainersTitles: '',
-      getAllTrainers: ''
+      baseUrl: 'https://hydra.cfapps.io/api/trainer/trainers',
+      create: '',
+      update: '/',
+      findAll: '',
+      find: '/',
+      remove: '/'
     },
 
     unavailableController: {
-      baseUrl: 'api/unavailable',
-      createUnavailability: '',
-      retrieveUnavailability: '/',
-      deleteUnavailability: '/',
-      retrieveAllUnavailabilities: ''
+      baseUrl: 'https://hydra.cfapps.io/api/unavailable//unavailabilities',
+      create: '',
+      update: '/',
+      findAll: '',
+      find: '/',
+      remove: '/'
     }
   }
 };
