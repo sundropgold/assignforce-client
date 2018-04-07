@@ -1,10 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { S3CredentialService } from '../../services/s3-credential/s3-credential.service';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 
-import { Trainer } from '../../model/Trainer';
 import { Skill } from '../../model/Skill';
-
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { S3CredentialService } from '../../services/s3-credential/s3-credential.service';
 
 @Component({
   selector: 'app-profile',

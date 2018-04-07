@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AppMaterialModule } from '../../material.module';
+
 import { Skill } from '../../model/Skill';
 import { Trainer } from '../../model/Trainer';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-skills',

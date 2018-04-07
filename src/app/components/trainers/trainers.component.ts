@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Trainer } from '../../model/Trainer';
+import { MatDialog } from '@angular/material';
+
 import { Skill } from '../../model/Skill';
+import { Trainer } from '../../model/Trainer';
 import { TrainersAddComponent } from './trainers-add/trainers-add.component';
-import { TrainerItemComponent } from './trainer-item/trainer-item.component';
-import { MatDialog, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-trainers',
