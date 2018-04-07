@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { SettingControllerService } from '../../services/api/setting-controller/setting-controller.service';
+
+import { Building } from '../../model/Building';
+import { Location } from '../../model/Location';
 import { Setting } from '../../model/Setting';
 import { AddressControllerService } from '../../services/api/address-controller/address-controller.service';
-import { Location } from '../../model/Location';
-import { Building } from '../../model/Building';
 import { BuildingControllerService } from '../../services/api/building-controller/building-controller.service';
+import { SettingControllerService } from '../../services/api/setting-controller/setting-controller.service';
+
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
