@@ -4,7 +4,7 @@
       <mat-toolbar class="md-toolbar" layout="columns">
         <span>Profile</span>
         <span class="md-toolbar-spacer"></span>
-        <button mat-icon-button (click)="updateName()" *ngIf="trainer.trainerId == id">
+        <button mat-icon-button (click)="updateName()" *ngIf="trainer.trainerId == displayTrainer.trainerId">
           <mat-icon matTooltip="Save" class="material-icons" *ngIf="!lockProfile">save</mat-icon>
           <mat-icon matTooltip="Edit" class="material-icons" *ngIf="lockProfile">edit</mat-icon>
         </button>
@@ -18,7 +18,7 @@
             id="displayImage" class="width-200 height-200" src="https://app.revature.com/core/resources/download/default/interns/image?t=1486138020884">
         </div>
         <div class="col-lg-10">
-          <h1>{{this.trainer.firstName}} {{this.trainer.lastName}}</h1>
+          <h1>{{this.displayTrainer.firstName}} {{this.displayTrainer.lastName}}</h1>
           <div *ngIf="!lockProfile">
             <form [formGroup]="nameForm">
               <mat-form-field flex>

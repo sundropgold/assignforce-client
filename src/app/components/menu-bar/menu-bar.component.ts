@@ -16,11 +16,14 @@ export class MenuBarComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute, private auth0: AuthService) {}
 
+  userId = -1;
+
   logout() {
     this.auth0.logout();
   }
 
   ngOnInit() {
+    this.getUser();
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         console.log(event.url);
@@ -29,12 +32,29 @@ export class MenuBarComponent implements OnInit {
     });
   }
 
+  ngDoCheck() {
+    if (this.router.url.split('/')[1] !== this.tabs[this.selectedTab]) {
+      console.log(this.tabs[this.selectedTab]);
+      this.selectedTab = this.tabs.indexOf(this.router.url.split('/')[1]);
+    }
+  }
+
   selectTab(evt) {
     console.log(evt);
-    if (this.selectedTab === this.tabs.indexOf('profile')) {
-      this.router.navigate(['/profile/1']);
+    if (evt.tab.textLabel.toLowerCase() === 'profile') {
+      this.router.navigate([`/profile/${this.userId}`]);
     } else {
-      this.router.navigate([this.tabs[evt.index]]);
+      this.router.navigate([evt.tab.textLabel.toLowerCase()]);
+    }
+  }
+
+  getUser() {
+    if (localStorage.getItem('access_token')) {
+      this.auth0.getProfile((error, profile) => {
+        if (profile) {
+          this.userId = profile.trainerId;
+        }
+      });
     }
   }
 }

@@ -41,6 +41,8 @@ export class ProfileComponent implements OnInit {
     active: true
   };
 
+  displayTrainer = this.trainer;
+
   readonly id = this.router.url.split('/')[this.router.url.split('/').length - 1];
 
   constructor(
@@ -50,7 +52,18 @@ export class ProfileComponent implements OnInit {
     private authService: AuthService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getUser();
+    if (this.id !== this.trainer.trainerId.toString()) {
+      this.trainerService.getAllTrainers().subscribe(trainers => {
+        for (const trainer of trainers) {
+          if (trainer.trainerId.toString() === this.id) {
+            this.displayTrainer = trainer;
+          }
+        }
+      });
+    }
+  }
 
   toggleEdit() {
     this.edit = !this.edit;
@@ -95,10 +108,14 @@ export class ProfileComponent implements OnInit {
   }
 
   getUser() {
-    this.authService.getProfile((error, profile) => {
-      if (!error) {
+    if (localStorage.getItem('access_token')) {
+      this.authService.getProfile((error, profile) => {
         this.trainer = profile;
-      }
-    });
+        this.displayTrainer = this.trainer;
+      });
+    }
   }
+  //   if (this.authService.getToken() !== undefined) {
+
+  // }
 }
