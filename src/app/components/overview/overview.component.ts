@@ -35,10 +35,9 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   constructor(private batchController: BatchControllerService) {}
 
   ngOnInit() {
-    //TODO -- use the batch-controller.service
     this.batchController.getAllBatches().subscribe(blist => {
       blist.forEach(batch => {
-        // This is an object that encapsulates the batch object's properties and a progress number.
+        // This is an object that encapsulates the Batch object's properties and a progress number.
         const batchObj = {
           name: batch.name,
           curriculum: batch.curriculum.name,
@@ -58,7 +57,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
           batchOb.progress = this.getCurrentProgress(batchOb);
         });
 
-        // This starts the view on showing All batches.
+        // This starts the view on showing All Batches.
         this.applyFilter(0);
       });
     });
@@ -123,6 +122,8 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   }
 
   computeNumOfWeeksBetween(startDate: number, endDate: number): number {
+    // EX: 0-6 DAYS = 1 WEEK
+    //     7-13 DAYS = 2 WEEKS
     const numberOfDays = Math.abs(<any>endDate - <any>startDate) / (1000 * 60 * 60 * 24);
     const numberOfWeeks = Math.floor(numberOfDays / 7);
     return numberOfWeeks;
@@ -137,6 +138,8 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     return weekNumber;
   }
 
+  // PROGRESS = 0 IF BATCH DIDNT START YET
+  // PROGRESS CAPPED AT 100 IF BATCH FINISHED
   getCurrentProgress(batchObj): number {
     const training_duration = this.computeNumOfWeeksBetween(batchObj.startDate, batchObj.endDate);
     if (training_duration === 0) {
