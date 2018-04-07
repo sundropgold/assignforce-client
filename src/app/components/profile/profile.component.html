@@ -3,7 +3,6 @@
 I have created two ng-shows with two different md-cards, find the section where there are  many empty comment blocks
 The top one is only for the user to change their profileCtrl
 The second md-card/ng-show is for other users to look at other trainers profiles but arent allowed to make a change.
-
  -->
 <div style="margin-top: 5%">
   <!--<mat-card *ngIf="tId == -1" md-whiteframe="8" ng-cloak>-->
@@ -18,7 +17,6 @@ The second md-card/ng-show is for other users to look at other trainers profiles
         </button>
       </mat-toolbar>
     </mat-toolbar-row>
-
     <!--info section-->
     <mat-card-content *ngIf="trainer != undefined && skills != undefined">
       <div class="row">
@@ -27,9 +25,9 @@ The second md-card/ng-show is for other users to look at other trainers profiles
             id="displayImage" class="width-200 height-200" src="https://app.revature.com/core/resources/download/default/interns/image?t=1486138020884">
         </div>
         <div class="col-lg-10">
-          <div>
             <h1>{{this.trainer.firstName}} {{this.trainer.lastName}}</h1>
-            <form [formGroup]="nameForm" *ngIf="!lockProfile">
+            <div *ngIf="!lockProfile">
+            <form [formGroup]="nameForm">
               <mat-form-field flex>
                 <input matInput class="formControl" placeholder="First Name" formControlName="firstName" required>
               </mat-form-field>
@@ -37,25 +35,25 @@ The second md-card/ng-show is for other users to look at other trainers profiles
                 <input matInput class="formControl" placeholder="Last Name" name="lastLast" formControlName="lastName" required>
               </mat-form-field>
             </form>
-          </div>
-          <div layout="row">
-            <!--need to figure out accessing the file, as far as permissions go-->
-            <label> Current Resume: </label>
-            <label *ngIf="trainer.resume != null">{{trainer.resume}}</label>
-            <label *ngIf="trainer.resume == null">No resume on file</label>
-            <br>
-          </div>
-          <div class="row">
-            <div class="col-lg-1">
-              <button mat-icon-button (click)="inputResume.click()">
-                <input class="inputFile" #inputResume type="file" (change)="getFiles($event)">
-                <mat-icon matTooltip="Add/Update Resume" position="below" class="material-icons revOrange">add_circle</mat-icon>
-              </button>
+            <div layout="row">
+              <!--need to figure out accessing the file, as far as permissions go-->
+              <label> Current Resume: </label>
+              <label *ngIf="trainer.resume != null">{{trainer.resume}}</label>
+              <label *ngIf="trainer.resume == null">No resume on file</label>
+              <br>
             </div>
-            <div class="col-lg-11" *ngIf="myFile != undefined">
-              <label>{{myFile[0].name}}</label>
-              <button mat-button (click)="uploadResume()">Update</button>
-            </div>
+            <div class="row">
+              <div class="col-lg-1">
+                <button mat-icon-button (click)="inputResume.click()">
+                  <input class="inputFile" #inputResume type="file" (change)="getFiles($event)">
+                  <mat-icon matTooltip="Add/Update Resume" position="below" class="material-icons revOrange">add_circle</mat-icon>
+                </button>
+              </div>
+              <div class="col-lg-11" *ngIf="myFile != undefined">
+                <label>{{myFile[0].name}}</label>
+                <button mat-button (click)="uploadResume()">Update</button>
+              </div>
+          </div>
           </div>
         </div>
       </div>
@@ -63,5 +61,4 @@ The second md-card/ng-show is for other users to look at other trainers profiles
     <app-skills></app-skills>
     <app-certifications></app-certifications>
   </mat-card>
-
 </div>

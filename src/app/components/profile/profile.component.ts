@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-
 import { Skill } from '../../model/Skill';
 import { S3CredentialService } from '../../services/s3-credential/s3-credential.service';
 
@@ -36,7 +35,7 @@ export class ProfileComponent implements OnInit {
   certFile: FileList = null;
   certName: string;
   skillsList: string[] = [];
-  hidden: true;
+  edit = false;
 
   trainer = {
     trainerId: 1,
@@ -51,20 +50,11 @@ export class ProfileComponent implements OnInit {
   constructor(private s3Service: S3CredentialService) {}
 
   ngOnInit() {
-    // data gathering
-    // id is hard coded for testing. unless you click on a trainer in the trainer page.
-    // if (this.tId > -1) {
-    //   this.lockProfile = false;
-    //   this.trainerService.getById(this.tId).subscribe(response => {this.trainer = response; this.getAllSkills(); },
-    //     () => this.showToast('Could not fetch trainer.'));
-    // } else {
-    //   this.trainerService.getByFirstNameAndLastName(this.fName, this.lName).subscribe(response => {this.trainer = response; this.getAllSkills(); },
-    //     () => this.showToast('Could not fetch trainer.'));
-    //   this.lockProfile = true;
-    // }
-    //
-    // // grab credentials for s3
-    // this.s3Service.getCreds().subscribe( response => this.creds = response, () => this.showToast('Failed to fetch Credentials'));
+    //this.populateSkillList();
+  }
+
+  toggleEdit() {
+    this.edit = !this.edit;
   }
 
   getFiles(event) {
@@ -72,47 +62,19 @@ export class ProfileComponent implements OnInit {
     console.log(this.myFile);
   }
 
+  getCert(event) {
+    this.certFile = event.target.files;
+  }
+
+  // showToast(message) {
+
+  // }
   showToast(message) {
     // this.aCtrl.showToast( message );
   }
 
   uploadResume() {
-    //   const path = 'Resumes/' + this.trainer.trainerId + '_' + this.myFile.name;
-    //
-    //   // This initializes a bucket with the keys obtained from Creds rest controller
-    //   const bucket = new AWS.S3({
-    //     apiVersion: '2006-03-01',
-    //     accessKeyId: this.creds.ID,
-    //     secretAccessKey: this.creds.SecretKey,
-    //     region: 'us-east-1',
-    //     httpOptions: {
-    //       proxy: 'http://dev.assignforce.revature.pro/'
-    //     }
-    //   });
-    //
-    //   // set the parameters needed to put an object in the aws s3 bucket
-    //   const params = {
-    //     Bucket: this.creds.BucketName,
-    //     Key: path,
-    //     Body: this.myFile
-    //   };
-    //
-    //   // putting an object in the s3 bucket
-    //   bucket.putObject(params, function (err) {
-    //     if (err) {
-    //       this.showToast('could not upload file.');
-    //       return;
-    //     }
-    //   });
-    //
-    this.trainer.resume = this.myFile[0].name; // set the trainer resume to the file name(s3 file key to grab that object)
-    //
-    //   // save the modified trainer resume field
-    //   this.trainerService.update(this.trainer).subscribe( () => {},
-    //     () => this.showToast('Failed to upload resume'),
-    //     () => this.showToast('Resume upload finished'));
-    //
-    //   // set my file to undefined so that update and label will be hidden in the html
+    this.trainer.resume = this.myFile[0].name;
     this.myFile = undefined;
   }
 
@@ -128,17 +90,8 @@ export class ProfileComponent implements OnInit {
     this.lockProfile = !this.lockProfile;
   }
 
-  // queries the database for skills. to be called after a change to the skills array
-  // rePullSkills() {
-  //   this.skillsList = undefined;
-  //   this.skillService.getAll().subscribe( response => this.skillsList = response, () => this.showToast('Could not fetch skills.'));
-  // }
-
   // queries the database for the trainer. to be called after a change to the trainer's properties
   pullTrainer() {
     this.trainer = undefined;
-    // this.trainerService
-    //   .getById(this.tId)
-    //   .subscribe(response => (this.trainer = response), () => this.showToast('Could not fetch trainer.'));
   }
 }
