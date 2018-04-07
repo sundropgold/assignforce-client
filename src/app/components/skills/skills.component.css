@@ -5,6 +5,14 @@
   color: #fb8c00;
 }
 
+.mat-icon {
+  color: #fff;
+}
+
+.mat-icon:hover {
+  color: #fb8c00;
+}
+
 /* ---------- MAT TOOLBAR ----------- */
 .md-toolbar-spacer {
   flex: 1 1 auto;

@@ -4,8 +4,8 @@
       <span>Skills</span>
       <span class="md-toolbar-spacer"></span>
       <button mat-icon-button (click)="updateSkills()">
-        <mat-icon matTooltip="Save" class="material-icons" *ngIf="!lockSkills">save</mat-icon>
-        <mat-icon matTooltip="Edit" class="material-icons" *ngIf="lockSkills">edit</mat-icon>
+        <mat-icon class="mat-icon" matTooltip="Save" *ngIf="!lockSkills">save</mat-icon>
+        <mat-icon class="mat-icon" matTooltip="Edit" *ngIf="lockSkills">edit</mat-icon>
       </button>
     </mat-toolbar>
   </mat-toolbar-row>
