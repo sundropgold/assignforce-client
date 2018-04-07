@@ -41,102 +41,84 @@ export const environment = {
     permissions: []
   },
 
-  apiUrls: {
-    batchController: {
-      baseUrl: 'api/batch',
-      createBatch: '',
-      deleteBatch: '/',
-      updateBatch: '',
-      findCommonLocations: '',
-      getAllBatches: '',
-      findAllBatchesByTrainer: '/',
-      createWeek: '',
-      getAllVpBatches: '',
-      getAllCurrentBatches: ''
-    },
+  addressController: {
+    baseUrl: 'https://hydra.cfapps.io/api/address/addresses',
+    create: '',
+    update: '/',
+    findAll: '',
+    find: '/',
+    remove: '/'
+  },
 
-    addressController: {
-      baseUrl: 'api/location',
-      createLocation: '',
-      updateLocation: '',
-      getAllLocations: '',
-      removeLocation: '/',
-      getLocation: '/',
-      reactivateLocation: ''
-    },
+  batchController: {
+    baseUrl: 'https://hydra.cfapps.io/api/batch/batches',
+    create: '',
+    update: '/',
+    findAll: '',
+    find: '/',
+    remove: '/'
+  },
 
-    buildingController: {
-      baseUrl: 'api/building',
-      createBuilding: '',
-      retrieveBuilding: '/',
-      updateBuilding: '',
-      deleteBuilding: '/',
-      retrieveAllBuildings: ''
-    },
+  buildingController: {
+    baseUrl: 'https://hydra.cfapps.io/api/address/buildings',
+    create: '',
+    update: '/',
+    findAll: '',
+    find: '/',
+    remove: '/'
+  },
 
-    locationController: {
-      baseUrl: 'api/location',
-      createLocation: '',
-      retrieveLocation: '/',
-      updateLocation: '',
-      deleteLocation: '/',
-      retrieveAllLocation: ''
-    },
+  locationController: {
+    baseUrl: 'https://hydra.cfapps.io/api/address/locations',
+    create: '',
+    update: '/',
+    findAll: '',
+    find: '/',
+    remove: '/'
+  },
 
-    curriculumController: {
-      baseUrl: 'api/curricula',
-      createCurriculum: '',
-      retrieveCurriculum: '/',
-      updateCurriculum: '',
-      deleteCurriculum: '/',
-      retrieveAllCurricula: '',
-      retrieveAllActiveCurricula: '',
-      retrieveAllCore: '',
-      retrieveAllActiveCore: '',
-      retrieveAllFocus: '',
-      retrieveAllActiveFocus: ''
-    },
+  roomController: {
+    baseUrl: 'https://hydra.cfapps.io/api/address/rooms',
+    create: '',
+    update: '/',
+    findAll: '',
+    find: '/',
+    remove: '/'
+  },
 
-    settingController: {
-      baseUrl: 'api/setting',
-      createSetting: '',
-      retrieveSetting: '/',
-      getGlobalSetting: '',
-      updateSetting: '',
-      deleteSetting: '/'
-    },
+  curriculumController: {
+    baseUrl: 'https://hydra.cfapps.io/api/curriculum/curricula',
+    create: '',
+    update: '/',
+    findAll: '',
+    find: '/',
+    remove: '/'
+  },
 
-    skillController: {
-      baseUrl: 'api/skill',
-      findAllActive: '',
-      findAll: '',
-      findSkillById: '/',
-      updateSkillCaliber: '',
-      saveSkill: '',
-      createSkill: '',
-      retrieveSkill: '/',
-      updateSkillMinerva: '',
-      deleteSkill: '/',
-      retrieveAllSkills: '',
-      retrieveSkillsByIds: ''
-    },
+  skillController: {
+    baseUrl: 'https://hydra.cfapps.io/api/skill/skills',
+    create: '',
+    update: '/',
+    findAll: '',
+    find: '/',
+    remove: '/'
+  },
 
-    trainerController: {
-      baseUrl: 'api/trainer',
-      createTrainer: '',
-      updateTrainer: '',
-      findTrainer: '/',
-      makeInactive: '/',
-      getAllTrainersTitles: '',
-      getAllTrainers: ''
-    },
+  trainerController: {
+    baseUrl: 'https://hydra.cfapps.io/api/trainer/trainers',
+    create: '',
+    update: '/',
+    findAll: '',
+    find: '/',
+    remove: '/'
+  },
 
-    unavailableController: {
-      baseUrl: 'api/unavailable',
-      createUnavailability: '',
-      retrieveUnavailability: '/',
-      deleteUnavailability: '/',
-      retrieveAllUnavailabilities: ''
-    }
+  unavailableController: {
+    baseUrl: 'https://hydra.cfapps.io/api/unavailable//unavailabilities',
+    create: '',
+    update: '/',
+    findAll: '',
+    find: '/',
+    remove: '/'
   }
 };

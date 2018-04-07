@@ -40,7 +40,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     //TODO -- use the batch-controller.service
-    // this.urlService.getAllBatches().subscribe(blist => {
+    // this.urlService.findAll().subscribe(blist => {
     //   blist.forEach(batch => {
     //     // This is an object that encapsulates the batch object's properties and a progress number.
     //     const batchObj = {
@@ -48,7 +48,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     //       curriculum: batch.curriculum.name,
     //       trainer: batch.trainer.firstName + ' ' + batch.trainer.lastName,
     //       cotrainer: batch.cotrainer,
-    //       location: batch.batchLocation.locationName,
+    //       address: batch.batchLocation.locationName,
     //       building: batch.batchLocation.buildingName,
     //       room: batch.batchLocation.roomName,
     //       startDate: batch.startDate,

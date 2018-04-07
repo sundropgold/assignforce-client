@@ -22,10 +22,10 @@ export class ProfileComponent implements OnInit {
 
   // data
   skills: Skill[] = [
-    { skillId: 1, name: 'Java', active: true },
-    { skillId: 2, name: 'SQL', active: true },
-    { skillId: 3, name: 'Angular', active: true },
-    { skillId: 4, name: 'C++', active: true }
+    { id: 1, name: 'Java', active: true },
+    { id: 2, name: 'SQL', active: true },
+    { id: 3, name: 'Angular', active: true },
+    { id: 4, name: 'C++', active: true }
   ];
 
   nameFound = false;

@@ -36,8 +36,8 @@ export class BatchesComponent implements OnInit, AfterViewInit {
   ];
 
   // locations = [
-  //   {value: 'location-0', viewValue: 'Revature HQ - Reston,VA'},
-  //   {value: 'location-1', viewValue: 'CUNY - SPS,NY'}
+  //   {value: 'address-0', viewValue: 'Revature HQ - Reston,VA'},
+  //   {value: 'address-1', viewValue: 'CUNY - SPS,NY'}
   // ];
 
   locations: any[] = [

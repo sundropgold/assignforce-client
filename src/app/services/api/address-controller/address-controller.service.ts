@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs/Observable';
-import { Location } from '../../../model/Location';
+import { Address } from '../../../model/Address';
 
 @Injectable()
 export class AddressControllerService {
@@ -10,27 +10,23 @@ export class AddressControllerService {
 
   private addressController = environment.apiUrls.addressController;
 
-  public createLocation(location: Location): Observable<Location> {
-    return this.http.post<Location>(this.addressController.baseUrl + this.addressController.createLocation, location);
+  public create(location: Address): Observable<Address> {
+    return this.http.post<Address>(this.addressController.baseUrl + this.addressController.create, location);
   }
-  public updateLocation(location: Location): Observable<Location> {
-    return this.http.put<Location>(this.addressController.baseUrl + this.addressController.updateLocation, location);
-  }
-  public getAllLocations(): Observable<Location[]> {
-    return this.http.get<Location[]>(this.addressController.baseUrl + this.addressController.getAllLocations);
-  }
-  public removeLocations(location: Location): Observable<Location> {
-    //todo
-    return null;
-  }
-  public reactivateLocation(location: Location): Observable<Location> {
-    return this.http.put<Location>(
-      this.addressController.baseUrl + this.addressController.reactivateLocation,
+  public update(location: Address): Observable<Address> {
+    return this.http.put<Address>(
+      this.addressController.baseUrl + this.addressController.update + location.id,
       location
     );
   }
+  public findAll(): Observable<Address[]> {
+    return this.http.get<Address[]>(this.addressController.baseUrl + this.addressController.findAll);
+  }
+  public remove(id: number): Observable<Address> {
+    return this.http.delete<Address>(this.addressController.baseUrl + this.addressController.remove + id);
+  }
 
-  public getLocation(id: number): Observable<Location> {
-    return this.http.get<Location>(this.addressController.baseUrl + this.addressController.getLocation + id);
+  public find(id: number): Observable<Address> {
+    return this.http.get<Address>(this.addressController.baseUrl + this.addressController.find + id);
   }
 }
