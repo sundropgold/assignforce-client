@@ -1,3 +1,6 @@
+/* ---------- CERTIFICATIONS STYLING ----------- */
+
+/* ---------- MAT TOOLBAR ----------- */
 .md-toolbar-spacer {
   flex: 1 1 auto;
 }
@@ -8,16 +11,7 @@
   color: inherit;
 }
 
-.inputFile {
-  display: none;
-}
-
-img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
+/* ---------- MAT CARD ----------- */
 mat-card {
   margin: 0 16px;
   padding: 0;
@@ -28,6 +22,7 @@ mat-card-content {
   padding: 16px;
 }
 
+/* ---------- MAT ICON ----------- */
 mat-icon {
   margin: 0;
   display: inline-flex;

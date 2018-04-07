@@ -1,18 +1,38 @@
 /* ---------- FOCI STYLING ---------- */
-.container-curricula {
-  margin-top: 5%;
-}
-.toolbar-curricula {
-  background-color: #38464e;
-  color: white;
-  max-height: 50px;
-}
+
+/* ---------- MAT TOOLBAR ---------- */
 /* #38464E #3D5360*/
 .toolbar-curricula-sub {
-  background-color: #3d5360;
+  background-color: #37474f;
   color: white;
 }
 
+.toolbar-mat-buttons {
+  margin: 12px 6px;
+}
+
+/* ---------- PANEL ---------- */
+.panel-title-fix {
+  padding-top: 8px;
+}
+
+/* ---------- ICON ---------- */
+.icon-margin-fix {
+  margin: 0px;
+}
+
+/* ---------- BUTTONS ---------- */
+.button-orange {
+  background-color: #fb8c00;
+  margin: 5px;
+}
+
+/* ---------- FOCUS ITEM DETAIL ---------- */
+.item-detail {
+  margin: 2%;
+}
+
+/* --------- STYLES INCONSISTENT ---------- */
 /* #mat-expansion-panel-header-1:hover mat-panel-title {
   color: black;
 }
@@ -32,24 +52,3 @@
 .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled='true']):hover {
   background: white;
 } */
-
-.toolbar-mat-buttons {
-  margin: 12px 6px;
-}
-
-.panel-title-fix {
-  padding-top: 8px;
-}
-.icon-margin-fix {
-  margin: 0px;
-}
-.button-orange {
-  background-color: #fb8c00;
-  margin: 5px;
-}
-.item-detail {
-  margin: 2%;
-}
-[hidden] {
-  display: none;
-}
