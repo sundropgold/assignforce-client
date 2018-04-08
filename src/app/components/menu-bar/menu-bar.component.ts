@@ -12,7 +12,7 @@ import { AuthService } from '../../services/auth/auth.service';
 export class MenuBarComponent implements OnInit {
   selectedTab = 0;
 
-  tabs = ['overview', 'batches', 'locations', 'curricula', 'trainers', 'profile', 'reports', 'settings'];
+  tabs = ['overview', 'batches', 'locations', 'curricula', 'trainers', 'profile', 'reports', 'settings', ''];
 
   constructor(private router: Router, private route: ActivatedRoute, private auth0: AuthService) {}
 
@@ -23,7 +23,7 @@ export class MenuBarComponent implements OnInit {
   ngOnInit() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        console.log('current url', event.url.split('/'));
+        console.log(event.url);
         this.selectedTab = this.tabs.indexOf(event.url.split('/')[1]);
       }
     });
@@ -31,6 +31,10 @@ export class MenuBarComponent implements OnInit {
 
   selectTab(evt) {
     console.log(evt);
-    this.router.navigate([evt.tab.textLabel.toLowerCase()]);
+    if (this.selectedTab === this.tabs.indexOf('profile')) {
+      this.router.navigate(['/profile/1']);
+    } else {
+      this.router.navigate([this.tabs[evt.index]]);
+    }
   }
 }

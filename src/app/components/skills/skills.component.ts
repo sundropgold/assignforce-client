@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Skill } from '../../model/Skill';
 import { Trainer } from '../../model/Trainer';
 import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';

@@ -1,28 +1,9 @@
-#check,
-#checkcell {
-  max-width: 25px;
-}
-.mat-expansion-panel {
-  background-color: black;
+/* ---------- BATCHES STYLING ----------- */
+#batchesDiv {
+  margin-top: 5%;
 }
 
-.mat-expansion-panel-body {
-  background-color: white;
-}
-
-.mat-expansion-panel-header {
-  background-color: black;
-}
-
-.mat-expansion-panel-header-title {
-  color: white;
-  font-weight: 600;
-}
-
-.mat-icon {
-  color: darkorange;
-}
-
+/* ---------- BUTTON STYLING ----------- */
 .mat-icon-button {
   line-height: 5.6rem;
   min-width: 0;

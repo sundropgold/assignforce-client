@@ -5,8 +5,8 @@ import { TrainersComponent } from '../trainers.component';
 import { Skill } from '../../../model/Skill';
 import { AppMaterialModule } from '../../../material.module';
 import { Trainer } from '../../../model/Trainer';
-import { Router } from '@angular/router';
 import { TrainerControllerService } from '../../../services/api/trainer-controller/trainer-controller.service';
+import { Router } from '@angular/router';
 
 describe('TrainerItemComponent', () => {
   let component: TrainerItemComponent;

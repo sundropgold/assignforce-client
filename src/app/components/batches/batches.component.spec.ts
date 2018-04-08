@@ -6,7 +6,6 @@ import { BatchesTimelineComponent } from '../batches-timeline/batches-timeline.c
 import { BatchesTimelineFilterComponent } from '../batches-timeline-filter/batches-timeline-filter.component';
 import { BatchControllerService } from '../../services/api/batch-controller/batch-controller.service';
 import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
-import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
 
 import { AppMaterialModule } from '../../material.module';
 import { BatchesComponent } from './batches.component';
@@ -14,6 +13,8 @@ import { FocusControllerService } from '../../services/api/focus-controller/focu
 import { AddressControllerService } from '../../services/api/address-controller/address-controller.service';
 import { RoomControllerService } from '../../services/api/room-controller/room-controller.service';
 import { BuildingControllerService } from '../../services/api/building-controller/building-controller.service';
+import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
+import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
 
 describe('BatchesComponent', () => {
   let component: BatchesComponent;
@@ -37,7 +38,8 @@ describe('BatchesComponent', () => {
           FocusControllerService,
           AddressControllerService,
           RoomControllerService,
-          BuildingControllerService
+          BuildingControllerService,
+          SkillControllerService
         ]
       }).compileComponents();
     })

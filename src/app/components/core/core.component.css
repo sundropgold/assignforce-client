@@ -1,21 +1,39 @@
-.fill-space {
-  flex: 1 1 auto;
-}
-.container-curricula {
-  margin-top: 5%;
-}
-.toolbar-curricula {
-  background-color: #38464e;
-  color: white;
-  max-height: 50px;
-}
+/* ---------- CORE STYLING ----------- */
+
+/* ---------- MAT TOOLBAR ----------- */
 /* #38464E #3D5360*/
 .toolbar-curricula-sub {
-  background-color: #3d5360;
+  background-color: #37474f;
   color: white;
 }
 
-#mat-expansion-panel-header-0:hover mat-panel-title {
+.toolbar-mat-buttons {
+  margin: 12px 6px;
+}
+
+/* -------- PANELS ---------- */
+.panel-title-fix {
+  padding-top: 8px;
+}
+
+/* -------- ICONS ---------- */
+.icon-margin-fix {
+  margin: 0px;
+}
+
+/* -------- BUTTONS ---------- */
+.button-orange {
+  background-color: #fb8c00;
+  margin: 5px;
+}
+
+/* -------- CORE ITEM DETAILS ---------- */
+.item-detail {
+  margin: 2%;
+}
+
+/* --------- STYLES INCONSISTENT ---------- */
+/* #mat-expansion-panel-header-0:hover mat-panel-title {
   color: black;
 }
 
@@ -33,29 +51,4 @@
 .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled='true']).cdk-program-focused,
 .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled='true']):hover {
   background: white;
-}
-
-.toolbar-mat-buttons {
-  margin: 12px 6px;
-}
-
-.mat-expansion-panel-header-title {
-  color: white;
-  font-weight: 600;
-}
-.panel-title-fix {
-  padding-top: 8px;
-}
-.icon-margin-fix {
-  margin: 0px;
-}
-.button-orange {
-  background-color: #fb8c00;
-  margin: 5px;
-}
-.item-detail {
-  margin: 2%;
-}
-[hidden] {
-  display: none;
-}
+} */
