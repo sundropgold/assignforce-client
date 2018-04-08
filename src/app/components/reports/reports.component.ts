@@ -216,20 +216,20 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     //this.notificationService.openSnackBar(msg);
   }
   // get default setting
-  getDefaultSetting() {
-    this.settingService.getGlobalSetting().subscribe(
-      setting => {
-        this.setting = setting;
-        this.reportIncomingGrads = this.setting[0].reportIncomingGrads;
-        this.reportGrads = this.setting[0].reportGrads;
-        console.log(this.setting);
-      },
-      err => {
-        console.log(err);
-        this.showToast('Failed to fetch Setting');
-      }
-    );
-  }
+  // getDefaultSetting() {
+  //   this.settingService.getGlobalSetting().subscribe(
+  //     setting => {
+  //       this.setting = setting;
+  //       this.reportIncomingGrads = this.setting[0].reportIncomingGrads;
+  //       this.reportGrads = this.setting[0].reportGrads;
+  //       console.log(this.setting);
+  //     },
+  //     err => {
+  //       console.log(err);
+  //       this.showToast('Failed to fetch Setting');
+  //     }
+  //   );
+  // }
   /*getDefaultSetting() {
     this.settingService.getSettings()(
         this.setting = setting;
