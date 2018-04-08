@@ -16,23 +16,23 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Curriculum</mat-label>
-        <mat-select id="curriculum" (change)="onFilterChange($event)" [(ngModel)]="curriculumFilter" name="curriculum">
-          <mat-option *ngFor="let cur of curriculumData" value="{{cur}}">
+        <mat-select id="curriculum" (change)="onFilterChange($event)" [(ngModel)]="curriculum" name="curriculum">
+          <mat-option *ngFor="let cur of curriculumData" value="{{curr}}">
             {{cur}}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Focus</mat-label>
-        <mat-select id="focus" (change)="onFilterChange($event)" [(ngModel)]="focusFilter" name="focus">
+        <mat-select id="focus" (change)="onFilterChange($event)" [(ngModel)]="focus" name="focus">
           <mat-option *ngFor="let foc of focusData" value="{{foc}}">
             {{foc}}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field>
-        <mat-label>Location</mat-label>
-        <mat-select id="location" (change)="onFilterChange($event)" [(ngModel)]="locationFilter" name="location">
+        <mat-label id="location">Location</mat-label>
+        <mat-select (change)="onFilterChange($event)" [(ngModel)]="location" name="location">
           <mat-option *ngFor="let loc of locationData" value="{{loc}}">
             {{loc}}
           </mat-option>
@@ -40,7 +40,7 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Building</mat-label>
-        <mat-select id="building" (change)="onFilterChange($event)" [(ngModel)]="buildingFilter" name="building">
+        <mat-select id="building" (change)="onFilterChange($event)" [(ngModel)]="building" name="building">
           <mat-option *ngFor="let build of buildingData" value="{{build}}">
             {{build}}
           </mat-option>
@@ -49,27 +49,7 @@
       <mat-checkbox id="hideconcluded" (change)="onFilterChange($event)" color="primary">Hide Concluded Batches</mat-checkbox>
       <mat-checkbox id="hidebatchless" (change)="onFilterChange($event)" color="primary">Hide Batchless Trainers</mat-checkbox>
       <mat-checkbox id="hideinactive" (change)="onFilterChange($event)" color="primary">Hide Inactive Trainers</mat-checkbox>
-      <br>
-      <mat-form-field>
-        <mat-label>TrainersPerPage</mat-label>
-        <input matInput placeholder="Trainers Per Page (0 to see all)" (change)="onFilterChange($event)" id="trainersperpage" value="{{trainersPerPage}}" type="number" min="0">
-      </mat-form-field>
-      <button mat-mini-fab id="diabled-firstpage" *ngIf="currentPage === 0" color="disabled"> |&lt; </button>
-      <button mat-mini-fab id="diabled-previouspage" *ngIf="currentPage === 0" color="disabled"> &lt; </button>
-      <button mat-mini-fab id="firstpage" *ngIf="currentPage > 0" (click)="onFilterChange({target:{id:'firstpage'}})" color="warn"> |&lt; </button>
-      <button mat-mini-fab id="previouspage" *ngIf="currentPage > 0" (click)="onFilterChange({target:{id:'previouspage'}})" color="warn"> &lt; </button>
-      <span *ngIf="trainersPerPage === 0">
-        Viewing All Trainers' Batches
-      </span>
-      <span *ngIf="trainersPerPage != 0" id="viewpagespan">
-        Viewing Page {{currentPage+1}} / {{maxPages+1}}
-      </span>
-      <button mat-mini-fab id="nextpage" *ngIf="currentPage < maxPages" (click)="onFilterChange({target:{id:'nextpage'}})" color="warn"> &gt; </button>
-      <button mat-mini-fab id="lastpage" *ngIf="currentPage < maxPages" (click)="onFilterChange({target:{id:'lastpage'}})" color="warn"> &gt;| </button>
-      <button mat-mini-fab id="diabled-nextpage" *ngIf="currentPage >= maxPages" color="disabled"> &gt; </button>
-      <button mat-mini-fab id="diabled-lastpage" *ngIf="currentPage >= maxPages" color="disabled"> &gt;| </button>
     </div>
-    <mat-progress-bar mode="buffer" *ngIf="loading"></mat-progress-bar>
   </div>
 </form>
 </div>

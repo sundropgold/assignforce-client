@@ -11,22 +11,22 @@ The second md-card/ng-show is for other users to look at other trainers profiles
       <mat-toolbar class="md-toolbar" layout="columns">
         <span class="mat-expansion-panel-header-title">Profile</span>
         <span class="md-toolbar-spacer"></span>
-        <button mat-icon-button (click)="updateName()">
+        <button mat-icon-button (click)="updateName()" *ngIf="trainer.trainerId == id">
           <mat-icon matTooltip="Save" class="material-icons" *ngIf="!lockProfile">save</mat-icon>
           <mat-icon matTooltip="Edit" class="material-icons" *ngIf="lockProfile">edit</mat-icon>
         </button>
       </mat-toolbar>
     </mat-toolbar-row>
     <!--info section-->
-    <mat-card-content *ngIf="trainer != undefined && skills != undefined">
+    <mat-card-content *ngIf="trainer != undefined">
       <div class="row">
         <div class="col-lg-2">
           <img layout="column" style="border-radius: 50%;" alt="" ng-src="https://app.revature.com/core/resources/download/default/interns/image?t=1486138020884"
             id="displayImage" class="width-200 height-200" src="https://app.revature.com/core/resources/download/default/interns/image?t=1486138020884">
         </div>
         <div class="col-lg-10">
-            <h1>{{this.trainer.firstName}} {{this.trainer.lastName}}</h1>
-            <div *ngIf="!lockProfile">
+          <h1>{{this.trainer.firstName}} {{this.trainer.lastName}}</h1>
+          <div *ngIf="!lockProfile">
             <form [formGroup]="nameForm">
               <mat-form-field flex>
                 <input matInput class="formControl" placeholder="First Name" formControlName="firstName" required>
@@ -53,7 +53,7 @@ The second md-card/ng-show is for other users to look at other trainers profiles
                 <label>{{myFile[0].name}}</label>
                 <button mat-button (click)="uploadResume()">Update</button>
               </div>
-          </div>
+            </div>
           </div>
         </div>
       </div>
