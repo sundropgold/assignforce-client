@@ -19,6 +19,10 @@
   color: black;
 }
 
+#mat-expansion-panel-header-2:hover mat-icon {
+  color: black;
+}
+
 #mat-expansion-panel-header-2:focus {
   background-color: #3d5360;
   color: white;
@@ -48,6 +52,7 @@
 }
 .icon-margin-fix {
   margin: 0px;
+  color: white;
 }
 .button-orange {
   background-color: #fb8c00;

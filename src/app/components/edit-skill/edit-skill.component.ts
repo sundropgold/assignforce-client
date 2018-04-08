@@ -26,10 +26,14 @@ export class EditSkillComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  newSkill(): void {
+    this.skill = new Skill(0, '', true);
+  }
+
   editSkill(): void {
     console.log('We are Editing a skill ' + this.data.name);
     this.skillControllerService.update(this.skill);
-    this.skill = new Skill(0, '', true);
+    this.newSkill();
     this.closeDialog();
   }
 }

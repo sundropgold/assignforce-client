@@ -119,6 +119,15 @@ export const environment = {
       remove: '/'
     },
 
+    settingController: {
+      baseUrl: 'https://hydra.cfapps.io/api/trainer/trainers',
+      create: '',
+      update: '/',
+      findAll: '',
+      find: '/',
+      remove: '/'
+    },
+
     unavailableController: {
       baseUrl: 'https://hydra.cfapps.io/api/unavailable//unavailabilities',
       create: '',

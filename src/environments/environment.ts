@@ -42,7 +42,7 @@ export const environment = {
 
   apiUrls: {
     addressController: {
-      baseUrl: 'https://hydra.cfapps.io/api/address/addresses',
+      baseUrl: 'api/address',
       create: '',
       update: '/',
       findAll: '',
@@ -51,7 +51,7 @@ export const environment = {
     },
 
     batchController: {
-      baseUrl: 'https://hydra.cfapps.io/api/batch/batches',
+      baseUrl: 'api/batch',
       create: '',
       update: '/',
       findAll: '',
@@ -60,7 +60,7 @@ export const environment = {
     },
 
     buildingController: {
-      baseUrl: 'https://hydra.cfapps.io/api/address/buildings',
+      baseUrl: 'api/building',
       create: '',
       update: '/',
       findAll: '',
@@ -69,7 +69,7 @@ export const environment = {
     },
 
     locationController: {
-      baseUrl: 'https://hydra.cfapps.io/api/address/locations',
+      baseUrl: 'api/location',
       create: '',
       update: '/',
       findAll: '',
@@ -78,7 +78,7 @@ export const environment = {
     },
 
     roomController: {
-      baseUrl: 'https://hydra.cfapps.io/api/address/rooms',
+      baseUrl: 'api/room',
       create: '',
       update: '/',
       findAll: '',
@@ -87,7 +87,7 @@ export const environment = {
     },
 
     curriculumController: {
-      baseUrl: 'https://hydra.cfapps.io/api/curriculum/curricula',
+      baseUrl: 'api/curriculum',
       create: '',
       update: '/',
       findAll: '',
@@ -96,7 +96,7 @@ export const environment = {
     },
 
     focusController: {
-      baseUrl: 'https://hydra.cfapps.io/api/curriculum/curricula',
+      baseUrl: 'api/focus',
       create: '',
       update: '/',
       findAll: '',
@@ -105,7 +105,7 @@ export const environment = {
     },
 
     skillController: {
-      baseUrl: 'https://hydra.cfapps.io/api/skill/skills',
+      baseUrl: 'api/skill',
       create: '',
       update: '/',
       findAll: '',
@@ -114,7 +114,16 @@ export const environment = {
     },
 
     trainerController: {
-      baseUrl: 'https://hydra.cfapps.io/api/trainer/trainers',
+      baseUrl: 'api/trainer',
+      create: '',
+      update: '/',
+      findAll: '',
+      find: '/',
+      remove: '/'
+    },
+
+    settingController: {
+      baseUrl: 'api/setting',
       create: '',
       update: '/',
       findAll: '',
@@ -123,7 +132,7 @@ export const environment = {
     },
 
     unavailableController: {
-      baseUrl: 'https://hydra.cfapps.io/api/unavailable//unavailabilities',
+      baseUrl: 'api/unavailable',
       create: '',
       update: '/',
       findAll: '',
