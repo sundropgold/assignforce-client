@@ -2,11 +2,28 @@
 #profileDiv {
   margin-top: 5%;
   width: 100%;
+  box-sizing: border-box;
+}
+
+.container {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.col-lg-2 {
+  padding: 2% 0 2% 0;
+  margin-right: 0;
+}
+
+.col-lg-10 {
+  margin-right: 0;
+  padding: 2% 0 2% 0;
 }
 
 /* ---------- TOOLBAR ----------- */
 .md-toolbar {
-  padding: 0px 16px;
+  padding: 0px;
   background-color: transparent;
   color: inherit;
 }

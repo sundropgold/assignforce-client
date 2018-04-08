@@ -2,7 +2,7 @@
 
 /* ---------- MAT TOOLBAR ----------- */
 .md-toolbar {
-  padding: 0px 16px;
+  padding: 0px;
   background-color: inherit;
   color: inherit;
 }
@@ -12,7 +12,7 @@
 }
 /* ---------- MAT CARD ----------- */
 mat-card {
-  margin: 0 16px;
+  margin: 0;
   padding: 0;
 }
 

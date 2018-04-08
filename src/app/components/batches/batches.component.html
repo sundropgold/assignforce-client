@@ -1,7 +1,7 @@
 <div id="batchesDiv">
 
   <!-- Create New Batch  -->
-  <!-- Only Appears if they are admin -->
+  <!-- Should Only Appear if they are admin -->
   <mat-accordion>
     <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>
@@ -11,7 +11,7 @@
       </mat-expansion-panel-header>
 
       <!-- Batch Form -->
-      <form [formGroup]="batchForm" (ngSubmit)="onSubmit(batchForm.value)">
+      <form [formGroup]="batchForm" (ngSubmit)="onSubmit()">
         <div>
           <mat-form-field>
             <mat-select formControlName="curriculum" placeholder="Core Curriculum">
@@ -106,21 +106,23 @@
         </div>
 
         <div>
-          <button mat-raised-button [disabled]="!batchForm.valid">Submit</button>
+          <button mat-raised-button [disabled]="!batchForm.valid" (click)="onSubmit()">Submit</button>
         </div>
       </form>
 
       <!-- Batch Projection Form-->
+      <!-- TODO -->
 
       <!-- Batch Totals -->
+      <!-- TODO -->
 
     </mat-expansion-panel>
 
-    <!-- for testing purpose -->
+    <!-- Shows form changing as values inserted. For testing purpose only -->
     <!-- <p>Form value: {{ batchForm.value | json }}</p> -->
   </mat-accordion>
 
-  <!-- All Batches -->
+  <!-- All Batches Panel-->
   <!-- This has some Admin properties -->
   <mat-accordion>
     <mat-expansion-panel [expanded]="true">
@@ -201,13 +203,13 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
             <mat-cell *matCellDef="let batch">
 
-              <button mat-icon-button color (click)="EditBatch()">
+              <button mat-icon-button color (click)="editBatch()">
                 <mat-icon matTooltip="Edit" matTooltipPosition="above">mode_edit</mat-icon>
               </button>
-              <button mat-icon-button color (click)="CloneBatch()">
+              <button mat-icon-button color (click)="cloneBatch(batch)">
                 <mat-icon matTooltip="Clone" matTooltipPosition="above">filter_none</mat-icon>
               </button>
-              <button mat-icon-button color>
+              <button mat-icon-button color (click)="deleteBatch(batch)">
                 <mat-icon matTooltip="Delete" matTooltipPosition="above">delete</mat-icon>
               </button>
               <button mat-icon-button color>

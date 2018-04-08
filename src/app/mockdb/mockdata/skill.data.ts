@@ -1,29 +1,35 @@
-// import { Skill } from '../../model/Skill';
-//
-// export const skills: Skill[] = [
-//   {
-//     id: 4,
-//     name: 'AngularJS',
-//     active: true
-//   },
-//   {
-//     id: 1,
-//     name: 'Core Java',
-//     active: true
-//   },
-//   {
-//     id: 2,
-//     name: 'JUnit',
-//     active: true
-//   },
-//   {
-//     id: 5,
-//     name: 'Selenium/WebDriver',
-//     active: true
-//   },
-//   {
-//     id: 3,
-//     name: 'Spring',
-//     active: true
-//   }
-// ];
+import { mockDataSize } from '../in-mem-db-settings';
+
+export const skillData = {
+  id: 'skill-data',
+  type: 'object',
+  properties: {
+    skill: {
+      type: 'array',
+      minItems: mockDataSize,
+      items: {
+        $ref: 'skill'
+      },
+      uniqueItems: true
+    }
+  },
+  required: ['skill']
+};
+
+export const skillDef = {
+  id: 'skill',
+  type: 'object',
+  properties: {
+    id: {
+      $ref: 'id'
+    },
+    active: {
+      $ref: 'active'
+    },
+    name: {
+      type: 'string',
+      faker: 'lorem.word'
+    }
+  },
+  required: ['id', 'name', 'active']
+};

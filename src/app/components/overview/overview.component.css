@@ -3,6 +3,17 @@
   margin-top: 5%;
 }
 
+.mat-expansion-panel-header-title {
+  color: #fff;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+[aria-disabled='true'].mat-expansion-panel-header {
+  color: #fff;
+  font-weight: 500;
+  font-size: 18px;
+}
 /* ----------- BUTTON ----------- */
 
 #download {

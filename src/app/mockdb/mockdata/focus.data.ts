@@ -1,23 +1,23 @@
 import { mockDataSize } from '../in-mem-db-settings';
 
-export const buildingData = {
-  id: 'building-data',
+export const focusData = {
+  id: 'focus-data',
   type: 'object',
   properties: {
-    building: {
+    focus: {
       type: 'array',
       minItems: mockDataSize,
       items: {
-        $ref: 'building'
+        $ref: 'focus'
       },
       uniqueItems: true
     }
   },
-  required: ['building']
+  required: ['focus']
 };
 
-export const buildingDef = {
-  id: 'building',
+export const focusDef = {
+  id: 'focus',
   type: 'object',
   properties: {
     id: {
@@ -30,18 +30,15 @@ export const buildingDef = {
       type: 'string',
       faker: 'lorem.sentence'
     },
-    address: {
-      $ref: 'address'
-    },
-    rooms: {
+    skills: {
       type: 'array',
       minItems: 1,
       maxItems: 10,
       items: {
-        $ref: 'room'
+        $ref: 'skill'
       },
       uniqueItems: true
     }
   },
-  required: ['id', 'active', 'name', 'address', 'rooms']
+  required: ['id', 'active', 'name', 'skills']
 };
