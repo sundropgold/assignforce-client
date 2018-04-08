@@ -13,7 +13,7 @@ export const addressData = {
       uniqueItems: true
     }
   },
-  required: ['address'],
+  required: ['address']
 };
 
 export const addressDef = {
@@ -38,7 +38,7 @@ export const addressDef = {
     active: {
       type: 'boolean',
       faker: 'random.boolean'
-    },
+    }
   },
   required: ['id', 'name', 'city', 'state', 'active']
 };
