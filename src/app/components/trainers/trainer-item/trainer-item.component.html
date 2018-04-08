@@ -1,6 +1,6 @@
 
-  <mat-list-item mat-ripple="#ff0000" *ngIf="trainer.active">
-    <mat-icon matListIcon style="color: #000;">people</mat-icon>
+  <mat-list-item mat-ripple="#ff0000" *ngIf="trainer.active" (click)="goToprofile(trainer.trainerId)">
+    <mat-icon class="peopleIcon" matListIcon>people</mat-icon>
     <h4 matLine> {{ trainer.firstName }} {{ trainer.lastName }} </h4>
     <p *ngIf="trainer.skills.length > 0" matLine>Skills: {{skillsList}}</p>
     <p *ngIf="trainer.skills.length <= 0" matLine> Skills: {{skillsList}} </p>
@@ -14,7 +14,7 @@
     </button>
   </mat-list-item>
 <mat-list-item class="md-2-line" mat-ripple="#ff0000" *ngIf="!trainer.active">
-  <mat-icon matListIcon style="color: #000;" >people</mat-icon>
+  <mat-icon class="peopleIcon" matListIcon>people</mat-icon>
     <h4 matLine> {{ trainer.firstName }} {{ trainer.lastName }} </h4>
     <p *ngIf="trainer.skills" matLine>Skills: {{skillsList}}</p>
     <p *ngIf="!trainer.skills" matLine> Skills: {{skillsList}} </p>

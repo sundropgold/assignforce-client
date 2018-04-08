@@ -1,8 +1,9 @@
-<div style="margin-top: 5%">
+<div id="profileDiv">
+  <!--<mat-card *ngIf="tId == -1" md-whiteframe="8" ng-cloak>-->
   <mat-card>
     <mat-toolbar-row>
       <mat-toolbar class="md-toolbar" layout="columns">
-        <span>Profile</span>
+        <span class="mat-expansion-panel-header-title">Profile</span>
         <span class="md-toolbar-spacer"></span>
         <button mat-icon-button (click)="updateTrainerInfo()">
           <mat-icon matTooltip="Save" class="material-icons" *ngIf="!lockProfile">save</mat-icon>
@@ -50,8 +51,8 @@
           </div>
         </div>
       </div>
-    </mat-card-content>
-    <app-skills></app-skills>
-    <app-certifications></app-certifications>
-  </mat-card>
+      <app-skills></app-skills>
+      <app-certifications></app-certifications>
+      </mat-card-content>
+    </mat-card>
 </div>

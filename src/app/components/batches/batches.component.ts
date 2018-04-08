@@ -1,13 +1,18 @@
-import { AfterViewInit, Component, DoCheck, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { MatSort, MatTableDataSource } from '@angular/material';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation, DoCheck } from '@angular/core';
+import { MatSort, MatTableDataSource, MatCheckbox, MatSelect } from '@angular/material';
+import { ReactiveFormsModule, FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
+import { Batch } from '../../model/Batch';
 import { Curriculum } from '../../model/Curriculum';
-import { Location } from '../../model/Location';
+import { Address } from '../../model/Address';
+
+import { BatchControllerService } from '../../services/api/batch-controller/batch-controller.service';
 import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
-import { LocationControllerService } from '../../services/api/location-controller/location-controller.service';
 import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
 import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
+import { AddressControllerService } from '../../services/api/address-controller/address-controller.service';
+import { Skill } from '../../model/Skill';
 
 @Component({
   selector: 'app-batches',
@@ -16,40 +21,32 @@ import { TrainerControllerService } from '../../services/api/trainer-controller/
   encapsulation: ViewEncapsulation.None
 })
 export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
-  //--------------------------------------------------Temporary---------------------------------------------------
-  skillsList = [];
-
+  //--------------------------------------------------VALUES FOR CREATE BATCHES-------------------------------------
+  //Object for storing batch form data
+  batchForm: FormGroup;
+  newBatch: Batch;
+  skillsList: Skill[] = [];
   focuses = [];
-
   trainers = [];
-
-  curriculums: Curriculum[] = [];
-  locations: Location[] = [];
   buildings = [];
   rooms = [];
   selectedLocation = null;
   selectedBuilding = null;
   selectedCurriculum = null;
 
-  //--------------------------------------------------VALUES FOR CREATE BATCHES----------------------------------------
-  batchForm: FormGroup;
+  //For form select in Create New Batch
+  curriculums: Curriculum[] = [];
+  locations: Address[] = [];
 
-  // //Object for storing batch form data
-  // batchObj: Batch;
-
-  // //Look up data for the form fields
-  // curriculums: Curriculum;
-  // locations: Location;
-
-  //number of weeks between two of the selected dates
+  // Create Batch Form Data
   numOfWeeksBetween = 0;
-  //generated batch name based on the selected Curriculum/Focus and start date
   genBatchName = '';
+  genEndDate;
 
-  firstTabHeader = 'Create New Batch';
-
-  //  VALUES FOR THE ALL BATCHES TAB
-  batchValues = [
+  currentDate = new Date(Date.now());
+  // ------------------------------------------------ VARIABLES FOR ALL BATCHES -----------------------------------
+  //  COLUMNS FOR THE ALL BATCHES TAB
+  batchColumns = [
     'Checkbox',
     'Name',
     'Curriculum',
@@ -62,37 +59,31 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
     'EndDate',
     'Icons'
   ];
-  batchData = new MatTableDataSource([]);
-  // batchData = new MatTableDataSource(BatchData);
 
-  //default for current date
-  currentDate: Date = new Date();
+  allBatches: Batch[];
+  dataSource = new MatTableDataSource(this.allBatches);
 
-  // constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
-  //   iconRegistry.addSvgIcon(
-  //     'thumbs-up',
-  //     sanitizer.bypassSecurityTrustResourceUrl('assets/img/examples/thumbup-icon.svg')
-  //   );
-  // }
   constructor(
     private fb: FormBuilder,
     private curriculumService: CurriculumControllerService,
-    private locationService: LocationControllerService,
+    private addressService: AddressControllerService,
     private skillService: SkillControllerService,
-    private trainerService: TrainerControllerService
+    private trainerService: TrainerControllerService,
+    private batchService: BatchControllerService
   ) {}
 
   @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit() {
+    // ------------- Populating Data from Services -----------------
     this.curriculumService
-      .retrieveAllActiveCore()
+      .findAll()
       .toPromise()
       .then(response => {
         this.curriculums = response;
       });
-    this.locationService
-      .retrieveAllLocation()
+    this.addressService
+      .findAll()
       .toPromise()
       .then(response => {
         this.locations = response;
@@ -104,18 +95,25 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
         this.skillsList = response;
       });
     this.curriculumService
-      .retrieveAllActiveFocus()
+      .findAll()
       .toPromise()
       .then(response => {
         this.focuses = response;
       });
     this.trainerService
-      .getAllTrainers()
+      .findAll()
       .toPromise()
       .then(response => {
         this.trainers = response;
-        console.log(this.trainers);
       });
+    this.batchService
+      .findAll()
+      .toPromise()
+      .then(response => {
+        this.allBatches = response;
+      });
+
+    // --------- Create Batch Validation --------------
     this.batchForm = this.fb.group({
       curriculum: [null, Validators.required],
       focus: [null],
@@ -124,22 +122,29 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
       endDate: [null, Validators.required],
       batchName: [null],
       trainer: [null, Validators.required],
-      cotrainer: [null, Validators.required],
+      cotrainer: [null],
       location: [null, Validators.required],
-      building: [null, Validators.required],
-      room: [null, Validators.required]
+      building: [null],
+      room: [null]
     });
 
+    // ----- Observable for form changes in Create Batches ------
     this.batchForm.valueChanges.subscribe(data => {
       const startDate = data.startDate;
       const endDate = data.endDate;
       const curriculum = data.curriculum;
+      const focus = data.focus;
       this.numOfWeeksBetween = this.computeNumOfWeeksBetween(startDate, endDate);
-      this.genBatchName = this.createBatchName(curriculum, startDate);
+      this.genBatchName = this.createBatchName(curriculum, focus, startDate);
+      if (startDate) {
+        this.genEndDate = this.computeDefaultEndDate(startDate);
+      }
     });
   }
 
   ngDoCheck() {
+    // ------- Checking if form field has selected value on Create Batch form -------
+    // ------- Populating Subsequent fields based on selection ---------
     if (this.batchForm.value.location) {
       const locationName = this.batchForm.value.location.name;
       if (locationName && locationName !== this.selectedLocation) {
@@ -157,28 +162,11 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
     if (this.batchForm.value.curriculum) {
       this.selectedCurriculum = this.batchForm.value.curriculum;
     }
-    if (this.batchForm.value.trainer) {
-    }
   }
 
   ngAfterViewInit() {
-    // this.batchData.sort = this.sort;
+    this.dataSource.sort = this.sort;
   }
-
-  //initialize form group
-  createBatch() {
-    this.firstTabHeader = 'Create New Batch';
-  }
-
-  editBatch() {
-    // this.firstTabHeader = 'Edit Batch';
-  }
-
-  cloneBatch() {
-    // this.firstTabHeader = 'Clone Batch';
-  }
-
-  deleteBatch() {}
 
   //Insert a new batch using provided form data
   onSubmit(form: NgForm) {
@@ -188,21 +176,29 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
 
   //Calculate number of weeks between two dates
   computeNumOfWeeksBetween(startDate: number, endDate: number): number {
-    if (startDate && endDate) {
-      const numberOfDays = Math.abs(<any>startDate - <any>endDate) / (1000 * 60 * 60 * 24);
+    const startValue = new Date(startDate).valueOf();
+    const endValue = new Date(endDate).valueOf();
+    if (startValue && endValue) {
+      const numberOfDays = Math.abs(<any>startValue - <any>endValue) / (1000 * 60 * 60 * 24);
       const numberOfWeeks = Math.floor(numberOfDays / 7);
-      // const numberOfWeeks = numberOfDays/7;
-
       return numberOfWeeks;
     }
     return 0;
   }
 
-  //Generate Batch Name
-  createBatchName(curriculum: string, startDate: number): string {
+  //Calculate the Date of Ten weeks later from start date
+  computeDefaultEndDate(startDate: number): number {
+    const dateValue = new Date(startDate);
+    if (dateValue) {
+      const tenWeeks = 1000 * 60 * 60 * 24 * 7 * 10 + 1000 * 60 * 60 * 24;
+      return dateValue.valueOf() + tenWeeks;
+    }
+  }
+
+  //Generate Batch Name based on curriculum and/or focus and start date
+  createBatchName(curriculum: string, focus: string, startDate: number): string {
     if (curriculum && startDate) {
       const date = new Date(startDate);
-
       const year = date
         .getFullYear()
         .toString()
@@ -214,16 +210,14 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
       if (date.getDate() < 10) {
         day = '0' + day;
       }
-
       if (date.getMonth() < 10) {
         month = '0' + month;
       }
-
+      if (focus) {
+        return year + '' + month + ' ' + monthName + '' + day + ' ' + curriculum + ' ' + focus;
+      }
       return year + '' + month + ' ' + monthName + '' + day + ' ' + curriculum;
     }
-
     return '';
   }
-
-  // SynchronizeBatch() {}
 }

@@ -1,4 +1,4 @@
-<div style="margin-top: 5%">
+<div id="batchesDiv">
 
   <!-- Create New Batch  -->
   <!-- Only Appears if they are admin -->
@@ -6,7 +6,7 @@
     <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          {{firstTabHeader}}
+          Create New Batch
         </mat-panel-title>
       </mat-expansion-panel-header>
 
@@ -15,7 +15,7 @@
         <div>
           <mat-form-field>
             <mat-select formControlName="curriculum" placeholder="Core Curriculum">
-              <mat-option *ngFor="let curriculum of curriculums" [value]="curriculum">
+              <mat-option *ngFor="let curriculum of curriculums" [value]="curriculum.name">
                 {{ curriculum.name }}
               </mat-option>
             </mat-select>
@@ -23,7 +23,7 @@
 
           <mat-form-field>
             <mat-select formControlName="focus" placeholder="Focus">
-              <mat-option *ngFor="let focus of focuses" [value]="focus.value">
+              <mat-option *ngFor="let focus of focuses" [value]="focus.name">
                 {{ focus.name }}
               </mat-option>
             </mat-select>
@@ -46,7 +46,7 @@
 
           <mat-form-field>
             <input formControlName="endDate" matInput [min]="batchForm.controls.startDate.value" [matDatepicker]="picker2" placeholder="Choose an end date"
-              readonly>
+              readonly [ngModel]="genEndDate | date:'yyyy-MM-dd'">
             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2></mat-datepicker>
           </mat-form-field>
@@ -63,7 +63,7 @@
         <div>
           <mat-form-field>
             <mat-select formControlName="trainer" placeholder="Trainer">
-              <mat-option *ngFor="let trainer of trainers" [value]="trainer.value">
+              <mat-option *ngFor="let trainer of trainers" [value]="trainer">
                 {{ trainer.firstName }}
               </mat-option>
             </mat-select>
@@ -71,7 +71,7 @@
 
           <mat-form-field>
             <mat-select formControlName="cotrainer" placeholder="Co-Trainer">
-              <mat-option *ngFor="let trainer of trainers" [value]="trainer.value">
+              <mat-option *ngFor="let trainer of trainers" [value]="trainer">
                 {{ trainer.firstName }}
               </mat-option>
             </mat-select>
@@ -117,24 +117,20 @@
     </mat-expansion-panel>
 
     <!-- for testing purpose -->
-    <p>Form value: {{ batchForm.value | json }}</p>
-
-
-
-
+    <!-- <p>Form value: {{ batchForm.value | json }}</p> -->
   </mat-accordion>
 
   <!-- All Batches -->
   <!-- This has some Admin properties -->
   <mat-accordion>
-    <mat-expansion-panel>
+    <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
           All Batches
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="example-container_mat-elevation-z8">
-        <mat-table #table [dataSource]="batchData" matSort>
+        <mat-table #table [dataSource]="dataSource" matSort>
 
           <!-- Checkbox Column -->
           <ng-container matColumnDef="Checkbox">
@@ -169,7 +165,7 @@
             <mat-cell *matCellDef="let batch"> {{batch.trainer}} / {{batch.cotrainer}}</mat-cell>
           </ng-container>
 
-          <!-- Location Column -->
+          <!-- Address Column -->
           <ng-container matColumnDef="Location">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Location </mat-header-cell>
             <mat-cell *matCellDef="let batch"> {{batch.location}} </mat-cell>
@@ -220,8 +216,8 @@
             </mat-cell>
           </ng-container>
 
-          <mat-header-row *matHeaderRowDef="batchValues"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: batchValues;"></mat-row>
+          <mat-header-row *matHeaderRowDef="batchColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: batchColumns;"></mat-row>
         </mat-table>
       </div>
 
@@ -230,7 +226,7 @@
 
   <!-- Batch TimeLine -->
   <mat-accordion>
-    <mat-expansion-panel>
+    <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Batch Timeline

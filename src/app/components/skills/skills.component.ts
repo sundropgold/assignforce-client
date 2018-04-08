@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Skill } from '../../model/Skill';
 import { Trainer } from '../../model/Trainer';
 
@@ -10,25 +11,16 @@ import { Trainer } from '../../model/Trainer';
 export class SkillsComponent implements OnInit {
   // data
   skills: Skill[] = [
-    { skillId: 1, name: 'Java', active: true },
-    { skillId: 2, name: 'SQL', active: true },
-    { skillId: 3, name: 'Angular', active: true },
-    { skillId: 4, name: 'C++', active: true }
+    { id: 1, name: 'Java', active: true },
+    { id: 2, name: 'SQL', active: true },
+    { id: 3, name: 'Angular', active: true },
+    { id: 4, name: 'C++', active: true }
   ];
 
   lockSkills = true;
   disabled = true;
   skillsList: string[] = [];
-  trainer: Trainer = {
-    trainerId: 1,
-    firstName: 'Joseph',
-    lastName: 'Wong',
-    skills: [],
-    resume: null,
-    certifications: [],
-    unavailabilities: [],
-    active: true
-  };
+  trainer: Trainer;
   skill: Skill;
 
   constructor() {}
@@ -86,7 +78,7 @@ export class SkillsComponent implements OnInit {
     //   let status = true;
     //   for (let i = 0; i < this.skills.length; i++) {
     //     for (let j = 0; j < this.trainer.skills.length; j++) {
-    //       if (this.skills[j].skillId === this.skills[i].skillId) {
+    //       if (this.skills[j].id === this.skills[i].id) {
     //         status = false;
     //         break;
     //       }

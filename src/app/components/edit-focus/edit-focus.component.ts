@@ -22,14 +22,14 @@ export class EditFocusComponent implements OnInit {
   ) {}
 
   skills: Skill[] = [
-    // { skillId: 1, name: 'Core JAVA', active: true },
-    // { skillId: 2, name: '.Net', active: true },
-    // { skillId: 3, name: 'Spring', active: true },
-    // { skillId: 4, name: 'REST', active: true },
-    // { skillId: 5, name: 'JUnit', active: true },
-    // { skillId: 6, name: 'MVC', active: true },
-    // { skillId: 7, name: 'SOAP', active: true },
-    // { skillId: 8, name: 'Pega', active: true }
+    // { id: 1, name: 'Core JAVA', active: true },
+    // { id: 2, name: '.Net', active: true },
+    // { id: 3, name: 'Spring', active: true },
+    // { id: 4, name: 'REST', active: true },
+    // { id: 5, name: 'JUnit', active: true },
+    // { id: 6, name: 'MVC', active: true },
+    // { id: 7, name: 'SOAP', active: true },
+    // { id: 8, name: 'Pega', active: true }
   ];
 
   selectedSkills: Skill[] = [];
@@ -54,8 +54,8 @@ export class EditFocusComponent implements OnInit {
   editFocus(): void {
     console.log('We are Editing a focus ' + this.data.name);
     this.focus.skills = this.selectedSkills;
-    this.curriculaControllerService.updateCurriculum(this.focus);
-    this.focus = new Curriculum(0, '', false, true, []);
+    this.curriculaControllerService.update(this.focus);
+    this.focus = new Curriculum(0, '', false, [], []);
     this.closeDialog();
   }
 }

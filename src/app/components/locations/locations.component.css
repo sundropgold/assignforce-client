@@ -1,31 +1,8 @@
-.mat-expansion-panel {
-  background-color: #37474f;
-}
+/* ---------- LOCATIONS STYLING ----------- */
 
-.mat-expansion-panel-body {
-  background-color: white;
-}
-
-.mat-expansion-panel-header {
-  background-color: #37474f;
-}
-
-.mat-expansion-panel-header-title {
-  color: white;
-  font-weight: 600;
-}
-
-.mat-expansion-panel-header-description {
-  color: white;
-}
-
-.fill-space {
-  flex: 1 1 auto;
-}
-
+/* ---------- BUTTONS ----------- */
 .mat-icon {
   margin-left: 10px;
-  color: gray;
 }
 
 #download {

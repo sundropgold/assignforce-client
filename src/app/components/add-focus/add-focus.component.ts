@@ -19,17 +19,17 @@ export class AddFocusComponent implements OnInit {
   ) {}
 
   skills: Skill[] = [
-    { skillId: 1, name: 'Core Java', active: true },
-    { skillId: 2, name: '.Net', active: true },
-    { skillId: 3, name: 'Spring', active: true },
-    { skillId: 4, name: 'REST', active: true },
-    { skillId: 5, name: 'JUnit', active: true }
+    { id: 1, name: 'Core Java', active: true },
+    { id: 2, name: '.Net', active: true },
+    { id: 3, name: 'Spring', active: true },
+    { id: 4, name: 'REST', active: true },
+    { id: 5, name: 'JUnit', active: true }
   ];
 
   selectedSkills: Skill[];
 
   ngOnInit() {
-    this.focus = new Curriculum(0, '', false, true, []);
+    this.focus = new Curriculum(0, '', false, [], []);
   }
 
   closeDialog(): void {
@@ -39,8 +39,8 @@ export class AddFocusComponent implements OnInit {
 
   addFocus(): void {
     console.log('We are Adding a focus ' + this.focus.name);
-    this.curriculumControllerService.createCurriculum(this.focus);
-    this.focus = new Curriculum(0, '', false, true, []);
+    this.curriculumControllerService.create(this.focus);
+    this.focus = new Curriculum(0, '', false, [], []);
     this.closeDialog();
   }
 }

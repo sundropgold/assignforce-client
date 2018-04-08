@@ -11,16 +11,7 @@ import { Skill } from '../../../model/Skill';
 export class TrainersAddComponent implements OnInit {
   Skillz: Skill[] = [];
 
-  trainer: Trainer = {
-    trainerId: 0,
-    firstName: '',
-    lastName: '',
-    skills: this.Skillz,
-    certifications: '',
-    active: true,
-    resume: '',
-    unavailabilities: []
-  };
+  trainer: Trainer;
 
   data = {
     trainer: this.trainer

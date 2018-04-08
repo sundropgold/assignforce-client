@@ -1,8 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Angular2Csv } from 'angular2-csv/Angular2-csv';
-
-import { UrlService } from '../../services/url/url.service';
+import { Batch } from '../../model/Batch';
 import { BatchControllerService } from '../../services/api/batch-controller/batch-controller.service';
 
 @Component({
@@ -14,6 +13,7 @@ import { BatchControllerService } from '../../services/api/batch-controller/batc
 export class OverviewComponent implements OnInit, AfterViewInit {
   // ----------------------- NEW CODE FROM NEW HOPE -----------------------------------
   selectedFilter: number;
+  panelTitle: string;
   batchList: any[] = [];
   displayedBatchList: any[];
   displayedColumns = [
@@ -35,18 +35,17 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   constructor(private batchController: BatchControllerService) {}
 
   ngOnInit() {
-    //TODO -- use the batch-controller.service
-    this.batchController.getAllBatches().subscribe(blist => {
+    this.batchController.findAll().subscribe(blist => {
       blist.forEach(batch => {
-        // This is an object that encapsulates the batch object's properties and a progress number.
+        // This is an object that encapsulates the Batch object's properties and a progress number.
         const batchObj = {
           name: batch.name,
           curriculum: batch.curriculum.name,
           trainer: batch.trainer.firstName + ' ' + batch.trainer.lastName,
           cotrainer: batch.cotrainer,
-          location: batch.batchLocation.locationName,
-          building: batch.batchLocation.buildingName,
-          room: batch.batchLocation.roomName,
+          location: batch.address.name,
+          building: batch.building.name,
+          room: batch.room.roomName,
           startDate: batch.startDate,
           endDate: batch.endDate,
           progress: 0
@@ -57,7 +56,8 @@ export class OverviewComponent implements OnInit, AfterViewInit {
         this.batchList.forEach(batchOb => {
           batchOb.progress = this.getCurrentProgress(batchOb);
         });
-        // This starts the view on showing All batches.
+
+        // This starts the view on showing All Batches.
         this.applyFilter(0);
       });
     });
@@ -90,26 +90,40 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     this.displayedBatchList = [];
     if (filterType === 0) {
       this.displayedBatchList = this.batchList;
+      this.panelTitle = 'All Batches';
     } else if (filterType === 1) {
       this.batchList.forEach(batchObj => {
         if (batchObj.progress > 0 && batchObj.progress < 100) {
           this.displayedBatchList.push(batchObj);
         }
       });
+
+      if (this.displayedBatchList.length < 1) {
+        this.panelTitle = 'No Batches In Progress';
+      } else {
+        this.panelTitle = 'Batches In Progress';
+      }
     } else if (filterType === 2) {
       this.batchList.forEach(batchObj => {
         if (batchObj.progress === 0) {
-          const currentWeek = this.getCurrentWeekOfBatch(batchObj.startDate);
-          if (currentWeek < 0 && currentWeek >= -2) {
+          if (this.getCurrentWeekOfBatch(batchObj.startDate) > -2) {
             this.displayedBatchList.push(batchObj);
           }
         }
       });
+
+      if (this.displayedBatchList.length < 1) {
+        this.panelTitle = 'No Batches Beginning in Two Weeks';
+      } else {
+        this.panelTitle = 'Batches Beginning in Two Weeks';
+      }
     }
     this.dataSource.data = this.displayedBatchList;
   }
 
   computeNumOfWeeksBetween(startDate: number, endDate: number): number {
+    // EX: 0-6 DAYS = 1 WEEK
+    //     7-13 DAYS = 2 WEEKS
     const numberOfDays = Math.abs(<any>endDate - <any>startDate) / (1000 * 60 * 60 * 24);
     const numberOfWeeks = Math.floor(numberOfDays / 7);
     return numberOfWeeks;
@@ -124,6 +138,8 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     return weekNumber;
   }
 
+  // PROGRESS = 0 IF BATCH DIDNT START YET
+  // PROGRESS CAPPED AT 100 IF BATCH FINISHED
   getCurrentProgress(batchObj): number {
     const training_duration = this.computeNumOfWeeksBetween(batchObj.startDate, batchObj.endDate);
     if (training_duration === 0) {

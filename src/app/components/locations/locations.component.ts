@@ -3,10 +3,10 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatIconRegistry } from '@angu
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { Building } from '../../model/Building';
-import { Location } from '../../model/Location';
+import { Address } from '../../model/Address';
 import { Room } from '../../model/Room';
 import { LocationAddDialogComponent } from './add-dialog/location-add-dialog.component';
-import { LocationControllerService } from '../../services/api/location-controller/location-controller.service';
+import { AddressControllerService } from '../../services/api/address-controller/address-controller.service';
 
 @Component({
   selector: 'app-location-delete-location-dialog',
@@ -54,8 +54,8 @@ export class LocationEditLocationDialogComponent {
 }
 
 // @Component({
-//   selector: 'app-location-add-building-dialog',
-//   templateUrl: './location-add-building-dialog.component.html'
+//   selector: 'app-address-add-building-dialog',
+//   templateUrl: './address-add-building-dialog.component.html'
 // })
 // export class LocationAddBuildingDialogComponent {
 //   constructor(
@@ -157,7 +157,7 @@ export class LocationsComponent implements OnInit {
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
     public dialog: MatDialog,
-    private locationService: LocationControllerService
+    private locationService: AddressControllerService
   ) {
     for (const location of this.locations) {
       this.expanded[location.id] = false;
@@ -175,7 +175,7 @@ export class LocationsComponent implements OnInit {
   }
   ngOnInit() {
     this.locationService
-      .retrieveAllLocation()
+      .findAll()
       .toPromise()
       .then(response => {
         this.locations = response;
@@ -190,13 +190,13 @@ export class LocationsComponent implements OnInit {
       }
     }
   }
-  addLocation(location: Location) {
+  addLocation(location: Address) {
     // call service
   }
-  updateLocation(location: Location) {
+  updateLocation(location: Address) {
     // call service
   }
-  deleteLocation(location: Location) {
+  deleteLocation(location: Address) {
     // call service
   }
   openAddLocationDialog(evt): void {
@@ -222,7 +222,7 @@ export class LocationsComponent implements OnInit {
       }
     });
   }
-  openDeleteLocationDialog(evt, location: Location): void {
+  openDeleteLocationDialog(evt, location: Address): void {
     evt.stopPropagation();
     const dialogRef = this.dialog.open(LocationDeleteLocationDialogComponent, {
       width: '250px',
@@ -237,7 +237,7 @@ export class LocationsComponent implements OnInit {
       }
     });
   }
-  openEditLocationDialog(evt, location: Location): void {
+  openEditLocationDialog(evt, location: Address): void {
     evt.stopPropagation();
     const dialogRef = this.dialog.open(LocationEditLocationDialogComponent, {
       width: '450px',
@@ -252,7 +252,7 @@ export class LocationsComponent implements OnInit {
       }
     });
   }
-  openAddBuildingDialog(evt, location: Location): void {
+  openAddBuildingDialog(evt, location: Address): void {
     evt.stopPropagation();
     const building = {
       name: '',
@@ -274,7 +274,7 @@ export class LocationsComponent implements OnInit {
       }
     });
   }
-  openDeleteBuildingDialog(evt, location: Location, building: Building): void {
+  openDeleteBuildingDialog(evt, location: Address, building: Building): void {
     evt.stopPropagation();
     const dialogRef = this.dialog.open(LocationDeleteBuildingDialogComponent, {
       width: '250px',
@@ -290,7 +290,7 @@ export class LocationsComponent implements OnInit {
       }
     });
   }
-  openEditBuildingDialog(evt, location: Location, building: Building): void {
+  openEditBuildingDialog(evt, location: Address, building: Building): void {
     evt.stopPropagation();
     const dialogRef = this.dialog.open(LocationEditBuildingDialogComponent, {
       width: '450px',
@@ -305,7 +305,7 @@ export class LocationsComponent implements OnInit {
       }
     });
   }
-  openAddRoomDialog(evt, location: Location, building: Building): void {
+  openAddRoomDialog(evt, location: Address, building: Building): void {
     evt.stopPropagation();
     const room = {
       roomName: ''
@@ -325,7 +325,7 @@ export class LocationsComponent implements OnInit {
       }
     });
   }
-  openDeleteRoomDialog(evt, location: Location, building: Building, room: Room): void {
+  openDeleteRoomDialog(evt, location: Address, building: Building, room: Room): void {
     evt.stopPropagation();
     const dialogRef = this.dialog.open(LocationDeleteRoomDialogComponent, {
       width: '250px',
@@ -341,7 +341,7 @@ export class LocationsComponent implements OnInit {
       }
     });
   }
-  openEditRoomDialog(evt, location: Location, room: Room): void {
+  openEditRoomDialog(evt, location: Address, room: Room): void {
     evt.stopPropagation();
     const dialogRef = this.dialog.open(LocationEditRoomDialogComponent, {
       width: '450px',

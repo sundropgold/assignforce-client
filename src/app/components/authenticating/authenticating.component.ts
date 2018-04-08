@@ -8,9 +8,7 @@ import { AuthService } from '../../services/auth/auth.service';
   styleUrls: ['./authenticating.component.css']
 })
 export class AuthenticatingComponent implements OnInit {
-  constructor(private auth0: AuthService) {}
+  constructor() {}
 
-  ngOnInit() {
-    //this.auth0.handleAuthentication();
-  }
+  ngOnInit() {}
 }

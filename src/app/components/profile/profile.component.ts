@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Skill } from '../../model/Skill';
 import { S3CredentialService } from '../../services/s3-credential/s3-credential.service';
+import { Router } from '@angular/router';
+import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
 import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
@@ -21,13 +23,13 @@ export class ProfileComponent implements OnInit {
     lastName: new FormControl('', Validators.required)
   });
 
-  // data
-  skills: Skill[] = [
-    { skillId: 1, name: 'Java', active: true },
-    { skillId: 2, name: 'SQL', active: true },
-    { skillId: 3, name: 'Angular', active: true },
-    { skillId: 4, name: 'C++', active: true }
-  ];
+  // // data
+  // skills: Skill[] = [
+  //   { skillId: 1, name: 'Java', active: true },
+  //   { skillId: 2, name: 'SQL', active: true },
+  //   { skillId: 3, name: 'Angular', active: true },
+  //   { skillId: 4, name: 'C++', active: true }
+  // ];
 
   nameFound = false;
 
@@ -48,11 +50,14 @@ export class ProfileComponent implements OnInit {
     active: true
   };
 
-  constructor(private s3Service: S3CredentialService, private authService: AuthService) {}
+  constructor(
+    private s3Service: S3CredentialService,
+    private router: Router,
+    private trainerService: TrainerControllerService,
+    private authService: AuthService
+  ) {}
 
-  ngOnInit() {
-    //this.populateSkillList();
-  }
+  ngOnInit() {}
 
   toggleEdit() {
     this.edit = !this.edit;
@@ -94,9 +99,13 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  getUser() {
-    this.authService.getProfile((error, profile) => {
-      console.log(profile);
-    });
-  }
+  // getUser() {
+  //   if (localStorage.getItem('access_token')) {
+  //     this.authService.getProfile((error, profile) => {
+  //       if (!error) {
+  //         this.trainer = profile;
+  //       }
+  //     });
+  //   }
+  // }
 }
