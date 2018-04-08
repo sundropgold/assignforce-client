@@ -22,18 +22,6 @@ export class CurriculumSkillsComponent implements OnInit {
     });
   }
 
-  addSkill(e) {
-    console.log('Adding Skill');
-  }
-
-  editSkill(e) {
-    console.log('Editing Skill');
-  }
-
-  removeSkill(e) {
-    console.log('Removing Skill');
-  }
-
   openAddSkillDialog() {
     const dialogRef = this.dialog.open(AddSkillComponent, {
       data: this.skillData
