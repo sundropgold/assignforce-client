@@ -13,7 +13,7 @@ import { BatchControllerService } from '../../services/api/batch-controller/batc
 export class OverviewComponent implements OnInit, AfterViewInit {
   // ----------------------- NEW CODE FROM NEW HOPE -----------------------------------
   selectedFilter: number;
-  panelTitle: string;
+  panelTitle = 'All Batches';
   batchList: any[] = [];
   displayedBatchList: any[];
   displayedColumns = [
