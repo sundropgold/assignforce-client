@@ -65,9 +65,9 @@ describe('BatchesTimelineComponent', () => {
     expect(component.todayLine.y2).not.toBeNull();
   });
 
-  it('should return the rectangles for the batches', async () => {
+  it('should return the rectangles for the batches', async done => {
     component.updateBatches();
-    waits(1);
+    done();
     const rects = component.getBatchesRectangles();
     expect(rects.length).toEqual(component.batches.length);
   });
@@ -81,9 +81,9 @@ describe('BatchesTimelineComponent', () => {
     expect(component.trainers).toBeTruthy();
   });
 
-  it('should return the list of trainers with positions', async () => {
+  it('should return the list of trainers with positions', async done => {
     component.updateBatches();
-    waits(1);
+    done();
     const trainers = component.getTrainers();
     let expectedAmount = component.trainers.length;
     if (expectedAmount === 0) {
