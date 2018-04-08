@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Skill } from '../../model/Skill';
 import { Trainer } from '../../model/Trainer';
+import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
+import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
+import { trainers } from '../../mockdb/mockdata/trainer.data';
 
 @Component({
   selector: 'app-skills',
@@ -9,22 +12,18 @@ import { Trainer } from '../../model/Trainer';
 })
 export class SkillsComponent implements OnInit {
   // data
-  skills: Skill[] = [
-    { id: 1, name: 'Java', active: true },
-    { id: 2, name: 'SQL', active: true },
-    { id: 3, name: 'Angular', active: true },
-    { id: 4, name: 'C++', active: true }
-  ];
+  skills: Skill[] = [];
 
   lockSkills = true;
   disabled = true;
   skillsList: string[] = [];
-  trainer: Trainer;
+  trainer: Trainer = trainers[0];
   skill: Skill;
 
-  constructor() {}
+  constructor(private skillService: SkillControllerService) {}
 
   ngOnInit() {
+    this.getAllSkills();
     this.populateSkillList();
   }
 
@@ -40,20 +39,13 @@ export class SkillsComponent implements OnInit {
   // add a skill to the current trainer
   addSkill(skill) {
     // add the skill to the trainer skill array
-    for (let i = 0; i < this.skills.length; i++) {
-      if (this.skills[i].name === skill) {
-        this.trainer.skills.push(this.skills[i]);
-        break;
-      }
-    }
-
+    this.trainer.skills.push(this.skills.filter(s => s.name === skill)[0]);
     this.remove(skill);
   }
 
   // remove the same skill from the skill list array
-  remove(skill: any): void {
+  remove(skill: string): void {
     const index = this.skillsList.indexOf(skill);
-
     if (index >= 0) {
       this.skillsList.splice(index, 1);
     }
@@ -72,26 +64,24 @@ export class SkillsComponent implements OnInit {
 
   // grab all the skills and create a skill list
   getAllSkills() {
-    // this.skillService.getAll().subscribe(response => {
-    //   this.skills = response;
-    //   let status = true;
-    //   for (let i = 0; i < this.skills.length; i++) {
-    //     for (let j = 0; j < this.trainer.skills.length; j++) {
-    //       if (this.skills[j].id === this.skills[i].id) {
-    //         status = false;
-    //         break;
-    //       }
-    //     }
-    //     if (status) {
-    //       this.skillsList.push(this.skills[i].name);
-    //     }
-    //     status = true;
-    //   }
-    // });
+    this.skillService.findAll().subscribe(response => {
+      this.skills = response;
+      // let status = true;
+      // for (let i = 0; i < this.skills.length; i++) {
+      //   for (let j = 0; j < this.trainer.skills.length; j++) {
+      //     if (this.skills[j].id === this.skills[i].id) {
+      //       status = false;
+      //       break;
+      //     }
+      //   }
+      //   if (status) {
+      //     this.skillsList.push(this.skills[i].name);
+      //   }
+      //   status = true;
+      // }
+    });
   }
   populateSkillList() {
-    for (let i = 0; i < this.skills.length; i++) {
-      this.skillsList.push(this.skills[i].name);
-    }
+    this.skillsList = this.skills.map(skill => skill.name);
   }
 }

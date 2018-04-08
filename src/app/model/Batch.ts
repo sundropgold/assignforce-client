@@ -26,7 +26,7 @@ export class Batch {
     startDate: number,
     endDate: number,
     curriculum: Curriculum,
-    focus: Curriculum,
+    focus: Focus,
     trainer: Trainer,
     cotrainer: Trainer,
     skills: Skill[],
