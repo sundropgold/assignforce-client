@@ -8,6 +8,7 @@ mat-icon {
   margin: 0;
   display: inline-flex;
   vertical-align: middle;
+  color: #fff;
 }
 
 .mat-icon {
@@ -15,6 +16,10 @@ mat-icon {
 }
 
 .mat-icon:hover {
+  color: #fb8c00;
+}
+
+.material-icons {
   color: #fb8c00;
 }
 
