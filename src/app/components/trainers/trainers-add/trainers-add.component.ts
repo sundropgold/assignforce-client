@@ -66,7 +66,8 @@ export class TrainersAddComponent implements OnInit {
     }
   }
 
-  onNoClick(): void {
+  onNoClick(evt): void {
+    evt.preventDefault();
     this.dialogRef.close();
   }
 }
