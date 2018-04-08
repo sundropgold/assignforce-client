@@ -11,3 +11,9 @@
   height: 5.6rem;
   border-radius: 50%;
 }
+
+/* Loading spinner */
+.center {
+  margin: auto;
+  width: 10%;
+}
