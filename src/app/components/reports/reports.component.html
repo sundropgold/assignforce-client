@@ -14,12 +14,14 @@
           <mat-expansion-panel-header>
             <mat-panel-title>Batch Projection</mat-panel-title>
             <span fxFlex=""></span>
-            <button mat-icon-button><mat-icon (click)="genCard($event)">add</mat-icon></button>
+            <button mat-icon-button>
+              <mat-icon (click)="genCard($event)">add</mat-icon>
+            </button>
             <span fxFlex="1%"></span>
           </mat-expansion-panel-header>
           <mat-card-content>
             <div fxFlex="70%" fxLayout="row" layoutXs="column" style="overflow: auto">
-              <div style="padding: 1%" fxFlex="80" flexXs="" flexGtXs="20" fxLayout="column"  *ngFor="let item of cardArr; let i = index" >
+              <div style="padding: 1%" fxFlex="80" flexXs="" flexGtXs="20" fxLayout="column" *ngFor="let item of cardArr; let i = index">
                 <!--*ngFor="let item of items"-->
                 <mat-card class="example-card">
                   <mat-card-title>
@@ -31,12 +33,13 @@
                       <input matInput type="number" placeholder="Trainee's Needed: " [(ngModel)]="cardArr[i].requiredGrads" (change)="calcReqBatch(cardArr[i].requiredGrads, i)">
                     </mat-form-field>
                     <mat-form-field>
-                      <input matInput [matDatepicker]="picker" placeholder="Hire Date: "  [(ngModel)]="cardArr[i].hireDate" (dateChange)="calcStartDate(cardArr[i].hireDate, i, $event)">
+                      <input matInput [matDatepicker]="picker" placeholder="Hire Date: " [(ngModel)]="cardArr[i].hireDate" (dateChange)="calcStartDate(cardArr[i].hireDate, i, $event)">
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
                     <mat-form-field>
-                      <mat-select placeholder="Curriculum: " [(ngModel)]="cardArr[i].batchType" (change)="assignCurr(cardArr[i].batchType, i)" required>
+                      <mat-select placeholder="Curriculum: " [(ngModel)]="cardArr[i].batchType" (change)="assignCurr(cardArr[i].batchType, i)"
+                        required>
                         <mat-option>--</mat-option>
                         <ng-container *ngFor="let x of curricula">
                           <mat-option *ngIf="x.core && x.active == true" [value]="x">
@@ -50,7 +53,9 @@
                       <span *ngIf="!(cardArr[i].formattedStartDate)">Choose a future hire date</span>
                       <span *ngIf="cardArr[i].formattedStartDate">{{cardArr[i].formattedStartDate}}</span>
                     </p>
-                    <p>Requested Batches: <span *ngIf="cardArr[i].requiredBatches">{{cardArr[i].requiredBatches}}</span></p>
+                    <p>Requested Batches:
+                      <span *ngIf="cardArr[i].requiredBatches">{{cardArr[i].requiredBatches}}</span>
+                    </p>
                   </mat-card-content>
                   <mat-card-actions>
                     <div fxLayoutAlign="center" class="btn" (click)="createBatch(cardArr[i], i, false)">
@@ -61,8 +66,7 @@
                 </mat-card>
               </div>
             </div>
-            <div fxFlex="25%" fxLayout="row"
-                 layoutXs="column" fxLayoutAlign="end start">
+            <div fxFlex="25%" fxLayout="row" layoutXs="column" fxLayoutAlign="end start">
               <div style="padding: 1%" fxFlex="80" flexXs="" flexGtXs="20" fxLayout="column">
 
                 <mat-card>
@@ -97,7 +101,9 @@
         <mat-expansion-panel-header>
           <mat-panel-title>Graduate Summary for {{gradYear}}</mat-panel-title>
           <span fxFlex=""></span>
-          <button mat-icon-button><mat-icon title="Export to CSV" (click)="exportToCSV($event, 'gruduateSummary')">get_app</mat-icon></button>
+          <button mat-icon-button>
+            <mat-icon title="Export to CSV" (click)="exportToCSV($event, 'gruduateSummary')">get_app</mat-icon>
+          </button>
           <mat-menu #settingGraduate="matMenu">
             <form mat-menu-item>
               <mat-form-field class="full-width">
@@ -106,7 +112,8 @@
             </form>
             <form mat-menu-item>
               <mat-form-field class="full-width">
-                <input matInput placeholder="Graduate Per Batch" type="number" [(ngModel)]="reportGrads" (click)="$event.stopPropagation()" name="settingGraduate">
+                <input matInput placeholder="Graduate Per Batch" type="number" [(ngModel)]="reportGrads" (click)="$event.stopPropagation()"
+                  name="settingGraduate">
               </mat-form-field>
             </form>
 
@@ -137,7 +144,7 @@
               <!-- Weight Column -->
               <ng-container matColumnDef="febuaray">
                 <mat-header-cell *matHeaderCellDef> febuaray </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.febuaray}}  </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element.febuaray}} </mat-cell>
               </ng-container>
 
               <!-- Symbol Column -->
@@ -195,7 +202,7 @@
               <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
               <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
             </mat-table>
-            <mat-paginator                [pageSizeOptions]="[5, 10, 25, 100]">
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]">
             </mat-paginator>
           </div>
 
@@ -216,7 +223,9 @@
         <mat-expansion-panel-header>
           <mat-panel-title>Incoming Trainee Summary for {{incomeYear}}</mat-panel-title>
           <span fxFlex=""></span>
-          <button mat-icon-button><mat-icon title="Export to CSV" (click)="exportToCSV($event, 'gruduateSummary')">get_app</mat-icon></button>
+          <button mat-icon-button>
+            <mat-icon title="Export to CSV" (click)="exportToCSV($event, 'gruduateSummary')">get_app</mat-icon>
+          </button>
           <mat-menu #settingIncoming="matMenu">
             <form mat-menu-item>
               <mat-form-field class="full-width">
@@ -225,7 +234,8 @@
             </form>
             <form mat-menu-item>
               <mat-form-field class="full-width">
-                <input matInput placeholder="Graduate Per Batch" type="number" [(ngModel)]="reportIncomingGrads" (click)="$event.stopPropagation()" name="settingIncoming">
+                <input matInput placeholder="Graduate Per Batch" type="number" [(ngModel)]="reportIncomingGrads" (click)="$event.stopPropagation()"
+                  name="settingIncoming">
               </mat-form-field>
             </form>
 
@@ -286,7 +296,7 @@
               <!-- Weight Column -->
               <ng-container matColumnDef="febuaray">
                 <mat-header-cell *matHeaderCellDef> febuaray </mat-header-cell>
-                <mat-cell *matCellDef="let element"> {{element.febuaray}}  </mat-cell>
+                <mat-cell *matCellDef="let element"> {{element.febuaray}} </mat-cell>
               </ng-container>
 
               <!-- Symbol Column -->
@@ -344,8 +354,7 @@
               <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
               <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
             </mat-table>
-            <mat-paginator
-              [pageSizeOptions]="[5, 10, 25, 100]">
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]">
             </mat-paginator>
           </div>
 

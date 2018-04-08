@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Skill } from '../../model/Skill';
 import { S3CredentialService } from '../../services/s3-credential/s3-credential.service';
+import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
 
 @Component({
   selector: 'app-profile',
@@ -21,12 +22,7 @@ export class ProfileComponent implements OnInit {
   });
 
   // data
-  skills: Skill[] = [
-    { id: 1, name: 'Java', active: true },
-    { id: 2, name: 'SQL', active: true },
-    { id: 3, name: 'Angular', active: true },
-    { id: 4, name: 'C++', active: true }
-  ];
+  skills: Skill[] = [];
 
   nameFound = false;
 
@@ -47,10 +43,27 @@ export class ProfileComponent implements OnInit {
     active: true
   };
 
-  constructor() {}
+  constructor(private skillsService: SkillControllerService) {}
 
   ngOnInit() {
-    // this.populateSkillList();
+    this.populateSkills();
+    this.populateSkillsList();
+  }
+
+  populateSkills() {
+    this.skillsService.findAll().subscribe(response => {
+      this.skills = response;
+    });
+  }
+
+  populateSkillsList() {
+    this.skills.forEach(skill => {
+      this.skillsList.push(skill.name);
+    });
+  }
+
+  remove(skill: string) {
+    this.skillsList = this.skillsList.filter(s => s !== skill);
   }
 
   toggleEdit() {

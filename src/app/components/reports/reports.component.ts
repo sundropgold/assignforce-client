@@ -1,6 +1,14 @@
-import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  ViewChild,
+  Optional
+} from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, NgControl } from '@angular/forms';
 import { Angular2Csv } from 'angular2-csv';
 import { Curriculum } from '../../model/Curriculum';
 import { Batch } from '../../model/Batch';
@@ -216,20 +224,20 @@ export class ReportsComponent implements OnInit, AfterViewInit, AfterViewChecked
     //this.notificationService.openSnackBar(msg);
   }
   // get default setting
-  // getDefaultSetting() {
-  //   this.settingService.getGlobalSetting().subscribe(
-  //     setting => {
-  //       this.setting = setting;
-  //       this.reportIncomingGrads = this.setting[0].reportIncomingGrads;
-  //       this.reportGrads = this.setting[0].reportGrads;
-  //       console.log(this.setting);
-  //     },
-  //     err => {
-  //       console.log(err);
-  //       this.showToast('Failed to fetch Setting');
-  //     }
-  //   );
-  // }
+  getDefaultSetting() {
+    // this.settingService.getGlobalSetting().subscribe(
+    //   setting => {
+    //     this.setting = setting;
+    //     this.reportIncomingGrads = this.setting[0].reportIncomingGrads;
+    //     this.reportGrads = this.setting[0].reportGrads;
+    //     console.log(this.setting);
+    //   },
+    //   err => {
+    //     console.log(err);
+    //     this.showToast('Failed to fetch Setting');
+    //   }
+    // );
+  }
   /*getDefaultSetting() {
     this.settingService.getSettings()(
         this.setting = setting;

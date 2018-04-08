@@ -10,38 +10,46 @@ import { CurriculumControllerService } from '../../services/api/curriculum-contr
 
 import { AppMaterialModule } from '../../material.module';
 import { BatchesComponent } from './batches.component';
+import { FocusControllerService } from '../../services/api/focus-controller/focus-controller.service';
+import { AddressControllerService } from '../../services/api/address-controller/address-controller.service';
+import { RoomControllerService } from '../../services/api/room-controller/room-controller.service';
+import { BuildingControllerService } from '../../services/api/building-controller/building-controller.service';
 
 describe('BatchesComponent', () => {
-  // let component: BatchesComponent;
-  // let fixture: ComponentFixture<BatchesComponent>;
-  //
-  // beforeEach(
-  //   async(() => {
-  //     TestBed.configureTestingModule({
-  //       imports: [
-  //         AppMaterialModule,
-  //         ReactiveFormsModule,
-  //         FormsModule,
-  //         HttpClientTestingModule,
-  //         BrowserAnimationsModule
-  //       ],
-  //       declarations: [BatchesComponent, BatchesTimelineComponent, BatchesTimelineFilterComponent],
-  //       providers: [
-  //         BatchControllerService,
-  //         TrainerControllerService,
-  //         CurriculumControllerService
-  //       ]
-  //     }).compileComponents();
-  //   })
-  // );
-  //
-  // beforeEach(() => {
-  //   fixture = TestBed.createComponent(BatchesComponent);
-  //   component = fixture.componentInstance;
-  //   fixture.detectChanges();
-  // });
-  //
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  let component: BatchesComponent;
+  let fixture: ComponentFixture<BatchesComponent>;
+
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          AppMaterialModule,
+          ReactiveFormsModule,
+          FormsModule,
+          HttpClientTestingModule,
+          BrowserAnimationsModule
+        ],
+        declarations: [BatchesComponent, BatchesTimelineComponent, BatchesTimelineFilterComponent],
+        providers: [
+          BatchControllerService,
+          TrainerControllerService,
+          CurriculumControllerService,
+          FocusControllerService,
+          AddressControllerService,
+          RoomControllerService,
+          BuildingControllerService
+        ]
+      }).compileComponents();
+    })
+  );
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(BatchesComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

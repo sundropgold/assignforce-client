@@ -6,25 +6,25 @@ import { AppMaterialModule } from '../../material.module';
 import { LocationsComponent } from './locations.component';
 
 describe('LocationsComponent', () => {
-  // let component: LocationsComponent;
-  // let fixture: ComponentFixture<LocationsComponent>;
-  //
-  // beforeEach(
-  //   async(() => {
-  //     TestBed.configureTestingModule({
-  //       imports: [AppMaterialModule, HttpClientTestingModule, BrowserAnimationsModule],
-  //       declarations: [LocationsComponent]
-  //     }).compileComponents();
-  //   })
-  // );
-  //
-  // beforeEach(() => {
-  //   fixture = TestBed.createComponent(LocationsComponent);
-  //   component = fixture.componentInstance;
-  //   fixture.detectChanges();
-  // });
-  //
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  let component: LocationsComponent;
+  let fixture: ComponentFixture<LocationsComponent>;
+
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [AppMaterialModule, HttpClientTestingModule, BrowserAnimationsModule],
+        declarations: [LocationsComponent]
+      }).compileComponents();
+    })
+  );
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(LocationsComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });
