@@ -1,16 +1,15 @@
 /* ---------- CERTIFICATIONS STYLING ----------- */
 
 /* ---------- MAT TOOLBAR ----------- */
-.md-toolbar-spacer {
-  flex: 1 1 auto;
-}
-
 .md-toolbar {
   padding: 0px 16px;
   background-color: inherit;
   color: inherit;
 }
 
+.md-toolbar-spacer {
+  flex: 1 1 auto;
+}
 /* ---------- MAT CARD ----------- */
 mat-card {
   margin: 0 16px;

@@ -18,7 +18,14 @@
 
 .mat-expansion-panel-header-title {
   color: #fff;
-  font-weight: 600;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+mat-panel-title {
+  color: #fff;
+  font-weight: 500;
+  font-size: 18px;
 }
 
 .mat-expansion-panel-header-description {

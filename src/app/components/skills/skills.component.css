@@ -1,8 +1,10 @@
 /* ---------- SKILLS STYLING ----------- */
 
 /* ---------- ICONS ----------- */
-.material-icons {
-  color: #fb8c00;
+mat-icon {
+  margin: 0;
+  display: inline-flex;
+  vertical-align: middle;
 }
 
 .mat-icon {
@@ -14,14 +16,14 @@
 }
 
 /* ---------- MAT TOOLBAR ----------- */
-.md-toolbar-spacer {
-  flex: 1 1 auto;
-}
-
 .md-toolbar {
   padding: 0px 16px;
-  background-color: inherit;
+  background-color: transparent;
   color: inherit;
+}
+
+.md-toolbar-spacer {
+  flex: 1 1 auto;
 }
 
 /* ---------- MAT LIST ITEM DISPLAY SKILLS ----------- */
@@ -33,19 +35,13 @@
 
 /* ---------- MAT CARD ----------- */
 mat-card {
-  margin: 0 16px;
+  margin: 0;
   padding: 0;
 }
 
 mat-card-content {
   margin: 0;
   padding: 16px;
-}
-
-mat-icon {
-  margin: 0;
-  display: inline-flex;
-  vertical-align: middle;
 }
 
 mat-select {

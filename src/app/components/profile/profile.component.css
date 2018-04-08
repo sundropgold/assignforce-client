@@ -7,7 +7,7 @@
 /* ---------- TOOLBAR ----------- */
 .md-toolbar {
   padding: 0px 16px;
-  background-color: inherit;
+  background-color: transparent;
   color: inherit;
 }
 

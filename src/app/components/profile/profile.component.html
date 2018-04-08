@@ -9,7 +9,7 @@ The second md-card/ng-show is for other users to look at other trainers profiles
   <mat-card>
     <mat-toolbar-row>
       <mat-toolbar class="md-toolbar" layout="columns">
-        <span>Profile</span>
+        <span class="mat-expansion-panel-header-title">Profile</span>
         <span class="md-toolbar-spacer"></span>
         <button mat-icon-button (click)="updateName()">
           <mat-icon matTooltip="Save" class="material-icons" *ngIf="!lockProfile">save</mat-icon>
@@ -58,7 +58,11 @@ The second md-card/ng-show is for other users to look at other trainers profiles
         </div>
       </div>
     </mat-card-content>
-    <app-skills></app-skills>
-    <app-certifications></app-certifications>
+    <mat-card>
+      <app-skills></app-skills>
+    </mat-card>
+    <mat-card>
+      <app-certifications></app-certifications>
+    </mat-card>
   </mat-card>
 </div>
