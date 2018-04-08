@@ -1,4 +1,7 @@
 /* ---------- SKILLS STYLING ----------- */
+.mat-expansion-panel-header-title {
+  flex: 1 1 auto;
+}
 
 /* ---------- ICONS ----------- */
 mat-icon {

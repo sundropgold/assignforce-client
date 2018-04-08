@@ -3,7 +3,7 @@
   <!-- Create New Batch -->
   <!-- Only Appears if they are admin -->
   <mat-accordion>
-    <mat-expansion-panel>
+    <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
           {{firstTabHeader}}
@@ -117,7 +117,7 @@
   <!-- All Batches -->
   <!-- This has some Admin properties -->
   <mat-accordion>
-    <mat-expansion-panel>
+    <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
           All Batches
@@ -220,7 +220,7 @@
 
   <!-- Batch TimeLine -->
   <mat-accordion>
-    <mat-expansion-panel>
+    <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
           Batch Timeline
