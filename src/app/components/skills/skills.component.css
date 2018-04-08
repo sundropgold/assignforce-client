@@ -11,18 +11,6 @@ mat-icon {
   color: #fff;
 }
 
-.mat-icon {
-  color: #fff;
-}
-
-.mat-icon:hover {
-  color: #fb8c00;
-}
-
-.material-icons {
-  color: #fb8c00;
-}
-
 /* ---------- MAT TOOLBAR ----------- */
 .md-toolbar {
   padding: 0px 16px;
