@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { Skill } from '../../model/Skill';
 import { Trainer } from '../../model/Trainer';
@@ -16,11 +16,12 @@ export class SkillsComponent implements OnInit {
 
   lockSkills = true;
   disabled = true;
-  skillsList: string[] = [];
-  trainer: Trainer;
+  skillsList: Skill[] = [];
   skill: Skill;
+  @Input() trainer: Trainer;
+  loading: boolean;
 
-  constructor(private skillService: SkillControllerService) {}
+  constructor(private skillService: SkillControllerService, private trainerService: TrainerControllerService) {}
 
   ngOnInit() {
     this.getAllSkills();
@@ -38,17 +39,22 @@ export class SkillsComponent implements OnInit {
 
   // add a skill to the current trainer
   addSkill(skill) {
-    // add the skill to the trainer skill array
-    this.trainer.skills.push(this.skills.filter(s => s.name === skill)[0]);
-    this.remove(skill);
+    for (let i = 0; i < this.trainer.skills.length; i++) {
+      if (this.skillsList[i] === skill) {
+        this.trainer.skills.push(skill);
+        this.skillsList.splice(i, 1);
+        break;
+      }
+    }
   }
 
   // remove the same skill from the skill list array
-  remove(skill: string): void {
-    const index = this.skillsList.indexOf(skill);
+  remove(skill: Skill): void {
+    const index = this.trainer.skills.indexOf(skill);
     if (index >= 0) {
-      this.skillsList.splice(index, 1);
+      this.trainer.skills.splice(index, 1);
     }
+    console.log(this.trainer.skills);
   }
 
   // remove a trainer skill on the bottom
@@ -64,24 +70,20 @@ export class SkillsComponent implements OnInit {
 
   // grab all the skills and create a skill list
   getAllSkills() {
-    this.skillService.findAll().subscribe(response => {
-      this.skills = response;
-      // let status = true;
-      // for (let i = 0; i < this.skills.length; i++) {
-      //   for (let j = 0; j < this.trainer.skills.length; j++) {
-      //     if (this.skills[j].id === this.skills[i].id) {
-      //       status = false;
-      //       break;
-      //     }
-      //   }
-      //   if (status) {
-      //     this.skillsList.push(this.skills[i].name);
-      //   }
-      //   status = true;
-      // }
-    });
+    this.loading = true;
+    this.skillService
+      .findAll()
+      .toPromise()
+      .then(response => {
+        this.loading = false;
+        this.skills = response;
+      })
+      .catch(error => {
+        console.log(error);
+        this.loading = false;
+      });
   }
   populateSkillList() {
-    this.skillsList = this.skills.map(skill => skill.name);
+    this.skillsList = this.skills.map(skill => skill);
   }
 }

@@ -14,7 +14,8 @@
     "lint": "ng lint",
     "format:fix": "pretty-quick --staged",
     "precommit": "run-s format:fix lint test:once",
-    "format:check": "prettier --config ./.prettierrc --list-different \"src/{app,environments,assets}/**/*{.ts,.js,.json,.css,.scss}\"",
+    "format:check":
+      "prettier --config ./.prettierrc --list-different \"src/{app,environments,assets}/**/*{.ts,.js,.json,.css,.scss}\"",
     "e2e": "cypress open",
     "e2e:run": "cypress run",
     "test:ci": "ng test --single-run --browsers=ChromeHeadless",
