@@ -95,6 +95,12 @@
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
           </mat-table>
+          <div class = "center">
+            <div fxFlex="100"> &nbsp;</div>
+            <h5 *ngIf="!isLoading && !displayedBatchList">No Batches</h5>
+            <mat-progress-spinner *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner>
+            <div fxFlex="100"> &nbsp;</div>
+          </div>
         </div>
       </mat-expansion-panel>
     </mat-accordion>
