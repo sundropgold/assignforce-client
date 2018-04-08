@@ -4,7 +4,6 @@ import { Skill } from '../../model/Skill';
 import { Trainer } from '../../model/Trainer';
 import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
 import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
-import { trainers } from '../../mockdb/mockdata/trainer.data';
 
 @Component({
   selector: 'app-skills',
@@ -18,7 +17,7 @@ export class SkillsComponent implements OnInit {
   lockSkills = true;
   disabled = true;
   skillsList: string[] = [];
-  trainer: Trainer = trainers[0];
+  trainer: Trainer;
   skill: Skill;
 
   constructor(private skillService: SkillControllerService) {}

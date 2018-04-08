@@ -269,7 +269,6 @@ export class LocationsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        location.buildings.push(result);
         this.updateLocation(location);
       }
     });
@@ -285,7 +284,6 @@ export class LocationsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        location.buildings = location.buildings.filter(e => e !== result);
         this.updateLocation(location);
       }
     });
