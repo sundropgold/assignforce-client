@@ -18,23 +18,8 @@ export class FociComponent implements OnInit {
 
   ngOnInit() {
     this.focusControllerService.findAll().subscribe(data => {
-      const tempData: Focus[] = data;
-      for (let i = 0; i < tempData.length; i++) {
-        this.focusData.push(tempData[i]);
-      }
+      this.focusData = data;
     });
-  }
-
-  addFocus(e) {
-    console.log('Adding Focus');
-  }
-
-  editFocus(e) {
-    console.log('Editing Focus');
-  }
-
-  removeFocus(e) {
-    console.log('Removing Focus');
   }
 
   openAddFocusDialog() {

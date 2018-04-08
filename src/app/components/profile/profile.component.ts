@@ -2,9 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Skill } from '../../model/Skill';
 import { S3CredentialService } from '../../services/s3-credential/s3-credential.service';
-import { Router } from '@angular/router';
-import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
-import { AuthService } from '../../services/auth/auth.service';
+import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
 
 @Component({
   selector: 'app-profile',
@@ -23,13 +21,8 @@ export class ProfileComponent implements OnInit {
     lastName: new FormControl('', Validators.required)
   });
 
-  // // data
-  // skills: Skill[] = [
-  //   { skillId: 1, name: 'Java', active: true },
-  //   { skillId: 2, name: 'SQL', active: true },
-  //   { skillId: 3, name: 'Angular', active: true },
-  //   { skillId: 4, name: 'C++', active: true }
-  // ];
+  // data
+  skills: Skill[] = [];
 
   nameFound = false;
 
@@ -50,14 +43,28 @@ export class ProfileComponent implements OnInit {
     active: true
   };
 
-  constructor(
-    private s3Service: S3CredentialService,
-    private router: Router,
-    private trainerService: TrainerControllerService,
-    private authService: AuthService
-  ) {}
+  constructor(private skillsService: SkillControllerService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.populateSkills();
+    this.populateSkillsList();
+  }
+
+  populateSkills() {
+    this.skillsService.findAll().subscribe(response => {
+      this.skills = response;
+    });
+  }
+
+  populateSkillsList() {
+    this.skills.forEach(skill => {
+      this.skillsList.push(skill.name);
+    });
+  }
+
+  remove(skill: string) {
+    this.skillsList = this.skillsList.filter(s => s !== skill);
+  }
 
   toggleEdit() {
     this.edit = !this.edit;

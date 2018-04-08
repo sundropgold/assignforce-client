@@ -1,3 +1,6 @@
+import { Building } from './Building';
+import { Address } from './Address';
+
 export class Setting {
   id: number;
   alias: string;
@@ -8,8 +11,8 @@ export class Setting {
   minBatchSize: number;
   maxBatchSize: number;
   trainerBreakDays: number;
-  defaultLocation: number;
-  defaultBuilding: number;
+  defaultLocation: Address;
+  defaultBuilding: Building;
   defaultNamePattern: string;
 
   constructor(
@@ -22,8 +25,8 @@ export class Setting {
     minBatchSize: number,
     maxBatchSize: number,
     trainerBreakDays: number,
-    defaultLocation: number,
-    defaultBuilding: number,
+    defaultLocation: Address,
+    defaultBuilding: Building,
     defaultNamePattern: string
   ) {
     this.id = id;

@@ -1,7 +1,9 @@
 /* ---------- FOCI STYLING ---------- */
 
 /* ---------- MAT TOOLBAR ---------- */
+
 /* #38464E #3D5360*/
+
 .toolbar-curricula-sub {
   background-color: #37474f;
   color: white;
@@ -12,27 +14,34 @@
 }
 
 /* ---------- PANEL ---------- */
+
 .panel-title-fix {
   padding-top: 8px;
 }
 
 /* ---------- ICON ---------- */
+
 .icon-margin-fix {
-  margin: 0px;
+  margin: 2%;
+  color: white;
 }
 
 /* ---------- BUTTONS ---------- */
+
 .button-orange {
   background-color: #fb8c00;
   margin: 5px;
 }
 
 /* ---------- FOCUS ITEM DETAIL ---------- */
+
 .item-detail {
   margin: 2%;
+  display: inline;
 }
 
 /* --------- STYLES INCONSISTENT ---------- */
+
 /* #mat-expansion-panel-header-1:hover mat-panel-title {
   color: black;
 }
