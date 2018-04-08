@@ -19,7 +19,7 @@ export class SettingsComponent implements OnInit {
     private buildingService: BuildingControllerService
   ) {}
 
-  setting: Setting = new Setting(0, '', 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
+  setting: Setting = new Setting(0, '', 0, 0, 0, 0, 0, 0, 0, null, null, '');
 
   defaultLocation: Address;
   defaultBuilding: Building;
@@ -71,26 +71,9 @@ export class SettingsComponent implements OnInit {
         console.log(setting);
 
         this.setting = setting;
+        this.defaultBuilding = setting.defaultBuilding;
+        this.defaultLocation = setting.defaultLocation;
 
-        this.addressService
-          .find(this.setting.defaultLocation)
-          .toPromise()
-          .then(location => {
-            this.defaultLocation = location;
-          })
-          .catch(err => {
-            console.log(err);
-          });
-
-        this.buildingService
-          .find(this.setting.defaultBuilding)
-          .toPromise()
-          .then(building => {
-            this.defaultBuilding = building;
-          })
-          .catch(err => {
-            console.log(err);
-          });
         this.isLoading = false;
       })
       .catch(err => {
