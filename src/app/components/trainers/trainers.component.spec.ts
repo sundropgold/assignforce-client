@@ -14,7 +14,7 @@ describe('TrainersComponent', () => {
   let trainerService: TrainerControllerService;
 
   class MockTrainerService {
-    getAllTrainers() {}
+    findAll() {}
   }
 
   let mockClient;
@@ -50,7 +50,7 @@ describe('TrainersComponent', () => {
           observer.next(trainers);
         })
       );
-      const dataServiceSpy = spyOn(trainerService, 'getAllTrainers').and.returnValue(
+      const dataServiceSpy = spyOn(trainerService, 'findAll').and.returnValue(
         Observable.create(observer => {
           observer.next(trainers);
         })

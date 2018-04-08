@@ -10,27 +10,20 @@ export class TrainerControllerService {
 
   private trainerController = environment.apiUrls.trainerController;
 
-  public createTrainer(trainer: Trainer): Observable<Trainer> {
-    return this.http.post<Trainer>(this.trainerController.baseUrl + this.trainerController.createTrainer, trainer);
+  public create(trainer: Trainer): Observable<Trainer> {
+    return this.http.post<Trainer>(this.trainerController.baseUrl + this.trainerController.create, trainer);
+  }
+  public update(trainer: Trainer): Observable<Trainer> {
+    return this.http.put<Trainer>(this.trainerController.baseUrl + this.trainerController.update + trainer.id, trainer);
+  }
+  public findAll(): Observable<Trainer[]> {
+    return this.http.get<Trainer[]>(this.trainerController.baseUrl + this.trainerController.findAll);
+  }
+  public remove(id: number): Observable<Trainer> {
+    return this.http.delete<Trainer>(this.trainerController.baseUrl + this.trainerController.remove + id);
   }
 
-  public updateTrainer(trainer: Trainer): Observable<Trainer> {
-    return this.http.put<Trainer>(this.trainerController.baseUrl + this.trainerController.updateTrainer, trainer);
-  }
-
-  public findTrainer(email: string): Observable<Trainer> {
-    return this.http.get<Trainer>(this.trainerController.baseUrl + this.trainerController.findTrainer + email);
-  }
-
-  public makeInactive(id: number): Observable<Trainer> {
-    return this.http.delete<Trainer>(this.trainerController.baseUrl + this.trainerController.makeInactive + id);
-  }
-
-  public getAllTrainersTitles(): Observable<Trainer[]> {
-    return this.http.get<Trainer[]>(this.trainerController.baseUrl + this.trainerController.getAllTrainersTitles);
-  }
-
-  public getAllTrainers(): Observable<Trainer[]> {
-    return this.http.get<Trainer[]>(this.trainerController.baseUrl + this.trainerController.getAllTrainers);
+  public find(id: number): Observable<Trainer> {
+    return this.http.get<Trainer>(this.trainerController.baseUrl + this.trainerController.find + id);
   }
 }

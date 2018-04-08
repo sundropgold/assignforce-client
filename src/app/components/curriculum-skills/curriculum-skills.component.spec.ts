@@ -60,11 +60,6 @@ describe('CurriculumSkillsComponent', () => {
     expect(compiled.querySelector('mat-panel-title').textContent).toContain('Skills');
   });
 
-  it('should add a skill when the add skill function is called', () => {
-    fixture.detectChanges();
-    component.addSkill("This doesn't matter");
-  });
-
   it('should have a remove button', () => {
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('.remove-button')).toBeTruthy();

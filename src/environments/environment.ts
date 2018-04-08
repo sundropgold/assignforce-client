@@ -26,7 +26,6 @@ export const environment = {
   auth0: {
     namespace: 'https://revature.com/',
     title: 'AssignForce Login',
-    //clientId: 'uS5tb62hP8K3CgU00qa38SVnfWvzviiH', //assign force
     clientId: 'tjQhcs0O4mRV2iry6SAO0Gy1YQcBrWCa', //hydra
     domain: 'revature.auth0.com',
     responseType: 'token id_token',
@@ -42,101 +41,103 @@ export const environment = {
   },
 
   apiUrls: {
-    batchController: {
-      baseUrl: 'api/batch',
-      createBatch: '',
-      deleteBatch: '/',
-      updateBatch: '',
-      findCommonLocations: '',
-      getAllBatches: '',
-      findAllBatchesByTrainer: '/',
-      createWeek: '',
-      getAllVpBatches: '',
-      getAllCurrentBatches: ''
+    addressController: {
+      baseUrl: 'api/address',
+      create: '',
+      update: '/',
+      findAll: '',
+      find: '/',
+      remove: '/'
     },
 
-    addressController: {
-      baseUrl: 'api/location',
-      createLocation: '',
-      updateLocation: '',
-      getAllLocations: '',
-      removeLocation: '/',
-      getLocation: '/',
-      reactivateLocation: ''
+    batchController: {
+      baseUrl: 'api/batch',
+      create: '',
+      update: '/',
+      findAll: '',
+      find: '/',
+      remove: '/'
     },
 
     buildingController: {
       baseUrl: 'api/building',
-      createBuilding: '',
-      retrieveBuilding: '/',
-      updateBuilding: '',
-      deleteBuilding: '/',
-      retrieveAllBuildings: ''
+      create: '',
+      update: '/',
+      findAll: '',
+      find: '/',
+      remove: '/'
     },
 
     locationController: {
       baseUrl: 'api/location',
-      createLocation: '',
-      retrieveLocation: '/',
-      updateLocation: '',
-      deleteLocation: '/',
-      retrieveAllLocation: ''
+      create: '',
+      update: '/',
+      findAll: '',
+      find: '/',
+      remove: '/'
+    },
+
+    roomController: {
+      baseUrl: 'api/room',
+      create: '',
+      update: '/',
+      findAll: '',
+      find: '/',
+      remove: '/'
     },
 
     curriculumController: {
-      baseUrl: 'api/curricula',
-      createCurriculum: '',
-      retrieveCurriculum: '/',
-      updateCurriculum: '',
-      deleteCurriculum: '/',
-      retrieveAllCurricula: '',
-      retrieveAllActiveCurricula: '',
-      retrieveAllCore: '',
-      retrieveAllActiveCore: '',
-      retrieveAllFocus: '',
-      retrieveAllActiveFocus: ''
+      baseUrl: 'api/curriculum',
+      create: '',
+      update: '/',
+      findAll: '',
+      find: '/',
+      remove: '/'
     },
 
-    settingController: {
-      baseUrl: 'api/setting',
-      createSetting: '',
-      retrieveSetting: '/',
-      getGlobalSetting: '',
-      updateSetting: '',
-      deleteSetting: '/'
+    focusController: {
+      baseUrl: 'api/focus',
+      create: '',
+      update: '/',
+      findAll: '',
+      find: '/',
+      remove: '/'
     },
 
     skillController: {
       baseUrl: 'api/skill',
-      findAllActive: '',
+      create: '',
+      update: '/',
       findAll: '',
-      findSkillById: '/',
-      updateSkillCaliber: '',
-      saveSkill: '',
-      createSkill: '',
-      retrieveSkill: '/',
-      updateSkillMinerva: '',
-      deleteSkill: '/',
-      retrieveAllSkills: '',
-      retrieveSkillsByIds: ''
+      find: '/',
+      remove: '/'
     },
 
     trainerController: {
       baseUrl: 'api/trainer',
-      createTrainer: '',
-      updateTrainer: '',
-      findTrainer: '/',
-      makeInactive: '/',
-      getAllTrainersTitles: '',
-      getAllTrainers: ''
+      create: '',
+      update: '/',
+      findAll: '',
+      find: '/',
+      remove: '/'
+    },
+
+    settingController: {
+      baseUrl: 'api/setting',
+      create: '',
+      update: '/',
+      findAll: '',
+      find: '/',
+      remove: '/'
     },
 
     unavailableController: {
       baseUrl: 'api/unavailable',
-      createUnavailability: '',
-      retrieveUnavailability: '/',
-      deleteUnavailability: '/',
-      retrieveAllUnavailabilities: ''
+      create: '',
+      update: '/',
+      findAll: '',
+      find: '/',
+      remove: '/'
     }
   }
 };

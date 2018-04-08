@@ -6,10 +6,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BatchControllerService } from '../../services/api/batch-controller/batch-controller.service';
-import { batches } from '../../mockdb/mockdata/batch.data';
 import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
-import { LocationControllerService } from '../../services/api/location-controller/location-controller.service';
 import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
+import { FocusControllerService } from '../../services/api/focus-controller/focus-controller.service';
+import { AddressControllerService } from '../../services/api/address-controller/address-controller.service';
+import { RoomControllerService } from '../../services/api/room-controller/room-controller.service';
+import { BuildingControllerService } from '../../services/api/building-controller/building-controller.service';
 
 describe('BatchesTimelineFilterComponent', () => {
   let component: BatchesTimelineFilterComponent;
@@ -26,7 +28,13 @@ describe('BatchesTimelineFilterComponent', () => {
           BrowserAnimationsModule
         ],
         declarations: [BatchesTimelineFilterComponent],
-        providers: [LocationControllerService, CurriculumControllerService]
+        providers: [
+          CurriculumControllerService,
+          FocusControllerService,
+          AddressControllerService,
+          RoomControllerService,
+          BuildingControllerService
+        ]
       }).compileComponents();
     })
   );

@@ -11,7 +11,7 @@ import { EditSkillComponent } from './edit-skill.component';
 describe('EditSkillComponent', () => {
   let component: EditSkillComponent;
   let fixture: ComponentFixture<EditSkillComponent>;
-  const mockDialogData: Skill = { skillId: 1, name: 'Test Skill', active: true };
+  const mockDialogData: Skill = { id: 1, name: 'Test Skill', active: true };
   let skillControllerService: SkillControllerService;
 
   class MockDialogRef {
@@ -19,7 +19,7 @@ describe('EditSkillComponent', () => {
   }
 
   class MockSkillController {
-    updateSkillCaliber() {}
+    update(skill: Skill) {}
   }
 
   beforeEach(
@@ -50,5 +50,11 @@ describe('EditSkillComponent', () => {
   it('should have name variable populated with current name of skill', () => {
     fixture.detectChanges();
     expect(component.data.name).toContain('Test Skill');
+  });
+
+  it('should create a new skill object when the new skill method is called', () => {
+    component.newSkill();
+    fixture.detectChanges();
+    expect(component.skill.name).toBe('');
   });
 });

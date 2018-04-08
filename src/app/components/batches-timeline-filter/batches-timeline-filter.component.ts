@@ -1,6 +1,9 @@
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
-import { LocationControllerService } from '../../services/api/location-controller/location-controller.service';
+import { FocusControllerService } from '../../services/api/focus-controller/focus-controller.service';
+import { AddressControllerService } from '../../services/api/address-controller/address-controller.service';
+import { RoomControllerService } from '../../services/api/room-controller/room-controller.service';
+import { BuildingControllerService } from '../../services/api/building-controller/building-controller.service';
 
 @Component({
   selector: 'app-batches-timeline-filter',
@@ -10,7 +13,10 @@ import { LocationControllerService } from '../../services/api/location-controlle
 export class BatchesTimelineFilterComponent implements OnInit {
   constructor(
     private curriculumControllerService: CurriculumControllerService,
-    private locationControllerService: LocationControllerService
+    private focusControllerService: FocusControllerService,
+    private addressControllerService: AddressControllerService,
+    private roomControllerService: RoomControllerService,
+    private buildingControllerService: BuildingControllerService
   ) {}
 
   @Input() loading = false;
@@ -44,13 +50,13 @@ export class BatchesTimelineFilterComponent implements OnInit {
 
   loadCurriculumData() {
     this.loading = true;
-    this.curriculumControllerService.retrieveAllCore().subscribe(result => {
+    this.curriculumControllerService.findAll().subscribe(result => {
       this.curriculumData = [];
       this.curriculumData.push('Any');
       for (let i = 0; i < result.length; i++) {
         const curriculum = result[i];
         const value = curriculum.name;
-        if (curriculum.core && value != null) {
+        if (value != null) {
           this.curriculumData.push(value);
         }
       }
@@ -61,13 +67,13 @@ export class BatchesTimelineFilterComponent implements OnInit {
 
   loadFocusData() {
     this.loading = true;
-    this.curriculumControllerService.retrieveAllFocus().subscribe(result => {
+    this.focusControllerService.findAll().subscribe(result => {
       this.focusData = [];
       this.focusData.push('Any');
       for (let i = 0; i < result.length; i++) {
         const focus = result[i];
         const value = focus.name;
-        if (!focus.core && value != null) {
+        if (value != null) {
           this.focusData.push(value);
         }
       }
@@ -78,7 +84,7 @@ export class BatchesTimelineFilterComponent implements OnInit {
 
   loadLocationData() {
     this.loading = true;
-    this.locationControllerService.retrieveAllLocation().subscribe(result => {
+    this.addressControllerService.findAll().subscribe(result => {
       this.locationData = [];
       this.locationData.push('Any');
       for (let i = 0; i < result.length; i++) {
@@ -95,19 +101,19 @@ export class BatchesTimelineFilterComponent implements OnInit {
 
   loadBuildingData() {
     this.loading = true;
-    this.locationControllerService.retrieveAllLocation().subscribe(result => {
+    this.buildingControllerService.findAll().subscribe(result => {
       this.buildingData = [];
       this.buildingData.push('Any');
-      for (let i = 0; i < result.length; i++) {
-        const location = result[i];
-        for (let j = 0; j < location.buildings.length; j++) {
-          const building = location.buildings[j];
-          const value = building.name;
-          if (value != null) {
-            this.buildingData.push(value);
-          }
-        }
-      }
+      // for (let i = 0; i < result.length; i++) {
+      //   const location = result[i];
+      //   for (let j = 0; j < result.length; j++) {
+      //     const building = result[j];
+      //     const value = building.name;
+      //     if (value != null) {
+      //       this.buildingData.push(value);
+      //     }
+      //   }
+      // }
       this.buildingFilter = 'Any';
       this.loading = false;
     });

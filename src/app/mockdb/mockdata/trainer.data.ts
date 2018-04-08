@@ -2,7 +2,7 @@ import { Trainer } from '../../model/Trainer';
 
 export const trainers: Trainer[] = [
   {
-    trainerId: 1,
+    id: 1,
     firstName: 'August',
     lastName: 'Duet',
     resume: null,
@@ -40,86 +40,94 @@ export const trainers: Trainer[] = [
     ],
     skills: [
       {
-        skillId: 4,
+        id: 4,
         name: 'AngularJS',
         active: true
       },
       {
-        skillId: 1,
+        id: 1,
         name: 'Core Java',
         active: true
       },
       {
-        skillId: 2,
+        id: 2,
         name: 'JUnit',
         active: true
       },
       {
-        skillId: 3,
+        id: 3,
         name: 'Spring',
         active: true
       },
       {
-        skillId: 50,
+        id: 50,
         name: 'Java Servlets',
         active: true
       },
       {
-        skillId: 51,
+        id: 51,
         name: 'JSP',
         active: true
       },
       {
-        skillId: 48,
+        id: 48,
         name: 'JDBC',
         active: true
       },
       {
-        skillId: 49,
+        id: 49,
         name: 'HTML',
         active: true
       },
       {
-        skillId: 52,
+        id: 52,
         name: 'Freemarker',
         active: true
       },
       {
-        skillId: 53,
+        id: 53,
         name: 'CSS',
         active: true
       },
       {
-        skillId: 54,
+        id: 54,
         name: 'jQuery',
         active: true
       },
       {
-        skillId: 55,
+        id: 55,
         name: 'Hibernate',
         active: true
       },
       {
-        skillId: 56,
+        id: 56,
         name: 'REST',
         active: true
       },
       {
-        skillId: 57,
+        id: 57,
         name: 'SOAP',
         active: true
       },
       {
-        skillId: 70,
+        id: 70,
         name: 'Python',
         active: true
       }
     ],
     certifications: [],
-    active: true
+    active: true,
+    preferredLocation: {
+      id: 1,
+      name: 'Revature HQ',
+      city: 'Reston',
+      state: 'VA',
+      active: true,
+      buildings: []
+    }
   },
   {
-    trainerId: 2,
+    id: 2,
     firstName: 'Fred',
     lastName: 'Belotte',
     resume: null,
@@ -152,10 +160,18 @@ export const trainers: Trainer[] = [
     ],
     skills: [],
     certifications: [],
-    active: true
+    active: true,
+    preferredLocation: {
+      id: 1,
+      name: 'Revature HQ',
+      city: 'Reston',
+      state: 'VA',
+      active: true,
+      buildings: []
+    }
   },
   {
-    trainerId: 3,
+    id: 3,
     firstName: 'Joe',
     lastName: 'Kirkbride',
     resume: null,
@@ -168,10 +184,18 @@ export const trainers: Trainer[] = [
     ],
     skills: [],
     certifications: [],
-    active: false
+    active: false,
+    preferredLocation: {
+      id: 1,
+      name: 'Revature HQ',
+      city: 'Reston',
+      state: 'VA',
+      active: true,
+      buildings: []
+    }
   },
   {
-    trainerId: 11,
+    id: 11,
     firstName: 'Nicholas',
     lastName: 'Jurczak',
     resume: null,
@@ -194,10 +218,18 @@ export const trainers: Trainer[] = [
     ],
     skills: [],
     certifications: [],
-    active: true
+    active: true,
+    preferredLocation: {
+      id: 1,
+      name: 'Revature HQ',
+      city: 'Reston',
+      state: 'VA',
+      active: true,
+      buildings: []
+    }
   },
   {
-    trainerId: 7,
+    id: 7,
     firstName: 'Yuvi',
     lastName: 'Damodaran',
     resume: null,
@@ -245,6 +277,14 @@ export const trainers: Trainer[] = [
     ],
     skills: [],
     certifications: [],
-    active: true
+    active: true,
+    preferredLocation: {
+      id: 1,
+      name: 'Revature HQ',
+      city: 'Reston',
+      state: 'VA',
+      active: true,
+      buildings: []
+    }
   }
 ];

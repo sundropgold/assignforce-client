@@ -9,9 +9,12 @@ import { BatchesTimelineFilterComponent } from '../batches-timeline-filter/batch
 import { BatchControllerService } from '../../services/api/batch-controller/batch-controller.service';
 import { HttpClient } from '@angular/common/http';
 import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
-import { LocationControllerService } from '../../services/api/location-controller/location-controller.service';
 import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
 import { Trainer } from '../../model/Trainer';
+import { FocusControllerService } from '../../services/api/focus-controller/focus-controller.service';
+import { AddressControllerService } from '../../services/api/address-controller/address-controller.service';
+import { RoomControllerService } from '../../services/api/room-controller/room-controller.service';
+import { BuildingControllerService } from '../../services/api/building-controller/building-controller.service';
 
 describe('BatchesTimelineComponent', () => {
   let component: BatchesTimelineComponent;
@@ -32,8 +35,11 @@ describe('BatchesTimelineComponent', () => {
         providers: [
           TrainerControllerService,
           BatchControllerService,
-          LocationControllerService,
-          CurriculumControllerService
+          CurriculumControllerService,
+          FocusControllerService,
+          AddressControllerService,
+          RoomControllerService,
+          BuildingControllerService
         ]
       }).compileComponents();
     })
@@ -59,9 +65,9 @@ describe('BatchesTimelineComponent', () => {
     expect(component.todayLine.y2).not.toBeNull();
   });
 
-  it('should return the rectangles for the batches', async () => {
+  it('should return the rectangles for the batches', async done => {
     component.updateBatches();
-    waits(1);
+    done();
     const rects = component.getBatchesRectangles();
     expect(rects.length).toEqual(component.batches.length);
   });
@@ -75,9 +81,9 @@ describe('BatchesTimelineComponent', () => {
     expect(component.trainers).toBeTruthy();
   });
 
-  it('should return the list of trainers with positions', async () => {
+  it('should return the list of trainers with positions', async done => {
     component.updateBatches();
-    waits(1);
+    done();
     const trainers = component.getTrainers();
     let expectedAmount = component.trainers.length;
     if (expectedAmount === 0) {

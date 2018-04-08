@@ -3,8 +3,6 @@ import { Batch } from '../../model/Batch';
 import { BatchControllerService } from '../../services/api/batch-controller/batch-controller.service';
 import { MatSelectChange, MatCheckboxChange, MatOption } from '@angular/material';
 import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
-import { curriculum } from '../../mockdb/mockdata/curriculum.data';
-import { BatchLocation } from '../../model/BatchLocation';
 import { Trainer } from '../../model/Trainer';
 import { Curriculum } from '../../model/Curriculum';
 
@@ -182,7 +180,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         value = event.target.value;
       }
     }
-    console.log('update filter ' + id + ': ' + value);
+    // console.log('update filter ' + id + ': ' + value);
     // handle the event with the specified id
     const filterIds = {
       startDate: 'startDate',
@@ -253,7 +251,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       this.updatePage();
     } else {
       // unknown event!
-      console.log('unknown event filter triggered! ' + event + '\n' + event.target);
+      // console.log('unknown event filter triggered! ' + event + '\n' + event.target);
     }
   }
 
@@ -283,9 +281,9 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
   // gets an updated list of batches
   updateBatches() {
-    console.log('updating batches...');
+    // console.log('updating batches...');
     this.loading = true;
-    this.batchController.getAllBatches().subscribe(result => {
+    this.batchController.findAll().subscribe(result => {
       this.batches = [];
       for (let i = 0; i < result.length; i++) {
         const batch = result[i];
@@ -307,12 +305,12 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
           }
         }
         if (this.locationFilter !== 'Any') {
-          if (batch.batchLocation.locationName !== this.locationFilter) {
+          if (batch.address.name !== this.locationFilter) {
             continue;
           }
         }
         if (this.buildingFilter !== 'Any') {
-          if (batch.batchLocation.buildingName !== this.buildingFilter) {
+          if (batch.building.name !== this.buildingFilter) {
             continue;
           }
         }
@@ -349,9 +347,9 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
   // makes the list of trainers
   updateTrainers() {
-    console.log('updating trainers...');
+    // console.log('updating trainers...');
     this.loading = true;
-    this.trainerController.getAllTrainers().subscribe(result => {
+    this.trainerController.findAll().subscribe(result => {
       this.trainers = [];
       for (let i = 0; i < result.length; i++) {
         const trainer = result[i];
@@ -359,7 +357,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         if (this.hideBatchlessTrainers) {
           let hasBatch = false;
           for (const batch of this.batches) {
-            if (batch.trainer.trainerId === trainer.trainerId) {
+            if (batch.trainer.id === trainer.id) {
               hasBatch = true;
               break;
             }
@@ -422,7 +420,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       }
     }
     if (batch == null) {
-      console.log('no batch with id ' + batchid);
+      // console.log('no batch with id ' + batchid);
       this.tooltipActive = false;
       return;
     }
@@ -478,22 +476,20 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
       lines.push([{ text: '----------', color: this.tooltipDefaultColor }]);
 
-      if (batch.batchLocation != null) {
-        if (batch.batchLocation.locationName != null) {
-          lines.push(this.getTooltipExists('Location', batch.batchLocation.locationName));
-        } else {
-          lines.push(this.getTooltipNone('Location'));
-        }
-        if (batch.batchLocation.buildingName != null) {
-          lines.push(this.getTooltipExists('Building', batch.batchLocation.buildingName));
-        } else {
-          lines.push(this.getTooltipNone('Building'));
-        }
-        if (batch.batchLocation.roomName != null) {
-          lines.push(this.getTooltipExists('Room', batch.batchLocation.roomName));
-        } else {
-          lines.push(this.getTooltipNone('Room'));
-        }
+      if (batch.address != null) {
+        lines.push(this.getTooltipExists('Location', batch.address.name));
+      } else {
+        lines.push(this.getTooltipNone('Location'));
+      }
+      if (batch.building != null) {
+        lines.push(this.getTooltipExists('Building', batch.building.name));
+      } else {
+        lines.push(this.getTooltipNone('Building'));
+      }
+      if (batch.room != null) {
+        lines.push(this.getTooltipExists('Room', batch.room.roomName));
+      } else {
+        lines.push(this.getTooltipNone('Room'));
       }
 
       // dynamic width
@@ -512,7 +508,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         }
         if (rectw < 100) {
           // text wasnt loaded!
-          console.log('tooltip text hasnt loaded in time for dynamic width');
+          // console.log('tooltip text hasnt loaded in time for dynamic width');
           return;
         }
         rectw += 6;
@@ -632,10 +628,10 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       duration = Math.floor(duration / (1000 * 60 * 60 * 24 * 7)); // ms to weeks
 
       // get the correct color
-      const color = this.getColorForcurriculum(batch.curriculum.currId);
+      const color = this.getColorForcurriculum(batch.curriculum.id);
 
       // get the column this batch will be in
-      let trainer_index = this.trainers.findIndex(t => t.trainerId === batch.trainer.trainerId);
+      let trainer_index = this.trainers.findIndex(t => t.id === batch.trainer.id);
       if (trainer_index < 0) {
         // this batch has no trainer, it may have been filtered
         continue;
@@ -676,7 +672,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         labeltext = '';
         labely = y - 2;
       } else {
-        console.log('batch rectangle height is negative!');
+        // console.log('batch rectangle height is negative!');
         continue;
       }
       // get the text that will be put into the rectangle
@@ -729,7 +725,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     for (let i = 0; i < this.trainers.length; i++) {
       const batchSet = [];
       for (let j = 0; j < this.batches.length; j++) {
-        if (this.batches[j].trainer.trainerId === this.trainers[i].trainerId) {
+        if (this.batches[j].trainer.id === this.trainers[i].id) {
           batchSet.push(this.batches[j]);
         }
       }
@@ -881,11 +877,11 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
           if (restartPauseTimer > 0) {
             restartPauseTimer -= intervalRate;
           } else {
-            console.log('completed with ' + this.swimPoints + '!');
+            // console.log('completed with ' + this.swimPoints + '!');
             if (this.swimPoints > this.swimHigh) {
               this.swimHigh = this.swimPoints;
             }
-            console.log('restarting...');
+            // console.log('restarting...');
             clearInterval(loop);
             this.startSwimMode();
           }
@@ -932,9 +928,9 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
             // check overlap
             const py = this.yPosToDate(this.swimPos.y);
             if (py > batch.startDate.valueOf() && py < batch.endDate.valueOf()) {
-              const batchlane = this.trainers.findIndex(t => t.trainerId === batch.trainer.trainerId);
+              const batchlane = this.trainers.findIndex(t => t.id === batch.trainer.id);
               if (this.swimLane === batchlane) {
-                console.log('hit!');
+                // console.log('hit!');
                 gotHit = true;
                 return;
               }
@@ -981,7 +977,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
               this.swimPos.x < this.swimDots[i].x + this.swimDots[i].r
             ) {
               this.swimPoints += 100;
-              console.log('+100');
+              // console.log('+100');
               this.swimDots.splice(i, 1);
               i--;
               continue;
@@ -1031,7 +1027,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     const maxDur = 1000 * 60 * 60 * 24 * 7 * 16; // 16 weeks
     const ranEndDate = startdate + Math.random() * maxDur + baseDur;
     const randRow = Math.floor(Math.random() * this.trainersOnThisPage);
-    const trId = this.trainers[randRow].trainerId;
+    const trId = this.trainers[randRow].id;
     // console.log('adding random batch at col:' + randRow + ' enddate: ' + ranEndDate);
     const currId = Math.floor(Math.random() * 4);
     this.batches.push(
@@ -1040,13 +1036,15 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         'randomly generated',
         startdate,
         ranEndDate,
-        new Curriculum(currId, null, true, true, null),
+        new Curriculum(currId, null, true, [], []),
         null,
         new Trainer(trId, null, null, null, null, true, null, null),
         null,
         null,
         null,
-        new BatchLocation(-1, -1, null, -1, null, -1, null)
+        null,
+        null,
+        null
       )
     );
   }
@@ -1154,7 +1152,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       }
       // console.log('10yr');
     } else {
-      console.log('getTimescale failed to determine scale');
+      // console.log('getTimescale failed to determine scale');
       return null;
     }
 
@@ -1262,7 +1260,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       newEnd = this.endValue;
     }
     if (newStart >= newEnd) {
-      console.log('start date is after end date!');
+      // console.log('start date is after end date!');
       return;
     }
     // set start and end dates

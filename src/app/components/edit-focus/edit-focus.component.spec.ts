@@ -5,25 +5,24 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable } from 'rxjs/Observable';
 
 import { AppMaterialModule } from '../../material.module';
-import { Curriculum } from '../../model/Curriculum';
 import { Skill } from '../../model/Skill';
-import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
 import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
 import { EditFocusComponent } from './edit-focus.component';
+import { Focus } from '../../model/Focus';
+import { FocusControllerService } from '../../services/api/focus-controller/focus-controller.service';
 
 describe('EditFocusComponent', () => {
   let component: EditFocusComponent;
   let fixture: ComponentFixture<EditFocusComponent>;
-  const mockFocusData: Curriculum = {
-    currId: 1,
+  const mockFocusData: Focus = {
+    id: 1,
     name: 'Test Focus',
-    core: false,
     active: true,
-    skills: [{ skillId: 1, name: 'Test Skill', active: true }]
+    skills: [{ id: 1, name: 'Test Skill', active: true }]
   };
   const testData: Skill[] = [new Skill(1, 'Test Skill', true), new Skill(2, 'Test Skill 2', true)];
   let skillControllerService: SkillControllerService;
-  let curriculaControllerService: CurriculumControllerService;
+  let focusControllerService: FocusControllerService;
 
   class MockSkillService {
     findAll(): Observable<Skill[]> {
@@ -31,8 +30,8 @@ describe('EditFocusComponent', () => {
     }
   }
 
-  class MockCurriculaController {
-    updateCurriculum(curriculum: Curriculum) {}
+  class MockFocusControllerService {
+    update(focus: Focus) {}
   }
 
   class MockDialogRef {
@@ -47,12 +46,12 @@ describe('EditFocusComponent', () => {
           { provide: MatDialogRef, useClass: MockDialogRef },
           { provide: MAT_DIALOG_DATA, useValue: mockFocusData },
           { provide: SkillControllerService, useClass: MockSkillService },
-          { provide: CurriculumControllerService, useClass: MockCurriculaController }
+          { provide: FocusControllerService, useClass: MockFocusControllerService }
         ],
         imports: [AppMaterialModule, BrowserAnimationsModule, FormsModule]
       }).compileComponents();
       skillControllerService = TestBed.get(SkillControllerService);
-      curriculaControllerService = TestBed.get(CurriculumControllerService);
+      focusControllerService = TestBed.get(FocusControllerService);
     })
   );
 

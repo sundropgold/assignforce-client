@@ -22,18 +22,6 @@ export class CurriculumSkillsComponent implements OnInit {
     });
   }
 
-  addSkill(e) {
-    console.log('Adding Skill');
-  }
-
-  editSkill(e) {
-    console.log('Editing Skill');
-  }
-
-  removeSkill(e) {
-    console.log('Removing Skill');
-  }
-
   openAddSkillDialog() {
     const dialogRef = this.dialog.open(AddSkillComponent, {
       data: this.skillData
@@ -48,7 +36,7 @@ export class CurriculumSkillsComponent implements OnInit {
 
   confirmRemoveFocus(skill) {
     if (confirm('Are you sure you want to remove ' + skill.name + '?')) {
-      this.skillControllerService.deleteSkill(skill.id);
+      this.skillControllerService.remove(skill.id);
     }
   }
 }

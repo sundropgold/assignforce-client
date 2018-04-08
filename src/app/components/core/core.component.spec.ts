@@ -11,13 +11,13 @@ describe('CoreComponent', () => {
   let component: CoreComponent;
   let fixture: ComponentFixture<CoreComponent>;
   const testData: Curriculum[] = [
-    new Curriculum(1, 'Test Curriculum', true, true, [{ skillId: 1, name: 'Test Skill', active: true }]),
-    new Curriculum(2, 'Test Curriculum 2', true, true, [{ skillId: 1, name: 'Test Skill', active: true }])
+    new Curriculum(1, 'Test Curriculum', true, [], [{ id: 1, name: 'Test Skill', active: true }]),
+    new Curriculum(2, 'Test Curriculum 2', true, [], [{ id: 1, name: 'Test Skill', active: true }])
   ];
   let curriculaControllerService = CurriculumControllerService;
 
   class MockCurriculaControllerService {
-    retrieveAllActiveCore(): Observable<Curriculum[]> {
+    findAll(): Observable<Curriculum[]> {
       return Observable.of(testData);
     }
   }

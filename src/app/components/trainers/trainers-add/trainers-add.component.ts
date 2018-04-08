@@ -12,16 +12,7 @@ import { TrainerControllerService } from '../../../services/api/trainer-controll
 export class TrainersAddComponent implements OnInit {
   Skillz: Skill[] = [];
 
-  trainer: Trainer = {
-    trainerId: 0,
-    firstName: '',
-    lastName: '',
-    skills: this.Skillz,
-    certifications: '',
-    active: true,
-    resume: '',
-    unavailabilities: []
-  };
+  trainer: Trainer;
 
   data = {
     trainer: this.trainer
@@ -75,7 +66,7 @@ export class TrainersAddComponent implements OnInit {
 
       this.trainer.lastName = l;
 
-      this.trainerService.createTrainer(this.trainer).subscribe();
+      this.trainerService.create(this.trainer).subscribe();
       console.log(this.trainer);
     }
   }

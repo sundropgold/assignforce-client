@@ -1,6 +1,6 @@
 <mat-card>
   <mat-accordion>
-    <mat-expansion-panel>
+    <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header class="toolbar-curricula-sub">
         <mat-panel-title>
           <span class="panel-title-fix">Focuses</span>
@@ -22,7 +22,7 @@
                 <span *ngIf="!lasty" class="focus-skills">{{skill.name}}, </span>
                 <span *ngIf="lasty" class="focus-skills">{{skill.name}}</span>
               </span>
-              <br><br><br><br>
+              <br><br><br>
             </div>
             <span class="fill-space"></span>
             <button mat-icon-button class="edit-button button-orange" (click)="openEditFocusDialog(focus)">
@@ -31,7 +31,7 @@
             <button mat-icon-button class="remove-button button-orange" (click)="confirmRemoveFocus(focus)">
               <mat-icon class="icon-margin-fix" matTooltip="Remove Focus">remove_circle</mat-icon>
             </button>
-            <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+            <mat-divider *ngIf="!last"></mat-divider>
           </mat-list-item>
         </mat-list>
       </div>

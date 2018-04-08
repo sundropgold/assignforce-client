@@ -59,7 +59,6 @@ describe('TrainersAddComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TrainersAddComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
@@ -81,26 +80,15 @@ describe('TrainersAddComponent', () => {
   it('should create Trainer', () => {
     const Skillz: Skill[] = [
       {
-        skillId: 1,
+        id: 1,
         name: 'Java',
         active: true
       }
     ];
 
-    const trainer: Trainer = {
-      trainerId: 0,
-      firstName: '',
-      lastName: '',
-      skills: Skill[1],
-      certifications: '',
-      active: true,
-      resume: '',
-      unavailabilities: []
-    };
-
     mockClient.post.and.returnValue(
       Observable.create(observer => {
-        observer.next(trainer);
+        //observer.next(trainer);
       })
     );
   });

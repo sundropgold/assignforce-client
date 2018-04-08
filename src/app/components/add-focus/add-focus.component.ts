@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 
-import { Curriculum } from '../../model/Curriculum';
 import { Skill } from '../../model/Skill';
-import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
+import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
+import { FocusControllerService } from '../../services/api/focus-controller/focus-controller.service';
+import { Focus } from '../../model/Focus';
 
 @Component({
   selector: 'app-add-focus',
@@ -11,25 +12,23 @@ import { CurriculumControllerService } from '../../services/api/curriculum-contr
   styleUrls: ['./add-focus.component.css']
 })
 export class AddFocusComponent implements OnInit {
-  focus: Curriculum;
+  focus: Focus;
 
   constructor(
     public dialogRef: MatDialogRef<AddFocusComponent>,
-    private curriculumControllerService: CurriculumControllerService
+    private focusControllerService: FocusControllerService,
+    private skillControllerService: SkillControllerService
   ) {}
 
-  skills: Skill[] = [
-    { skillId: 1, name: 'Core Java', active: true },
-    { skillId: 2, name: '.Net', active: true },
-    { skillId: 3, name: 'Spring', active: true },
-    { skillId: 4, name: 'REST', active: true },
-    { skillId: 5, name: 'JUnit', active: true }
-  ];
+  skills: Skill[] = [];
 
   selectedSkills: Skill[];
 
   ngOnInit() {
-    this.focus = new Curriculum(0, '', false, true, []);
+    this.newFocus();
+    this.skillControllerService.findAll().subscribe(data => {
+      this.skills = data;
+    });
   }
 
   closeDialog(): void {
@@ -37,10 +36,14 @@ export class AddFocusComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  newFocus(): void {
+    this.focus = new Focus(0, '', false, []);
+  }
+
   addFocus(): void {
     console.log('We are Adding a focus ' + this.focus.name);
-    this.curriculumControllerService.createCurriculum(this.focus);
-    this.focus = new Curriculum(0, '', false, true, []);
+    this.focusControllerService.create(this.focus);
+    this.newFocus();
     this.closeDialog();
   }
 }

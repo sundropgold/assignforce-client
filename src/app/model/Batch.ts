@@ -1,8 +1,10 @@
 import { Curriculum } from './Curriculum';
 import { Trainer } from './Trainer';
 import { Skill } from './Skill';
-import { BatchStatus } from './BatchStatus';
-import { BatchLocation } from './BatchLocation';
+import { Address } from './Address';
+import { Room } from './Room';
+import { Building } from './Building';
+import { Focus } from './Focus';
 
 export class Batch {
   id: number;
@@ -10,12 +12,13 @@ export class Batch {
   startDate: number;
   endDate: number;
   curriculum: Curriculum;
-  focus: Curriculum;
+  focus: Focus;
   trainer: Trainer;
   cotrainer: Trainer;
   skills: Skill[];
-  batchStatus: BatchStatus;
-  batchLocation: BatchLocation;
+  address: Address;
+  building: Building;
+  room: Room;
 
   constructor(
     id: number,
@@ -23,12 +26,14 @@ export class Batch {
     startDate: number,
     endDate: number,
     curriculum: Curriculum,
-    focus: Curriculum,
+    focus: Focus,
     trainer: Trainer,
     cotrainer: Trainer,
     skills: Skill[],
-    batchStatus: BatchStatus,
-    batchLocation: BatchLocation
+    batchStatus: string,
+    address: Address,
+    building: Building,
+    room: Room
   ) {
     this.id = id;
     this.name = name;
@@ -39,7 +44,8 @@ export class Batch {
     this.trainer = trainer;
     this.cotrainer = cotrainer;
     this.skills = skills;
-    this.batchStatus = batchStatus;
-    this.batchLocation = batchLocation;
+    this.address = address;
+    this.building = building;
+    this.room = room;
   }
 }

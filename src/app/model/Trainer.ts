@@ -1,18 +1,20 @@
 import { Skill } from './Skill';
 import { Unavailability } from './Unavailability';
+import { Address } from './Address';
 
 export class Trainer {
-  trainerId: number;
+  id: number;
   firstName: string;
   lastName: string;
   skills: Skill[];
   certifications: any;
   active: boolean;
   resume: any;
+  preferredLocation: Address;
   unavailabilities: Unavailability[];
 
   constructor(
-    trainerId: number,
+    id: number,
     firstName: string,
     lastName: string,
     skills: Skill[],
@@ -21,7 +23,7 @@ export class Trainer {
     resume: any,
     unavailabilities: Unavailability[]
   ) {
-    this.trainerId = trainerId;
+    this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.skills = skills;
