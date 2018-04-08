@@ -180,7 +180,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         value = event.target.value;
       }
     }
-    console.log('update filter ' + id + ': ' + value);
+    // console.log('update filter ' + id + ': ' + value);
     // handle the event with the specified id
     const filterIds = {
       startDate: 'startDate',
@@ -251,7 +251,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       this.updatePage();
     } else {
       // unknown event!
-      console.log('unknown event filter triggered! ' + event + '\n' + event.target);
+      // console.log('unknown event filter triggered! ' + event + '\n' + event.target);
     }
   }
 
@@ -281,7 +281,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
   // gets an updated list of batches
   updateBatches() {
-    console.log('updating batches...');
+    // console.log('updating batches...');
     this.loading = true;
     this.batchController.findAll().subscribe(result => {
       this.batches = [];
@@ -347,7 +347,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
   // makes the list of trainers
   updateTrainers() {
-    console.log('updating trainers...');
+    // console.log('updating trainers...');
     this.loading = true;
     this.trainerController.findAll().subscribe(result => {
       this.trainers = [];
@@ -420,7 +420,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       }
     }
     if (batch == null) {
-      console.log('no batch with id ' + batchid);
+      // console.log('no batch with id ' + batchid);
       this.tooltipActive = false;
       return;
     }
@@ -508,7 +508,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         }
         if (rectw < 100) {
           // text wasnt loaded!
-          console.log('tooltip text hasnt loaded in time for dynamic width');
+          // console.log('tooltip text hasnt loaded in time for dynamic width');
           return;
         }
         rectw += 6;
@@ -672,7 +672,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         labeltext = '';
         labely = y - 2;
       } else {
-        console.log('batch rectangle height is negative!');
+        // console.log('batch rectangle height is negative!');
         continue;
       }
       // get the text that will be put into the rectangle
@@ -877,11 +877,11 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
           if (restartPauseTimer > 0) {
             restartPauseTimer -= intervalRate;
           } else {
-            console.log('completed with ' + this.swimPoints + '!');
+            // console.log('completed with ' + this.swimPoints + '!');
             if (this.swimPoints > this.swimHigh) {
               this.swimHigh = this.swimPoints;
             }
-            console.log('restarting...');
+            // console.log('restarting...');
             clearInterval(loop);
             this.startSwimMode();
           }
@@ -930,7 +930,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
             if (py > batch.startDate.valueOf() && py < batch.endDate.valueOf()) {
               const batchlane = this.trainers.findIndex(t => t.id === batch.trainer.id);
               if (this.swimLane === batchlane) {
-                console.log('hit!');
+                // console.log('hit!');
                 gotHit = true;
                 return;
               }
@@ -977,7 +977,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
               this.swimPos.x < this.swimDots[i].x + this.swimDots[i].r
             ) {
               this.swimPoints += 100;
-              console.log('+100');
+              // console.log('+100');
               this.swimDots.splice(i, 1);
               i--;
               continue;
@@ -1152,7 +1152,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       }
       // console.log('10yr');
     } else {
-      console.log('getTimescale failed to determine scale');
+      // console.log('getTimescale failed to determine scale');
       return null;
     }
 
@@ -1260,7 +1260,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       newEnd = this.endValue;
     }
     if (newStart >= newEnd) {
-      console.log('start date is after end date!');
+      // console.log('start date is after end date!');
       return;
     }
     // set start and end dates
