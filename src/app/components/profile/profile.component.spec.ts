@@ -28,6 +28,8 @@ class MockSkillService {
   }
 }
 
+// class MockAuthService {}
+
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
@@ -53,11 +55,6 @@ describe('ProfileComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ProfileComponent);
     component = fixture.componentInstance;
-  });
-
-  //test component initialization
-  it('should create', () => {
-    expect(component).toBeTruthy();
   });
 
   // should populate the component's skills array with skills from the service

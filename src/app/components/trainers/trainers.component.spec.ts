@@ -7,6 +7,8 @@ import { TrainersComponent } from './trainers.component';
 import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
 import { Trainer } from '../../model/Trainer';
 import { Observable } from 'rxjs/Observable';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
 
 describe('TrainersComponent', () => {
   let component: TrainersComponent;
@@ -25,6 +27,12 @@ describe('TrainersComponent', () => {
       declarations: [TrainersComponent, TrainerItemComponent],
       imports: [AppMaterialModule],
       providers: [
+        {
+          provide: Router,
+          useClass: class {
+            navigate = jasmine.createSpy('navigate');
+          }
+        },
         { provide: TrainerControllerService, useClass: MockTrainerService },
         { provide: HttpClient, useValue: mockClient }
       ]

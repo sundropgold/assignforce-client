@@ -1,18 +1,24 @@
-// import { Setting } from '../../model/Setting';
-//
-// export const settings: Setting[] = [
-//   {
-//     id: 1,
-//     alias: 'global',
-//     trainersPerPage: 0,
-//     reportGrads: 22,
-//     batchLength: 11,
-//     reportIncomingGrads: 26,
-//     minBatchSize: 10,
-//     maxBatchSize: 20,
-//     trainerBreakDays: 14,
-//     defaultLocation: 1,
-//     defaultBuilding: 64,
-//     defaultNamePattern: '$y$m $mmm$d $c'
-//   }
-// ];
+import { mockDataSize } from '../in-mem-db-settings';
+
+export const settingData = {
+  id: 'setting-data',
+  type: 'object',
+  properties: {
+    setting: {
+      type: 'array',
+      minItems: mockDataSize,
+      items: {
+        $ref: 'setting'
+      },
+      uniqueItems: true
+    }
+  },
+  required: ['setting']
+};
+
+export const settingDef = {
+  id: 'setting',
+  type: 'object',
+  properties: {},
+  required: []
+};

@@ -47,7 +47,7 @@ const appRoutes: Routes = [
         component: TrainersComponent
       },
       {
-        path: environment.appRoutes.profile,
+        path: environment.appRoutes.profile + '/:id',
         component: ProfileComponent
       },
       {

@@ -1,24 +1,25 @@
+/* ---------- SETTINGS STYLING ---------- */
+.padding-top {
+  padding-top: 5%;
+  max-width: 60%;
+  padding-left: 10%;
+  padding-right: 10%;
+  margin: 0 auto;
+}
+
+/* ---------- BUTTONS STYLING ---------- */
 .btn-orange,
-btn .btn-orange:hover,
-btn .btn-orange:active,
-btn .btn-orange:focus {
+.btn-orange:hover,
+.btn-orange:active,
+.btn-orange:focus {
   color: #ffffff;
   background-color: #f26a25;
-  border-color: #fb8c00;
 }
 
 .btn-white {
-  /* color: #000000;
-    background-color: #ffffff; */
+  color: #000000;
+  background-color: #ffffff;
   border-color: #000000;
-}
-
-.padding-top {
-  padding-top: 10%;
-  max-width: 600px;
-  /*padding-left: 10%;*/
-  /*padding-right: 10%;*/
-  margin: 0 auto;
 }
 
 .leftAlign {

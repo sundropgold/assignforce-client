@@ -34,18 +34,31 @@ export class BatchesTimelineFilterComponent implements OnInit {
   @Input() currentPage: number;
   @Input() maxPages: number;
 
+  private DEFAULT_PRECEEDING_MONTHS = 3;
+  private DEFAULT_PROCEEDING_MONTHS = 6;
+
   @Output() public filterChangeEmitter = new EventEmitter<Event>();
 
-  curriculumData = ['Any', '.NET', 'Java', 'SDET', 'Custom'];
-  focusData = ['Any', 'Appian', 'Capitol One', 'Big Data'];
-  locationData = ['Revature HQ', 'Tempe', 'New York City'];
-  buildingData = ['Any', '11730 Plaza Drive'];
+  public curriculumData = ['Any', '.NET', 'Java', 'SDET', 'Custom'];
 
-  ngOnInit() {
-    this.loadCurriculumData();
-    this.loadFocusData();
-    this.loadLocationData();
-    this.loadBuildingData();
+  public focusData = ['Any', 'Appian', 'Capitol One', 'Big Data'];
+
+  public locationData = ['Revature HQ', 'Tempe', 'New York City'];
+
+  public buildingData = ['Any', '11730 Plaza Drive'];
+
+  loadStartDate() {
+    const preceedingDate = new Date();
+    preceedingDate.setMonth(preceedingDate.getMonth() - this.DEFAULT_PRECEEDING_MONTHS);
+    this.startDate = preceedingDate;
+    console.log(this.startDate);
+  }
+
+  loadEndDate() {
+    const proceedingDate = new Date();
+    proceedingDate.setMonth(proceedingDate.getMonth() + this.DEFAULT_PROCEEDING_MONTHS);
+    this.endDate = proceedingDate;
+    console.log(this.endDate);
   }
 
   loadCurriculumData() {
@@ -121,5 +134,10 @@ export class BatchesTimelineFilterComponent implements OnInit {
 
   onFilterChange(evt: Event) {
     this.filterChangeEmitter.emit(evt);
+  }
+
+  ngOnInit() {
+    this.loadStartDate();
+    this.loadEndDate();
   }
 }

@@ -28,7 +28,7 @@ export class ProfileComponent implements OnInit {
 
   myFile: FileList;
   creds: any;
-  certFile: FileList = null;
+  //certFile: FileList = null;
   certName: string;
   skillsList: string[] = [];
   edit = false;
@@ -72,12 +72,12 @@ export class ProfileComponent implements OnInit {
 
   getFiles(event) {
     this.myFile = event.target.files;
-    console.log(this.myFile);
+    console.log(this.myFile[0].size);
   }
 
-  getCert(event) {
-    this.certFile = event.target.files;
-  }
+  // getCert(event) {
+  //   this.certFile = event.target.files;
+  // }
 
   // showToast(message) {
 
@@ -92,19 +92,27 @@ export class ProfileComponent implements OnInit {
   }
 
   //Updates user's name
-  updateName() {
+  updateTrainerInfo() {
     this.lockProfile = !this.lockProfile;
     if (this.lockProfile) {
-      console.log(this.nameForm.value.firstName);
-
-      this.nameFound = true;
-      this.trainer.firstName = this.nameForm.value.firstName;
-      this.trainer.lastName = this.nameForm.value.lastName;
+      if (this.nameForm.valid) {
+        this.nameFound = true;
+        this.trainer.firstName = this.nameForm.value.firstName;
+        this.trainer.lastName = this.nameForm.value.lastName;
+      }
+      if (this.myFile[0] !== undefined) {
+        this.uploadResume();
+      }
     }
   }
 
-  // queries the database for the trainer. to be called after a change to the trainer's properties
-  pullTrainer() {
-    this.trainer = undefined;
-  }
+  // getUser() {
+  //   if (localStorage.getItem('access_token')) {
+  //     this.authService.getProfile((error, profile) => {
+  //       if (!error) {
+  //         this.trainer = profile;
+  //       }
+  //     });
+  //   }
+  // }
 }

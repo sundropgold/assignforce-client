@@ -1,41 +1,14 @@
-.fill-space {
-  flex: 1 1 auto;
-}
+/* ---------- CURRICULA STYLES ---------- */
 .container-curricula {
   margin-top: 5%;
+  width: 100%;
 }
+
 .toolbar-curricula {
-  background-color: #38464e;
+  background-color: #37474f;
   color: white;
   max-height: 50px;
-}
-/* #38464E #3D5360*/
-.toolbar-curricula-sub {
-  background-color: #3d5360;
-  color: white;
-}
 
-.toolbar-mat-buttons {
-  margin: 12px 6px;
-}
-
-.mat-expansion-panel-header-title {
-  color: white;
-  font-weight: 600;
-}
-.panel-title-fix {
-  padding-top: 8px;
-}
-.icon-margin-fix {
-  margin: 0px;
-}
-.button-orange {
-  background-color: #fb8c00;
-  margin: 5px;
-}
-.item-detail {
-  margin: 2%;
-}
-[hidden] {
-  display: none;
+  background-color: inherit;
+  color: inherit;
 }
