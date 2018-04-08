@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Skill } from '../../model/Skill';
 import { S3CredentialService } from '../../services/s3-credential/s3-credential.service';
 import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
+import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
+import { Trainer } from '../../model/Trainer';
 
 @Component({
   selector: 'app-profile',
@@ -22,7 +24,7 @@ export class ProfileComponent implements OnInit {
   });
 
   // data
-  skills: Skill[] = [];
+  //skills: Skill[] = [];
 
   nameFound = false;
 
@@ -30,40 +32,48 @@ export class ProfileComponent implements OnInit {
   creds: any;
   //certFile: FileList = null;
   certName: string;
-  skillsList: string[] = [];
+  skillsList: Skill[] = [];
   edit = false;
+  loading: boolean;
+  trainer = new Trainer(0, '', '', [], null, false, null, []);
 
-  trainer = {
-    trainerId: 1,
-    firstName: 'Joseph',
-    lastName: 'Wong',
-    skills: [],
-    resume: null,
-    certifications: [],
-    active: true
-  };
-
-  constructor(private skillsService: SkillControllerService) {}
+  constructor(private skillsService: SkillControllerService, private trainerService: TrainerControllerService) {}
 
   ngOnInit() {
+    this.setTrainer();
     this.populateSkills();
-    this.populateSkillsList();
+  }
+
+  setTrainer() {
+    this.loading = true;
+    this.trainerService
+      .find(0)
+      .toPromise()
+      .then(trainer => {
+        this.trainer = trainer;
+        this.loading = false;
+      })
+      .catch(error => {
+        console.log(error);
+        //this.trainer=new Trainer(0,"","", [], null, false, null, []);
+        this.loading = false;
+      });
   }
 
   populateSkills() {
-    this.skillsService.findAll().subscribe(response => {
-      this.skills = response;
-    });
+    this.skillsService
+      .findAll()
+      .toPromise()
+      .then(response => {
+        this.skillsList = response;
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
-  populateSkillsList() {
-    this.skills.forEach(skill => {
-      this.skillsList.push(skill.name);
-    });
-  }
-
-  remove(skill: string) {
-    this.skillsList = this.skillsList.filter(s => s !== skill);
+  remove(skill: Skill) {
+    this.skillsList = this.trainer.skills.filter(s => s !== skill);
   }
 
   toggleEdit() {
@@ -86,10 +96,10 @@ export class ProfileComponent implements OnInit {
     // this.aCtrl.showToast( message );
   }
 
-  uploadResume() {
-    this.trainer.resume = this.myFile[0].name;
-    this.myFile = undefined;
-  }
+  // uploadResume() {
+  //   this.trainer.resume = this.myFile[0].name;
+  //   this.myFile = undefined;
+  // }
 
   //Updates user's name
   updateTrainerInfo() {
@@ -100,9 +110,9 @@ export class ProfileComponent implements OnInit {
         this.trainer.firstName = this.nameForm.value.firstName;
         this.trainer.lastName = this.nameForm.value.lastName;
       }
-      if (this.myFile[0] !== undefined) {
-        this.uploadResume();
-      }
+      // if (this.myFile[0] !== undefined) {
+      //   this.uploadResume();
+      // }
     }
   }
 

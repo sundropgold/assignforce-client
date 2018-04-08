@@ -12,7 +12,7 @@
       </mat-toolbar>
     </mat-toolbar-row>
     <!--info section-->
-    <mat-card-content *ngIf="trainer != undefined" id="profileContent">
+    <mat-card-content id="profileContent">
       <div class="row">
         <div class="col-lg-2">
           <img layout="column" style="border-radius: 50%;" alt="" ng-src="https://app.revature.com/core/resources/download/default/interns/image?t=1486138020884"
@@ -20,13 +20,12 @@
         </div>
         <div class="col-lg-10">
             <h1>{{this.trainer.firstName}} {{this.trainer.lastName}}</h1>
-            <div layout="row">
-              <!--need to figure out accessing the file, as far as permissions go-->
+            <!-- <div layout="row">
               <label> Current Resume: </label>
               <label *ngIf="trainer.resume != null">{{trainer.resume}}</label>
               <label *ngIf="trainer.resume == null">No resume on file</label>
               <br>
-            </div>
+            </div> -->
             <div *ngIf="!lockProfile">
             <form [formGroup]="nameForm">
               <mat-form-field flex>
@@ -36,22 +35,15 @@
                 <input matInput class="formControl" placeholder="Last Name" name="lastLast" formControlName="lastName" required>
               </mat-form-field>
             </form>
-            <div class="row">
-              <div class="col-lg-2">
-                <label for="addResume">Add Resume:</label>
-                <button name="addResume" mat-icon-button (click)="inputResume.click()">
-                  <input class="inputFile" #inputResume type="file" (change)="getFiles($event)">
-                  <mat-icon matTooltip="Add/Update Resume" position="below" class="material-icons revOrange">add_circle</mat-icon>
-                </button>
-              </div>
-              <div class="col-lg-11" *ngIf="myFile != undefined">
-                <label>{{myFile[0].name}}</label>
-              </div>
-          </div>
           </div>
         </div>
       </div>
-      <app-skills></app-skills>
+      <div *ngIf="loading===true" class="center">
+        <div fxFlex="100"> &nbsp;</div>
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+        <div fxFlex="100"> &nbsp;</div>
+      </div>
+      <app-skills [trainer]="trainer"></app-skills>
       <app-certifications></app-certifications>
       </mat-card-content>
     </mat-card>
