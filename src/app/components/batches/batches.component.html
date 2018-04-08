@@ -11,7 +11,7 @@
       </mat-expansion-panel-header>
 
       <!-- Batch Form -->
-      <form [formGroup]="batchForm" (ngSubmit)="onSubmit(batchForm.value)">
+      <form [formGroup]="batchForm" (ngSubmit)="onSubmit()">
         <div>
           <mat-form-field>
             <mat-select formControlName="curriculum" placeholder="Core Curriculum">
