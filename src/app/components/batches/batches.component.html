@@ -6,7 +6,7 @@
     <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Create New Batch
+          {{firstHeader}}
         </mat-panel-title>
       </mat-expansion-panel-header>
 
@@ -14,7 +14,7 @@
       <form [formGroup]="batchForm" (ngSubmit)="onSubmit()">
         <div>
           <mat-form-field>
-            <mat-select formControlName="curriculum" placeholder="Core Curriculum">
+            <mat-select formControlName="curriculum" placeholder="Core Curriculum" [disabled]="curriculums.length < 1">
               <mat-option *ngFor="let curriculum of curriculums" [value]="curriculum.name">
                 {{ curriculum.name }}
               </mat-option>
@@ -22,7 +22,7 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-select formControlName="focus" placeholder="Focus">
+            <mat-select formControlName="focus" placeholder="Focus" [disabled]="focuses.length < 1">
               <mat-option *ngFor="let focus of focuses" [value]="focus.name">
                 {{ focus.name }}
               </mat-option>
@@ -30,7 +30,7 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-select formControlName="skills" placeholder="Skills" multiple>
+            <mat-select formControlName="skills" placeholder="Skills" multiple [disabled]="skillsList.length < 1">
               <mat-option *ngFor="let skill of skillsList" [value]="skill">{{skill.name}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -40,14 +40,14 @@
           <mat-form-field>
             <input formControlName="startDate" matInput [min]="currentDate" [matDatepicker]="picker1" placeholder="Choose a start date"
               readonly>
-            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker-toggle matSuffix [for]="picker1" [disabled]="curriculums.length < 1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field>
             <input formControlName="endDate" matInput [min]="batchForm.controls.startDate.value" [matDatepicker]="picker2" placeholder="Choose an end date"
               readonly [ngModel]="genEndDate | date:'yyyy-MM-dd'">
-            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker-toggle matSuffix [for]="picker2" [disabled]="!batchForm.value.startDate"></mat-datepicker-toggle>
             <mat-datepicker #picker2></mat-datepicker>
           </mat-form-field>
 
@@ -62,7 +62,7 @@
 
         <div>
           <mat-form-field>
-            <mat-select formControlName="trainer" placeholder="Trainer">
+            <mat-select formControlName="trainer" placeholder="Trainer" [disabled]="curriculums.length < 1 && trainers.length < 1">
               <mat-option *ngFor="let trainer of trainers" [value]="trainer">
                 {{ trainer.firstName }}
               </mat-option>
@@ -70,7 +70,7 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-select formControlName="cotrainer" placeholder="Co-Trainer">
+            <mat-select formControlName="cotrainer" placeholder="Co-Trainer" [disabled]="trainers.length < 1">
               <mat-option *ngFor="let trainer of trainers" [value]="trainer">
                 {{ trainer.firstName }}
               </mat-option>
@@ -80,7 +80,7 @@
 
         <div>
           <mat-form-field>
-            <mat-select formControlName="location" placeholder="Location">
+            <mat-select formControlName="location" placeholder="Location" [disabled]="curriculums.length < 1 && locations.length < 1">
               <mat-option *ngFor="let location of locations" [value]="location">
                 {{ location.name }}
               </mat-option>
@@ -89,7 +89,7 @@
 
 
           <mat-form-field>
-            <mat-select formControlName="building" placeholder="Building">
+            <mat-select formControlName="building" placeholder="Building" [disabled]="!selectedLocation">
               <mat-option *ngFor="let building of buildings" [value]="building">
                 {{ building.name }}
               </mat-option>
@@ -97,7 +97,7 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-select formControlName="room" placeholder="Room">
+            <mat-select formControlName="room" placeholder="Room" [disabled]="!selectedBuilding">
               <mat-option *ngFor="let room of rooms" [value]="room">
                 {{ room.roomName }}
               </mat-option>
@@ -128,7 +128,7 @@
     <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          All Batches
+          {{secondHeader}}
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="example-container_mat-elevation-z8">
@@ -206,10 +206,10 @@
               <button mat-icon-button color (click)="editBatch()">
                 <mat-icon matTooltip="Edit" matTooltipPosition="above">mode_edit</mat-icon>
               </button>
-              <button mat-icon-button color (click)="cloneBatch(batch)">
+              <button mat-icon-button color (click)="cloneBatch()">
                 <mat-icon matTooltip="Clone" matTooltipPosition="above">filter_none</mat-icon>
               </button>
-              <button mat-icon-button color (click)="deleteBatch(batch)">
+              <button mat-icon-button color (click)="deleteBatch()">
                 <mat-icon matTooltip="Delete" matTooltipPosition="above">delete</mat-icon>
               </button>
               <button mat-icon-button color>
@@ -221,6 +221,14 @@
           <mat-header-row *matHeaderRowDef="batchColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: batchColumns;"></mat-row>
         </mat-table>
+
+        <!-- Loading Spinner -->
+        <div class = "center">
+          <div fxFlex="100"> &nbsp;</div>
+          <h5 *ngIf="!isLoading && !allBatches">No Batches</h5>
+          <mat-progress-spinner *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner>
+          <div fxFlex="100"> &nbsp;</div>
+        </div>
       </div>
 
     </mat-expansion-panel>

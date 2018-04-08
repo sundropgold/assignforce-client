@@ -13,7 +13,8 @@ import { BatchControllerService } from '../../services/api/batch-controller/batc
 export class OverviewComponent implements OnInit, AfterViewInit {
   // ----------------------- NEW CODE FROM NEW HOPE -----------------------------------
   selectedFilter: number;
-  panelTitle = 'All Batches';
+  panelTitle = 'Loading...';
+  isLoading: boolean;
   batchList: any[] = [];
   displayedBatchList: any[];
   displayedColumns = [
@@ -35,32 +36,44 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   constructor(private batchController: BatchControllerService) {}
 
   ngOnInit() {
-    this.batchController.findAll().subscribe(blist => {
-      blist.forEach(batch => {
-        // This is an object that encapsulates the Batch object's properties and a progress number.
-        const batchObj = {
-          name: batch.name,
-          curriculum: batch.curriculum.name,
-          trainer: batch.trainer.firstName + ' ' + batch.trainer.lastName,
-          cotrainer: batch.cotrainer,
-          location: batch.address.name,
-          building: batch.building.name,
-          room: batch.room.roomName,
-          startDate: batch.startDate,
-          endDate: batch.endDate,
-          progress: 0
-        };
-        this.batchList.push(batchObj);
+    this.isLoading = true;
 
-        // Calculating and updating the progress of each batch.
-        this.batchList.forEach(batchOb => {
-          batchOb.progress = this.getCurrentProgress(batchOb);
+    // ------- Populating batch list data --------
+    this.batchController
+      .findAll()
+      .toPromise()
+      .then(blist => {
+        blist.forEach(batch => {
+          // This is an object that encapsulates the Batch object's properties and a progress number.
+          const batchObj = {
+            name: batch.name,
+            curriculum: batch.curriculum.name,
+            trainer: batch.trainer.firstName + ' ' + batch.trainer.lastName,
+            cotrainer: batch.cotrainer,
+            location: batch.address.name,
+            building: batch.building.name,
+            room: batch.room.roomName,
+            startDate: batch.startDate,
+            endDate: batch.endDate,
+            progress: 0
+          };
+          this.batchList.push(batchObj);
+          this.isLoading = false;
+
+          // Calculating and updating the progress of each batch.
+          this.batchList.forEach(batchOb => {
+            batchOb.progress = this.getCurrentProgress(batchOb);
+          });
+
+          // This starts the view on showing All Batches.
+          this.applyFilter(0);
         });
-
-        // This starts the view on showing All Batches.
-        this.applyFilter(0);
+      })
+      .catch(error => {
+        this.isLoading = false;
+        this.panelTitle = 'Could Not Load Batches';
+        console.log(error);
       });
-    });
   }
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;

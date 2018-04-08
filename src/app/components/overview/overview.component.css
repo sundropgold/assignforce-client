@@ -26,3 +26,8 @@
 #download:hover .downloadText {
   visibility: visible;
 }
+/* Loading spinner */
+.center {
+  margin: auto;
+  width: 10%;
+}

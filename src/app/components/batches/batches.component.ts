@@ -47,6 +47,8 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
   genEndDate;
 
   currentDate = new Date(Date.now());
+  isLoading: boolean;
+  firstHeader = 'Loading...';
   // ------------------------------------------------ VARIABLES FOR ALL BATCHES -----------------------------------
   //  COLUMNS FOR THE ALL BATCHES TAB
   batchColumns = [
@@ -65,6 +67,7 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
 
   allBatches: Batch[];
   dataSource = new MatTableDataSource(this.allBatches);
+  secondHeader = 'Loading...';
 
   constructor(
     private fb: FormBuilder,
@@ -77,36 +80,66 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
   @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit() {
+    this.isLoading = true;
     // ------------- Populating Data from Services -----------------
     this.curriculumService
       .findAll()
       .toPromise()
       .then(response => {
         this.curriculums = response;
+        this.firstHeader = 'Create New Batch';
+        this.isLoading = false;
+      })
+      .catch(error => {
+        this.isLoading = false;
+        this.firstHeader = 'Create Batch Form Disabled - Content Not Loaded';
+        console.log(error);
       });
     this.addressService
       .findAll()
       .toPromise()
       .then(response => {
         this.locations = response;
+        this.isLoading = false;
+      })
+      .catch(error => {
+        this.isLoading = false;
+        console.log(error);
       });
     this.curriculumService
       .findAll()
       .toPromise()
       .then(response => {
         this.focuses = response;
+        this.isLoading = false;
+      })
+      .catch(error => {
+        this.isLoading = false;
+        console.log(error);
       });
     this.trainerService
       .findAll()
       .toPromise()
       .then(response => {
         this.trainers = response;
+        this.isLoading = false;
+      })
+      .catch(error => {
+        this.isLoading = false;
+        console.log(error);
       });
     this.batchService
       .findAll()
       .toPromise()
       .then(response => {
         this.allBatches = response;
+        this.secondHeader = 'All Batches';
+        this.isLoading = false;
+      })
+      .catch(error => {
+        this.isLoading = false;
+        this.secondHeader = 'Could Not Load Batches';
+        console.log(error);
       });
 
     // ------------ Batch Form Validation --------------
