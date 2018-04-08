@@ -15,7 +15,6 @@ export class ProfileComponent implements OnInit {
   @Input() fName: string;
   @Input() lName: string;
 
-  tId: -1;
   lockProfile = true;
   fb: FormBuilder = new FormBuilder();
   nameForm = this.fb.group({
@@ -41,7 +40,7 @@ export class ProfileComponent implements OnInit {
   edit = false;
 
   trainer = {
-    trainerId: 1,
+    trainerId: -1,
     firstName: 'Joseph',
     lastName: 'Wong',
     skills: [],
