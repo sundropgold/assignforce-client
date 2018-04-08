@@ -87,6 +87,15 @@ export const environment = {
       remove: '/'
     },
 
+    focusController: {
+      baseUrl: 'https://hydra.cfapps.io/api/curriculum/curricula',
+      create: '',
+      update: '/',
+      findAll: '',
+      find: '/',
+      remove: '/'
+    },
+
     skillController: {
       baseUrl: 'https://hydra.cfapps.io/api/skills',
       create: '',
