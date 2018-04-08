@@ -11,9 +11,21 @@ mat-icon {
   color: #fff;
 }
 
+.material-icons {
+  color: #f26a25;
+}
+
+.ng-star-inserted {
+  color: #fff;
+}
+
+.ng-star-inserted:hover {
+  color: #f26a25;
+}
+
 /* ---------- MAT TOOLBAR ----------- */
 .md-toolbar {
-  padding: 0px 16px;
+  padding: 0px;
   background-color: transparent;
   color: inherit;
 }
