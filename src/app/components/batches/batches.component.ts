@@ -21,7 +21,7 @@ import { Skill } from '../../model/Skill';
   encapsulation: ViewEncapsulation.None
 })
 export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
-  //--------------------------------------------------VALUES FOR CREATE BATCHES----------------------------------------
+  //--------------------------------------------------VALUES FOR CREATE BATCHES-------------------------------------
   //Object for storing batch form data
   batchForm: FormGroup;
   newBatch: Batch;
@@ -41,7 +41,9 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
   // Create Batch Form Data
   numOfWeeksBetween = 0;
   genBatchName = '';
+  genEndDate;
 
+  currentDate = new Date(Date.now());
   // ------------------------------------------------ VARIABLES FOR ALL BATCHES -----------------------------------
   //  COLUMNS FOR THE ALL BATCHES TAB
   batchColumns = [
@@ -120,10 +122,10 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
       endDate: [null, Validators.required],
       batchName: [null],
       trainer: [null, Validators.required],
-      cotrainer: [null, Validators.required],
+      cotrainer: [null],
       location: [null, Validators.required],
-      building: [null, Validators.required],
-      room: [null, Validators.required]
+      building: [null],
+      room: [null]
     });
 
     // ----- Observable for form changes in Create Batches ------
@@ -131,8 +133,12 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
       const startDate = data.startDate;
       const endDate = data.endDate;
       const curriculum = data.curriculum;
+      const focus = data.focus;
       this.numOfWeeksBetween = this.computeNumOfWeeksBetween(startDate, endDate);
-      this.genBatchName = this.createBatchName(curriculum, startDate);
+      this.genBatchName = this.createBatchName(curriculum, focus, startDate);
+      if (startDate) {
+        this.genEndDate = this.computeDefaultEndDate(startDate);
+      }
     });
   }
 
@@ -156,8 +162,6 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
     if (this.batchForm.value.curriculum) {
       this.selectedCurriculum = this.batchForm.value.curriculum;
     }
-    if (this.batchForm.value.trainer) {
-    }
   }
 
   ngAfterViewInit() {
@@ -172,16 +176,27 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
 
   //Calculate number of weeks between two dates
   computeNumOfWeeksBetween(startDate: number, endDate: number): number {
-    if (startDate && endDate) {
-      const numberOfDays = Math.abs(<any>startDate - <any>endDate) / (1000 * 60 * 60 * 24);
+    const startValue = new Date(startDate).valueOf();
+    const endValue = new Date(endDate).valueOf();
+    if (startValue && endValue) {
+      const numberOfDays = Math.abs(<any>startValue - <any>endValue) / (1000 * 60 * 60 * 24);
       const numberOfWeeks = Math.floor(numberOfDays / 7);
       return numberOfWeeks;
     }
     return 0;
   }
 
-  //Generate Batch Name based on curriculum and start date
-  createBatchName(curriculum: string, startDate: number): string {
+  //Calculate the Date of Ten weeks later from start date
+  computeDefaultEndDate(startDate: number): number {
+    const dateValue = new Date(startDate);
+    if (dateValue) {
+      const tenWeeks = 1000 * 60 * 60 * 24 * 7 * 10 + 1000 * 60 * 60 * 24;
+      return dateValue.valueOf() + tenWeeks;
+    }
+  }
+
+  //Generate Batch Name based on curriculum and/or focus and start date
+  createBatchName(curriculum: string, focus: string, startDate: number): string {
     if (curriculum && startDate) {
       const date = new Date(startDate);
       const year = date
@@ -197,6 +212,9 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
       }
       if (date.getMonth() < 10) {
         month = '0' + month;
+      }
+      if (focus) {
+        return year + '' + month + ' ' + monthName + '' + day + ' ' + curriculum + ' ' + focus;
       }
       return year + '' + month + ' ' + monthName + '' + day + ' ' + curriculum;
     }
