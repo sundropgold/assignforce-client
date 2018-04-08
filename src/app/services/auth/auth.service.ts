@@ -56,14 +56,6 @@ export class AuthService {
     // Set the time that the Access Token will expire at
     const expiresAt = JSON.stringify(authResult.expiresIn * 1000 + new Date().getTime());
 
-    //Set the scopes to provided scopes || requested scopes || ''
-    const scopes = authResult.scope || '';
-
-    const namespace = environment.auth0.namespace;
-
-    const roles = authResult.idTokenPayload[namespace + 'roles'] || '';
-    const groups = authResult.idTokenPayload[namespace + 'groups'] || '';
-
     console.log(authResult);
 
     localStorage.setItem('access_token', authResult.accessToken);
@@ -88,9 +80,8 @@ export class AuthService {
   }
 
   public userHasRole(expectedRoles: Array<String>): boolean {
-    const roles = JSON.parse(localStorage.getItem('roles'));
-    const included: boolean = roles.some(role => expectedRoles.includes(role));
-    return included;
+    //todo
+    return true;
   }
 
   public getProfile(cb): void {
