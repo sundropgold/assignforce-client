@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppMaterialModule } from '../../material.module';
 import { ReportsComponent } from './reports.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('ReportsComponent', () => {
   // let component: ReportsComponent;
@@ -11,6 +12,7 @@ describe('ReportsComponent', () => {
   //   async(() => {
   //     TestBed.configureTestingModule({
   //       imports: [AppMaterialModule, BrowserAnimationsModule],
+  //       schemas: [NO_ERRORS_SCHEMA],
   //       declarations: [ReportsComponent]
   //     }).compileComponents();
   //   })
