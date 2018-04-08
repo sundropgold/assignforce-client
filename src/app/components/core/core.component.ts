@@ -15,10 +15,7 @@ export class CoreComponent implements OnInit {
 
   ngOnInit() {
     this.curriculumControllerService.findAll().subscribe(data => {
-      const tempData: Curriculum[] = data;
-      for (let i = 0; i < tempData.length; i++) {
-        this.coreData.push(tempData[i]);
-      }
+      this.coreData = data;
     });
   }
 }
