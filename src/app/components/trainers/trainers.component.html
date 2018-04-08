@@ -27,7 +27,7 @@
         </mat-list>
     </mat-card-content>
     <!--displays a loading circle if trainers is undefined-->
-    <div *ngIf="trainers.length < 1" class = "center">
+    <div *ngIf="isLoading" class = "center">
       <div fxFlex="100"> &nbsp;</div>
       <mat-progress-spinner  mode="indeterminate"></mat-progress-spinner>
       <div fxFlex="100"> &nbsp;</div>
@@ -50,7 +50,7 @@
       </mat-list>
     </mat-card-content>
     <!--shows a loading circle if trainers is undefined-->
-    <div *ngIf="trainers.length < 1" class = "center" fxLayout="column" fxLayoutWrap fxLayoutAlign="center center">
+    <div *ngIf="isLoading" class = "center" fxLayout="column" fxLayoutWrap fxLayoutAlign="center center">
       <div fxFlex="100"> &nbsp;</div>
       <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
       <div fxFlex="100"> &nbsp;</div>

@@ -20,15 +20,25 @@ export class TrainersComponent implements OnInit {
   trainers: Trainer[] = [];
 
   isManager = true;
+  isLoading: boolean;
 
   constructor(public dialog: MatDialog, private trainerService: TrainerControllerService, private router: Router) {}
 
   ngOnInit() {
     this.isManager = true;
 
-    this.trainerService.findAll().subscribe(t => {
-      this.trainers = t;
-    });
+    this.isLoading = true;
+    this.trainerService
+      .findAll()
+      .toPromise()
+      .then(t => {
+        this.trainers = t;
+        this.isLoading = false;
+      })
+      .catch(error => {
+        this.isLoading = false;
+        console.log(error);
+      });
   }
 
   showCalendar() {}
