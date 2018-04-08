@@ -21,7 +21,7 @@ class MockSkillService {
   }
 }
 
-fdescribe('SkillsComponent', () => {
+describe('SkillsComponent', () => {
   let component: SkillsComponent;
   let fixture: ComponentFixture<SkillsComponent>;
 
