@@ -25,7 +25,7 @@ export const addressDef = {
     },
     name: {
       type: 'string',
-      faker: 'address.streetName'
+      faker: 'address.streetAddress'
     },
     city: {
       type: 'string',
@@ -36,8 +36,7 @@ export const addressDef = {
       faker: 'address.state'
     },
     active: {
-      type: 'boolean',
-      faker: 'random.boolean'
+      $ref: 'active'
     }
   },
   required: ['id', 'name', 'city', 'state', 'active']

@@ -4,3 +4,9 @@ export const idDef = {
   minimum: 1,
   autoIncrement: true
 };
+
+export const activeDef = {
+  id: 'active',
+  type: 'boolean',
+  faker: 'random.boolean'
+};
