@@ -15,6 +15,6 @@
       </div>
       <div mat-dialog-actions>
             <button mat-button [mat-dialog-close]="data.trainer" tabindex="4" [disabled]="!addForm.form.valid" (click)="onSubmit()">Add</button>
-            <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+            <button mat-button (click)="onNoClick($event)" tabindex="-1">Cancel</button>
       </div>
 </form>

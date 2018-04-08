@@ -67,7 +67,7 @@ describe('TrainersAddComponent', () => {
 
   it('should call onNoClick', () => {
     spyOn(component, 'onNoClick');
-    component.onNoClick();
+    component.onNoClick(event);
     expect(component.onNoClick).toHaveBeenCalled();
   });
 

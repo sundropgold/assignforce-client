@@ -5,7 +5,7 @@
     <mat-toolbar class="toolbar-trainers">
       <span class="mat-expansion-panel-header-title"> Trainers </span>
       <span class="md-toolbar-spacer"> </span>
-      <button mat-icon-button *ngIf="isManager==true && trainers.length > 0" (click)="addTrainer()" matTooltip="Add Trainer">
+      <button mat-icon-button *ngIf="isManager==true && !isLoading" (click)="addTrainer()" matTooltip="Add Trainer">
         <mat-icon>add_circle</mat-icon>
       </button>
       <!-- <button mat-icon-button (click)="showCalendar()" matTooltip="View PTO Calendar">
@@ -27,9 +27,10 @@
         </mat-list>
     </mat-card-content>
     <!--displays a loading circle if trainers is undefined-->
-    <div *ngIf="trainers.length < 1" class = "center">
+    <div class = "center">
       <div fxFlex="100"> &nbsp;</div>
-      <mat-progress-spinner  mode="indeterminate"></mat-progress-spinner>
+      <mat-progress-spinner *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner>
+      <h4 *ngIf="!isLoading">No Active Trainers.</h4>
       <div fxFlex="100"> &nbsp;</div>
     </div>
   </mat-card>
@@ -50,9 +51,10 @@
       </mat-list>
     </mat-card-content>
     <!--shows a loading circle if trainers is undefined-->
-    <div *ngIf="trainers.length < 1" class = "center" fxLayout="column" fxLayoutWrap fxLayoutAlign="center center">
+    <div class = "center" fxLayout="column" fxLayoutWrap fxLayoutAlign="center center">
       <div fxFlex="100"> &nbsp;</div>
-      <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      <mat-progress-spinner *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner>
+      <h4 *ngIf="!isLoading">No Inactive Trainers.</h4>
       <div fxFlex="100"> &nbsp;</div>
     </div>
   </mat-card>
