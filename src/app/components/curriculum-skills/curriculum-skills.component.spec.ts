@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { CurriculumSkillsComponent } from './curriculum-skills.component';
-import { AppMaterialModule } from '../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Skill } from '../../model/Skill';
 import { Observable } from 'rxjs/Observable';
+
+import { AppMaterialModule } from '../../material.module';
+import { Skill } from '../../model/Skill';
 import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
+import { CurriculumSkillsComponent } from './curriculum-skills.component';
 
 describe('CurriculumSkillsComponent', () => {
   let component: CurriculumSkillsComponent;

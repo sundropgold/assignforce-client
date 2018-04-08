@@ -3,6 +3,8 @@ import { Batch } from '../../model/Batch';
 import { BatchControllerService } from '../../services/api/batch-controller/batch-controller.service';
 import { MatSelectChange, MatCheckboxChange, MatOption } from '@angular/material';
 import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
+import { Trainer } from '../../model/Trainer';
+import { Curriculum } from '../../model/Curriculum';
 
 @Component({
   selector: 'app-batches-timeline',
@@ -10,9 +12,6 @@ import { TrainerControllerService } from '../../services/api/trainer-controller/
   styleUrls: ['./batches-timeline.component.css']
 })
 export class BatchesTimelineComponent implements OnInit, AfterViewInit {
-  // local copy of batches to show
-  batches = [];
-
   // root element of the timeline. used for getting the relative mouse position
   @ViewChild('timelineroot') timelineRootElement: ElementRef;
   // trainer name. used to set the width
@@ -20,33 +19,85 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   // trainer name. used to set the width
   @ViewChildren('tooltiptext') tooltipTexts;
 
-  // default values for formatting
-  // dynamic values
+  // dynamic values for formatting
   width = 1536;
   swimlaneXOfs = 100;
-  // static values
-  height = 2067;
   columnWidth = 50;
+  loading = false;
+  // static values for formatting
+  height = 2067;
+  minColumnWidth = 26;
+  maxColumnWidth = 100;
   minWidth = 400;
   swimlaneYOfs = 20;
   timescaleXOfs = 80;
+  DEFAULT_PRECEEDING_MONTHS = 3;
+  DEFAULT_PROCEEDING_MONTHS = 6;
 
   // editable data
   startDate: Date;
   endDate: Date;
+  curriculumFilter = 'Any';
+  focusFilter = 'Any';
+  locationFilter = 'Any';
+  buildingFilter = 'Any';
   hideBatchlessTrainers = false;
   hideConcludedBatches = false;
   hideInactiveTrainers = false;
   trainersPerPage = 0;
+  actualTrainersPerPage = 0;
+  currentPage = 0;
+  maxPages = 1;
+  trainersOnThisPage = 0;
+
+  startValue: number;
+  endValue: number;
+  todayLine = { x1: 0, x2: 0, y1: 0, y2: 0 };
 
   // zooming
+  zoomingEnabled = true;
   zooming = false;
+  minZoom = 1000 * 60 * 60 * 12; // 1/2 a day
+  maxZoom = 1000 * 60 * 60 * 24 * 365 * 2000; // 2000 years
   zoomingFrom: number;
   zoomingFromDate: number;
   zoomingLine = { x1: 0, x2: 0, y1: 0, y2: 0 };
   preZoomBeforeDuration: number;
   preZoomAfterDuration: number;
   zoomScale = 0.01; // px to zoom scale
+  shifting = false;
+
+  // this.keycodes
+  keycodes = {
+    up: 38,
+    down: 40,
+    left: 37,
+    right: 39,
+    space: 32,
+    primary: 66,
+    secondary: 65,
+    z: 90,
+    p: 80,
+    enter: 13,
+    tab: 9,
+    plus: 187,
+    minus: 189,
+    esc: 27
+  };
+  keyBoardScrollEnabled = true;
+  keyScrollSpeed = 0.01;
+
+  // swimmer
+  swimActive = false;
+  swimPos = { x: 0, y: 0, color: '#000000', r: 0, points: { x: 0, y: 0 }, highpoints: { x: 0, y: 0 } };
+  swimGauge = { value: 0, y1: 0, y2: 0, bgy1: 0, bgy2: 0, x1: 0, x2: 0, bgx1: 0, bgx2: 0, w: 0 };
+  swimDots = [];
+  swimLane = 0;
+  swimStartProgress = 0;
+  swimDown = false;
+  swimPoints = 0;
+  swimHigh = 0;
+  swimPaused = false;
 
   // tooltip
   tooltipActive = false;
@@ -61,36 +112,40 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   tooltipMidSectionColor = '#FFD700';
   tooltipNoneColor = '#FF6347';
 
-  // other generated data
+  // cached data
+  batches = [];
   trainers = [];
-  todayLine = { x1: 0, x2: 0, y1: 0, y2: 0 };
 
   constructor(private batchController: BatchControllerService, private trainerController: TrainerControllerService) {}
 
   // initialize data
   ngOnInit() {
-    // todo get values from batches timeline component instead
-    if (this.trainersPerPage === 0) {
-      this.trainersPerPage = this.batches.length;
-    }
-    // set start date to 3 months ago
-    const today = new Date(Date.now());
-    this.startDate = new Date(today);
-    this.startDate.setMonth(this.startDate.getMonth() - 3);
-    // set end date to 6 months ago
-    this.endDate = new Date(today);
-    this.endDate.setMonth(this.endDate.getMonth() + 6);
-
-    console.log('batches timeline component init');
+    this.loadInitialDates();
+    this.currentPage = 0;
     setTimeout(() => {
       this.updateBatches();
       this.updateTrainers();
     }, 0);
   }
 
+  // set initial values for start and end dates
+  loadInitialDates() {
+    // start date
+    const preceedingDate = new Date();
+    preceedingDate.setMonth(preceedingDate.getMonth() - this.DEFAULT_PRECEEDING_MONTHS);
+    this.startValue = preceedingDate.valueOf();
+    // console.log(this.startDate);
+    // end date
+    const proceedingDate = new Date();
+    proceedingDate.setMonth(proceedingDate.getMonth() + this.DEFAULT_PROCEEDING_MONTHS);
+    this.endValue = proceedingDate.valueOf();
+    // console.log(this.endDate);
+    this.updateDateFilters();
+  }
+
   // setup page size
   ngAfterViewInit() {
-    // causes exception if done without a short timeout
+    // causes exception if done without a delay
     setTimeout(() => {
       this.updateSize();
     }, 0);
@@ -110,6 +165,9 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     } else if (event instanceof MatCheckboxChange) {
       id = event.source.id;
       value = event.checked;
+    } else if (event instanceof MatCheckboxChange) {
+      id = event.source.id;
+      value = event.checked;
     } else if (event.targetElement != null) {
       // mat input date event
       id = event.targetElement.id;
@@ -122,59 +180,151 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         value = event.target.value;
       }
     }
-    console.log('got event: ' + id + ': ' + value);
+    console.log('update filter ' + id + ': ' + value);
     // handle the event with the specified id
-    if (id === 'startDate') {
-      this.startDate = new Date(value);
+    const filterIds = {
+      startDate: 'startDate',
+      endDate: 'endDate',
+      curriculum: 'curriculum',
+      focus: 'focus',
+      location: 'location',
+      building: 'building',
+      hideConcluded: 'hideconcluded',
+      hideBatchless: 'hidebatchless',
+      hideInactiveTrainers: 'hideinactive',
+      trainersPerPage: 'trainersperpage',
+      currentPage: 'currentpage',
+      firstPage: 'firstpage',
+      lastPage: 'lastpage',
+      prevPage: 'previouspage',
+      nextPage: 'nextpage'
+    };
+    if (id === filterIds.startDate) {
+      // date filters
+      this.startValue = value;
       this.updateTodayLine();
-      return;
-    } else if (id === 'endDate') {
-      this.endDate = new Date(value);
+    } else if (id === filterIds.endDate) {
+      this.endValue = value;
       this.updateTodayLine();
-      return;
-    } else if (id === 'curriculum') {
-      // todo filtering
-
-      return;
-    } else if (id === 'focus') {
-      return;
-    } else if (id === 'location') {
-      return;
-    } else if (id === 'building') {
-      return;
-    } else if (id === 'hideconcluded') {
+    } else if (id === filterIds.curriculum) {
+      // batch type filters
+      this.curriculumFilter = value;
+      this.updateBatches();
+    } else if (id === filterIds.focus) {
+      this.focusFilter = value;
+      this.updateBatches();
+    } else if (id === filterIds.location) {
+      this.locationFilter = value;
+      this.updateBatches();
+    } else if (id === filterIds.building) {
+      this.buildingFilter = value;
+      this.updateBatches();
+    } else if (id === filterIds.hideConcluded) {
+      // hide filters
       this.hideConcludedBatches = value;
       this.updateBatches();
       this.updateTrainers();
-      return;
-    } else if (id === 'hidebatchless') {
+    } else if (id === filterIds.hideBatchless) {
       this.hideBatchlessTrainers = value;
       this.updateTrainers();
-      return;
-    } else if (id === 'hideinactive') {
+    } else if (id === filterIds.hideInactiveTrainers) {
       this.hideInactiveTrainers = value;
       this.updateTrainers();
-      return;
+    } else if (id === filterIds.trainersPerPage) {
+      // page filters
+      this.trainersPerPage = Math.max(0, Number.parseInt(value));
+      this.updatePage();
+    } else if (id === filterIds.currentPage) {
+      this.currentPage = Math.max(0, value);
+      this.updatePage();
+    } else if (id === filterIds.firstPage) {
+      this.currentPage = 0;
+      this.updatePage();
+    } else if (id === filterIds.lastPage) {
+      this.currentPage = this.maxPages;
+      this.updatePage();
+    } else if (id === filterIds.prevPage) {
+      this.currentPage = Math.max(0, this.currentPage - 1);
+      this.updatePage();
+    } else if (id === filterIds.nextPage) {
+      this.currentPage = this.currentPage + 1;
+      this.updatePage();
+    } else {
+      // unknown event!
+      console.log('unknown event filter triggered! ' + event + '\n' + event.target);
     }
-    // unknown event!
-    console.log('unknown event filter triggered! ' + event + '\n' + event.target);
   }
 
-  // gets an updates list of batches
+  // updates the max pages
+  updatePage() {
+    if (this.trainersPerPage > this.trainers.length) {
+      this.trainersPerPage = this.trainers.length;
+    }
+    if (this.trainersPerPage === 0) {
+      this.actualTrainersPerPage = this.trainers.length;
+      this.maxPages = 0;
+      this.currentPage = 0;
+    } else {
+      this.actualTrainersPerPage = this.trainersPerPage;
+      // update max page value
+      this.maxPages = Math.floor((this.trainers.length - 0.5) / this.actualTrainersPerPage);
+      this.currentPage = Math.min(this.currentPage, this.maxPages);
+    }
+
+    // find the number of trainers on the current page
+    this.trainersOnThisPage = Math.min(
+      this.trainers.length - this.currentPage * this.actualTrainersPerPage,
+      this.actualTrainersPerPage
+    );
+    this.updateSize();
+  }
+
+  // gets an updated list of batches
   updateBatches() {
     console.log('updating batches...');
-    this.batchController.getAllBatches().subscribe(result => {
+    this.loading = true;
+    this.batchController.findAll().subscribe(result => {
       this.batches = [];
       for (let i = 0; i < result.length; i++) {
         const batch = result[i];
+        // filter concluded batches
         if (this.hideConcludedBatches) {
           if (batch.endDate < Date.now()) {
             continue;
           }
         }
+        // filter by type
+        if (this.curriculumFilter !== 'Any') {
+          if (batch.curriculum.name !== this.curriculumFilter) {
+            continue;
+          }
+        }
+        if (this.focusFilter !== 'Any') {
+          if (batch.focus != null && batch.focus.name !== this.focusFilter) {
+            continue;
+          }
+        }
+        if (this.locationFilter !== 'Any') {
+          if (batch.address.name !== this.locationFilter) {
+            continue;
+          }
+        }
+        if (this.buildingFilter !== 'Any') {
+          if (batch.building.name !== this.buildingFilter) {
+            continue;
+          }
+        }
+        // add it
         this.batches.push(batch);
       }
+      this.loading = false;
     });
+  }
+
+  // updates the start and end date filters
+  updateDateFilters() {
+    this.startDate = new Date(this.startValue);
+    this.endDate = new Date(this.endValue);
   }
 
   // sets size of the svg graphic to fit the screen
@@ -182,20 +332,24 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     // set width to be the same size as the trainernames div, as it scales with the page
     this.width = this.trainernamesElement.nativeElement.getBoundingClientRect().width;
     this.width = Math.max(this.minWidth, this.width);
-    // todo determine height ?
-    this.swimlaneXOfs = (this.width - this.timescaleXOfs) / 2 - this.trainers.length / 2 * this.columnWidth;
+    this.height = this.width * 2;
+    this.swimlaneXOfs = this.width * 0.5 - this.trainersOnThisPage * 0.5 * this.columnWidth;
     this.swimlaneXOfs = Math.max(this.timescaleXOfs + 10, this.swimlaneXOfs);
 
-    // todo update column width
+    // update column width
+    const col_wid = (this.width - this.timescaleXOfs) / this.trainersOnThisPage - 5;
+    this.columnWidth = Math.min(this.maxColumnWidth, Math.max(this.minColumnWidth, col_wid));
 
     // console.log(this.width + ' ' + this.height);
+    this.finishSwimMode();
     this.updateTodayLine();
   }
 
   // makes the list of trainers
   updateTrainers() {
     console.log('updating trainers...');
-    this.trainerController.getAllTrainers().subscribe(result => {
+    this.loading = true;
+    this.trainerController.findAll().subscribe(result => {
       this.trainers = [];
       for (let i = 0; i < result.length; i++) {
         const trainer = result[i];
@@ -203,7 +357,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         if (this.hideBatchlessTrainers) {
           let hasBatch = false;
           for (const batch of this.batches) {
-            if (batch.trainer.trainerId === trainer.trainerId) {
+            if (batch.trainer.id === trainer.id) {
               hasBatch = true;
               break;
             }
@@ -220,16 +374,16 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         }
         this.trainers.push(trainer);
       }
+      this.updatePage();
+      this.loading = false;
     });
   }
 
   // updates the line for today
   updateTodayLine() {
     // calculate position of today_line
-    const y =
-      (new Date(Date.now()).valueOf() - this.startDate.valueOf()) /
-      (this.endDate.valueOf() - this.startDate.valueOf()) *
-      this.height;
+    this.updateDateFilters();
+    const y = this.dateToYPos(Date.now());
     this.todayLine = { x1: this.timescaleXOfs, x2: this.width, y1: y, y2: y };
   }
 
@@ -322,22 +476,20 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
       lines.push([{ text: '----------', color: this.tooltipDefaultColor }]);
 
-      if (batch.batchLocation != null) {
-        if (batch.batchLocation.locationName != null) {
-          lines.push(this.getTooltipExists('Location', batch.batchLocation.locationName));
-        } else {
-          lines.push(this.getTooltipNone('Location'));
-        }
-        if (batch.batchLocation.buildingName != null) {
-          lines.push(this.getTooltipExists('Building', batch.batchLocation.buildingName));
-        } else {
-          lines.push(this.getTooltipNone('Building'));
-        }
-        if (batch.batchLocation.roomName != null) {
-          lines.push(this.getTooltipExists('Room', batch.batchLocation.roomName));
-        } else {
-          lines.push(this.getTooltipNone('Room'));
-        }
+      if (batch.address != null) {
+        lines.push(this.getTooltipExists('Location', batch.address.name));
+      } else {
+        lines.push(this.getTooltipNone('Location'));
+      }
+      if (batch.building != null) {
+        lines.push(this.getTooltipExists('Building', batch.building.name));
+      } else {
+        lines.push(this.getTooltipNone('Building'));
+      }
+      if (batch.room != null) {
+        lines.push(this.getTooltipExists('Room', batch.room.roomName));
+      } else {
+        lines.push(this.getTooltipNone('Room'));
       }
 
       // dynamic width
@@ -467,7 +619,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     if (this.batches.length === 0) {
       return rects;
     }
-    const full_duration = this.endDate.valueOf() - this.startDate.valueOf();
+    const full_duration = this.endValue - this.startValue;
     // make a rectangle for each batch
     for (let i = 0; i < this.batches.length; i++) {
       const batch = this.batches[i];
@@ -476,22 +628,28 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       duration = Math.floor(duration / (1000 * 60 * 60 * 24 * 7)); // ms to weeks
 
       // get the correct color
-      const color = this.getColorForcurriculum(batch.curriculum.currId);
+      const color = this.getColorForcurriculum(batch.curriculum.id);
 
       // get the column this batch will be in
-      const trainer_index = this.trainers.findIndex(t => t.trainerId === batch.trainer.trainerId);
+      let trainer_index = this.trainers.findIndex(t => t.id === batch.trainer.id);
       if (trainer_index < 0) {
         // this batch has no trainer, it may have been filtered
         continue;
       }
+      // only show batches on this page
+      trainer_index -= this.currentPage * this.actualTrainersPerPage;
+      if (trainer_index < 0 || trainer_index >= this.trainersOnThisPage) {
+        continue;
+      }
+
       // todo set width dynamically ?
       const w = 25;
 
       // get the top left position of the rectangle
       const x = this.swimlaneXOfs + trainer_index * this.columnWidth + (this.columnWidth - w) * 0.5;
-      const y = (batch.startDate - this.startDate.valueOf()) / full_duration * this.height;
+      const y = this.dateToYPos(batch.startDate);
       // calculate height from the top and bottom of the rectangle
-      const endy = (batch.endDate - this.startDate.valueOf()) / full_duration * this.height;
+      const endy = this.dateToYPos(batch.endDate);
       const h = endy - y;
 
       // change label based on height of rectangle
@@ -543,7 +701,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   getSwimlanes() {
     const lines = [];
     // make 1 more swimlane than the amount of trainers
-    for (let i = 0; i < this.trainers.length + 1; i++) {
+    for (let i = 0; i < this.trainersOnThisPage + 1; i++) {
       const xpos = this.swimlaneXOfs + i * this.columnWidth;
       lines.push({ x1: xpos, y1: this.swimlaneYOfs, x2: xpos, y2: this.height - this.swimlaneYOfs });
     }
@@ -553,7 +711,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   // get lines that run between the batches
   getBatchLanes() {
     const lines = [];
-    for (let i = 0; i < this.trainers.length; i++) {
+    for (let i = 0; i < this.trainersOnThisPage; i++) {
       const xpos = this.swimlaneXOfs + (i + 0.5) * this.columnWidth;
       lines.push({ x1: xpos, y1: this.swimlaneYOfs, x2: xpos, y2: this.height });
     }
@@ -567,7 +725,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     for (let i = 0; i < this.trainers.length; i++) {
       const batchSet = [];
       for (let j = 0; j < this.batches.length; j++) {
-        if (this.batches[j].trainer.trainerId === this.trainers[i].trainerId) {
+        if (this.batches[j].trainer.id === this.trainers[i].id) {
           batchSet.push(this.batches[j]);
         }
       }
@@ -581,16 +739,17 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     }
     const midPoints = [];
     for (let l = 0; l < trainerBatches.length; l++) {
-      const xpos = this.swimlaneXOfs + (l + 0.5) * this.columnWidth + 5;
+      const xindex = l - this.actualTrainersPerPage * this.currentPage;
+      if (xindex < 0 || xindex >= this.trainersOnThisPage) {
+        continue;
+      }
+      const xpos = this.swimlaneXOfs + (xindex + 0.5) * this.columnWidth + 5;
       if (trainerBatches[l].length > 1) {
         for (let m = 0; m < trainerBatches[l].length - 1; m++) {
-          let dif = trainerBatches[l][m + 1].startDate - trainerBatches[l][m].startDate;
           const gap = trainerBatches[l][m + 1].startDate - trainerBatches[l][m].endDate;
-          const duration = Math.floor(gap / (1000 * 60 * 60 * 24 * 7));
-          dif = dif / 2;
-          const midDate = trainerBatches[l][m].endDate + dif;
-          const y =
-            (midDate - this.startDate.valueOf()) / (this.endDate.valueOf() - this.startDate.valueOf()) * this.height;
+          const duration = Math.floor(gap / (1000 * 60 * 60 * 24 * 7)); // ms to weeks
+          const midDate = trainerBatches[l][m].endDate + gap / 2;
+          const y = this.dateToYPos(midDate);
           midPoints.push({ duration: duration, xPos: xpos, midDatePos: y });
         }
       }
@@ -610,8 +769,8 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
     // add each trainer and position to array
     const trainerposs = [];
-    for (let i = 0; i < this.trainers.length; i++) {
-      const trainer = this.trainers[i];
+    for (let i = 0; i < this.trainersOnThisPage; i++) {
+      const trainer = this.trainers[this.actualTrainersPerPage * this.currentPage + i];
 
       // get trainer name
       const name = trainer.firstName + ' ' + trainer.lastName;
@@ -626,17 +785,280 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     return trainerposs;
   }
 
+  // start alternate control mode
+  startSwimMode() {
+    // setup variables that are reset at start of swim mode
+    this.swimActive = true;
+    this.zoomingEnabled = false;
+    this.batches = [];
+    this.todayLine.x1 = this.todayLine.x2 = -10;
+    this.swimPoints = 0;
+    this.swimDown = false;
+    this.swimDots = [];
+
+    // setup posiitons
+    const defDur = 1000 * 60 * 60 * 24 * 0.71 * this.height; // 0.7 days per pixel
+    this.endValue = this.startValue + defDur;
+    const swimposy = this.dateToYPos(this.startValue + defDur / 8);
+    const pointsRect = { x: this.width, y: swimposy };
+    const highpointsRect = { x: this.width, y: swimposy + 50 };
+    const leftlanex = this.swimlaneXOfs + 0 * this.columnWidth + this.columnWidth * 0.5;
+    const swimColor = '#122555';
+    this.swimPos = {
+      x: leftlanex,
+      y: swimposy,
+      color: swimColor + 'ff',
+      r: 15,
+      points: pointsRect,
+      highpoints: highpointsRect
+    };
+
+    // setup gauge position
+    const gaugex = leftlanex - this.columnWidth;
+    const gaugeh = this.swimPos.r * 4;
+    const gaugey = swimposy - gaugeh / 2;
+    const gaugey2 = swimposy + gaugeh / 2;
+    const gaugew = 8;
+    this.swimGauge = {
+      value: 0,
+      y1: gaugey,
+      y2: gaugey2,
+      bgy1: gaugey,
+      bgy2: gaugey2,
+      x1: gaugex,
+      x2: gaugex,
+      bgx1: gaugex,
+      bgx2: gaugex,
+      w: gaugew
+    };
+
+    // setup local variables for loop
+    const gaugeMax = 1;
+    const gaugeDepleteRate = 0.02;
+    const gaugeFillRate = 0.05;
+
+    const numFrames = 15;
+    const oneWeekMs = 1000 * 60 * 60 * 24 * 7;
+
+    const startMoveSpeed = defDur / 8 / numFrames;
+    const maxMoveSpeed = defDur / numFrames;
+    const maxMoveMaxScore = 10000;
+    let moveSpeed = startMoveSpeed;
+
+    const addBuffer = defDur / 6;
+    let addBatchTimer = 0;
+    const addBatchRate = 1000;
+    const minAddBatchRate = 80;
+    const minBatchAddMaxScore = 7500;
+    let addDotTimer = 0;
+    const addDotRate = 1000;
+
+    let gotHit = false;
+    let restartPauseTimer = 3000;
+    const intervalRate = 1000 / numFrames;
+    let time = 0;
+    const startIn = 1000;
+    // start
+    setTimeout(() => {
+      const loop = setInterval(() => {
+        // stop
+        if (!this.swimActive) {
+          clearInterval(loop);
+          return;
+        }
+
+        // wait until not paused
+        if (this.swimPaused) {
+          return;
+        }
+
+        // check finished
+        if (gotHit) {
+          if (restartPauseTimer > 0) {
+            restartPauseTimer -= intervalRate;
+          } else {
+            console.log('completed with ' + this.swimPoints + '!');
+            if (this.swimPoints > this.swimHigh) {
+              this.swimHigh = this.swimPoints;
+            }
+            console.log('restarting...');
+            clearInterval(loop);
+            this.startSwimMode();
+          }
+          return;
+        }
+        time += intervalRate;
+
+        // update lane
+        this.swimPos.x = leftlanex + this.columnWidth * this.swimLane;
+
+        // update gauge
+        if (this.swimDown) {
+          if (this.swimGauge.value > 0) {
+            this.swimGauge.value -= gaugeDepleteRate;
+          } else {
+            this.swimGauge.value = 0;
+            this.swimDown = false;
+          }
+          // transparent
+          this.swimPos.color = swimColor + '99';
+        }
+        if (!this.swimDown) {
+          if (this.swimGauge.value < gaugeMax) {
+            this.swimGauge.value += gaugeFillRate;
+          } else {
+            this.swimGauge.value = gaugeMax;
+          }
+          // solid
+          this.swimPos.color = swimColor + 'ff';
+        }
+        this.swimGauge.y1 = gaugey2 - gaugeh * (gaugeMax - (1 - this.swimGauge.value));
+
+        // check collision
+        if (!this.swimDown) {
+          for (let i = 0; i < this.batches.length; i++) {
+            const batch = this.batches[i];
+            // remove old ones
+            if (batch.endDate < this.startValue - 1000 - moveSpeed) {
+              // console.log('removing batch ' + i + ' '+ batch.endDate + ' ' + this.startValue);
+              this.batches.splice(i, 1);
+              i--;
+              continue;
+            }
+            // check overlap
+            const py = this.yPosToDate(this.swimPos.y);
+            if (py > batch.startDate.valueOf() && py < batch.endDate.valueOf()) {
+              const batchlane = this.trainers.findIndex(t => t.id === batch.trainer.id);
+              if (this.swimLane === batchlane) {
+                console.log('hit!');
+                gotHit = true;
+                return;
+              }
+            }
+          }
+        }
+
+        // add batches
+        addBatchTimer -= intervalRate;
+        if (addBatchTimer <= 0) {
+          const randy = Math.random() * oneWeekMs * 4;
+          this.addRandomBatch(this.endValue + addBuffer + randy);
+          addBatchTimer = this.linearInterpolation(
+            addBatchRate,
+            minAddBatchRate,
+            Math.min(1, this.swimPoints / minBatchAddMaxScore)
+          );
+        }
+
+        // add dots
+        addDotTimer -= intervalRate;
+        if (addDotTimer <= 0) {
+          const randX = leftlanex + this.columnWidth * Math.floor(Math.random() * this.trainersOnThisPage);
+          const randy = Math.random() * oneWeekMs * 5;
+          const y = this.dateToYPos(this.endValue + addBuffer - randy);
+          // console.log('making dot ' + this.swimDots.length + ' at ' + randX + ' ' + y);
+          this.swimDots.push({ x: randX, y: y, r: this.swimPos.r / 2, color: '#eedd20ee' });
+          addDotTimer = addDotRate;
+        }
+        for (let i = 0; i < this.swimDots.length; i++) {
+          if (this.swimDots[i].y <= -50) {
+            // console.log('removing dot '+i);
+            this.swimDots.splice(i, 1);
+            i--;
+            continue;
+          }
+          // check collision
+          if (
+            this.swimPos.y - this.swimPos.r - this.swimDots[i].r < this.swimDots[i].y &&
+            this.swimPos.y + this.swimPos.r > this.swimDots[i].y
+          ) {
+            if (
+              this.swimPos.x > this.swimDots[i].x - this.swimDots[i].r &&
+              this.swimPos.x < this.swimDots[i].x + this.swimDots[i].r
+            ) {
+              this.swimPoints += 100;
+              console.log('+100');
+              this.swimDots.splice(i, 1);
+              i--;
+              continue;
+            }
+          }
+          this.swimDots[i].y = this.dateToYPos(this.yPosToDate(this.swimDots[i].y) - moveSpeed);
+        }
+
+        // update pos
+        this.startValue = this.startValue + moveSpeed;
+        this.endValue = this.endValue + moveSpeed;
+
+        // increase speed
+        moveSpeed = this.linearInterpolation(
+          startMoveSpeed,
+          maxMoveSpeed,
+          Math.min(1, this.swimPoints / maxMoveMaxScore)
+        );
+
+        this.swimPoints += 1;
+        // console.log(this.swimPoints);
+      }, intervalRate);
+    }, startIn);
+  }
+
+  // interpolates over from-to by d
+  linearInterpolation(from, to, d) {
+    return d * (to - from) + from;
+  }
+
+  // reset to normal mode
+  finishSwimMode() {
+    if (this.swimPoints > this.swimHigh) {
+      this.swimHigh = this.swimPoints;
+    }
+    this.swimActive = false;
+    this.swimStartProgress = 0;
+    this.zoomingEnabled = true;
+    this.loadInitialDates();
+    this.updateBatches();
+    this.updateTodayLine();
+  }
+
+  // adds a random batch that starts at the specified date
+  addRandomBatch(startdate: number) {
+    const baseDur = 1000 * 60 * 60 * 24 * 7 * 2; // 2 weeks
+    const maxDur = 1000 * 60 * 60 * 24 * 7 * 16; // 16 weeks
+    const ranEndDate = startdate + Math.random() * maxDur + baseDur;
+    const randRow = Math.floor(Math.random() * this.trainersOnThisPage);
+    const trId = this.trainers[randRow].id;
+    // console.log('adding random batch at col:' + randRow + ' enddate: ' + ranEndDate);
+    const currId = Math.floor(Math.random() * 4);
+    this.batches.push(
+      new Batch(
+        -1,
+        'randomly generated',
+        startdate,
+        ranEndDate,
+        new Curriculum(currId, null, true, [], []),
+        null,
+        new Trainer(trId, null, null, null, null, true, null, null),
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      )
+    );
+  }
+
   // returns the list of months to display and their position
   getTimescale() {
     // cache some common values
-    const full_duration = this.endDate.valueOf() - this.startDate.valueOf();
+    const full_duration = this.endValue - this.startValue;
     const start_month = this.startDate.getMonth();
     const start_year = this.startDate.getFullYear();
 
     // get distance between months (px) to determine which scale to use
-    const ys0 = (new Date(start_year, start_month).valueOf() - this.startDate.valueOf()) / full_duration * this.height;
-    const ys1 =
-      (new Date(start_year, start_month + 1).valueOf() - this.startDate.valueOf()) / full_duration * this.height;
+    const ys0 = this.dateToYPos(new Date(start_year, start_month).valueOf());
+    const ys1 = this.dateToYPos(new Date(start_year, start_month + 1).valueOf());
     const dist_between_months = ys1 - ys0;
     // console.log(dist_between_months);
 
@@ -784,7 +1206,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         name = '' + date.getFullYear();
       }
       // calculate the position of the text
-      const y = this.swimlaneYOfs + (date.valueOf() - this.startDate.valueOf()) / full_duration * this.height;
+      const y = this.swimlaneYOfs + this.dateToYPos(date.valueOf());
       if (y < this.swimlaneYOfs) {
         continue;
       } else if (y > this.height - this.swimlaneYOfs) {
@@ -796,41 +1218,54 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     return timescale;
   }
 
-  startZoom(mouseposy) {
+  // returns the pixel value on the vertical axis this date would appear on the timeline
+  dateToYPos(dateValue: number) {
+    return (dateValue - this.startValue) / (this.endValue - this.startValue) * this.height;
+  }
+
+  // returns the date value from the vertical axis position on the timeline
+  yPosToDate(ypos: number) {
+    return ypos * (this.endValue - this.startValue) / this.height + this.startValue;
+  }
+
+  startZoom(mouseposy: number) {
     // calculate values needed for zooming from the mousepos
     this.zoomingFrom = mouseposy;
     this.zoomingLine = { x1: this.timescaleXOfs, x2: this.width, y1: mouseposy, y2: mouseposy };
     // position (px) to date
-    this.zoomingFromDate =
-      mouseposy / this.height * (this.endDate.valueOf() - this.startDate.valueOf()) + this.startDate.valueOf();
+    this.zoomingFromDate = this.yPosToDate(mouseposy);
     // get duration before and after zoom line
     // console.log(new Date(this.zoomingFromDate));
-    this.preZoomBeforeDuration = this.zoomingFromDate - this.startDate.valueOf();
-    this.preZoomAfterDuration = this.endDate.valueOf() - this.zoomingFromDate;
+    this.preZoomBeforeDuration = this.zoomingFromDate - this.startValue;
+    this.preZoomAfterDuration = this.endValue - this.zoomingFromDate;
     this.zooming = true;
 
     // hide tooltip
     this.tooltipActive = false;
   }
 
-  zoomBy(amount) {
+  zoomBy(amount: number) {
     // must be zooming to zoom
     if (!this.zooming) {
       return;
     }
     // scale the durations before and after the zoom line
     const newBeforeDuration = this.preZoomBeforeDuration * amount;
-    const newStart = this.zoomingFromDate - newBeforeDuration;
+    let newStart = this.zoomingFromDate - newBeforeDuration;
     const newAfterDuration = this.preZoomAfterDuration * amount;
-    const newEnd = this.zoomingFromDate + newAfterDuration;
+    let newEnd = this.zoomingFromDate + newAfterDuration;
     // console.log(new Date(newStart) + ', ' + new Date(this.endDate));
+    if (newEnd - newStart < this.minZoom || newEnd - newStart > this.maxZoom) {
+      newStart = this.startValue;
+      newEnd = this.endValue;
+    }
     if (newStart >= newEnd) {
       console.log('start date is after end date!');
       return;
     }
     // set start and end dates
-    this.startDate = new Date(newStart);
-    this.endDate = new Date(newEnd);
+    this.startValue = newStart;
+    this.endValue = newEnd;
     this.updateTodayLine();
   }
 
@@ -839,20 +1274,48 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     this.zooming = false;
   }
 
+  shiftBy(amount: number) {
+    const dur = this.endValue - this.startValue;
+    const shiftBy = amount * dur;
+    this.startValue = this.startValue + shiftBy;
+    this.endValue = this.endValue + shiftBy;
+    this.updateTodayLine();
+  }
+
   // start zoom at mouse pos on mousedown
-  bgmousedown(event) {
-    const mousey = event.clientY - this.timelineRootElement.nativeElement.getBoundingClientRect().top;
-    this.startZoom(mousey);
+  bgmousedown(event: MouseEvent) {
+    if (this.zoomingEnabled) {
+      const mx = event.clientX - this.timelineRootElement.nativeElement.getBoundingClientRect().left;
+      const my = event.clientY - this.timelineRootElement.nativeElement.getBoundingClientRect().top;
+      if (mx <= this.timescaleXOfs) {
+        this.shifting = true;
+      } else {
+        this.startZoom(my);
+      }
+    }
   }
   // finish zoom on mouseup
-  bgmouseup(event) {
+  bgmouseup(event: MouseEvent) {
     this.finishZoom();
+    this.shifting = false;
   }
   // hide popup and update zoom by delta on mouse move
-  bgmousemove(event) {
+  bgmousemove(event: MouseEvent) {
     const my = event.clientY - this.timelineRootElement.nativeElement.getBoundingClientRect().top;
     const mx = event.clientX - this.timelineRootElement.nativeElement.getBoundingClientRect().left;
+    const mdy = event.movementY;
+    if (this.shifting) {
+      event.preventDefault();
+      // stop shifting if mouse is up (happens when mouse is released outside of the timeline and returns)
+      if (event.buttons !== 1) {
+        this.shifting = false;
+      }
+      // get the factor to zoom by from the relative mouse position
+      const shiftFactor = -mdy / this.height;
+      this.shiftBy(shiftFactor);
+    }
     if (this.zooming) {
+      event.preventDefault();
       // stop zooming if mouse is up (happens when mouse is released outside of the timeline and returns)
       if (event.buttons !== 1) {
         this.finishZoom();
@@ -865,6 +1328,142 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       this.zoomBy(zoomFactor);
     }
     this.updateTooltipVisibility();
+    if (this.width !== this.trainernamesElement.nativeElement.getBoundingClientRect().width) {
+      this.updateSize();
+    }
+  }
+
+  keydown(event: KeyboardEvent) {
+    // console.log(event.keyCode + ' pressed');
+
+    if (event.keyCode === this.keycodes.esc) {
+      // escape pressed
+    }
+    if (this.swimActive) {
+      // keyboard codes for alternate control mode
+      if (
+        event.keyCode === this.keycodes.tab ||
+        event.keyCode === this.keycodes.enter ||
+        event.keyCode === this.keycodes.esc
+      ) {
+        this.finishSwimMode();
+      }
+      if (
+        event.keyCode === this.keycodes.primary ||
+        event.keyCode === this.keycodes.secondary ||
+        event.keyCode === this.keycodes.z ||
+        event.keyCode === this.keycodes.space ||
+        event.keyCode === this.keycodes.down ||
+        event.keyCode === this.keycodes.up
+      ) {
+        if (this.swimGauge.value >= 0.6) {
+          event.preventDefault();
+          this.swimDown = true;
+        }
+      }
+      if (!this.swimPaused && !this.swimDown) {
+        if (event.keyCode === this.keycodes.left) {
+          this.swimLane = Math.max(0, this.swimLane - 1);
+        }
+        if (event.keyCode === this.keycodes.right) {
+          this.swimLane = Math.min(this.trainersOnThisPage - 1, this.swimLane + 1);
+        }
+      }
+      if (event.keyCode === this.keycodes.p) {
+        this.swimPaused = !this.swimPaused;
+        event.preventDefault();
+      }
+    } else {
+      switch (event.keyCode) {
+        case this.keycodes.plus:
+          this.startZoom((this.dateToYPos(this.endValue) - this.dateToYPos(this.startValue)) / 2);
+          this.zoomBy(0.75);
+          this.finishZoom();
+          break;
+        case this.keycodes.minus:
+          this.startZoom((this.dateToYPos(this.endValue) - this.dateToYPos(this.startValue)) / 2);
+          this.zoomBy(1.5);
+          this.finishZoom();
+          break;
+        case this.keycodes.up:
+          if (event.shiftKey && this.keyBoardScrollEnabled) {
+            // scroll up
+            event.preventDefault();
+            this.shiftBy(this.keyScrollSpeed);
+          }
+          if (this.swimStartProgress === 0 || this.swimStartProgress === 1) {
+            this.swimStartProgress += 1;
+          } else {
+            this.swimStartProgress = 0;
+          }
+          break;
+        case this.keycodes.down:
+          if (event.shiftKey && this.keyBoardScrollEnabled) {
+            // scroll down
+            event.preventDefault();
+            this.shiftBy(-this.keyScrollSpeed);
+          }
+          if (this.swimStartProgress === 2 || this.swimStartProgress === 3) {
+            this.swimStartProgress += 1;
+          } else {
+            this.swimStartProgress = 0;
+          }
+          break;
+        case this.keycodes.left:
+          if (this.swimStartProgress === 4 || this.swimStartProgress === 6) {
+            this.swimStartProgress += 1;
+          } else {
+            this.swimStartProgress = 0;
+          }
+          break;
+        case this.keycodes.right:
+          if (this.swimStartProgress === 5 || this.swimStartProgress === 7) {
+            this.swimStartProgress += 1;
+          } else {
+            this.swimStartProgress = 0;
+          }
+          break;
+        case this.keycodes.primary:
+          if (this.swimStartProgress === 8) {
+            this.swimStartProgress += 1;
+          } else {
+            this.swimStartProgress = 0;
+          }
+          break;
+        case this.keycodes.secondary:
+          if (this.swimStartProgress === 9) {
+            this.swimStartProgress += 1;
+          } else {
+            this.swimStartProgress = 0;
+          }
+          break;
+        case this.keycodes.enter:
+          if (this.swimStartProgress === 10) {
+            event.preventDefault();
+            this.swimStartProgress += 1;
+            this.startSwimMode();
+          } else {
+            this.swimStartProgress = 0;
+          }
+          break;
+      }
+    }
+  }
+
+  keyup(event: KeyboardEvent) {
+    if (this.swimActive) {
+      if (
+        event.keyCode === this.keycodes.primary ||
+        event.keyCode === this.keycodes.secondary ||
+        event.keyCode === this.keycodes.z ||
+        event.keyCode === this.keycodes.space ||
+        event.keyCode === this.keycodes.down ||
+        event.keyCode === this.keycodes.up
+      ) {
+        event.preventDefault();
+        this.swimDown = false;
+      }
+    }
   }
 
   // show tooltip at mouse on mouse move on batch

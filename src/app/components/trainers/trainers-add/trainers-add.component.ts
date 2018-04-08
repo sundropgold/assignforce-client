@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatIconRegistry } from '@angular/material';
 import { Trainer } from '../../../model/Trainer';
 import { Skill } from '../../../model/Skill';
-import { TrainerService } from '../../../services/trainer/trainer.service';
+import { TrainerControllerService } from '../../../services/api/trainer-controller/trainer-controller.service';
 
 @Component({
   selector: 'app-trainers-add',
@@ -10,24 +10,9 @@ import { TrainerService } from '../../../services/trainer/trainer.service';
   styleUrls: ['./trainers-add.component.css']
 })
 export class TrainersAddComponent implements OnInit {
-  Skillz: Skill[] = [
-    {
-      skillId: 1,
-      name: 'Java',
-      active: true
-    }
-  ];
+  Skillz: Skill[] = [];
 
-  trainer: Trainer = {
-    trainerId: 0,
-    firstName: '',
-    lastName: '',
-    skills: this.Skillz,
-    certifications: '',
-    active: true,
-    resume: '',
-    unavailabilities: []
-  };
+  trainer: Trainer;
 
   data = {
     trainer: this.trainer
@@ -36,7 +21,7 @@ export class TrainersAddComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<TrainersAddComponent>,
     @Inject(MAT_DIALOG_DATA) public dataP: any,
-    private trainerService: TrainerService
+    private trainerService: TrainerControllerService
   ) {}
 
   ngOnInit() {}

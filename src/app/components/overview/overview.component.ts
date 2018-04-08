@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Angular2Csv } from 'angular2-csv/Angular2-csv';
-import { Batch } from '../../model/Batch';
+
 import { UrlService } from '../../services/url/url.service';
+
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
@@ -39,7 +40,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     //TODO -- use the batch-controller.service
-    // this.urlService.getAllBatches().subscribe(blist => {
+    // this.urlService.findAll().subscribe(blist => {
     //   blist.forEach(batch => {
     //     // This is an object that encapsulates the batch object's properties and a progress number.
     //     const batchObj = {
@@ -47,7 +48,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     //       curriculum: batch.curriculum.name,
     //       trainer: batch.trainer.firstName + ' ' + batch.trainer.lastName,
     //       cotrainer: batch.cotrainer,
-    //       location: batch.batchLocation.locationName,
+    //       address: batch.batchLocation.locationName,
     //       building: batch.batchLocation.buildingName,
     //       room: batch.batchLocation.roomName,
     //       startDate: batch.startDate,

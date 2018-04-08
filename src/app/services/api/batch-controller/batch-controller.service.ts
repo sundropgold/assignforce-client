@@ -3,7 +3,6 @@ import { Batch } from '../../../model/Batch';
 import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Location } from '../../../model/Location';
 
 @Injectable()
 export class BatchControllerService {
@@ -11,39 +10,20 @@ export class BatchControllerService {
 
   private batchController = environment.apiUrls.batchController;
 
-  public createBatch(batch: Batch): Observable<Batch> {
-    return this.http.post<Batch>(this.batchController.baseUrl + this.batchController.createBatch, batch);
+  public create(batch: Batch): Observable<Batch> {
+    return this.http.post<Batch>(this.batchController.baseUrl + this.batchController.create, batch);
+  }
+  public update(batch: Batch): Observable<Batch> {
+    return this.http.put<Batch>(this.batchController.baseUrl + this.batchController.update + batch.id, batch);
+  }
+  public findAll(): Observable<Batch[]> {
+    return this.http.get<Batch[]>(this.batchController.baseUrl + this.batchController.findAll);
+  }
+  public remove(id: number): Observable<Batch> {
+    return this.http.delete<Batch>(this.batchController.baseUrl + this.batchController.remove + id);
   }
 
-  public deleteBatch(id: number): Observable<Batch> {
-    return this.http.delete<Batch>(this.batchController.baseUrl + this.batchController.deleteBatch + id);
-  }
-
-  public updateBatch(batch: Batch): Observable<Batch> {
-    return this.http.put<Batch>(this.batchController.baseUrl + this.batchController.updateBatch, batch);
-  }
-
-  public findCommonLocations(): Observable<Location[]> {
-    return this.http.get<Location[]>(this.batchController.baseUrl + this.batchController.findCommonLocations);
-  }
-
-  public getAllBatches(): Observable<Batch[]> {
-    return this.http.get<Batch[]>(this.batchController.baseUrl + this.batchController.getAllBatches);
-  }
-
-  public findAllBatchesByTrainer(): Observable<Batch[]> {
-    return this.http.get<Batch[]>(this.batchController.baseUrl + this.batchController.findAllBatchesByTrainer);
-  }
-
-  public createWeek(batchId: number): Observable<Batch> {
-    return this.http.post<Batch>(this.batchController.baseUrl + this.batchController.createWeek + batchId, null);
-  }
-
-  public getAllVpBatches(): Observable<Batch[]> {
-    return this.http.get<Batch[]>(this.batchController.baseUrl + this.batchController.getAllVpBatches);
-  }
-
-  public getAllCurrentBatches(): Observable<Batch[]> {
-    return this.http.get<Batch[]>(this.batchController.baseUrl + this.batchController.getAllCurrentBatches);
+  public find(id: number): Observable<Batch> {
+    return this.http.get<Batch>(this.batchController.baseUrl + this.batchController.find + id);
   }
 }

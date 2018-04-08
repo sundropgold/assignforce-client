@@ -1,17 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { EditSkillComponent } from './edit-skill.component';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { AppMaterialModule } from '../../material.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Skill } from '../../model/Skill';
 import { FormsModule } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { AppMaterialModule } from '../../material.module';
+import { Skill } from '../../model/Skill';
 import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
+import { EditSkillComponent } from './edit-skill.component';
 
 describe('EditSkillComponent', () => {
   let component: EditSkillComponent;
   let fixture: ComponentFixture<EditSkillComponent>;
-  const mockDialogData: Skill = { skillId: 1, name: 'Test Skill', active: true };
+  const mockDialogData: Skill = { id: 1, name: 'Test Skill', active: true };
   let skillControllerService: SkillControllerService;
 
   class MockDialogRef {
@@ -19,7 +19,7 @@ describe('EditSkillComponent', () => {
   }
 
   class MockSkillController {
-    updateSkillCaliber() {}
+    update(skill: Skill) {}
   }
 
   beforeEach(

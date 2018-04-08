@@ -1,23 +1,23 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { FociComponent } from './foci.component';
-import { AppMaterialModule } from '../../material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Curriculum } from '../../model/Curriculum';
 import { Observable } from 'rxjs/Observable';
-import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
+
+import { AppMaterialModule } from '../../material.module';
+import { FociComponent } from './foci.component';
+import { Focus } from '../../model/Focus';
+import { FocusControllerService } from '../../services/api/focus-controller/focus-controller.service';
 
 describe('FociComponent', () => {
   let component: FociComponent;
   let fixture: ComponentFixture<FociComponent>;
-  const testData: Curriculum[] = [
-    new Curriculum(1, 'Test Curriculum', false, true, [{ skillId: 1, name: 'Test Skill', active: true }]),
-    new Curriculum(2, 'Test Curriculum 2', true, true, [{ skillId: 1, name: 'Test Skill', active: true }])
+  const testData: Focus[] = [
+    new Focus(1, 'Test Focus', false, [{ id: 1, name: 'Test Skill', active: true }]),
+    new Focus(2, 'Test Focus 2', true, [{ id: 1, name: 'Test Skill', active: true }])
   ];
-  let curriculaControllerService = CurriculumControllerService;
+  let focusControllerService = FocusControllerService;
 
-  class MockCurriculaService {
-    retrieveAllActiveFocus(): Observable<Curriculum[]> {
+  class MockFocusControllerService {
+    findAll(): Observable<Focus[]> {
       return Observable.of(testData);
     }
   }
@@ -27,9 +27,9 @@ describe('FociComponent', () => {
       TestBed.configureTestingModule({
         imports: [AppMaterialModule, BrowserAnimationsModule],
         declarations: [FociComponent],
-        providers: [{ provide: CurriculumControllerService, useClass: MockCurriculaService }]
+        providers: [{ provide: FocusControllerService, useClass: MockFocusControllerService }]
       }).compileComponents();
-      curriculaControllerService = TestBed.get(CurriculumControllerService);
+      focusControllerService = TestBed.get(FocusControllerService);
     })
   );
 

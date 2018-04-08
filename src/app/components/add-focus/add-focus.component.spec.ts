@@ -1,36 +1,36 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { AddFocusComponent } from './add-focus.component';
-import { MatDialogRef } from '@angular/material';
-import { AppMaterialModule } from '../../material.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
-import { Curriculum } from '../../model/Curriculum';
-import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
+import { MatDialogRef } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable } from 'rxjs/Observable';
+
+import { AppMaterialModule } from '../../material.module';
+import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
 import { Skill } from '../../model/Skill';
+import { AddFocusComponent } from './add-focus.component';
+import { FocusControllerService } from '../../services/api/focus-controller/focus-controller.service';
+import { Focus } from '../../model/Focus';
 
 describe('AddFocusComponent', () => {
   let component: AddFocusComponent;
   let fixture: ComponentFixture<AddFocusComponent>;
-  let curriculaControllerService: CurriculumControllerService;
+  let focusControllerService: FocusControllerService;
   let skillControllerService: SkillControllerService;
   const testData: Skill[] = [
-    { skillId: 1, name: 'Test Skill', active: true },
-    { skillId: 2, name: 'Test Skill 2', active: true }
+    { id: 1, name: 'Test Skill', active: true },
+    { id: 2, name: 'Test Skill 2', active: true }
   ];
 
   class MockDialogRef {
     close() {}
   }
 
-  class MockCurriculumController {
-    createCurriculum(curriculum: Curriculum) {}
+  class MockFocusControllerService {
+    create(focus: Focus) {}
   }
 
   class MockSkillControllerService {
-    findAllActive(): Observable<Skill[]> {
+    findAll(): Observable<Skill[]> {
       return Observable.of(testData);
     }
   }
@@ -41,12 +41,12 @@ describe('AddFocusComponent', () => {
         declarations: [AddFocusComponent],
         providers: [
           { provide: MatDialogRef, useClass: MockDialogRef },
-          { provide: CurriculumControllerService, useClass: MockCurriculumController },
+          { provide: FocusControllerService, useClass: MockFocusControllerService },
           { provide: SkillControllerService, useClass: MockSkillControllerService }
         ],
         imports: [AppMaterialModule, BrowserAnimationsModule, FormsModule]
       }).compileComponents();
-      curriculaControllerService = TestBed.get(CurriculumControllerService);
+      focusControllerService = TestBed.get(FocusControllerService);
       skillControllerService = TestBed.get(SkillControllerService);
     })
   );

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef } from '@angular/material';
+
 import { Skill } from '../../model/Skill';
-import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
-import { Curriculum } from '../../model/Curriculum';
 import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
+import { FocusControllerService } from '../../services/api/focus-controller/focus-controller.service';
+import { Focus } from '../../model/Focus';
 
 @Component({
   selector: 'app-add-focus',
@@ -11,11 +12,11 @@ import { SkillControllerService } from '../../services/api/skill-controller/skil
   styleUrls: ['./add-focus.component.css']
 })
 export class AddFocusComponent implements OnInit {
-  focus: Curriculum;
+  focus: Focus;
 
   constructor(
     public dialogRef: MatDialogRef<AddFocusComponent>,
-    private curriculumControllerService: CurriculumControllerService,
+    private focusControllerService: FocusControllerService,
     private skillControllerService: SkillControllerService
   ) {}
 
@@ -25,7 +26,7 @@ export class AddFocusComponent implements OnInit {
 
   ngOnInit() {
     this.newFocus();
-    this.skillControllerService.findAllActive().subscribe(data => {
+    this.skillControllerService.findAll().subscribe(data => {
       this.skills = data;
     });
   }
@@ -36,12 +37,12 @@ export class AddFocusComponent implements OnInit {
   }
 
   newFocus(): void {
-    this.focus = new Curriculum(0, '', false, true, []);
+    this.focus = new Focus(0, '', false, []);
   }
 
   addFocus(): void {
     console.log('We are Adding a focus ' + this.focus.name);
-    this.curriculumControllerService.createCurriculum(this.focus);
+    this.focusControllerService.create(this.focus);
     this.newFocus();
     this.closeDialog();
   }
