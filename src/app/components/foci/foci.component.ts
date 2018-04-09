@@ -25,7 +25,8 @@ export class FociComponent implements OnInit {
       });
   }
 
-  openAddFocusDialog() {
+  openAddFocusDialog(event: Event) {
+    event.stopPropagation();
     const dialogRef = this.dialog.open(AddFocusComponent, {});
     dialogRef.afterClosed().subscribe(result => {
       this.refreshFocuses();
