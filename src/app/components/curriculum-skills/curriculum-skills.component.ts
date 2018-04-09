@@ -22,7 +22,8 @@ export class CurriculumSkillsComponent implements OnInit {
     });
   }
 
-  openAddSkillDialog() {
+  openAddSkillDialog(event: Event) {
+    event.stopPropagation();
     const dialogRef = this.dialog.open(AddSkillComponent, {
       data: this.skillData
     });
@@ -38,9 +39,12 @@ export class CurriculumSkillsComponent implements OnInit {
   }
 
   refreshSkills(): void {
-    this.skillControllerService.findAll().subscribe(data => {
-      this.skillData = data;
-    });
+    this.skillControllerService
+      .findAll()
+      .toPromise()
+      .then(data => {
+        this.skillData = data;
+      });
   }
 
   confirmRemoveFocus(skill) {
