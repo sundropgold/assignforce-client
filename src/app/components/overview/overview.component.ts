@@ -43,7 +43,6 @@ export class OverviewComponent implements OnInit, AfterViewInit {
       .findAll()
       .toPromise()
       .then(blist => {
-        console.log('response', blist);
         blist.forEach(batch => {
           // This is an object that encapsulates the Batch object's properties and a progress number.
           const batchObj = {
@@ -52,8 +51,8 @@ export class OverviewComponent implements OnInit, AfterViewInit {
             trainer: batch.trainer.firstName + ' ' + batch.trainer.lastName,
             cotrainer: batch.cotrainer,
             location: batch.address.name,
-            building: batch.building.name,
-            room: batch.room.roomName,
+            building: batch.building,
+            room: batch.room,
             startDate: batch.startDate,
             endDate: batch.endDate,
             progress: 0
