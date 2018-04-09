@@ -43,7 +43,9 @@ export class TrainersComponent implements OnInit {
 
   showCalendar() {}
 
-  goToTrainer(trainer: Trainer) {}
+  goToTrainer(id: Number) {
+    this.router.navigate([`profile/${id}`]);
+  }
 
   grabS3Resume(trainer: Trainer) {}
 
@@ -76,10 +78,5 @@ export class TrainersComponent implements OnInit {
 
   activateTrainer(trainer: Trainer) {
     trainer.active = true;
-  }
-
-  gotoTrainer(id: number) {
-    console.log(`/profile/${id}`);
-    this.router.navigate([`/profile/${id}`]);
   }
 }
