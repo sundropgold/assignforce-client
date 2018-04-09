@@ -24,7 +24,7 @@ const appRoutes: Routes = [
   },
   {
     path: '',
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
     children: [
       {
         path: environment.appRoutes.overview,
