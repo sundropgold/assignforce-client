@@ -15,23 +15,23 @@
         <div>
           <mat-form-field>
             <mat-select formControlName="curriculum" placeholder="Core Curriculum" [disabled]="curriculums.length < 1">
-              <mat-option *ngFor="let curriculum of curriculums" [value]="curriculum.name">
+              <mat-option *ngFor="let curriculum of curriculums" [value]="curriculum">
                 {{ curriculum.name }}
               </mat-option>
             </mat-select>
           </mat-form-field>
-
+          
           <mat-form-field>
             <mat-select formControlName="focus" placeholder="Focus" [disabled]="focuses.length < 1">
-              <mat-option *ngFor="let focus of focuses" [value]="focus.name">
+              <mat-option *ngFor="let focus of focuses" [value]="focus">
                 {{ focus.name }}
               </mat-option>
             </mat-select>
           </mat-form-field>
-
+          
           <mat-form-field>
             <mat-select formControlName="skills" placeholder="Skills" multiple [disabled]="skillsList.length < 1">
-              <mat-option *ngFor="let skill of skillsList" [value]="skill.name">{{skill.name}}</mat-option>
+              <mat-option *ngFor="let skill of skillsList" [value]="skill">{{skill.name}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
@@ -70,7 +70,7 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-select formControlName="cotrainer" placeholder="Co-Trainer" [disabled]="trainers.length < 1">
+            <mat-select formControlName="cotrainer" placeholder="Co-Trainer" [disabled]="!batchForm.value.trainer">
               <mat-option *ngFor="let trainer of trainers" [value]="trainer">
                 {{ trainer.firstName }}
               </mat-option>
@@ -90,7 +90,7 @@
 
           <mat-form-field>
             <mat-select formControlName="building" placeholder="Building" [disabled]="!selectedLocation">
-              <mat-option *ngFor="let building of buildings" [value]="building">
+              <mat-option *ngFor="let building of buildingsOfALocation" [value]="building">
                 {{ building.name }}
               </mat-option>
             </mat-select>
@@ -204,18 +204,18 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
             <mat-cell *matCellDef="let batch">
 
-              <button mat-icon-button color (click)="editBatch()">
+              <button mat-icon-button (click)="editBatch()">
                 <mat-icon matTooltip="Edit" matTooltipPosition="above">mode_edit</mat-icon>
               </button>
-              <button mat-icon-button color (click)="cloneBatch()">
+              <button mat-icon-button (click)="cloneBatch()">
                 <mat-icon matTooltip="Clone" matTooltipPosition="above">filter_none</mat-icon>
               </button>
-              <button mat-icon-button color (click)="deleteBatch()">
+              <button mat-icon-button (click)="deleteBatch()">
                 <mat-icon matTooltip="Delete" matTooltipPosition="above">delete</mat-icon>
               </button>
-              <button mat-icon-button color>
+              <!-- <button mat-icon-button>
                 <mat-icon matTooltip="Synchronize" matTooltipPosition="above">publish</mat-icon>
-              </button>
+              </button> -->
             </mat-cell>
           </ng-container>
 
