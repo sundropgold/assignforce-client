@@ -1,27 +1,67 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, MatTableDataSource } from '@angular/material';
 
-const ELEMENT_DATA: Element[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-  { position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na' },
-  { position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg' },
-  { position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al' },
-  { position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si' },
-  { position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P' },
-  { position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S' },
-  { position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl' },
-  { position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar' },
-  { position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K' },
-  { position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca' }
+const Reports: Report[] = [
+  {
+    skill: '.NET',
+    jan: 26,
+    feb: 26,
+    mar: 16,
+    apr: 26,
+    may: 0,
+    jun: 8,
+    jul: 5,
+    aug: 15,
+    sep: 20,
+    oct: 5,
+    nov: 8,
+    dec: 16
+  },
+  {
+    skill: 'Java',
+    jan: 24,
+    feb: 13,
+    mar: 6,
+    apr: 30,
+    may: 10,
+    jun: 13,
+    jul: 20,
+    aug: 21,
+    sep: 29,
+    oct: 7,
+    nov: 13,
+    dec: 17
+  },
+  {
+    skill: 'Custom',
+    jan: 26,
+    feb: 5,
+    mar: 11,
+    apr: 0,
+    may: 1,
+    jun: 3,
+    jul: 25,
+    aug: 12,
+    sep: 18,
+    oct: 1,
+    nov: 29,
+    dec: 13
+  },
+  {
+    skill: 'SDET',
+    jan: 27,
+    feb: 16,
+    mar: 12,
+    apr: 24,
+    may: 2,
+    jun: 27,
+    jul: 19,
+    aug: 0,
+    sep: 19,
+    oct: 19,
+    nov: 28,
+    dec: 23
+  }
 ];
 
 @Component({
@@ -30,8 +70,8 @@ const ELEMENT_DATA: Element[] = [
   styleUrls: ['./reports.component.css']
 })
 export class ReportsComponent implements OnInit, AfterViewInit {
-  displayedColumns = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  displayedColumns = ['skill', 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+  dataSource = new MatTableDataSource(Reports);
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -44,9 +84,18 @@ export class ReportsComponent implements OnInit, AfterViewInit {
   }
 }
 
-export interface Element {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+export interface Report {
+  skill: string;
+  jan: number;
+  feb: number;
+  mar: number;
+  apr: number;
+  may: number;
+  jun: number;
+  jul: number;
+  aug: number;
+  sep: number;
+  oct: number;
+  nov: number;
+  dec: number;
 }
