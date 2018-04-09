@@ -17,24 +17,51 @@ export class FociComponent implements OnInit {
   constructor(private dialog: MatDialog, private focusControllerService: FocusControllerService) {}
 
   ngOnInit() {
-    this.focusControllerService.findAll().subscribe(data => {
-      this.focusData = data;
-    });
+    this.focusControllerService
+      .findAll()
+      .toPromise()
+      .then(data => {
+        this.focusData = data;
+      });
   }
 
-  openAddFocusDialog() {
+  openAddFocusDialog(event: Event) {
+    event.stopPropagation();
     const dialogRef = this.dialog.open(AddFocusComponent, {});
+    dialogRef.afterClosed().subscribe(result => {
+      this.refreshFocuses();
+    });
   }
 
   openEditFocusDialog(focus) {
     const dialogRef = this.dialog.open(EditFocusComponent, {
       data: focus
     });
+    dialogRef.afterClosed().subscribe(result => {
+      this.refreshFocuses();
+    });
+  }
+
+  refreshFocuses(): void {
+    this.focusControllerService
+      .findAll()
+      .toPromise()
+      .then(data => {
+        this.focusData = data;
+      });
   }
 
   confirmRemoveFocus(focus) {
     if (confirm('Are you sure you want to remove ' + focus.name + '?')) {
-      this.focusControllerService.remove(focus.id);
+      this.focusControllerService
+        .remove(focus.id)
+        .toPromise()
+        .then()
+        .catch(err => {
+          alert('Error occurred while removing focus');
+          console.log(err);
+        });
     }
+    this.refreshFocuses();
   }
 }

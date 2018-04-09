@@ -22,9 +22,13 @@ export class CurriculumSkillsComponent implements OnInit {
     });
   }
 
-  openAddSkillDialog() {
+  openAddSkillDialog(event: Event) {
+    event.stopPropagation();
     const dialogRef = this.dialog.open(AddSkillComponent, {
       data: this.skillData
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.refreshSkills();
     });
   }
 
@@ -32,11 +36,31 @@ export class CurriculumSkillsComponent implements OnInit {
     const dialogRef = this.dialog.open(EditSkillComponent, {
       data: skill
     });
+    dialogRef.afterClosed().subscribe(result => {
+      this.refreshSkills();
+    });
+  }
+
+  refreshSkills(): void {
+    this.skillControllerService
+      .findAll()
+      .toPromise()
+      .then(data => {
+        this.skillData = data;
+      });
   }
 
   confirmRemoveFocus(skill) {
     if (confirm('Are you sure you want to remove ' + skill.name + '?')) {
-      this.skillControllerService.remove(skill.id);
+      this.skillControllerService
+        .remove(skill.id)
+        .toPromise()
+        .then()
+        .catch(err => {
+          alert('Error occurred while removing skill');
+          console.log(err);
+        });
     }
+    this.refreshSkills();
   }
 }
