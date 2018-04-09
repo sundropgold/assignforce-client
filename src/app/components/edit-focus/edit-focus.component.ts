@@ -27,11 +27,15 @@ export class EditFocusComponent implements OnInit {
   selectedSkills: Skill[] = [];
 
   ngOnInit() {
-    this.skillControllerService.findAll().subscribe(data => {
-      this.skills = data;
-      this.selectedSkills = this.data.skills;
-      this.focus = this.data;
-    });
+    this.newFocus();
+    this.skillControllerService
+      .findAll()
+      .toPromise()
+      .then(data => {
+        this.skills = data;
+        this.selectedSkills = this.data.skills;
+        this.focus = this.data;
+      });
   }
 
   closeDialog() {
@@ -43,11 +47,22 @@ export class EditFocusComponent implements OnInit {
     return skill1.name === skill2.name;
   }
 
+  newFocus(): void {
+    this.focus = new Focus(0, '', true, []);
+  }
+
   editFocus(): void {
     console.log('We are Editing a focus ' + this.data.name);
     this.focus.skills = this.selectedSkills;
-    this.focusControllerService.update(this.focus);
-    this.focus = new Focus(0, '', false, []);
+    this.focusControllerService
+      .update(this.focus)
+      .toPromise()
+      .then()
+      .catch(err => {
+        alert('Error occurred while editing Focus');
+        console.log(err);
+      });
+    this.newFocus();
     this.closeDialog();
   }
 }

@@ -1,3 +1,4 @@
+
 <!--skills section-->
   <mat-toolbar-row>
     <mat-toolbar class="md-toolbar" layout="columns">
@@ -9,21 +10,30 @@
       </button>
     </mat-toolbar>
   </mat-toolbar-row>
+
+  <div id="skillsDiv">
+  <mat-card-content *ngIf="loading===true">
+    <div class="center">
+      <div fxFlex="100"> &nbsp;</div>
+      <mat-progress-spinner class="center" mode="indeterminate"></mat-progress-spinner>
+      <div fxFlex="100"> &nbsp;</div>
+    </div>
+  </mat-card-content>
   
-  <mat-card-content>
+  <mat-card-content *ngIf="loading==false && skillsList.length >= 1">
     <div class="md-padding" layout="column">
       <div *ngIf="!lockSkills">
-      <h2 matSubheader>Select a skill:</h2>
-      <mat-select class="revOrange" placeholder="Select Skill">
-        <mat-optgroup>
-          <mat-option *ngFor="let skill of skillsList" (click)="addSkill(skill)">
-            {{skill}}
+      <h2 matSubheader class="revDark">Select a skill:</h2>
+      <mat-select class="revDark" placeholder="Select Skill">
+        <mat-optgroup class="revDark">
+          <mat-option class="revDark" *ngFor="let skill of skillsList" (click)="addSkill(skill)">
+            <span class="revDark">{{skill}}</span>
           </mat-option>
         </mat-optgroup>
       </mat-select>
       <hr>
       </div>
-      <h2 matSubheader>Current skills:</h2>
+      <h2 matSubheader class="revDark">Current Skills</h2>
       <mat-list>
         <button [disabled]="lockSkills" mat-button class="md-list-item" *ngFor="let skill of trainer.skills" (click)="removeSkill(skill)">
           <mat-icon class="material-icons">stars</mat-icon>
@@ -32,3 +42,8 @@
       </mat-list>
     </div>
   </mat-card-content>
+
+  <mat-card-content *ngIf="loading == false && skillsList.length < 1">
+    <h1 class="center revOrange">FAILED TO LOAD</h1>
+  </mat-card-content>
+</div>

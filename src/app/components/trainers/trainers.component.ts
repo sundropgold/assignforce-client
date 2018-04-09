@@ -50,10 +50,22 @@ export class TrainersComponent implements OnInit {
   addTrainer(): void {
     //add trainer
 
+    const trainer: Trainer = {
+      id: 0,
+      firstName: '',
+      lastName: '',
+      skills: [],
+      certifications: '',
+      active: true,
+      resume: '',
+      preferredLocation: null,
+      unavailabilities: []
+    };
+
     const dialogRef = this.dialog.open(TrainersAddComponent, {
       width: '450px',
       data: {
-        trainer: null
+        trainer: trainer
       }
     });
 
@@ -61,15 +73,16 @@ export class TrainersComponent implements OnInit {
       if (result) {
         //  this.addTrainer(result);
         this.trainers.push(result);
-        this.trainerService
-          .create(result)
-          .toPromise()
-          .then(t => {
-            console.log(t);
-          })
-          .catch(error => {
-            console.log(error);
-          });
+
+        // this.trainerService
+        //   .create(result)
+        //   .toPromise()
+        //   .then(t => {
+        //     console.log(t);
+        //   })
+        //   .catch(error => {
+        //     console.log(error);
+        //   });
       }
     });
   }

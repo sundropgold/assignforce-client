@@ -35,6 +35,7 @@ export class ProfileComponent implements OnInit {
   skillsList: Skill[] = [];
   edit = false;
   loading: boolean;
+  trainers: Trainer[] = [];
   trainer = new Trainer(0, '', '', [], null, false, null, []);
 
   constructor(private skillsService: SkillControllerService, private trainerService: TrainerControllerService) {}
@@ -47,15 +48,16 @@ export class ProfileComponent implements OnInit {
   setTrainer() {
     this.loading = true;
     this.trainerService
-      .find(0)
+      .findAll()
       .toPromise()
-      .then(trainer => {
-        this.trainer = trainer;
+      .then(trainers => {
+        this.trainers = trainers;
+        this.trainer = this.trainers[0];
         this.loading = false;
       })
       .catch(error => {
         console.log(error);
-        //this.trainer=new Trainer(0,"","", [], null, false, null, []);
+        this.trainers[0].firstName = 'Failed to load';
         this.loading = false;
       });
   }
@@ -73,7 +75,7 @@ export class ProfileComponent implements OnInit {
   }
 
   remove(skill: Skill) {
-    this.skillsList = this.trainer.skills.filter(s => s !== skill);
+    this.skillsList = this.trainers[0].skills.filter(s => s !== skill);
   }
 
   toggleEdit() {
@@ -107,8 +109,8 @@ export class ProfileComponent implements OnInit {
     if (this.lockProfile) {
       if (this.nameForm.valid) {
         this.nameFound = true;
-        this.trainer.firstName = this.nameForm.value.firstName;
-        this.trainer.lastName = this.nameForm.value.lastName;
+        this.trainers[0].firstName = this.nameForm.value.firstName;
+        this.trainers[0].lastName = this.nameForm.value.lastName;
       }
       // if (this.myFile[0] !== undefined) {
       //   this.uploadResume();
