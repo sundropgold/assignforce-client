@@ -9,8 +9,16 @@
       </button>
     </mat-toolbar>
   </mat-toolbar-row>
+
+  <mat-card-content *ngIf="loading===true">
+    <div class="center">
+      <div fxFlex="100"> &nbsp;</div>
+      <mat-progress-spinner class="center" mode="indeterminate"></mat-progress-spinner>
+      <div fxFlex="100"> &nbsp;</div>
+    </div>
+  </mat-card-content>
   
-  <mat-card-content>
+  <mat-card-content *ngIf="loading==false && skillsList.length >= 1">
     <div class="md-padding" layout="column">
       <div *ngIf="!lockSkills">
       <h2 matSubheader>Select a skill:</h2>
@@ -31,4 +39,8 @@
         </button>
       </mat-list>
     </div>
+  </mat-card-content>
+
+  <mat-card-content *ngIf="loading == false && skillsList.length < 1">
+    <h1 class="center">FAILED TO LOAD</h1>
   </mat-card-content>

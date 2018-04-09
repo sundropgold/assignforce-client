@@ -1,14 +1,9 @@
-// The file contents for the current environment will overwrite these during build.
-// The build system defaults to the dev environment which uses `environment.ts`, but if you do
-// `ng build --env=prod` then `environment.prod.ts` will be used instead.
-// The list of which env maps to which file can be found in `.angular-cli.json`.
-
 export const environment = {
   production: true,
-  baseUrl: 'https://localhost:4200',
+  baseUrl: 'http://localhost:8080',
 
   appRoutes: {
-    login: 'login',
+    login: '',
     overview: 'overview',
     batches: 'batches',
     locations: 'locations',
@@ -27,7 +22,7 @@ export const environment = {
   },
 
   auth0: {
-    namespace: 'https://revature.com/',
+    namespace: 'http://revature.com/',
     title: 'AssignForce Login',
     clientId: 'tjQhcs0O4mRV2iry6SAO0Gy1YQcBrWCa', //hydra
     domain: 'revature.auth0.com',
@@ -39,7 +34,7 @@ export const environment = {
 
   apiUrls: {
     addressController: {
-      baseUrl: 'https://hydra.cfapps.io/api/addresses',
+      baseUrl: 'http://localhost:8080/addresses',
       create: '',
       update: '/',
       findAll: '',
@@ -48,7 +43,7 @@ export const environment = {
     },
 
     batchController: {
-      baseUrl: 'https://hydra.cfapps.io/api/batches',
+      baseUrl: 'http://localhost:8080/batches',
       create: '',
       update: '/',
       findAll: '',
@@ -57,7 +52,7 @@ export const environment = {
     },
 
     buildingController: {
-      baseUrl: 'https://hydra.cfapps.io/api/buidings',
+      baseUrl: 'http://localhost:8080/buildings',
       create: '',
       update: '/',
       findAll: '',
@@ -66,7 +61,7 @@ export const environment = {
     },
 
     locationController: {
-      baseUrl: 'https://hydra.cfapps.io/api/locations',
+      baseUrl: 'http://localhost:8080/locations',
       create: '',
       update: '/',
       findAll: '',
@@ -75,7 +70,7 @@ export const environment = {
     },
 
     roomController: {
-      baseUrl: 'https://hydra.cfapps.io/api/rooms',
+      baseUrl: 'http://localhost:8080/rooms',
       create: '',
       update: '/',
       findAll: '',
@@ -84,7 +79,7 @@ export const environment = {
     },
 
     curriculumController: {
-      baseUrl: 'https://hydra.cfapps.io/api/curricula',
+      baseUrl: 'http://localhost:8080/curricula',
       create: '',
       update: '/',
       findAll: '',
@@ -93,7 +88,7 @@ export const environment = {
     },
 
     focusController: {
-      baseUrl: 'https://hydra.cfapps.io/api/focuses',
+      baseUrl: 'http://localhost:8080/curriculum/curricula',
       create: '',
       update: '/',
       findAll: '',
@@ -102,7 +97,7 @@ export const environment = {
     },
 
     skillController: {
-      baseUrl: 'https://hydra.cfapps.io/api/skills',
+      baseUrl: 'http://localhost:8080/skills',
       create: '',
       update: '/',
       findAll: '',
@@ -111,7 +106,7 @@ export const environment = {
     },
 
     trainerController: {
-      baseUrl: 'https://hydra.cfapps.io/api/trainers',
+      baseUrl: 'http://localhost:8080/trainers',
       create: '',
       update: '/',
       findAll: '',
@@ -120,7 +115,7 @@ export const environment = {
     },
 
     settingController: {
-      baseUrl: 'https://hydra.cfapps.io/api/assignforce-settings',
+      baseUrl: 'http://localhost:8080/setting',
       create: '',
       update: '/',
       findAll: '',
@@ -129,7 +124,7 @@ export const environment = {
     },
 
     unavailableController: {
-      baseUrl: 'https://hydra.cfapps.io/api/unavailables',
+      baseUrl: 'http://localhost:8080/unavailables',
       create: '',
       update: '/',
       findAll: '',

@@ -2,6 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import {
+  MatCardModule,
   MatExpansionModule,
   MatFormFieldModule,
   MatGridListModule,
@@ -35,6 +36,7 @@ describe('SettingsComponent', () => {
         MatGridListModule,
         MatSelectModule,
         MatProgressBarModule,
+        MatCardModule,
         HttpClientTestingModule
       ],
       declarations: [SettingsComponent],

@@ -1,17 +1,17 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { InMemDbService } from './in-mem-db.service';
+import { InterceptorsService } from './interceptors.service';
 
-describe('InMemDbService', () => {
+describe('InterceptorsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [InMemDbService]
+      providers: [InterceptorsService]
     });
   });
 
   it(
     'should be created',
-    inject([InMemDbService], (service: InMemDbService) => {
+    inject([InterceptorsService], (service: InterceptorsService) => {
       expect(service).toBeTruthy();
     })
   );

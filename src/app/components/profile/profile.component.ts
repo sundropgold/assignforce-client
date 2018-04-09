@@ -55,7 +55,7 @@ export class ProfileComponent implements OnInit {
       })
       .catch(error => {
         console.log(error);
-        //this.trainer=new Trainer(0,"","", [], null, false, null, []);
+        this.trainer.firstName = 'Failed to load';
         this.loading = false;
       });
   }
