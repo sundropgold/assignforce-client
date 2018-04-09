@@ -48,16 +48,6 @@ describe('FociComponent', () => {
     expect(compiled.querySelector('mat-list')).toBeTruthy();
   });
 
-  it('should contain the focus name', () => {
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.focus-name').textContent).toContain(component.focusData[0].name);
-  });
-
-  it('should contain the skills for the focus', () => {
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.focus-skills').textContent).toContain(component.focusData[0].skills[0].name);
-  });
-
   it('should contain an accordion for the focuses', () => {
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('mat-accordion')).toBeTruthy();
