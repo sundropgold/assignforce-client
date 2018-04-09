@@ -1,14 +1,26 @@
 language: node_js
 node_js:
 - 8.9.4
+sudo: required
+dist: trusty
+before_script:
+- "sudo chown root /opt/google/chrome/chrome-sandbox"
+- "sudo chmod 4755 /opt/google/chrome/chrome-sandbox"
+addons:
+  apt:
+    sources:
+    - google-chrome
+    packages:
+    - google-chrome-stable
 install:
 - npm install
-- npm i headless-chromium
 script:
-- cd clientApp
-- npm run lint -- --fix
-# - npm run test: once
+- export CHROME_BIN=chromium-browser
+- xvfb-run -a npm run lint:ci
+- xvfb-run -a npm run test:ci
+- xvfb-run -a npm run prod
 deploy:
+  skip_cleanup: true
   provider: cloudfoundry
   api: https://api.run.pivotal.io
   username: pdawson2090@gmail.com
@@ -18,4 +30,5 @@ deploy:
   space: development
   on:
     repo: revaturelabs/assignforce-client
-    branch: staging
+    branch: develop
+
