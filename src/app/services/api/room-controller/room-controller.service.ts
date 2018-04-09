@@ -10,11 +10,28 @@ export class RoomControllerService {
 
   private roomController = environment.apiUrls.roomController;
 
+  private generateDTO(room: Room): any {
+    const unavailabilities: string[] = [];
+    room.unavailabilities.forEach(unavail => {
+      unavailabilities.push(environment.apiUrls.roomController.baseUrl + '/' + unavail.id);
+    });
+    return {
+      id: room.id,
+      active: room.active,
+      roomName: room.roomName,
+      building: environment.apiUrls.buildingController.baseUrl + '/' + room.building.id,
+      unavailabilities: unavailabilities
+    };
+  }
+
   public create(room: Room): Observable<Room> {
-    return this.http.post<Room>(this.roomController.baseUrl + this.roomController.create, room);
+    return this.http.post<Room>(this.roomController.baseUrl + this.roomController.create, this.generateDTO(room));
   }
   public update(room: Room): Observable<Room> {
-    return this.http.put<Room>(this.roomController.baseUrl + this.roomController.update + room.id, room);
+    return this.http.put<Room>(
+      this.roomController.baseUrl + this.roomController.update + room.id,
+      this.generateDTO(room)
+    );
   }
   public findAll(): Observable<Room[]> {
     return this.http.get<Room[]>(this.roomController.baseUrl + this.roomController.findAll);
@@ -22,7 +39,6 @@ export class RoomControllerService {
   public remove(id: number): Observable<Room> {
     return this.http.delete<Room>(this.roomController.baseUrl + this.roomController.remove + id);
   }
-
   public find(id: number): Observable<Room> {
     return this.http.get<Room>(this.roomController.baseUrl + this.roomController.find + id);
   }
