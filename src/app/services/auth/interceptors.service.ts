@@ -8,7 +8,6 @@ export class InterceptorsService {
   constructor() {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log(localStorage.getItem('access_token'));
     req = req.clone({
       setHeaders: {
         Authorization: `Bearer ${localStorage.getItem('access_token')}`
