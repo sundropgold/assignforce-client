@@ -79,6 +79,7 @@ export class TrainersAddComponent implements OnInit {
         .toPromise()
         .then(t => {
           console.log(t);
+          window.location.reload();
         })
         .catch(error => {
           console.log(error);
