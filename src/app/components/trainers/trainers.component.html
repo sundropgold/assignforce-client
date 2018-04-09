@@ -29,7 +29,7 @@
     <!--displays a loading circle if trainers is undefined-->
     <div class = "center">
       <div fxFlex="100"> &nbsp;</div>
-      <mat-progress-spinner *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner>
+      <mat-progress-spinner *ngIf="isLoading && trainers.length < 1" mode="indeterminate"></mat-progress-spinner>
       <h4 *ngIf="!isLoading && trainers.length < 1">No Active Trainers.</h4>
       <div fxFlex="100"> &nbsp;</div>
     </div>
@@ -54,7 +54,7 @@
     <div class = "center" fxLayout="column" fxLayoutWrap fxLayoutAlign="center center">
       <div fxFlex="100"> &nbsp;</div>
       <mat-progress-spinner *ngIf="isLoading && trainers.length < 1" mode="indeterminate"></mat-progress-spinner>
-      <h4 *ngIf="!isLoading">No Inactive Trainers.</h4>
+      <h4 *ngIf="!isLoading && trainers.length < 1">No Inactive Trainers.</h4>
       <div fxFlex="100"> &nbsp;</div>
     </div>
   </mat-card>
