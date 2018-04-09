@@ -42,7 +42,16 @@ export class AddFocusComponent implements OnInit {
 
   addFocus(): void {
     console.log('We are Adding a focus ' + this.focus.name);
-    this.focusControllerService.create(this.focus);
+    console.log(this.focus);
+    this.focus.skills = this.selectedSkills;
+    this.focusControllerService
+      .create(this.focus)
+      .toPromise()
+      .then()
+      .catch(err => {
+        alert('Error occurred while adding Focus');
+        console.log(err);
+      });
     this.newFocus();
     this.closeDialog();
   }
