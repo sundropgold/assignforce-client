@@ -11,7 +11,7 @@ import { TrainerControllerService } from '../../../services/api/trainer-controll
 })
 export class TrainersAddComponent implements OnInit {
   trainer: Trainer = {
-    id: 0,
+    id: null,
     firstName: '',
     lastName: '',
     skills: [],
