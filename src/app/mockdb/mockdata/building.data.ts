@@ -1,47 +1,45 @@
 import { mockDataSize } from '../in-mem-db-settings';
-
-export const buildingData = {
-  id: 'building-data',
-  type: 'object',
-  properties: {
-    building: {
-      type: 'array',
-      minItems: mockDataSize,
-      items: {
-        $ref: 'building'
-      },
-      uniqueItems: true
-    }
-  },
-  required: ['building']
-};
+import { idDef, activeDef } from './util.def';
+import { addressDef } from './address.data';
+import { roomDef } from './room.data';
 
 export const buildingDef = {
   id: 'building',
   type: 'object',
   properties: {
     id: {
-      $ref: 'id'
+      ...idDef
     },
     active: {
-      $ref: 'active'
+      ...activeDef
     },
     name: {
       type: 'string',
-      faker: 'lorem.sentence'
+      faker: 'lorem.word'
     },
     address: {
-      $ref: 'address'
+      ...addressDef
     },
     rooms: {
       type: 'array',
       minItems: 1,
       maxItems: 10,
       items: {
-        $ref: 'room'
+        ...roomDef
       },
       uniqueItems: true
     }
   },
   required: ['id', 'active', 'name', 'address', 'rooms']
+};
+
+export const buildingData = {
+  id: 'building-data',
+  type: 'array',
+  minItems: mockDataSize,
+  items: {
+    ...buildingDef
+  },
+  uniqueItems: true,
+  required: ['building']
 };

@@ -1,41 +1,28 @@
 import { mockDataSize } from '../in-mem-db-settings';
-
-export const curriculumData = {
-  id: 'curriculum-data',
-  type: 'object',
-  properties: {
-    curriculum: {
-      type: 'array',
-      minItems: mockDataSize,
-      items: {
-        $ref: 'curriculum'
-      },
-      uniqueItems: true
-    }
-  },
-  required: ['curriculum']
-};
+import { idDef, activeDef } from './util.def';
+import { focusDef } from './focus.data';
+import { skillDef } from './skill.data';
 
 export const curriculumDef = {
   id: 'curriculum',
   type: 'object',
   properties: {
     id: {
-      $ref: 'id'
+      ...idDef
     },
     active: {
-      $ref: 'active'
+      ...activeDef
     },
     name: {
       type: 'string',
-      faker: 'lorem.sentence'
+      faker: 'lorem.word'
     },
     focuses: {
       type: 'array',
       minItems: 1,
       maxItems: 10,
       items: {
-        $ref: 'focus'
+        ...focusDef
       },
       uniqueItems: true
     },
@@ -44,10 +31,21 @@ export const curriculumDef = {
       minItems: 1,
       maxItems: 10,
       items: {
-        $ref: 'skill'
+        ...skillDef
       },
       uniqueItems: true
     }
   },
   required: ['id', 'active', 'name', 'focuses', 'skills']
+};
+
+export const curriculumData = {
+  id: 'curriculum-data',
+  type: 'array',
+  minItems: mockDataSize,
+  items: {
+    ...curriculumDef
+  },
+  uniqueItems: true,
+  required: ['curriculum']
 };

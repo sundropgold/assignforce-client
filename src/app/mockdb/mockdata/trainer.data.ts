@@ -1,20 +1,8 @@
 import { mockDataSize } from '../in-mem-db-settings';
-
-export const trainerData = {
-  id: 'trainer-data',
-  type: 'object',
-  properties: {
-    trainer: {
-      type: 'array',
-      minItems: mockDataSize,
-      items: {
-        $ref: 'trainer'
-      },
-      uniqueItems: true
-    }
-  },
-  required: ['trainer']
-};
+import { idDef, activeDef } from './util.def';
+import { addressDef } from './address.data';
+import { skillDef } from './skill.data';
+import { unavailabilityDef } from './unavailability.data';
 
 // Certifications and Resume are omitted
 export const trainerDef = {
@@ -22,10 +10,10 @@ export const trainerDef = {
   type: 'object',
   properties: {
     id: {
-      $ref: 'id'
+      ...idDef
     },
     active: {
-      $ref: 'active'
+      ...activeDef
     },
     firstName: {
       type: 'string',
@@ -36,14 +24,14 @@ export const trainerDef = {
       faker: 'name.lastName'
     },
     perferredLocations: {
-      $ref: 'address'
+      ...addressDef
     },
     skills: {
       type: 'array',
       minItems: 1,
       maxItems: 10,
       items: {
-        $ref: 'skill'
+        ...skillDef
       },
       uniqueItems: true
     },
@@ -52,10 +40,21 @@ export const trainerDef = {
       minItems: 1,
       maxItems: 10,
       items: {
-        $ref: 'unavailability'
+        ...unavailabilityDef
       },
       uniqueItems: true
     }
   },
   required: ['id', 'active', 'firstName', 'lastName', 'preferredLocation', 'skills', 'unavailabilities']
+};
+
+export const trainerData = {
+  id: 'trainer-data',
+  type: 'array',
+  minItems: mockDataSize,
+  items: {
+    ...trainerDef
+  },
+  uniqueItems: true,
+  required: ['trainer']
 };
