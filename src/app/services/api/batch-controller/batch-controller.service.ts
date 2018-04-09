@@ -12,9 +12,6 @@ export class BatchControllerService {
   private batchController = environment.apiUrls.batchController;
 
   public create(batch: Batch): Observable<Batch> {
-    const skills = batch.skills.map(skill => {
-      return `${this.batchController.baseUrl}/skills/${skill.id}`;
-    });
     return this.http.post<Batch>(this.batchController.baseUrl + this.batchController.create, {
       name: batch.name,
       startDate: batch.startDate,
@@ -22,7 +19,7 @@ export class BatchControllerService {
       curriculum: `${environment.apiUrls.curriculumController.baseUrl}/${batch.curriculum.id}`,
       focus: `${environment.apiUrls.focusController.baseUrl}/${batch.focus.id}`,
       trainer: `${environment.apiUrls.trainerController.baseUrl}/${batch.trainer.id}`,
-      skills,
+      skills: this.parseSkills(batch.skills),
       address: `${environment.apiUrls.addressController.baseUrl}/${batch.address.id}`,
       building: `${environment.apiUrls.buildingController.baseUrl}/${batch.building.id}`,
       room: `${environment.apiUrls.roomController.baseUrl}/${batch.room.id}`
