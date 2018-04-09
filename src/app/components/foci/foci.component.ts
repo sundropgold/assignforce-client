@@ -37,6 +37,9 @@ export class FociComponent implements OnInit {
     const dialogRef = this.dialog.open(EditFocusComponent, {
       data: focus
     });
+    dialogRef.afterClosed().subscribe(result => {
+      this.refreshFocuses();
+    });
   }
 
   refreshFocuses(): void {
