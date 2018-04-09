@@ -17,3 +17,11 @@
   margin: auto;
   width: 10%;
 }
+
+mat-icon {
+  color: #37474f;
+}
+
+mat-icon:hover {
+  color: #f26a25;
+}
