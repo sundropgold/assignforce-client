@@ -60,6 +60,7 @@ import { BatchesTimelineComponent } from './components/batches-timeline/batches-
 import { BatchesTimelineFilterComponent } from './components/batches-timeline-filter/batches-timeline-filter.component';
 import { FocusControllerService } from './services/api/focus-controller/focus-controller.service';
 import { RoomControllerService } from './services/api/room-controller/room-controller.service';
+import { InterceptorsService } from './services/auth/interceptors.service';
 
 @NgModule({
   declarations: [
@@ -106,8 +107,8 @@ import { RoomControllerService } from './services/api/room-controller/room-contr
     BrowserModule,
     AppRouting,
     BrowserAnimationsModule,
-    AppMaterialModule,
-    InMemoryWebApiModule.forRoot(InMemDbService)
+    AppMaterialModule
+    // InMemoryWebApiModule.forRoot(InMemDbService)
   ],
 
   exports: [AppMaterialModule],
@@ -132,6 +133,11 @@ import { RoomControllerService } from './services/api/room-controller/room-contr
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpringXsrfInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorsService,
       multi: true
     }
   ],
