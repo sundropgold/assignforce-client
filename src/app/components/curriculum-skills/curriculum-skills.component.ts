@@ -36,6 +36,9 @@ export class CurriculumSkillsComponent implements OnInit {
     const dialogRef = this.dialog.open(EditSkillComponent, {
       data: skill
     });
+    dialogRef.afterClosed().subscribe(result => {
+      this.refreshSkills();
+    });
   }
 
   refreshSkills(): void {

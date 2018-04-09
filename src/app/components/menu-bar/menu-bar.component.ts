@@ -14,6 +14,8 @@ export class MenuBarComponent implements OnInit {
 
   tabs = ['overview', 'batches', 'locations', 'curricula', 'trainers', 'profile', 'reports', 'settings'];
 
+  id = -1;
+
   constructor(private router: Router, private route: ActivatedRoute, private auth0: AuthService) {}
 
   logout() {
@@ -25,6 +27,9 @@ export class MenuBarComponent implements OnInit {
       if (event instanceof NavigationEnd) {
         console.log(event.url);
         this.selectedTab = this.tabs.indexOf(event.url.split('/')[1]);
+        if (this.router.url.includes('profile')) {
+          this.id = Number.parseInt(this.router.url.split('/')[2]);
+        }
       }
     });
   }
@@ -32,7 +37,7 @@ export class MenuBarComponent implements OnInit {
   selectTab(evt) {
     console.log(evt);
     if (this.selectedTab === this.tabs.indexOf('profile')) {
-      this.router.navigate(['/profile/1']);
+      this.router.navigate([`/profile/${this.id}`]);
     } else {
       this.router.navigate([this.tabs[evt.index]]);
     }
