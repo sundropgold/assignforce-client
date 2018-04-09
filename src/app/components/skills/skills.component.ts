@@ -25,7 +25,6 @@ export class SkillsComponent implements OnInit {
 
   ngOnInit() {
     this.getAllSkills();
-    this.populateSkillList();
   }
 
   updateSkills() {
@@ -76,14 +75,11 @@ export class SkillsComponent implements OnInit {
       .toPromise()
       .then(response => {
         this.loading = false;
-        this.skills = response;
+        this.skillsList = response;
       })
       .catch(error => {
         console.log(error);
         this.loading = false;
       });
-  }
-  populateSkillList() {
-    this.skillsList = this.skills.map(skill => skill);
   }
 }

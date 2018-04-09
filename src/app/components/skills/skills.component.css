@@ -15,6 +15,11 @@ mat-icon {
   color: #f26a25;
 }
 
+.center {
+  text-align: center;
+  margin: 0 auto;
+}
+
 .ng-star-inserted {
   color: #fff;
 }
