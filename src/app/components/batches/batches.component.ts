@@ -135,6 +135,7 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
         this.allBatches = response;
         this.secondHeader = 'All Batches';
         this.isLoading = false;
+        this.dataSource.data = this.allBatches;
       })
       .catch(error => {
         this.isLoading = false;
@@ -155,6 +156,11 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
       location: [null, Validators.required],
       building: [null],
       room: [null]
+      // Example:
+      // form = new FormGroup({
+      //   first: new FormControl({value: 'Nancy', disabled: true}, Validators.required),
+      //   last: new FormControl('Drew', Validators.required)
+      // });
     });
 
     // ----- Observable for form changes in Create Batches panel ------
@@ -220,7 +226,7 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
       this.batchForm.value.trainer,
       this.batchForm.value.cotrainer,
       this.batchForm.value.skills,
-      null,
+      '',
       this.batchForm.value.location,
       this.batchForm.value.building,
       this.batchForm.value.room

@@ -58,13 +58,13 @@
             <!-- Building Column -->
             <ng-container matColumnDef="building">
               <mat-header-cell *matHeaderCellDef mat-sort-header> Building </mat-header-cell>
-              <mat-cell *matCellDef="let batchObj"> {{batchObj.building}}</mat-cell>
+              <mat-cell *matCellDef="let batchObj"><div *ngIf="batchObj.building">{{batchObj.building.name}}</div></mat-cell>
             </ng-container>
   
             <!-- Room Column -->
             <ng-container matColumnDef="room">
               <mat-header-cell *matHeaderCellDef mat-sort-header> Room </mat-header-cell>
-              <mat-cell *matCellDef="let batchObj"> {{batchObj.room}}</mat-cell>
+              <mat-cell *matCellDef="let batchObj"><div *ngIf="batchObj.room">{{batchObj.room.roomName}}</div></mat-cell>
             </ng-container>
   
             <!-- Start Date Column -->
