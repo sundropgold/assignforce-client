@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  baseUrl: 'https://localhost:4200',
+  baseUrl: 'http://localhost:8080',
 
   appRoutes: {
     login: '',
@@ -22,7 +22,7 @@ export const environment = {
   },
 
   auth0: {
-    namespace: 'https://revature.com/',
+    namespace: 'http://revature.com/',
     title: 'AssignForce Login',
     clientId: 'tjQhcs0O4mRV2iry6SAO0Gy1YQcBrWCa', //hydra
     domain: 'revature.auth0.com',
@@ -34,7 +34,7 @@ export const environment = {
 
   apiUrls: {
     addressController: {
-      baseUrl: 'https://localhost:4200/addresses',
+      baseUrl: 'http://localhost:8080/addresses',
       create: '',
       update: '/',
       findAll: '',
@@ -43,7 +43,7 @@ export const environment = {
     },
 
     batchController: {
-      baseUrl: 'https://localhost:4200/batches',
+      baseUrl: 'http://localhost:8080/batches',
       create: '',
       update: '/',
       findAll: '',
@@ -52,7 +52,7 @@ export const environment = {
     },
 
     buildingController: {
-      baseUrl: 'https://localhost:4200/buildings',
+      baseUrl: 'http://localhost:8080/buildings',
       create: '',
       update: '/',
       findAll: '',
@@ -61,7 +61,7 @@ export const environment = {
     },
 
     locationController: {
-      baseUrl: 'https://localhost:4200/locations',
+      baseUrl: 'http://localhost:8080/locations',
       create: '',
       update: '/',
       findAll: '',
@@ -70,7 +70,7 @@ export const environment = {
     },
 
     roomController: {
-      baseUrl: 'https://localhost:4200/rooms',
+      baseUrl: 'http://localhost:8080/rooms',
       create: '',
       update: '/',
       findAll: '',
@@ -79,7 +79,7 @@ export const environment = {
     },
 
     curriculumController: {
-      baseUrl: 'https://localhost:4200/curricula',
+      baseUrl: 'http://localhost:8080/curricula',
       create: '',
       update: '/',
       findAll: '',
@@ -88,7 +88,7 @@ export const environment = {
     },
 
     focusController: {
-      baseUrl: 'https://localhost:4200/curriculum/curricula',
+      baseUrl: 'http://localhost:8080/curriculum/curricula',
       create: '',
       update: '/',
       findAll: '',
@@ -97,7 +97,7 @@ export const environment = {
     },
 
     skillController: {
-      baseUrl: 'https://localhost:4200/skills',
+      baseUrl: 'http://localhost:8080/skills',
       create: '',
       update: '/',
       findAll: '',
@@ -106,7 +106,7 @@ export const environment = {
     },
 
     trainerController: {
-      baseUrl: 'https://localhost:4200/trainers',
+      baseUrl: 'http://localhost:8080/trainers',
       create: '',
       update: '/',
       findAll: '',
@@ -115,7 +115,7 @@ export const environment = {
     },
 
     settingController: {
-      baseUrl: 'https://localhost:4200/setting',
+      baseUrl: 'http://localhost:8080/setting',
       create: '',
       update: '/',
       findAll: '',
@@ -124,7 +124,7 @@ export const environment = {
     },
 
     unavailableController: {
-      baseUrl: 'https://localhost:4200/unavailables',
+      baseUrl: 'http://localhost:8080/unavailables',
       create: '',
       update: '/',
       findAll: '',
