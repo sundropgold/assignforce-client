@@ -53,7 +53,7 @@ export class TrainersComponent implements OnInit {
     //add trainer
 
     const trainer: Trainer = {
-      id: 0,
+      id: null,
       firstName: '',
       lastName: '',
       skills: [],
@@ -73,6 +73,7 @@ export class TrainersComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        console.log(result);
         //  this.addTrainer(result);
         this.trainers.push(result);
 
@@ -89,7 +90,7 @@ export class TrainersComponent implements OnInit {
     });
   }
 
-  activateTrainer(trainer: Trainer) {
-    trainer.active = true;
-  }
+  // activateTrainer(trainer: Trainer) {
+  //   trainer.active = true;
+  // }
 }
