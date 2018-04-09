@@ -148,10 +148,8 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.loadInitialDates();
     this.currentPage = 0;
-    setTimeout(() => {
-      this.updateBatches();
-      this.updateTrainers();
-    }, 0);
+    this.updateBatches();
+    this.updateTrainers();
   }
 
   // set initial values for start and end dates
@@ -309,42 +307,95 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   updateBatches() {
     // console.log('updating batches...');
     this.loading = true;
-    this.batchController.findAll().subscribe(result => {
-      this.batches = [];
-      for (let i = 0; i < result.length; i++) {
-        const batch = result[i];
-        // filter concluded batches
-        if (this.hideConcludedBatches) {
-          if (batch.endDate < Date.now()) {
-            continue;
-          }
+    this.batchController.findAll().subscribe(
+      result => {
+        this.batches = [];
+        if (result.length === 0) {
+          console.log('no batches loaded!');
+          return;
         }
-        // filter by type
-        if (this.curriculumFilter !== 'Any') {
-          if (batch.curriculum.name !== this.curriculumFilter) {
-            continue;
+        for (let i = 0; i < result.length; i++) {
+          const batch = result[i];
+          // filter concluded batches
+          if (this.hideConcludedBatches) {
+            if (batch.endDate < Date.now()) {
+              continue;
+            }
           }
-        }
-        if (this.focusFilter !== 'Any') {
-          if (batch.focus != null && batch.focus.name !== this.focusFilter) {
-            continue;
+          // filter by type
+          if (this.curriculumFilter !== 'Any') {
+            if (batch.curriculum.name !== this.curriculumFilter) {
+              continue;
+            }
           }
-        }
-        if (this.locationFilter !== 'Any') {
-          if (batch.address.name !== this.locationFilter) {
-            continue;
+          if (this.focusFilter !== 'Any') {
+            if (batch.focus != null && batch.focus.name !== this.focusFilter) {
+              continue;
+            }
           }
-        }
-        if (this.buildingFilter !== 'Any') {
-          if (batch.building.name !== this.buildingFilter) {
-            continue;
+          if (this.locationFilter !== 'Any') {
+            if (batch.address.name !== this.locationFilter) {
+              continue;
+            }
           }
+          if (this.buildingFilter !== 'Any') {
+            if (batch.building.name !== this.buildingFilter) {
+              continue;
+            }
+          }
+          // add it
+          this.batches.push(batch);
         }
-        // add it
-        this.batches.push(batch);
+        this.loading = false;
+      },
+      err => {
+        console.log('failed to load batches ', err);
       }
-      this.loading = false;
-    });
+    );
+  }
+
+  // gets the list of trainers
+  updateTrainers() {
+    // console.log('updating trainers...');
+    this.loading = true;
+    this.trainerController.findAll().subscribe(
+      result => {
+        this.trainers = [];
+        if (result.length === 0) {
+          console.log('no trainers loaded!');
+          this.updatePage();
+          return;
+        }
+        for (let i = 0; i < result.length; i++) {
+          const trainer = result[i];
+          // filter batchless trainers
+          if (this.hideBatchlessTrainers) {
+            let hasBatch = false;
+            for (const batch of this.batches) {
+              if (batch.trainer.id === trainer.id) {
+                hasBatch = true;
+                break;
+              }
+            }
+            if (!hasBatch) {
+              continue;
+            }
+          }
+          // filter inactive trainers
+          if (this.hideInactiveTrainers) {
+            if (!trainer.active) {
+              continue;
+            }
+          }
+          this.trainers.push(trainer);
+        }
+        this.updatePage();
+        this.loading = false;
+      },
+      err => {
+        console.log('failed to load trainers ', err);
+      }
+    );
   }
 
   // updates the start and end date filters
@@ -369,40 +420,6 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     // console.log(this.width + ' ' + this.height);
     this.finishSwimMode();
     this.updateTodayLine();
-  }
-
-  // makes the list of trainers
-  updateTrainers() {
-    // console.log('updating trainers...');
-    this.loading = true;
-    this.trainerController.findAll().subscribe(result => {
-      this.trainers = [];
-      for (let i = 0; i < result.length; i++) {
-        const trainer = result[i];
-        // filter batchless trainers
-        if (this.hideBatchlessTrainers) {
-          let hasBatch = false;
-          for (const batch of this.batches) {
-            if (batch.trainer.id === trainer.id) {
-              hasBatch = true;
-              break;
-            }
-          }
-          if (!hasBatch) {
-            continue;
-          }
-        }
-        // filter inactive trainers
-        if (this.hideInactiveTrainers) {
-          if (!trainer.active) {
-            continue;
-          }
-        }
-        this.trainers.push(trainer);
-      }
-      this.updatePage();
-      this.loading = false;
-    });
   }
 
   // updates the line for today
