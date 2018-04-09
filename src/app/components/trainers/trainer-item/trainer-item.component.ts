@@ -30,7 +30,9 @@ export class TrainerItemComponent implements OnInit, DoCheck {
   }
 
   removeTrainer(trainer: Trainer) {
-    trainer.active = false;
+    console.log(trainer);
+    console.log(this.trainer);
+    this.trainer.active = false;
     this.trainerService
       .update(this.trainer)
       .toPromise()
@@ -43,7 +45,9 @@ export class TrainerItemComponent implements OnInit, DoCheck {
   }
 
   activateTrainer(trainer: Trainer) {
-    trainer.active = true;
+    console.log(trainer);
+    console.log(this.trainer);
+    this.trainer.active = true;
     this.trainerService
       .update(this.trainer)
       .toPromise()
