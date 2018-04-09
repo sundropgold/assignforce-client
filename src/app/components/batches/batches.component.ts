@@ -37,6 +37,7 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
   selectedLocation = null;
   selectedBuilding = null;
   selectedCurriculum = null;
+  selectedFocus = null;
 
   //For form select in Create New Batch
   curriculums: Curriculum[] = [];
@@ -179,6 +180,8 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
   ngDoCheck() {
     // ------- Checking if a form field has a selected value on Create Batch form -------
     // ------- Populating Subsequent fields based on selection ---------
+
+    // Checking if Location has been selected, if so, populate buildings
     if (this.batchForm.value.location) {
       const locationName = this.batchForm.value.location.name;
       if (locationName && locationName !== this.selectedLocation) {
@@ -191,6 +194,8 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
         });
       }
     }
+
+    // Checking if Building has been selected, if so, populate rooms
     if (this.batchForm.value.building) {
       const buildingName = this.batchForm.value.building.name;
       if (buildingName && buildingName !== this.selectedBuilding) {
@@ -198,6 +203,8 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
         this.rooms = this.batchForm.value.building.rooms;
       }
     }
+
+    // Checking if Curriculum has been selected, if so, populate focuses and skills
     if (this.batchForm.value.curriculum) {
       const curriculumName = this.batchForm.value.curriculum.name;
       if (curriculumName && curriculumName !== this.selectedCurriculum) {
@@ -206,10 +213,24 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
         this.skillsList = this.batchForm.value.curriculum.skills;
       }
     }
+
+    // Checking if Focus has been selected, if so, append focus skills to core skills
     if (this.batchForm.value.focus) {
       const focusName = this.batchForm.value.focus.name;
-      if (focusName) {
-        this.skillsList.concat(this.batchForm.value.focus.skills);
+      if (focusName && focusName !== this.selectedFocus) {
+        this.selectedFocus = focusName;
+
+        this.batchForm.value.focus.skills.forEach(skill => {
+          let canAdd = true;
+          this.skillsList.forEach(s => {
+            if (s.name === skill.name) {
+              canAdd = false;
+            }
+          });
+          if (canAdd) {
+            this.skillsList.push(skill);
+          }
+        });
       }
     }
   }
@@ -239,8 +260,8 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
     this.batchService
       .create(this.newBatch)
       .toPromise()
-      .then(t => {
-        console.log(t);
+      .then(b => {
+        // console.log(b);
       })
       .catch(error => {
         console.log(error);

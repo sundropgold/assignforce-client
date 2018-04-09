@@ -204,18 +204,18 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
             <mat-cell *matCellDef="let batch">
 
-              <button mat-icon-button color (click)="editBatch()">
+              <button mat-icon-button (click)="editBatch()">
                 <mat-icon matTooltip="Edit" matTooltipPosition="above">mode_edit</mat-icon>
               </button>
-              <button mat-icon-button color (click)="cloneBatch()">
+              <button mat-icon-button (click)="cloneBatch()">
                 <mat-icon matTooltip="Clone" matTooltipPosition="above">filter_none</mat-icon>
               </button>
-              <button mat-icon-button color (click)="deleteBatch()">
+              <button mat-icon-button (click)="deleteBatch()">
                 <mat-icon matTooltip="Delete" matTooltipPosition="above">delete</mat-icon>
               </button>
-              <button mat-icon-button color>
+              <!-- <button mat-icon-button>
                 <mat-icon matTooltip="Synchronize" matTooltipPosition="above">publish</mat-icon>
-              </button>
+              </button> -->
             </mat-cell>
           </ng-container>
 
