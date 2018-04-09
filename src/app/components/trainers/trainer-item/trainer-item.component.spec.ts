@@ -7,6 +7,8 @@ import { AppMaterialModule } from '../../../material.module';
 import { Trainer } from '../../../model/Trainer';
 import { TrainerControllerService } from '../../../services/api/trainer-controller/trainer-controller.service';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('TrainerItemComponent', () => {
   let component: TrainerItemComponent;
@@ -15,7 +17,7 @@ describe('TrainerItemComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [AppMaterialModule],
+        imports: [AppMaterialModule, HttpClientTestingModule],
         declarations: [TrainerItemComponent, TrainersComponent],
         providers: [TrainerControllerService, { provide: Router }]
       }).compileComponents();

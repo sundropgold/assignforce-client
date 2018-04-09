@@ -10,13 +10,11 @@ import { TrainerControllerService } from '../../../services/api/trainer-controll
   styleUrls: ['./trainers-add.component.css']
 })
 export class TrainersAddComponent implements OnInit {
-  Skillz: Skill[] = [];
-
   trainer: Trainer = {
     id: 0,
     firstName: '',
     lastName: '',
-    skills: this.Skillz,
+    skills: [],
     certifications: '',
     active: true,
     resume: '',
