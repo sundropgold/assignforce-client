@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, DoCheck } from '@angular/core';
 import { Trainer } from '../../../model/Trainer';
 import { Skill } from '../../../model/Skill';
+import { TrainerControllerService } from '../../../services/api/trainer-controller/trainer-controller.service';
 
 @Component({
   selector: 'app-trainer-item',
@@ -13,7 +14,7 @@ export class TrainerItemComponent implements OnInit, DoCheck {
   check = false;
   skillsList = '';
 
-  constructor() {}
+  constructor(private trainerService: TrainerControllerService) {}
 
   ngOnInit() {
     this.isManager = true;
@@ -28,10 +29,28 @@ export class TrainerItemComponent implements OnInit, DoCheck {
 
   removeTrainer(trainer: Trainer) {
     trainer.active = false;
+    this.trainerService
+      .update(this.trainer)
+      .toPromise()
+      .then(t => {
+        console.log(t);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   activateTrainer(trainer: Trainer) {
     trainer.active = true;
+    this.trainerService
+      .update(this.trainer)
+      .toPromise()
+      .then(t => {
+        console.log(t);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   listSkills(skills: Skill[]) {
