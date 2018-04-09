@@ -43,6 +43,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
       .findAll()
       .toPromise()
       .then(blist => {
+        console.log('response', blist);
         blist.forEach(batch => {
           // This is an object that encapsulates the Batch object's properties and a progress number.
           const batchObj = {
