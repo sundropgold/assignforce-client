@@ -3,7 +3,7 @@ export const environment = {
   baseUrl: 'https://assignforce.cfapps.io',
 
   appRoutes: {
-    login: '',
+    login: 'login',
     overview: 'overview',
     batches: 'batches',
     locations: 'locations',
