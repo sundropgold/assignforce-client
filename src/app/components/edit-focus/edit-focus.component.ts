@@ -34,7 +34,8 @@ export class EditFocusComponent implements OnInit {
       .then(data => {
         this.skills = data;
         this.selectedSkills = this.data.skills;
-        this.focus = this.data;
+        this.focus = JSON.parse(JSON.stringify(this.data));
+        //this.focus = this.data;
       });
   }
 

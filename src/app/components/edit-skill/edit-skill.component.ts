@@ -20,7 +20,8 @@ export class EditSkillComponent implements OnInit {
 
   ngOnInit() {
     this.newSkill();
-    this.skill = this.data;
+    this.skill = JSON.parse(JSON.stringify(this.data));
+    console.log(this.skill);
   }
 
   closeDialog() {
