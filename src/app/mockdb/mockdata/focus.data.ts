@@ -1,30 +1,16 @@
 import { mockDataSize } from '../in-mem-db-settings';
-
-export const focusData = {
-  id: 'focus-data',
-  type: 'object',
-  properties: {
-    focus: {
-      type: 'array',
-      minItems: mockDataSize,
-      items: {
-        $ref: 'focus'
-      },
-      uniqueItems: true
-    }
-  },
-  required: ['focus']
-};
+import { idDef, activeDef } from './util.def';
+import { skillDef } from './skill.data';
 
 export const focusDef = {
   id: 'focus',
   type: 'object',
   properties: {
     id: {
-      $ref: 'id'
+      ...idDef
     },
     active: {
-      $ref: 'active'
+      ...activeDef
     },
     name: {
       type: 'string',
@@ -35,10 +21,21 @@ export const focusDef = {
       minItems: 1,
       maxItems: 10,
       items: {
-        $ref: 'skill'
+        ...skillDef
       },
       uniqueItems: true
     }
   },
   required: ['id', 'active', 'name', 'skills']
+};
+
+export const focusData = {
+  id: 'focus-data',
+  type: 'array',
+  minItems: mockDataSize,
+  items: {
+    ...focusDef
+  },
+  uniqueItems: true,
+  required: ['focus']
 };

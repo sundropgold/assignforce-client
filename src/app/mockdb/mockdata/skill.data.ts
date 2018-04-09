@@ -1,30 +1,15 @@
 import { mockDataSize } from '../in-mem-db-settings';
-
-export const skillData = {
-  id: 'skill-data',
-  type: 'object',
-  properties: {
-    skill: {
-      type: 'array',
-      minItems: mockDataSize,
-      items: {
-        $ref: 'skill'
-      },
-      uniqueItems: true
-    }
-  },
-  required: ['skill']
-};
+import { idDef, activeDef } from './util.def';
 
 export const skillDef = {
   id: 'skill',
   type: 'object',
   properties: {
     id: {
-      $ref: 'id'
+      ...idDef
     },
     active: {
-      $ref: 'active'
+      ...activeDef
     },
     name: {
       type: 'string',
@@ -32,4 +17,15 @@ export const skillDef = {
     }
   },
   required: ['id', 'name', 'active']
+};
+
+export const skillData = {
+  id: 'skill-data',
+  type: 'array',
+  minItems: mockDataSize,
+  items: {
+    ...skillDef
+  },
+  uniqueItems: true,
+  required: ['skill']
 };

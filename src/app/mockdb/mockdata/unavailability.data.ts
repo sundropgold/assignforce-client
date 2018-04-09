@@ -1,27 +1,12 @@
 import { mockDataSize } from '../in-mem-db-settings';
-
-export const unavailabilityData = {
-  id: 'unavailability-data',
-  type: 'object',
-  properties: {
-    unavailability: {
-      type: 'array',
-      minItems: mockDataSize,
-      items: {
-        $ref: 'unavailability'
-      },
-      uniqueItems: true
-    }
-  },
-  required: ['unavailability']
-};
+import { idDef } from './util.def';
 
 export const unavailabilityDef = {
   id: 'unavailability',
   type: 'object',
   properties: {
     id: {
-      $ref: 'id'
+      ...idDef
     },
     startDate: {
       type: 'string',
@@ -33,4 +18,15 @@ export const unavailabilityDef = {
     }
   },
   required: ['id', 'startDate', 'endDate']
+};
+
+export const unavailabilityData = {
+  id: 'unavailability-data',
+  type: 'array',
+  minItems: mockDataSize,
+  items: {
+    ...unavailabilityDef
+  },
+  uniqueItems: true,
+  required: ['unavailability']
 };
