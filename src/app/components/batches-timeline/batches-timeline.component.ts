@@ -75,6 +75,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   ];
   shortMonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   dayOfWeekNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
+  timescaleEnabled = true;
 
   // zooming
   zoomingEnabled = true;
@@ -89,7 +90,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   zoomScale = 0.01; // px to zoom scale
   shifting = false;
 
-  // this.keycodes
+  // useful keycodes
   keycodes = {
     up: 38,
     down: 40,
@@ -663,6 +664,11 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       return rects;
     }
     const full_duration = this.endValue - this.startValue;
+    
+    // text mode to use by pixel height
+    const txtlongpx = 105;
+    const txtshortpx = 30;
+    const txtnumpx = 0;
     // make a rectangle for each batch
     for (let i = 0; i < this.batches.length; i++) {
       const batch = this.batches[i];
@@ -696,26 +702,23 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       const h = endy - y;
 
       // change label based on height of rectangle
-      const labelx = x + w / 4;
+      const labelx = x + w * 0.25;
       let labely = y + 20;
-      const pxhlong = 105;
-      const pxhshort = 30;
-      const pxhnum = 0;
       let labeltext = '';
-      if (h > pxhlong) {
+      if (h > txtlongpx) {
         // spell out weeks
         labeltext = 'WEEKS';
         labely = y + 25;
-      } else if (h > pxhshort) {
+      } else if (h > txtshortpx) {
         // only have number and w
         labeltext = 'W';
         labely = y + 15;
-      } else if (h >= pxhnum) {
+      } else if (h >= txtnumpx) {
         // only number
         labeltext = '';
         labely = y - 2;
       } else {
-        console.warn('batch rectangle height is negative!');
+        // console.warn('batch rectangle height is negative!');
         continue;
       }
       // get the text that will be put into the rectangle
@@ -811,7 +814,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     }
 
     // add each trainer and position to array
-    const trainerposs = [];
+    const trainerspos = [];
     for (let i = 0; i < this.trainersOnThisPage; i++) {
       const trainer = this.trainers[this.actualTrainersPerPage * this.currentPage + i];
 
@@ -822,10 +825,10 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       if (i === 0) {
         left += this.swimlaneXOfs;
       }
-      trainerposs.push({ name: name, left: left, width: width });
+      trainerspos.push({ name: name, left: left, width: width });
     }
 
-    return trainerposs;
+    return trainerspos;
   }
 
   // start alternate control mode
@@ -1053,6 +1056,8 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
   // reset to normal mode
   finishSwimMode() {
+    if (!this.swimActive)
+      return;
     if (this.swimPoints > this.swimHigh) {
       this.swimHigh = this.swimPoints;
     }
@@ -1068,6 +1073,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   startRandomMode(forceRegenTrainers = false) {
     this.randomModeActive = true;
     this.batches = [];
+    this.loading = false;
     if (forceRegenTrainers || this.trainers.length === 0) {
       // make random trainers
       this.trainers = [];
@@ -1176,8 +1182,8 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       }
       this.updatePage();
     }
-    const duration = Math.max(this.endValue - this.startValue, this.ONE_WEEK * 5); // min 5 weeks
-    const batches_per_teacher_to_make = Math.floor(1 / (this.ONE_WEEK * 25) * duration);
+    const duration = Math.max(this.endValue - this.startValue, this.ONE_WEEK * 1); // min 1 week
+    const batches_per_teacher_to_make = Math.floor(duration / (this.ONE_WEEK * 15));
     console.log('making ' + batches_per_teacher_to_make + ' batches');
     const max_random_start = this.ONE_WEEK * 20; // 20 weeks
     // const max_random = this.ONE_WEEK * 10; // 10 weeks
@@ -1186,13 +1192,12 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       for (let j = 0; j < batches_per_teacher_to_make; j++) {
         // const random_week = Math.random() * 2 * max_random; // +/- rand weeks
         // console.log("rw: " + random_week);
-        const interval = Math.floor(Math.random() * (this.ONE_WEEK * 10) + this.ONE_WEEK * 10); // 1 every 10-20 weeks
+        const interval = Math.floor(Math.random() * (this.ONE_WEEK * 20) + this.ONE_WEEK * 8); // 1 every 8-28 weeks
         const bstart = random_start_week + interval;
         const rend = this.addRandomBatch(bstart, true, i);
         random_start_week = rend;
       }
     }
-    console.log('created random batches');
   }
   // clear random batches and reset
   finishRandomMode() {
@@ -1270,6 +1275,9 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
   // returns the list of months to display and their position
   getTimescale() {
+    if (!this.timescaleEnabled) {
+      return [];
+    }
     // cache some common values
     const full_duration = this.endValue - this.startValue;
     const start_month = this.startDate.getMonth();
