@@ -41,14 +41,6 @@
         </button>
       </mat-list>
     </div>
-    <h2 matSubheader>Current skills:</h2>
-    <mat-list>
-      <button [disabled]="lockSkills" mat-button class="md-list-item" *ngFor="let skill of trainer.skills" (click)="removeSkill(skill)">
-        <mat-icon class="material-icons">stars</mat-icon>
-        <h5>{{skill.name}}</h5>
-      </button>
-    </mat-list>
-  </div>
 </mat-card-content>
 
   <mat-card-content *ngIf="loading == false && skillsList.length < 1">
