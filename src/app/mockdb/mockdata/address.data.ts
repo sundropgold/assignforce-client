@@ -1,27 +1,12 @@
 import { mockDataSize } from '../in-mem-db-settings';
-
-export const addressData = {
-  id: 'address-data',
-  type: 'object',
-  properties: {
-    address: {
-      type: 'array',
-      minItems: mockDataSize,
-      items: {
-        $ref: 'address'
-      },
-      uniqueItems: true
-    }
-  },
-  required: ['address']
-};
+import { idDef, activeDef } from './util.def';
 
 export const addressDef = {
   id: 'address',
   type: 'object',
   properties: {
     id: {
-      $ref: 'id'
+      ...idDef
     },
     name: {
       type: 'string',
@@ -36,8 +21,19 @@ export const addressDef = {
       faker: 'address.state'
     },
     active: {
-      $ref: 'active'
+      ...activeDef
     }
   },
   required: ['id', 'name', 'city', 'state', 'active']
+};
+
+export const addressData = {
+  id: 'address-data',
+  type: 'array',
+  minItems: mockDataSize,
+  items: {
+    ...addressDef
+  },
+  uniqueItems: true,
+  required: ['address']
 };

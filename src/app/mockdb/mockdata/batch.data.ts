@@ -1,69 +1,61 @@
 import { mockDataSize } from '../in-mem-db-settings';
-
-export const batchData = {
-  id: 'batch-data',
-  type: 'object',
-  properties: {
-    batch: {
-      type: 'array',
-      minItems: mockDataSize,
-      items: {
-        $ref: 'batch'
-      },
-      uniqueItems: true
-    }
-  },
-  required: ['batch']
-};
+import { idDef, activeDef } from './util.def';
+import { curriculumDef } from './curriculum.data';
+import { focusDef } from './focus.data';
+import { trainerDef } from './trainer.data';
+import { skillDef } from './skill.data';
+import { addressDef } from './address.data';
+import { buildingDef } from './building.data';
+import { roomDef } from './room.data';
 
 export const batchDef = {
   id: 'batch',
   type: 'object',
   properties: {
     id: {
-      $ref: 'id'
+      ...idDef
     },
     name: {
       type: 'string',
-      faker: 'lorem.sentence'
+      faker: 'lorem.word'
     },
     startDate: {
       type: 'string',
-      faker: 'date.soon'
+      faker: 'date.future'
     },
     endDate: {
       type: 'string',
-      faker: 'date.soon'
+      faker: 'date.future'
     },
     curriculum: {
-      $ref: 'curriculum'
+      ...curriculumDef
     },
     focus: {
-      $ref: 'focus'
+      ...focusDef
     },
     trainer: {
-      $ref: 'trainer'
+      ...trainerDef
     },
     cotrainer: {
-      $ref: 'trainer'
+      ...trainerDef
     },
     skills: {
       type: 'array',
       minItems: 1,
       maxItems: 10,
       items: {
-        $ref: 'skill'
+        ...skillDef
       },
       uniqueItems: true
     },
     address: {
-      $ref: 'address'
+      ...addressDef
     },
     building: {
-      $ref: 'building'
+      ...buildingDef
     },
     room: {
-      $ref: 'room'
+      ...roomDef
     }
   },
   required: [
@@ -80,4 +72,15 @@ export const batchDef = {
     'building',
     'room'
   ]
+};
+
+export const batchData = {
+  id: 'batch-data',
+  type: 'array',
+  minItems: mockDataSize,
+  items: {
+    ...batchDef
+  },
+  uniqueItems: true,
+  required: ['batch']
 };

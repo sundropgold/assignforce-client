@@ -107,8 +107,8 @@ import { InterceptorsService } from './services/auth/interceptors.service';
     BrowserModule,
     AppRouting,
     BrowserAnimationsModule,
-    AppMaterialModule
-    // InMemoryWebApiModule.forRoot(InMemDbService)
+    AppMaterialModule,
+    InMemoryWebApiModule.forRoot(InMemDbService)
   ],
 
   exports: [AppMaterialModule],

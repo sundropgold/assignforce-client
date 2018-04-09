@@ -1,7 +1,7 @@
-import { OnInit, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-// import schemaFaker from 'json-schema-faker';
-import faker from 'faker';
+import * as schemaFaker from 'json-schema-faker';
+import * as faker from 'faker';
 
 import { Address } from '../model/Address';
 import { Batch } from '../model/Batch';
@@ -14,21 +14,19 @@ import { Skill } from '../model/Skill';
 import { Trainer } from '../model/Trainer';
 import { Unavailability } from '../model/Unavailability';
 
-import { idDef, activeDef } from './mockdata/util.def';
-import { addressData, addressDef } from './mockdata/address.data';
-import { batchData, batchDef } from './mockdata/batch.data';
-import { buildingData, buildingDef } from './mockdata/building.data';
-import { curriculumData, curriculumDef } from './mockdata/curriculum.data';
-import { focusData, focusDef } from './mockdata/focus.data';
-import { roomData, roomDef } from './mockdata/room.data';
-import { settingData, settingDef } from './mockdata/setting.data';
-import { skillData, skillDef } from './mockdata/skill.data';
-import { trainerData, trainerDef } from './mockdata/trainer.data';
-import { unavailabilityData, unavailabilityDef } from './mockdata/unavailability.data';
+import { addressData } from './mockdata/address.data';
+import { batchData } from './mockdata/batch.data';
+import { buildingData } from './mockdata/building.data';
+import { curriculumData } from './mockdata/curriculum.data';
+import { focusData } from './mockdata/focus.data';
+import { roomData } from './mockdata/room.data';
+import { settingData } from './mockdata/setting.data';
+import { skillData } from './mockdata/skill.data';
+import { trainerData } from './mockdata/trainer.data';
+import { unavailabilityData } from './mockdata/unavailability.data';
 
 @Injectable()
-export class InMemDbService implements InMemoryDbService, OnInit {
-  private jsf;
+export class InMemDbService implements InMemoryDbService {
   private address: Address[];
   private batch: Batch[];
   private building: Building[];
@@ -41,18 +39,33 @@ export class InMemDbService implements InMemoryDbService, OnInit {
   private unavailability: Unavailability[];
 
   constructor() {
-    this.jsf = require('json-schema-faker');
-    this.jsf.extend('faker', () => faker);
+    schemaFaker.extend('faker', () => faker);
+    this.loadMock();
   }
 
-  async ngOnInit() {
-    this.address = await schemaFaker.resolve(addressData, [idDef, activeDef]);
-    console.log(this.address);
+  async loadMock() {
+    this.address = await schemaFaker.resolve(addressData);
+    this.batch = await schemaFaker.resolve(batchData);
+    this.building = await schemaFaker.resolve(buildingData);
+    this.curriculum = await schemaFaker.resolve(curriculumData);
+    this.focus = await schemaFaker.resolve(focusData);
+    this.room = await schemaFaker.resolve(roomData);
+    this.skill = await schemaFaker.resolve(skillData);
+    this.trainer = await schemaFaker.resolve(trainerData);
+    this.unavailability = await schemaFaker.resolve(unavailabilityData);
   }
 
   createDb() {
     return {
-      address: this.address
+      address: this.address,
+      batch: this.batch,
+      building: this.building,
+      curriculum: this.curriculum,
+      focus: this.focus,
+      room: this.room,
+      skill: this.skill,
+      trainer: this.trainer,
+      unavailability: this.unavailability
     };
   }
 }
