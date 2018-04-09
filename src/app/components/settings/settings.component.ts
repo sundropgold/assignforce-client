@@ -28,8 +28,10 @@ export class SettingsComponent implements OnInit {
   buildings: Building[];
 
   isLoading = false;
+  isError = false;
 
   ngOnInit() {
+    this.isError = false;
     this.loadLocations();
     this.loadBuildings();
     this.getSettingsInfo();
@@ -77,6 +79,8 @@ export class SettingsComponent implements OnInit {
         this.isLoading = false;
       })
       .catch(err => {
+        this.isLoading = false;
+        this.isError = true;
         console.log('error retrieving setting data.');
         console.log(err);
       });
@@ -101,6 +105,7 @@ export class SettingsComponent implements OnInit {
   // resets the settings information
   reset(evt) {
     console.log('resetting settings');
+    this.isError = false;
     this.getSettingsInfo();
     evt.preventDefault();
   }

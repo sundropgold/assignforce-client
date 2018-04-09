@@ -13,16 +13,16 @@ import { Skill } from '../model/Skill';
 import { Trainer } from '../model/Trainer';
 import { Unavailability } from '../model/Unavailability';
 
-import { addressData } from './mockdata/address.data';
-import { batchData } from './mockdata/batch.data';
-import { buildingData } from './mockdata/building.data';
-import { curriculumData } from './mockdata/curriculum.data';
-import { focusData } from './mockdata/focus.data';
-import { roomData } from './mockdata/room.data';
-import { settingData } from './mockdata/setting.data';
-import { skillData } from './mockdata/skill.data';
-import { trainerData } from './mockdata/trainer.data';
-import { unavailabilityData } from './mockdata/unavailability.data';
+// import { addressData } from './mockdata/address.data';
+// import { batchData } from './mockdata/batch.data';
+// import { buildingData } from './mockdata/building.data';
+// import { curriculumData } from './mockdata/curriculum.data';
+// import { focusData } from './mockdata/focus.data';
+// import { roomData } from './mockdata/room.data';
+// import { settingData } from './mockdata/setting.data';
+// import { skillData } from './mockdata/skill.data';
+// import { trainerData } from './mockdata/trainer.data';
+// import { unavailabilityData } from './mockdata/unavailability.data';
 import { Room } from '../model/Room';
 
 @Injectable()
