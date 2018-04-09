@@ -11,7 +11,7 @@ import { TrainerControllerService } from '../../../services/api/trainer-controll
 })
 export class TrainersAddComponent implements OnInit {
   trainer: Trainer = {
-    id: 0,
+    id: null,
     firstName: '',
     lastName: '',
     skills: [],
@@ -79,6 +79,7 @@ export class TrainersAddComponent implements OnInit {
         .toPromise()
         .then(t => {
           console.log(t);
+          window.location.reload();
         })
         .catch(error => {
           console.log(error);

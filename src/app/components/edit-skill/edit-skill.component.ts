@@ -19,7 +19,9 @@ export class EditSkillComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.skill = this.data;
+    this.newSkill();
+    this.skill = JSON.parse(JSON.stringify(this.data));
+    console.log(this.skill);
   }
 
   closeDialog() {
@@ -32,7 +34,14 @@ export class EditSkillComponent implements OnInit {
 
   editSkill(): void {
     console.log('We are Editing a skill ' + this.data.name);
-    this.skillControllerService.update(this.skill);
+    this.skillControllerService
+      .update(this.skill)
+      .toPromise()
+      .then()
+      .catch(err => {
+        alert('Error occurred while editing skill');
+        console.log(err);
+      });
     this.newSkill();
     this.closeDialog();
   }
