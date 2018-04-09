@@ -5,6 +5,7 @@ import { S3CredentialService } from '../../services/s3-credential/s3-credential.
 import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
 import { TrainerControllerService } from '../../services/api/trainer-controller/trainer-controller.service';
 import { Trainer } from '../../model/Trainer';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -37,12 +38,29 @@ export class ProfileComponent implements OnInit {
   loading: boolean;
   trainers: Trainer[] = [];
   trainer = new Trainer(0, '', '', [], null, false, null, []);
+  displayTrainer = this.trainer;
 
-  constructor(private skillsService: SkillControllerService, private trainerService: TrainerControllerService) {}
+  constructor(
+    private skillsService: SkillControllerService,
+    private trainerService: TrainerControllerService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.setTrainer();
     this.populateSkills();
+    const id = this.router.url.split('/')[2];
+    if (id !== this.trainer.id.toString()) {
+      this.trainerService
+        .find(Number.parseInt(id))
+        .toPromise()
+        .then(trainer => {
+          this.displayTrainer = trainer;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
   }
 
   setTrainer() {
@@ -111,6 +129,7 @@ export class ProfileComponent implements OnInit {
         this.nameFound = true;
         this.trainers[0].firstName = this.nameForm.value.firstName;
         this.trainers[0].lastName = this.nameForm.value.lastName;
+        this.displayTrainer = this.trainer;
       }
       // if (this.myFile[0] !== undefined) {
       //   this.uploadResume();

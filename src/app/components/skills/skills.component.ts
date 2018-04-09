@@ -19,6 +19,7 @@ export class SkillsComponent implements OnInit {
   skillsList: Skill[] = [];
   skill: Skill;
   @Input() trainer: Trainer;
+  @Input() displayTrainer: Trainer;
   loading: boolean;
 
   constructor(private skillService: SkillControllerService, private trainerService: TrainerControllerService) {}

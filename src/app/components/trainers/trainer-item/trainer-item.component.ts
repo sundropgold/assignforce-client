@@ -1,4 +1,6 @@
 import { Component, OnInit, Input, DoCheck } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { Trainer } from '../../../model/Trainer';
 import { Skill } from '../../../model/Skill';
 import { TrainerControllerService } from '../../../services/api/trainer-controller/trainer-controller.service';
