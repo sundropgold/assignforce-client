@@ -3,7 +3,7 @@ export const environment = {
   baseUrl: 'https://assignforce.cfapps.io',
 
   appRoutes: {
-    login: '',
+    login: 'login',
     overview: 'overview',
     batches: 'batches',
     locations: 'locations',
@@ -88,7 +88,7 @@ export const environment = {
     },
 
     focusController: {
-      baseUrl: 'https://hydra.cfapps.io/api/curriculum/curricula',
+      baseUrl: 'https://hydra.cfapps.io/api/curricula',
       create: '',
       update: '/',
       findAll: '',

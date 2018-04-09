@@ -3,7 +3,6 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 
 import { AppComponent } from './app.component';
 import { AppRouting } from './app.routing';
@@ -42,7 +41,6 @@ import { TrainersAddComponent } from './components/trainers/trainers-add/trainer
 import { TrainersComponent } from './components/trainers/trainers.component';
 import { SpringXsrfInterceptor } from './interceptors/springXsrfInterceptor';
 import { AppMaterialModule } from './material.module';
-import { InMemDbService } from './mockdb/in-mem-db.service';
 import { AddressControllerService } from './services/api/address-controller/address-controller.service';
 import { BatchControllerService } from './services/api/batch-controller/batch-controller.service';
 import { BuildingControllerService } from './services/api/building-controller/building-controller.service';
@@ -107,8 +105,8 @@ import { InterceptorsService } from './services/auth/interceptors.service';
     BrowserModule,
     AppRouting,
     BrowserAnimationsModule,
-    AppMaterialModule,
-    InMemoryWebApiModule.forRoot(InMemDbService)
+    AppMaterialModule
+    //InMemoryWebApiModule.forRoot(InMemDbService)
   ],
 
   exports: [AppMaterialModule],

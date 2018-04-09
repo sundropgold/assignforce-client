@@ -5,10 +5,10 @@
 
 export const environment = {
   production: true,
-  baseUrl: 'https://assignforce.cfapps.io',
+  baseUrl: 'https://localhost:4200',
 
   appRoutes: {
-    login: '',
+    login: 'login',
     overview: 'overview',
     batches: 'batches',
     locations: 'locations',
@@ -33,13 +33,13 @@ export const environment = {
     domain: 'revature.auth0.com',
     responseType: 'token id_token',
     audience: 'hydra-gateway',
-    redirectUri: 'https://assignforce.cfapps.io/callback',
+    redirectUri: 'https://localhost:4200/callback',
     scope: 'openid profile'
   },
 
   apiUrls: {
     addressController: {
-      baseUrl: 'https://hydra.cfapps.io/api/address/addresses',
+      baseUrl: 'https://hydra.cfapps.io/api/addresses',
       create: '',
       update: '/',
       findAll: '',
@@ -48,7 +48,7 @@ export const environment = {
     },
 
     batchController: {
-      baseUrl: 'https://hydra.cfapps.io/api/batch/batches',
+      baseUrl: 'https://hydra.cfapps.io/api/batches',
       create: '',
       update: '/',
       findAll: '',
@@ -57,7 +57,7 @@ export const environment = {
     },
 
     buildingController: {
-      baseUrl: 'https://hydra.cfapps.io/api/address/buildings',
+      baseUrl: 'https://hydra.cfapps.io/api/buidings',
       create: '',
       update: '/',
       findAll: '',
@@ -66,7 +66,7 @@ export const environment = {
     },
 
     locationController: {
-      baseUrl: 'https://hydra.cfapps.io/api/address/locations',
+      baseUrl: 'https://hydra.cfapps.io/api/locations',
       create: '',
       update: '/',
       findAll: '',
@@ -75,7 +75,7 @@ export const environment = {
     },
 
     roomController: {
-      baseUrl: 'https://hydra.cfapps.io/api/address/rooms',
+      baseUrl: 'https://hydra.cfapps.io/api/rooms',
       create: '',
       update: '/',
       findAll: '',
@@ -84,7 +84,7 @@ export const environment = {
     },
 
     curriculumController: {
-      baseUrl: 'https://hydra.cfapps.io/api/curriculum/curricula',
+      baseUrl: 'https://hydra.cfapps.io/api/curricula',
       create: '',
       update: '/',
       findAll: '',
@@ -93,7 +93,7 @@ export const environment = {
     },
 
     focusController: {
-      baseUrl: 'https://hydra.cfapps.io/api/curriculum/curricula',
+      baseUrl: 'https://hydra.cfapps.io/api/focuses',
       create: '',
       update: '/',
       findAll: '',
@@ -102,7 +102,7 @@ export const environment = {
     },
 
     skillController: {
-      baseUrl: 'https://hydra.cfapps.io/api/skill/skills',
+      baseUrl: 'https://hydra.cfapps.io/api/skills',
       create: '',
       update: '/',
       findAll: '',
@@ -111,7 +111,7 @@ export const environment = {
     },
 
     trainerController: {
-      baseUrl: 'https://hydra.cfapps.io/api/trainer/trainers',
+      baseUrl: 'https://hydra.cfapps.io/api/trainers',
       create: '',
       update: '/',
       findAll: '',
@@ -120,7 +120,7 @@ export const environment = {
     },
 
     settingController: {
-      baseUrl: 'https://hydra.cfapps.io/api/trainer/trainers',
+      baseUrl: 'https://hydra.cfapps.io/api/assignforce-settings',
       create: '',
       update: '/',
       findAll: '',
@@ -129,7 +129,7 @@ export const environment = {
     },
 
     unavailableController: {
-      baseUrl: 'https://hydra.cfapps.io/api/unavailable//unavailabilities',
+      baseUrl: 'https://hydra.cfapps.io/api/unavailables',
       create: '',
       update: '/',
       findAll: '',
