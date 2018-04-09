@@ -30,114 +30,117 @@ export class BatchesTimelineFilterComponent implements OnInit {
   @Input() hideConcludedBatches: boolean;
   @Input() hideBatchlessTrainers: boolean;
   @Input() hideInactiveTrainers: boolean;
-  @Input() trainersPerPage: number;
-  @Input() currentPage: number;
-  @Input() maxPages: number;
-
-  private DEFAULT_PRECEEDING_MONTHS = 3;
-  private DEFAULT_PROCEEDING_MONTHS = 6;
+  @Input() trainersPerPage: 0;
+  @Input() currentPage: 0;
+  @Input() maxPages: 0;
 
   @Output() public filterChangeEmitter = new EventEmitter<Event>();
 
-  public curriculumData = ['Any', '.NET', 'Java', 'SDET', 'Custom'];
+  public curriculumData = [];
+  public focusData = [];
+  public locationData = [];
+  public buildingData = [];
 
-  public focusData = ['Any', 'Appian', 'Capitol One', 'Big Data'];
-
-  public locationData = ['Revature HQ', 'Tempe', 'New York City'];
-
-  public buildingData = ['Any', '11730 Plaza Drive'];
-
-  loadStartDate() {
-    const preceedingDate = new Date();
-    preceedingDate.setMonth(preceedingDate.getMonth() - this.DEFAULT_PRECEEDING_MONTHS);
-    this.startDate = preceedingDate;
-    console.log(this.startDate);
-  }
-
-  loadEndDate() {
-    const proceedingDate = new Date();
-    proceedingDate.setMonth(proceedingDate.getMonth() + this.DEFAULT_PROCEEDING_MONTHS);
-    this.endDate = proceedingDate;
-    console.log(this.endDate);
+  ngOnInit() {
+    this.loadCurriculumData();
+    this.loadFocusData();
+    this.loadLocationData();
+    this.loadBuildingData();
   }
 
   loadCurriculumData() {
     this.loading = true;
-    this.curriculumControllerService.findAll().subscribe(result => {
-      this.curriculumData = [];
-      this.curriculumData.push('Any');
-      for (let i = 0; i < result.length; i++) {
-        const curriculum = result[i];
-        const value = curriculum.name;
-        if (value != null) {
-          this.curriculumData.push(value);
+    this.curriculumControllerService.findAll().subscribe(
+      result => {
+        this.curriculumData = [];
+        this.curriculumData.push('Any');
+        for (let i = 0; i < result.length; i++) {
+          const curriculum = result[i];
+          const value = curriculum.name;
+          if (value != null) {
+            this.curriculumData.push(value);
+          }
         }
+        this.curriculumFilter = 'Any';
+        this.loading = false;
+      },
+      err => {
+        console.log('failed to load curriculums ', err);
       }
-      this.curriculumFilter = 'Any';
-      this.loading = false;
-    });
+    );
   }
 
   loadFocusData() {
     this.loading = true;
-    this.focusControllerService.findAll().subscribe(result => {
-      this.focusData = [];
-      this.focusData.push('Any');
-      for (let i = 0; i < result.length; i++) {
-        const focus = result[i];
-        const value = focus.name;
-        if (value != null) {
-          this.focusData.push(value);
+    this.focusControllerService.findAll().subscribe(
+      result => {
+        this.focusData = [];
+        this.focusData.push('Any');
+        for (let i = 0; i < result.length; i++) {
+          const focus = result[i];
+          const value = focus.name;
+          if (value != null) {
+            this.focusData.push(value);
+          }
         }
+        this.focusFilter = 'Any';
+        this.loading = false;
+      },
+      err => {
+        console.log('failed to load focuses ', err);
       }
-      this.focusFilter = 'Any';
-      this.loading = false;
-    });
+    );
   }
 
   loadLocationData() {
     this.loading = true;
-    this.addressControllerService.findAll().subscribe(result => {
-      this.locationData = [];
-      this.locationData.push('Any');
-      for (let i = 0; i < result.length; i++) {
-        const location = result[i];
-        const value = location.name;
-        if (value != null) {
-          this.locationData.push(value);
+    this.addressControllerService.findAll().subscribe(
+      result => {
+        this.locationData = [];
+        this.locationData.push('Any');
+        for (let i = 0; i < result.length; i++) {
+          const location = result[i];
+          const value = location.name;
+          if (value != null) {
+            this.locationData.push(value);
+          }
         }
+        this.locationFilter = 'Any';
+        this.loading = false;
+      },
+      err => {
+        console.log('failed to load locations ', err);
       }
-      this.locationFilter = 'Any';
-      this.loading = false;
-    });
+    );
   }
 
   loadBuildingData() {
     this.loading = true;
-    this.buildingControllerService.findAll().subscribe(result => {
-      this.buildingData = [];
-      this.buildingData.push('Any');
-      // for (let i = 0; i < result.length; i++) {
-      //   const location = result[i];
-      //   for (let j = 0; j < result.length; j++) {
-      //     const building = result[j];
-      //     const value = building.name;
-      //     if (value != null) {
-      //       this.buildingData.push(value);
-      //     }
-      //   }
-      // }
-      this.buildingFilter = 'Any';
-      this.loading = false;
-    });
+    this.buildingControllerService.findAll().subscribe(
+      result => {
+        this.buildingData = [];
+        this.buildingData.push('Any');
+        console.log('load building data: ' + result);
+        for (let i = 0; i < result.length; i++) {
+          const location = result[i];
+          for (let j = 0; j < result.length; j++) {
+            const building = result[j];
+            const value = building.name;
+            if (value != null) {
+              this.buildingData.push(value);
+            }
+          }
+        }
+        this.buildingFilter = 'Any';
+        this.loading = false;
+      },
+      err => {
+        console.log('failed to load buildings ', err);
+      }
+    );
   }
 
   onFilterChange(evt: Event) {
     this.filterChangeEmitter.emit(evt);
-  }
-
-  ngOnInit() {
-    this.loadStartDate();
-    this.loadEndDate();
   }
 }
