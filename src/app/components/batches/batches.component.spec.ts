@@ -15,6 +15,7 @@ import { RoomControllerService } from '../../services/api/room-controller/room-c
 import { BuildingControllerService } from '../../services/api/building-controller/building-controller.service';
 import { CurriculumControllerService } from '../../services/api/curriculum-controller/curriculum-controller.service';
 import { SkillControllerService } from '../../services/api/skill-controller/skill-controller.service';
+import { SettingControllerService } from '../../services/api/setting-controller/setting-controller.service';
 
 describe('BatchesComponent', () => {
   let component: BatchesComponent;
@@ -35,6 +36,7 @@ describe('BatchesComponent', () => {
           BatchControllerService,
           TrainerControllerService,
           CurriculumControllerService,
+          SettingControllerService,
           FocusControllerService,
           AddressControllerService,
           RoomControllerService,
