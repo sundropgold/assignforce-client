@@ -1,11 +1,11 @@
-<div id="profileDiv" class="container">
+<div id="profileDiv" class="container" *ngIf="!failed">
   <!--<mat-card *ngIf="tId == -1" md-whiteframe="8" ng-cloak>-->
   <mat-card>
     <mat-toolbar-row>
       <mat-toolbar class="md-toolbar" layout="columns">
         <span class="mat-expansion-panel-header-title">Profile</span>
         <span class="md-toolbar-spacer"></span>
-        <button mat-icon-button [disabled]="trainer.firstName == 'Failed to load'" (click)="updateTrainerInfo()" *ngIf="this.trainer.id === this.displayTrainer.id">
+        <button mat-icon-button [disabled]="trainer.firstName == 'Failed to load'" (click)="updateTrainerInfo()" *ngIf="this.trainer.id == this.displayTrainer.id">
           <mat-icon matTooltip="Save " class="material-icons " *ngIf="!lockProfile ">save</mat-icon>
           <mat-icon matTooltip="Edit " class="material-icons " *ngIf="lockProfile ">edit</mat-icon>
         </button>
@@ -13,8 +13,8 @@
     </mat-toolbar-row>
     <!--info section-->
     <mat-card-content id="profileContent ">
-      <div class="row ">
-        <div class="col-lg-2 " *ngIf="trainer.firstName !='Failed to load' ">
+      <div class="row " *ngIf="displayTrainer != undefined ">
+        <div class="col-lg-2 ">
           <img layout="column " style="border-radius: 50%; " alt=" " ng-src="https://app.revature.com/core/resources/download/default/interns/image?t=1486138020884 "
             id="displayImage " class="width-200 height-200 " src="https://app.revature.com/core/resources/download/default/interns/image?t=1486138020884 ">
         </div>
@@ -27,18 +27,18 @@
               <br>
             </div> -->
           <div *ngIf="!lockProfile ">
-            <form [formGroup]="nameForm ">
+            <form [formGroup]="nameForm">
               <mat-form-field flex>
-                <input matInput class="formControl " placeholder="First Name " formControlName="firstName " required>
+                <input matInput class="formControl" placeholder="First Name" formControlName="firstName" required>
               </mat-form-field>
               <mat-form-field flex>
-                <input matInput class="formControl " placeholder="Last Name " name="lastLast " formControlName="lastName " required>
+                <input matInput class="formControl" placeholder="Last Name" name="lastLast " formControlName="lastName" required>
               </mat-form-field>
             </form>
           </div>
         </div>
       </div>
-      <div *ngIf="loading===true " class="center ">
+      <div *ngIf="loading == true " class="center ">
         <div fxFlex="100 "> &nbsp;</div>
         <mat-progress-spinner class="center " mode="indeterminate "></mat-progress-spinner>
         <div fxFlex="100 "> &nbsp;</div>
@@ -47,4 +47,8 @@
       <!-- <app-certifications></app-certifications> -->
     </mat-card-content>
   </mat-card>
+</div>
+
+<div *ngIf="failed">
+  <h1>Error: Failed to load</h1>
 </div>

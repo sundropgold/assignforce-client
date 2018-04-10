@@ -3,7 +3,7 @@
   <mat-toolbar class="md-toolbar" layout="columns">
     <span class="mat-expansion-panel-header-title">Skills</span>
     <span class="md-toolbar-spacer"></span>
-    <button mat-icon-button (click)="updateSkills()" *ngIf="trainer.id === displayTrainer.id">
+    <button mat-icon-button (click)="updateSkills()">
       <mat-icon matTooltip="Save" class="mat-icon" *ngIf="!lockSkills">save</mat-icon>
       <mat-icon matTooltip="Edit" class="mat-icon" *ngIf="lockSkills">edit</mat-icon>
     </button>
@@ -19,14 +19,14 @@
     </div>
   </mat-card-content>
 
-  <mat-card-content *ngIf="loading==false && skillsList.length >= 1">
+  <mat-card-content *ngIf="loading==false && skillsList != undefined">
     <div class="md-padding" layout="column">
       <div *ngIf="!lockSkills">
         <h2 matSubheader class="revDark">Select a skill:</h2>
         <mat-select class="revDark" placeholder="Select Skill">
           <mat-optgroup class="revDark">
             <mat-option class="revDark" *ngFor="let skill of skillsList" (click)="addSkill(skill)">
-              <span class="revDark">{{skill}}</span>
+              <span class="revDark">{{skill.name}}</span>
             </mat-option>
           </mat-optgroup>
         </mat-select>
@@ -42,7 +42,7 @@
     </div>
   </mat-card-content>
 
-  <mat-card-content *ngIf="loading == false && skillsList.length < 1">
+  <mat-card-content *ngIf="loading == false && skillsList == undefined">
     <h1 class="center revOrange">FAILED TO LOAD</h1>
   </mat-card-content>
 </div>
