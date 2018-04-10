@@ -49,7 +49,6 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.setTrainer();
-    // this.populateSkills();
   }
 
   setTrainer() {
@@ -86,17 +85,6 @@ export class ProfileComponent implements OnInit {
         console.log(error);
       });
   }
-  // populateSkills() {
-  //   this.skillsService
-  //     .findAll()
-  //     .toPromise()
-  //     .then(response => {
-  //       this.skillsList = response;
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-  // }
 
   remove(skill: Skill) {
     this.skillsList = this.trainers[0].skills.filter(s => s !== skill);
@@ -131,11 +119,19 @@ export class ProfileComponent implements OnInit {
   updateTrainerInfo() {
     this.lockProfile = !this.lockProfile;
     if (this.lockProfile) {
+      this.trainer.firstName = this.nameForm.value.firstName;
+      this.trainer.lastName = this.nameForm.value.lastName;
       if (this.nameForm.valid) {
-        this.nameFound = true;
-        this.trainers[0].firstName = this.nameForm.value.firstName;
-        this.trainers[0].lastName = this.nameForm.value.lastName;
-        this.displayTrainer = this.trainer;
+        this.trainerService
+          .update(this.trainer)
+          .toPromise()
+          .then(trainer => {
+            this.trainer = trainer;
+            this.displayTrainer = this.trainer;
+          })
+          .catch(error => {
+            console.log(error);
+          });
       }
       // if (this.myFile[0] !== undefined) {
       //   this.uploadResume();
