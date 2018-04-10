@@ -9,10 +9,12 @@ import { CurriculumControllerService } from '../../services/api/curriculum-contr
   styleUrls: ['./core.component.css']
 })
 export class CoreComponent implements OnInit {
-  coreData: Curriculum[] = [];
-
   constructor(private curriculumControllerService: CurriculumControllerService) {}
 
+  //An array of all Core Curricula currently in the backend.
+  coreData: Curriculum[] = [];
+
+  //Gathers all core Curricula from the backend and assigns it to coreData for displaying in a list.
   ngOnInit() {
     this.curriculumControllerService.findAll().subscribe(data => {
       this.coreData = data;

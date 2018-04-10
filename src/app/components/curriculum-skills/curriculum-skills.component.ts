@@ -55,12 +55,13 @@ export class CurriculumSkillsComponent implements OnInit {
       this.skillControllerService
         .remove(skill.id)
         .toPromise()
-        .then()
+        .then(() => {
+          this.refreshSkills();
+        })
         .catch(err => {
           alert('Error occurred while removing skill');
           console.log(err);
         });
     }
-    this.refreshSkills();
   }
 }
