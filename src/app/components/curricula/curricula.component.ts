@@ -8,15 +8,7 @@ import { Skill } from '../../model/Skill';
   styleUrls: ['./curricula.component.css']
 })
 export class CurriculaComponent implements OnInit {
-  isAdmin: Boolean = true;
-  skills: Skill[];
-
   constructor() {}
 
   ngOnInit() {}
-
-  clickTest(evt) {
-    console.log('button clicked');
-    evt.stopPropagation();
-  }
 }

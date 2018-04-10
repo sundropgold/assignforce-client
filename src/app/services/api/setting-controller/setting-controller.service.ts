@@ -28,8 +28,8 @@ export class SettingControllerService {
     return msg;
   }
 
-  public find(id: number): Observable<Setting> {
-    return this.http.get<Setting>(this.settingController.baseUrl + this.settingController.find + id);
+  public find(): Observable<Setting[]> {
+    return this.http.get<Setting[]>(this.settingController.baseUrl + this.settingController.find);
   }
 
   public update(setting: Setting): Observable<Setting> {

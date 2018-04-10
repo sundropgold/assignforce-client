@@ -12,18 +12,22 @@ import { Focus } from '../../model/Focus';
   styleUrls: ['./add-focus.component.css']
 })
 export class AddFocusComponent implements OnInit {
-  focus: Focus;
-
   constructor(
     public dialogRef: MatDialogRef<AddFocusComponent>,
     private focusControllerService: FocusControllerService,
     private skillControllerService: SkillControllerService
   ) {}
 
+  //The focus to be added.
+  focus: Focus;
+
+  //The array of all skills possible to add to the focus.
   skills: Skill[] = [];
 
+  //The array of all skills that have been selected for addition to the focus.
   selectedSkills: Skill[];
 
+  //Gathers and sets all needed data for adding a focus.
   ngOnInit() {
     this.newFocus();
     this.skillControllerService.findAll().subscribe(data => {
@@ -31,15 +35,18 @@ export class AddFocusComponent implements OnInit {
     });
   }
 
+  //Closes the add Focus Modal.
   closeDialog(): void {
     console.log(this.selectedSkills);
     this.dialogRef.close();
   }
 
+  //Resets the current Focus.  This is here to prevent the old focus from persisting between additions and to prevent undefined errors.
   newFocus(): void {
     this.focus = new Focus(0, '', false, []);
   }
 
+  //Sends the Focus to the server to be added.
   addFocus(): void {
     console.log('We are Adding a focus ' + this.focus.name);
     console.log(this.focus);
