@@ -119,7 +119,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
     } else if (filterType === 2) {
       this.batchList.forEach(batchObj => {
         if (batchObj.progress === 0) {
-          if (this.getCurrentWeekOfBatch(batchObj.startDate) > -2) {
+          if (this.getCurrentWeekOfBatch(batchObj.startDate) >= -2) {
             this.displayedBatchList.push(batchObj);
           }
         }
@@ -128,7 +128,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
       if (this.displayedBatchList.length < 1) {
         this.panelTitle = 'No Batches Beginning in Two Weeks';
       } else {
-        this.panelTitle = 'Batches Beginning in Two Weeks';
+        this.panelTitle = 'Batches Beginning within Two Weeks';
       }
     }
     this.dataSource.data = this.displayedBatchList;
@@ -137,16 +137,22 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   computeNumOfWeeksBetween(startDate: number, endDate: number): number {
     // EX: 0-6 DAYS = 1 WEEK
     //     7-13 DAYS = 2 WEEKS
-    const numberOfDays = Math.abs(<any>endDate - <any>startDate) / (1000 * 60 * 60 * 24);
-    const numberOfWeeks = Math.floor(numberOfDays / 7);
-    return numberOfWeeks;
+    const startValue = new Date(startDate).valueOf();
+    const endValue = new Date(endDate).valueOf();
+    if (startValue && endValue) {
+      const numberOfDays = Math.abs(<any>startValue - <any>endValue) / (1000 * 60 * 60 * 24);
+      const numberOfWeeks = Math.floor(numberOfDays / 7);
+      return numberOfWeeks;
+    }
+    return 0;
   }
 
   // IF RETURN IS POSITIVE, BATCH HAS STARTED/IS IN SESSION FOR # WEEKS.
   // IF RETURN IS NEGATIVE, BATCH HAS NOT STARTED/WILL START IN # WEEKS.
   getCurrentWeekOfBatch(startDate: number): number {
     const currentDate = new Date(Date.now());
-    const numberOfDays = (<any>currentDate - <any>startDate) / (1000 * 60 * 60 * 24);
+    const startValue = new Date(startDate).valueOf();
+    const numberOfDays = (currentDate.valueOf() - startValue) / (1000 * 60 * 60 * 24);
     const weekNumber = Math.floor(numberOfDays / 7);
     return weekNumber;
   }
@@ -156,7 +162,7 @@ export class OverviewComponent implements OnInit, AfterViewInit {
   getCurrentProgress(batchObj): number {
     const training_duration = this.computeNumOfWeeksBetween(batchObj.startDate, batchObj.endDate);
     if (training_duration === 0) {
-      return 0;
+      return 100;
     }
     const batch_current_week = this.getCurrentWeekOfBatch(batchObj.startDate);
     if (batch_current_week <= 0) {

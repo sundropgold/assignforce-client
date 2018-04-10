@@ -34,7 +34,7 @@ export class TrainersAddComponent implements OnInit {
 
   ngOnInit() {}
 
-  onSubmit() {
+  onSubmit(evt) {
     if (
       this.trainer.firstName !== '' &&
       this.trainer.lastName !== '' &&
@@ -73,17 +73,19 @@ export class TrainersAddComponent implements OnInit {
       }
 
       this.trainer.lastName = l;
-
-      this.trainerService
-        .create(this.trainer)
-        .toPromise()
-        .then(t => {
-          console.log(t);
-          window.location.reload();
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      // this.canLoad = false;
+      // this.trainerService
+      //   .create(this.trainer)
+      //   .toPromise()
+      //   .then(t => {
+      //     console.log(t);
+      //     event.stopPropagation();
+      //     // window.location.reload();
+      //     this.canLoad = true;
+      //   })
+      //   .catch(error => {
+      //     console.log(error);
+      //   });
 
       console.log(this.trainer);
     }
