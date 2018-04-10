@@ -91,6 +91,7 @@ export class SettingsComponent implements OnInit {
   save() {
     console.log('saving settings...');
     this.isLoading = true;
+    console.log(this.setting);
     this.settingService
       .update(this.setting)
       .toPromise()

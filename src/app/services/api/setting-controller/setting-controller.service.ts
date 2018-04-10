@@ -21,8 +21,8 @@ export class SettingControllerService {
       minBatchSize: setting.minBatchSize,
       maxBatchSize: setting.maxBatchSize,
       trainerBreakDays: setting.trainerBreakDays,
-      defaultLocation: environment.apiUrls.locationController.baseUrl + '/' + setting.defaultLocation.id,
-      defaultBuilding: environment.apiUrls.buildingController.baseUrl + '/' + setting.defaultBuilding.id,
+      defaultLocation: '',
+      defaultBuilding: '',
       defaultNamePattern: setting.defaultNamePattern
     };
     return msg;
