@@ -146,7 +146,7 @@
     [colspan] = "2"
     [rowspan] = "1">
       <mat-form-field>
-        <input matInput required name="namePattern" type="text" readonly [(ngModel)]="setting.defaultNamePattern">
+        <input matInput name="namePattern" type="text" readonly [(ngModel)]="setting.defaultNamePattern">
       </mat-form-field>
     </mat-grid-tile>
 
@@ -164,7 +164,7 @@
     <mat-grid-tile
     [colspan] = "1"
     [rowspan] = "1">
-      <button mat-raised-button (click)="reset($event)">RESET</button>
+      <button mat-raised-button (click)="reset()">RESET</button>
     </mat-grid-tile>
 
     <mat-grid-tile
