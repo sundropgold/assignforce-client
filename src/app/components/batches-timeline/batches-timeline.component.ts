@@ -664,7 +664,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       return rects;
     }
     const full_duration = this.endValue - this.startValue;
-    
+
     // text mode to use by pixel height
     const txtlongpx = 105;
     const txtshortpx = 30;
@@ -1056,8 +1056,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
   // reset to normal mode
   finishSwimMode() {
-    if (!this.swimActive)
-      return;
+    if (!this.swimActive) return;
     if (this.swimPoints > this.swimHigh) {
       this.swimHigh = this.swimPoints;
     }

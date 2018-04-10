@@ -1,4 +1,3 @@
-
 <!--skills section-->
 <mat-toolbar-row>
   <mat-toolbar class="md-toolbar" layout="columns">
@@ -11,7 +10,7 @@
   </mat-toolbar>
 </mat-toolbar-row>
 
-  <div id="skillsDiv">
+<div id="skillsDiv">
   <mat-card-content *ngIf="loading===true">
     <div class="center">
       <div fxFlex="100"> &nbsp;</div>
@@ -19,19 +18,19 @@
       <div fxFlex="100"> &nbsp;</div>
     </div>
   </mat-card-content>
-  
-  <mat-card-content *ngIf="loading==false && skillsList.length >= 1">
+
+  <mat-card-content *ngIf="loading==false && skillsList != undefined">
     <div class="md-padding" layout="column">
       <div *ngIf="!lockSkills">
-      <h2 matSubheader class="revDark">Select a skill:</h2>
-      <mat-select class="revDark" placeholder="Select Skill">
-        <mat-optgroup class="revDark">
-          <mat-option class="revDark" *ngFor="let skill of skillsList" (click)="addSkill(skill)">
-            <span class="revDark">{{skill}}</span>
-          </mat-option>
-        </mat-optgroup>
-      </mat-select>
-      <hr>
+        <h2 matSubheader class="revDark">Select a skill:</h2>
+        <mat-select class="revDark" placeholder="Select Skill">
+          <mat-optgroup class="revDark">
+            <mat-option class="revDark" *ngFor="let skill of skillsList" (click)="addSkill(skill)">
+              <span class="revDark">{{skill.name}}</span>
+            </mat-option>
+          </mat-optgroup>
+        </mat-select>
+        <hr>
       </div>
       <h2 matSubheader class="revDark">Current Skills</h2>
       <mat-list>
@@ -41,9 +40,9 @@
         </button>
       </mat-list>
     </div>
-</mat-card-content>
+  </mat-card-content>
 
-  <mat-card-content *ngIf="loading == false && skillsList.length < 1">
+  <mat-card-content *ngIf="loading == false && skillsList == undefined">
     <h1 class="center revOrange">FAILED TO LOAD</h1>
   </mat-card-content>
 </div>

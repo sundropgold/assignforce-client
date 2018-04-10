@@ -39,6 +39,7 @@ export class ProfileComponent implements OnInit {
   trainers: Trainer[] = [];
   trainer = new Trainer(0, '', '', [], null, false, null, []);
   displayTrainer = this.trainer;
+  readonly trainerEmail = localStorage.getItem('user-email');
 
   constructor(
     private skillsService: SkillControllerService,
@@ -48,44 +49,37 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.setTrainer();
-    this.populateSkills();
-    const id = this.router.url.split('/')[2];
-    if (id !== this.trainer.id.toString()) {
-      this.trainerService
-        .find(Number.parseInt(id))
-        .toPromise()
-        .then(trainer => {
-          this.displayTrainer = trainer;
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
   }
 
   setTrainer() {
     this.loading = true;
     this.trainerService
-      .findAll()
+      .findByEmail(this.trainerEmail)
       .toPromise()
-      .then(trainers => {
-        this.trainers = trainers;
-        this.trainer = this.trainers[0];
+      .then(trainer => {
+        this.trainer = trainer;
+        this.displayTrainer = this.trainer;
+        console.log(this.trainer);
         this.loading = false;
+        const id = this.router.url.split('/')[2];
+        if (id !== this.trainer.id.toString()) {
+          this.getTrainer(Number.parseInt(id));
+        }
       })
       .catch(error => {
         console.log(error);
-        this.trainers[0].firstName = 'Failed to load';
+        this.trainer = new Trainer(-1, 'Not Logged In', '', [], '', false, '', []);
         this.loading = false;
       });
   }
 
-  populateSkills() {
-    this.skillsService
-      .findAll()
+  getTrainer(id: number) {
+    this.trainerService
+      .find(id)
       .toPromise()
-      .then(response => {
-        this.skillsList = response;
+      .then(displayTrainer => {
+        this.displayTrainer = displayTrainer;
+        console.log(displayTrainer);
       })
       .catch(error => {
         console.log(error);
@@ -125,25 +119,23 @@ export class ProfileComponent implements OnInit {
   updateTrainerInfo() {
     this.lockProfile = !this.lockProfile;
     if (this.lockProfile) {
+      this.trainer.firstName = this.nameForm.value.firstName;
+      this.trainer.lastName = this.nameForm.value.lastName;
       if (this.nameForm.valid) {
-        this.nameFound = true;
-        this.trainers[0].firstName = this.nameForm.value.firstName;
-        this.trainers[0].lastName = this.nameForm.value.lastName;
-        this.displayTrainer = this.trainer;
+        this.trainerService
+          .update(this.trainer)
+          .toPromise()
+          .then(trainer => {
+            this.trainer = trainer;
+            this.displayTrainer = this.trainer;
+          })
+          .catch(error => {
+            console.log(error);
+          });
       }
       // if (this.myFile[0] !== undefined) {
       //   this.uploadResume();
       // }
     }
   }
-
-  // getUser() {
-  //   if (localStorage.getItem('access_token')) {
-  //     this.authService.getProfile((error, profile) => {
-  //       if (!error) {
-  //         this.trainer = profile;
-  //       }
-  //     });
-  //   }
-  // }
 }

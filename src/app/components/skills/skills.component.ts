@@ -12,7 +12,6 @@ import { TrainerControllerService } from '../../services/api/trainer-controller/
 })
 export class SkillsComponent implements OnInit {
   // data
-  skills: Skill[] = [];
 
   lockSkills = true;
   disabled = true;
@@ -30,6 +29,18 @@ export class SkillsComponent implements OnInit {
 
   updateSkills() {
     this.lockSkills = !this.lockSkills;
+    if (this.lockSkills === true) {
+      this.trainerService
+        .update(this.trainer)
+        .toPromise()
+        .then(trainer => {
+          console.log(trainer);
+          this.trainer = trainer;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
   }
 
   // called to save the current state of the trainers skills
@@ -39,22 +50,13 @@ export class SkillsComponent implements OnInit {
 
   // add a skill to the current trainer
   addSkill(skill) {
-    for (let i = 0; i < this.trainer.skills.length; i++) {
+    for (let i = 0; i < this.skillsList.length; i++) {
       if (this.skillsList[i] === skill) {
         this.trainer.skills.push(skill);
         this.skillsList.splice(i, 1);
         break;
       }
     }
-  }
-
-  // remove the same skill from the skill list array
-  remove(skill: Skill): void {
-    const index = this.trainer.skills.indexOf(skill);
-    if (index >= 0) {
-      this.trainer.skills.splice(index, 1);
-    }
-    console.log(this.trainer.skills);
   }
 
   // remove a trainer skill on the bottom
@@ -77,6 +79,13 @@ export class SkillsComponent implements OnInit {
       .then(response => {
         this.loading = false;
         this.skillsList = response;
+        for (const skill of this.skillsList) {
+          for (const trainerSkill of this.displayTrainer.skills) {
+            if (skill.name === trainerSkill.name) {
+              this.skillsList.splice(this.skillsList.indexOf(skill));
+            }
+          }
+        }
       })
       .catch(error => {
         console.log(error);

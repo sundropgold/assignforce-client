@@ -61,6 +61,9 @@ export class AuthService {
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
+    this.getProfile((error, profile) => {
+      console.log(localStorage.getItem('user-profile'));
+    });
   }
 
   public logout(): void {
@@ -94,6 +97,7 @@ export class AuthService {
     this.lock.getUserInfo(accessToken, (error, profile) => {
       if (profile) {
         self.userProfile = profile;
+        localStorage.setItem('user-email', profile.name);
       }
       cb(error, profile);
     });
