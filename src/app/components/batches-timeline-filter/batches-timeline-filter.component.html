@@ -56,11 +56,11 @@
         <input id="trainersperpage" type="number" matInput placeholder="Trainers Per Page (0 to see all)" (change)="onFilterChange($event)"
           value="{{trainersPerPage}}" min="0">
       </mat-form-field>
-      <button id="diabled-firstpage" mat-mini-fab *ngIf="currentPage === 0" color="disabled"> |&lt; </button>
-      <button id="diabled-previouspage" mat-mini-fab *ngIf="currentPage === 0" color="disabled"> &lt; </button>
-      <button id="firstpage" mat-mini-fab *ngIf="currentPage > 0" (click)="onFilterChange({target:{id:'firstpage'}})" color="warn">
+      <button mat-raised-button id="diabled-firstpage" mat-mini-fab *ngIf="currentPage === 0" color="disabled"> |&lt; </button>
+      <button mat-raised-button id="diabled-previouspage" mat-mini-fab *ngIf="currentPage === 0" color="disabled"> &lt; </button>
+      <button mat-raised-button id="firstpage" mat-mini-fab *ngIf="currentPage > 0" (click)="onFilterChange({target:{id:'firstpage'}})" color="warn">
       |&lt; </button>
-      <button id="previouspage" mat-mini-fab *ngIf="currentPage > 0" (click)="onFilterChange({target:{id:'previouspage'}})" color="warn">
+      <button  mat-raised-button id="previouspage" mat-mini-fab *ngIf="currentPage > 0" (click)="onFilterChange({target:{id:'previouspage'}})" color="warn">
       &lt; </button>
       <span *ngIf="trainersPerPage === 0">
         Viewing All Trainers' Batches
@@ -68,12 +68,12 @@
       <span id="viewpagespan" *ngIf="trainersPerPage != 0">
         Viewing Page: {{currentPage + 1}} / {{maxPages + 1}}
       </span>
-      <button id="nextpage" mat-mini-fab *ngIf="currentPage < maxPages" (click)="onFilterChange({target:{id:'nextpage'}})" color="warn">
+      <button mat-raised-button id="nextpage" mat-mini-fab *ngIf="currentPage < maxPages" (click)="onFilterChange({target:{id:'nextpage'}})" color="warn">
       &gt; </button>
-      <button id="lastpage" mat-mini-fab *ngIf="currentPage < maxPages" (click)="onFilterChange({target:{id:'lastpage'}})" color="warn">
+      <button mat-raised-button id="lastpage" mat-mini-fab *ngIf="currentPage < maxPages" (click)="onFilterChange({target:{id:'lastpage'}})" color="warn">
       &gt;| </button>
-      <button id="diabled-nextpage" mat-mini-fab *ngIf="currentPage >= maxPages" color="disabled"> &gt; </button>
-      <button id="diabled-lastpage" mat-mini-fab *ngIf="currentPage >= maxPages" color="disabled"> &gt;| </button>
+      <button mat-raised-button id="diabled-nextpage" mat-mini-fab *ngIf="currentPage >= maxPages" color="disabled"> &gt; </button>
+      <button mat-raised-button id="diabled-lastpage" mat-mini-fab *ngIf="currentPage >= maxPages" color="disabled"> &gt;| </button>
     </div>
     <mat-progress-bar mode="buffer" *ngIf="loading"></mat-progress-bar>
   </div>

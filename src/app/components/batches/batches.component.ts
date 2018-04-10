@@ -261,12 +261,12 @@ export class BatchesComponent implements OnInit, AfterViewInit, DoCheck {
       .create(this.newBatch)
       .toPromise()
       .then(b => {
-        // console.log(b);
+        // tslint:disable-next-line:no-unused-expression
+        location.reload();
       })
       .catch(error => {
         console.log(error);
       });
-    // window.location.reload();
   }
 
   // --------------------------------- Methods for auto generating form values -------------------------------------
