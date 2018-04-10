@@ -97,7 +97,7 @@
           </mat-table>
           <div class = "center">
             <div fxFlex="100"> &nbsp;</div>
-            <h5 *ngIf="!isLoading && !displayedBatchList">No Batches</h5>
+            <h5 *ngIf="!isLoading && (!displayedBatchList || displayedBatchList.length < 1)">No Batches</h5>
             <mat-progress-spinner *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner>
             <div fxFlex="100"> &nbsp;</div>
           </div>

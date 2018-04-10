@@ -73,7 +73,7 @@ describe('TrainersAddComponent', () => {
 
   it('should call onSubmit', () => {
     spyOn(component, 'onSubmit');
-    component.onSubmit(event);
+    component.onSubmit();
     expect(component.onSubmit).toHaveBeenCalled();
   });
 
