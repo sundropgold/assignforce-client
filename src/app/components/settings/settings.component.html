@@ -1,4 +1,4 @@
-<form class="padding-top" #settingsForm="ngForm" (ngSubmit)="save()">
+<form class="padding-top" #settingsForm="ngForm">
   <mat-grid-list cols='4' rowHeight="50px">
     <mat-grid-tile
       [colspan] = "2"
@@ -44,41 +44,41 @@
     </mat-grid-tile>
 
 
-    <mat-grid-tile
-    [colspan] = "2"
-    [rowspan] = "1">
-      <label class="leftAlign" for="batchLocation">Default Batch Location</label>
-    </mat-grid-tile>
+    <!--<mat-grid-tile-->
+    <!--[colspan] = "2"-->
+    <!--[rowspan] = "1">-->
+      <!--<label class="leftAlign" for="batchLocation">Default Batch Location</label>-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile
-    [colspan] = "2"
-    [rowspan] = "1">
-      <mat-form-field>
-        <mat-select [(ngModel)]="setting.defaultLocation" name="defaultLocation">
-          <mat-option *ngFor="let location of locations" [value]="location.id">
-            {{ location.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </mat-grid-tile>
+    <!--<mat-grid-tile-->
+    <!--[colspan] = "2"-->
+    <!--[rowspan] = "1">-->
+      <!--<mat-form-field>-->
+        <!--<mat-select [(ngModel)]="setting.defaultLocation" name="defaultLocation">-->
+          <!--<mat-option *ngFor="let location of locations" [value]="location">-->
+            <!--{{ location.name }}-->
+          <!--</mat-option>-->
+        <!--</mat-select>-->
+      <!--</mat-form-field>-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile
-    [colspan] = "2"
-    [rowspan] = "1">
-      <label class="leftAlign" for="batchBuilding">Default Batch Building</label>
-    </mat-grid-tile>
+    <!--<mat-grid-tile-->
+    <!--[colspan] = "2"-->
+    <!--[rowspan] = "1">-->
+      <!--<label class="leftAlign" for="batchBuilding">Default Batch Building</label>-->
+    <!--</mat-grid-tile>-->
 
-    <mat-grid-tile
-    [colspan] = "2"
-    [rowspan] = "1">
-      <mat-form-field>
-        <mat-select [(ngModel)]="setting.defaultBuilding" name="defaultBuilding">
-          <mat-option *ngFor="let building of buildings" [value]="building.id">
-            {{ building.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </mat-grid-tile>
+    <!--<mat-grid-tile-->
+    <!--[colspan] = "2"-->
+    <!--[rowspan] = "1">-->
+      <!--<mat-form-field>-->
+        <!--<mat-select [(ngModel)]="setting.defaultBuilding" name="defaultBuilding">-->
+          <!--<mat-option *ngFor="let building of buildings" [value]="building">-->
+            <!--{{ building.name }}-->
+          <!--</mat-option>-->
+        <!--</mat-select>-->
+      <!--</mat-form-field>-->
+    <!--</mat-grid-tile>-->
 
     <mat-grid-tile
     [colspan] = "2"
@@ -158,7 +158,7 @@
     <mat-grid-tile
     [colspan] = "1"
     [rowspan] = "1">
-      <button mat-raised-button class="btn-orange" type="submit" [disabled]="!settingsForm.form.valid">SAVE</button>
+      <button mat-raised-button class="btn-orange" type="submit" [disabled]="!settingsForm.form.valid" (click)="save()">SAVE</button>
     </mat-grid-tile>
 
     <mat-grid-tile

@@ -88,7 +88,7 @@ export const environment = {
     },
 
     focusController: {
-      baseUrl: 'https://hydra.cfapps.io/api/curricula',
+      baseUrl: 'https://hydra.cfapps.io/api/focuses',
       create: '',
       update: '/',
       findAll: '',
@@ -115,7 +115,7 @@ export const environment = {
     },
 
     settingController: {
-      baseUrl: 'https://hydra.cfapps.io/api/setting',
+      baseUrl: 'https://hydra.cfapps.io/api/assignforce-settings',
       create: '',
       update: '/',
       findAll: '',

@@ -8,6 +8,7 @@ import { Curriculum } from '../../model/Curriculum';
 import { Address } from '../../model/Address';
 import { Building } from '../../model/Building';
 import { Room } from '../../model/Room';
+import { SettingControllerService } from '../../services/api/setting-controller/setting-controller.service';
 
 @Component({
   selector: 'app-batches-timeline',
@@ -143,12 +144,17 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   batches: Batch[] = [];
   trainers: Trainer[] = [];
 
-  constructor(private batchController: BatchControllerService, private trainerController: TrainerControllerService) {}
+  constructor(
+    private batchController: BatchControllerService,
+    private trainerController: TrainerControllerService,
+    private settingControllerService: SettingControllerService
+  ) {}
 
   // initialize data
   ngOnInit() {
     this.loadInitialDates();
     this.currentPage = 0;
+    this.updateSettings();
     this.updateBatches();
     this.updateTrainers();
   }
@@ -283,7 +289,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   // updates the max pages
   updatePage() {
     if (this.trainersPerPage > this.trainers.length) {
-      this.trainersPerPage = this.trainers.length;
+      this.actualTrainersPerPage = this.trainers.length;
     }
     if (this.trainersPerPage === 0) {
       this.actualTrainersPerPage = this.trainers.length;
@@ -401,6 +407,14 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         console.log('failed to load trainers ', err);
       }
     );
+  }
+
+  updateSettings() {
+    this.settingControllerService.find().subscribe(result => {
+      const setting = result[0];
+      this.trainersPerPage = setting.trainersPerPage;
+      this.updatePage();
+    });
   }
 
   // updates the start and end date filters
