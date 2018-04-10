@@ -22,6 +22,8 @@ export class TrainersComponent implements OnInit {
   isManager = true;
   isLoading: boolean;
 
+  canLoad = true;
+
   constructor(public dialog: MatDialog, private trainerService: TrainerControllerService, private router: Router) {}
 
   ngOnInit() {
@@ -77,15 +79,30 @@ export class TrainersComponent implements OnInit {
         //  this.addTrainer(result);
         this.trainers.push(result);
 
-        // this.trainerService
-        //   .create(result)
-        //   .toPromise()
-        //   .then(t => {
-        //     console.log(t);
-        //   })
-        //   .catch(error => {
-        //     console.log(error);
-        //   });
+        this.canLoad = false;
+
+        this.trainerService
+          .create(result)
+          .toPromise()
+          .then(t => {
+            console.log(t);
+            event.stopPropagation();
+            // window.location.reload();
+
+            this.trainerService
+              .findAll()
+              .toPromise()
+              .then(t2 => {
+                this.trainers = t2;
+                this.canLoad = true;
+              })
+              .catch(error2 => {
+                console.log(error2);
+              });
+          })
+          .catch(error => {
+            console.log(error);
+          });
       }
     });
   }
