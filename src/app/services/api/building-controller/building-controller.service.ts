@@ -10,13 +10,31 @@ export class BuildingControllerService {
 
   private buildingController = environment.apiUrls.buildingController;
 
-  public create(building: Building): Observable<Building> {
-    return this.http.post<Building>(this.buildingController.baseUrl + this.buildingController.create, building);
+  private generateDTO(building: Building): any {
+    const rooms: string[] = [];
+    building.rooms.forEach(room => {
+      rooms.push(environment.apiUrls.roomController.baseUrl + '/' + room.id);
+    });
+    return {
+      id: building.id,
+      active: building.active,
+      address: environment.apiUrls.addressController.baseUrl + '/' + building.address.id,
+      name: building.name,
+      rooms: rooms
+    };
   }
+
+  public create(building: Building): Observable<Building> {
+    return this.http.post<Building>(
+      this.buildingController.baseUrl + this.buildingController.create,
+      this.generateDTO(building)
+    );
+  }
+
   public update(building: Building): Observable<Building> {
     return this.http.put<Building>(
       this.buildingController.baseUrl + this.buildingController.update + building.id,
-      building
+      this.generateDTO(building)
     );
   }
   public findAll(): Observable<Building[]> {

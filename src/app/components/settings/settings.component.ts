@@ -20,6 +20,7 @@ export class SettingsComponent implements OnInit {
   ) {}
 
   setting: Setting = new Setting(0, '', 0, 0, 0, 0, 0, 0, 0, null, null, '');
+  setting2: Setting = new Setting(0, '', 0, 0, 0, 0, 0, 0, 0, null, null, '');
 
   defaultLocation: Address;
   defaultBuilding: Building;
@@ -65,6 +66,7 @@ export class SettingsComponent implements OnInit {
   getSettingsInfo() {
     console.log('loading setting data from service...');
     this.isLoading = true;
+
     this.settingService
       .find(1)
       .toPromise()
@@ -90,23 +92,46 @@ export class SettingsComponent implements OnInit {
   save() {
     console.log('saving settings...');
     this.isLoading = true;
-    this.settingService
-      .update(this.setting)
-      .toPromise()
-      .then(setting => {
-        console.log('save success');
-        this.isLoading = false;
-      })
-      .catch(err => {
-        console.log(err);
-      });
+
+    this.setting2 = {
+      id: this.setting.id,
+      alias: this.setting.alias,
+      trainersPerPage: this.setting.trainersPerPage,
+      reportGrads: this.setting.reportGrads,
+      batchLength: this.setting.batchLength,
+      reportIncomingGrads: this.setting.reportIncomingGrads,
+      minBatchSize: this.setting.minBatchSize,
+      maxBatchSize: this.setting.maxBatchSize,
+      trainerBreakDays: this.setting.trainerBreakDays,
+      defaultLocation: this.defaultLocation,
+      defaultBuilding: this.defaultBuilding,
+      defaultNamePattern: ''
+    };
+    this.isLoading = false;
+
+    // this.settingService
+    //   .update(this.setting)
+    //   .toPromise()
+    //   .then(setting => {
+    //     console.log('save success');
+    //     this.isLoading = false;
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
   }
 
   // resets the settings information
-  reset(evt) {
+  reset() {
     console.log('resetting settings');
     this.isError = false;
-    this.getSettingsInfo();
-    evt.preventDefault();
+    this.isLoading = true;
+
+    this.setting = this.setting2;
+
+    this.isLoading = false;
+    // this.setting
+    // this.getSettingsInfo();
+    // evt.preventDefault();
   }
 }

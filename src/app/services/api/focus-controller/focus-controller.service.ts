@@ -10,11 +10,27 @@ export class FocusControllerService {
 
   private focusController = environment.apiUrls.focusController;
 
+  private generateDTO(focus: Focus) {
+    const msg = {
+      id: focus.id,
+      name: focus.name,
+      active: focus.active,
+      skills: []
+    };
+    focus.skills.forEach(s => {
+      msg.skills.push(environment.apiUrls.skillController.baseUrl + '/' + s.id);
+    });
+    return msg;
+  }
+
   public create(focus: Focus): Observable<Focus> {
-    return this.http.post<Focus>(this.focusController.baseUrl + this.focusController.create, focus);
+    return this.http.post<Focus>(this.focusController.baseUrl + this.focusController.create, this.generateDTO(focus));
   }
   public update(focus: Focus): Observable<Focus> {
-    return this.http.put<Focus>(this.focusController.baseUrl + this.focusController.update + focus.id, focus);
+    return this.http.put<Focus>(
+      this.focusController.baseUrl + this.focusController.update + focus.id,
+      this.generateDTO(focus)
+    );
   }
   public findAll(): Observable<Focus[]> {
     return this.http.get<Focus[]>(this.focusController.baseUrl + this.focusController.findAll);
