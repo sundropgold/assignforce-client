@@ -67,6 +67,11 @@
       </span>
       <span id="viewpagespan" *ngIf="trainersPerPage != 0">
         Viewing Page: {{currentPage + 1}} / {{maxPages + 1}}
+        <mat-form-field>
+          <mat-label>Current Page</mat-label>
+          <input id="currentpage" type="number" matInput placeholder="Enter value to go to page" (change)="onFilterChange($event)"
+            value="{{currentPage}}" min="0">
+        </mat-form-field>
       </span>
       <button mat-raised-button id="nextpage" mat-mini-fab *ngIf="currentPage < maxPages" (click)="onFilterChange({target:{id:'nextpage'}})" color="warn">
       &gt; </button>
