@@ -3,7 +3,7 @@
   <mat-toolbar class="md-toolbar" layout="columns">
     <span class="mat-expansion-panel-header-title">Skills</span>
     <span class="md-toolbar-spacer"></span>
-    <button mat-icon-button (click)="updateSkills()">
+    <button mat-icon-button (click)="updateSkills()" *ngIf="trainer.id === displayTrainer.id">
       <mat-icon matTooltip="Save" class="mat-icon" *ngIf="!lockSkills">save</mat-icon>
       <mat-icon matTooltip="Edit" class="mat-icon" *ngIf="lockSkills">edit</mat-icon>
     </button>
@@ -34,7 +34,7 @@
       </div>
       <h2 matSubheader class="revDark">Current Skills</h2>
       <mat-list>
-        <button [disabled]="lockSkills" mat-button class="md-list-item" *ngFor="let skill of trainer.skills" (click)="removeSkill(skill)">
+        <button [disabled]="lockSkills" mat-button class="md-list-item" *ngFor="let skill of displayTrainer.skills" (click)="removeSkill(skill)">
           <mat-icon class="material-icons">stars</mat-icon>
           <h5>{{skill.name}}</h5>
         </button>
