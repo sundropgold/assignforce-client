@@ -26,4 +26,8 @@ export class TrainerControllerService {
   public find(id: number): Observable<Trainer> {
     return this.http.get<Trainer>(this.trainerController.baseUrl + this.trainerController.find + id);
   }
+
+  public findByEmail(email: String) {
+    return this.http.get<Trainer>(this.trainerController.baseUrl + `/email?email=${email}`);
+  }
 }

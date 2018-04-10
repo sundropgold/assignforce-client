@@ -39,6 +39,7 @@ export class ProfileComponent implements OnInit {
   trainers: Trainer[] = [];
   trainer = new Trainer(0, '', '', [], null, false, null, []);
   displayTrainer = this.trainer;
+  readonly trainerEmail = localStorage.getItem('user-email');
 
   constructor(
     private skillsService: SkillControllerService,
@@ -48,49 +49,54 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.setTrainer();
-    this.populateSkills();
-    const id = this.router.url.split('/')[2];
-    if (id !== this.trainer.id.toString()) {
-      this.trainerService
-        .find(Number.parseInt(id))
-        .toPromise()
-        .then(trainer => {
-          this.displayTrainer = trainer;
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    }
+    // this.populateSkills();
   }
 
   setTrainer() {
     this.loading = true;
     this.trainerService
-      .findAll()
+      .findByEmail(this.trainerEmail)
       .toPromise()
-      .then(trainers => {
-        this.trainers = trainers;
-        this.trainer = this.trainers[0];
+      .then(trainer => {
+        this.trainer = trainer;
+        this.displayTrainer = this.trainer;
+        console.log(this.trainer);
         this.loading = false;
+        const id = this.router.url.split('/')[2];
+        if (id !== this.trainer.id.toString()) {
+          this.getTrainer(Number.parseInt(id));
+        }
       })
       .catch(error => {
         console.log(error);
-        this.trainers[0].firstName = 'Failed to load';
+        this.trainer = new Trainer(-1, 'Not Logged In', '', [], '', false, '', []);
         this.loading = false;
       });
   }
 
-  populateSkills() {
-    this.skillsService
-      .findAll()
+  getTrainer(id: number) {
+    this.trainerService
+      .find(id)
       .toPromise()
-      .then(response => {
-        this.skillsList = response;
+      .then(displayTrainer => {
+        this.displayTrainer = displayTrainer;
+        console.log(displayTrainer);
       })
       .catch(error => {
         console.log(error);
       });
   }
+  // populateSkills() {
+  //   this.skillsService
+  //     .findAll()
+  //     .toPromise()
+  //     .then(response => {
+  //       this.skillsList = response;
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // }
 
   remove(skill: Skill) {
     this.skillsList = this.trainers[0].skills.filter(s => s !== skill);
@@ -136,14 +142,4 @@ export class ProfileComponent implements OnInit {
       // }
     }
   }
-
-  // getUser() {
-  //   if (localStorage.getItem('access_token')) {
-  //     this.authService.getProfile((error, profile) => {
-  //       if (!error) {
-  //         this.trainer = profile;
-  //       }
-  //     });
-  //   }
-  // }
 }
