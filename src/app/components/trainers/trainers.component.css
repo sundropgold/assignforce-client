@@ -50,3 +50,9 @@ mat-card-content {
   margin: auto;
   width: 10%;
 }
+
+/* ---------- BUTTONS ---------- */
+.mat-icon,
+.material-icons {
+  color: #f26a25;
+}

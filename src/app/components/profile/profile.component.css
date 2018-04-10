@@ -65,3 +65,9 @@ mat-card {
 mat-card-content {
   margin: 0;
 }
+
+/* ---------- BUTTONS ---------- */
+.mat-icon,
+.material-icons {
+  color: #f26a25;
+}
