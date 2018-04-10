@@ -24,3 +24,7 @@ mat-icon,
 .mat-icon-button {
   color: #37474f;
 }
+
+#batchName {
+  width: 250px;
+}

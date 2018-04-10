@@ -55,7 +55,7 @@
             <input matInput placeholder="spans {{numOfWeeksBetween}} weeks" readonly>
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field id="batchName">
             <input formControlName="batchName" matInput placeholder="Name" [ngModel]="genBatchName" readonly>
           </mat-form-field>
         </div>
@@ -71,9 +71,11 @@
 
           <mat-form-field>
             <mat-select formControlName="cotrainer" placeholder="Co-Trainer" [disabled]="!batchForm.value.trainer">
-              <mat-option *ngFor="let trainer of trainers" [value]="trainer">
+              <div *ngFor="let trainer of trainers">
+              <mat-option *ngIf="batchForm.value.trainer !== trainer" [value]="trainer">
                 {{ trainer.firstName }}
               </mat-option>
+            </div>
             </mat-select>
           </mat-form-field>
         </div>
