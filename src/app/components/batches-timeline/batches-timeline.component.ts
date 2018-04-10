@@ -140,8 +140,8 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   tooltipNoneColor = '#FF6347';
 
   // cached data
-  batches = [];
-  trainers = [];
+  batches: Batch[] = [];
+  trainers: Trainer[] = [];
 
   constructor(private batchController: BatchControllerService, private trainerController: TrainerControllerService) {}
 
@@ -276,7 +276,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       this.updatePage();
     } else {
       // unknown event!
-      // console.log('unknown event filter triggered! ' + event + '\n' + event.target);
+      console.log('unknown event filter triggered! ' + event + '\n' + event.target);
     }
   }
 
@@ -345,6 +345,10 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
             }
           }
           // add it
+          if (typeof batch.startDate !== 'number') {
+            batch.startDate = new Date(batch.startDate).valueOf();
+            batch.endDate = new Date(batch.endDate).valueOf();
+          }
           this.batches.push(batch);
         }
         this.loading = false;
@@ -664,14 +668,14 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       return rects;
     }
     const full_duration = this.endValue - this.startValue;
-    
+
     // text mode to use by pixel height
     const txtlongpx = 105;
     const txtshortpx = 30;
     const txtnumpx = 0;
     // make a rectangle for each batch
     for (let i = 0; i < this.batches.length; i++) {
-      const batch = this.batches[i];
+      const batch: Batch = this.batches[i];
       // valueOf gives us ms, convert to weeks to get the duration this event takes
       let duration = batch.endDate - batch.startDate;
       duration = Math.floor(duration / this.ONE_WEEK);
@@ -718,7 +722,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         labeltext = '';
         labely = y - 2;
       } else {
-        // console.warn('batch rectangle height is negative!');
+        // console.warn('batch rectangle height is negative!' + y + ' ' + endy);
         continue;
       }
       // get the text that will be put into the rectangle
@@ -1023,7 +1027,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
               this.swimPos.x < this.swimDots[i].x + this.swimDots[i].r
             ) {
               this.swimPoints += 100;
-              // console.log('+100');
+              console.log('+100');
               this.swimDots.splice(i, 1);
               i--;
               continue;
@@ -1056,8 +1060,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
 
   // reset to normal mode
   finishSwimMode() {
-    if (!this.swimActive)
-      return;
+    if (!this.swimActive) return;
     if (this.swimPoints > this.swimHigh) {
       this.swimHigh = this.swimPoints;
     }
@@ -1287,7 +1290,6 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     const ys0 = this.dateToYPos(new Date(start_year, start_month).valueOf());
     const ys1 = this.dateToYPos(new Date(start_year, start_month + 1).valueOf());
     const dist_between_months = ys1 - ys0;
-    // console.log(dist_between_months);
 
     // the maximum number of dates to be shown on the screen
     const max_dates = 40;
