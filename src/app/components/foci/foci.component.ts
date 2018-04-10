@@ -31,9 +31,12 @@ export class FociComponent implements OnInit {
   openAddFocusDialog(event: Event) {
     event.stopPropagation();
     const dialogRef = this.dialog.open(AddFocusComponent, {});
-    dialogRef.afterClosed().subscribe(result => {
-      this.refreshFocuses();
-    });
+    dialogRef
+      .afterClosed()
+      .toPromise()
+      .then(result => {
+        this.refreshFocuses();
+      });
   }
 
   //Opens up the Edit Focus Modal
@@ -41,9 +44,12 @@ export class FociComponent implements OnInit {
     const dialogRef = this.dialog.open(EditFocusComponent, {
       data: focus
     });
-    dialogRef.afterClosed().subscribe(result => {
-      this.refreshFocuses();
-    });
+    dialogRef
+      .afterClosed()
+      .toPromise()
+      .then(result => {
+        this.refreshFocuses();
+      });
   }
 
   //Refreshes the list of focuses.  This is to be used after changing the data in the backend.
