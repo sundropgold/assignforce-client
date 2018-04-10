@@ -18,9 +18,9 @@
             <div>
               <h3 mat-line class="focus-name">{{focus.name}}</h3>
               <span>Skills: </span>
-              <span *ngFor="let skill of focus.skills; lasty as last">
-                <span *ngIf="!lasty" class="focus-skills">{{skill.name}}, </span>
-                <span *ngIf="lasty" class="focus-skills">{{skill.name}}</span>
+              <span *ngFor="let skill of focus.skills; last as last">
+                <span *ngIf="!last" class="focus-skills">{{skill.name}}, </span>
+                <span *ngIf="last" class="focus-skills">{{skill.name}}</span>
               </span>
               <br><br><br>
             </div>

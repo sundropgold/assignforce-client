@@ -12,7 +12,10 @@
             <div>
               <h3 mat-line class="core-name">{{core.name}}</h3>
               <span class="core-skills-label">Skills: </span>
-              <span *ngFor="let skill of core.skills; first as first" class="core-skills">{{skill.name}}, </span>
+              <span *ngFor="let skill of core.skills; last as last">
+                <span *ngIf="!last" class="core-skills">{{skill.name}}, </span>
+                <span *ngIf="last" class="core-skills">{{skill.name}}</span>
+              </span>
               <br><br><br>
               <mat-divider *ngIf="!last"></mat-divider>
             </div>
