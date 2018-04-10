@@ -1,4 +1,4 @@
-<div id="profileDiv" class="container">
+<div id="profileDiv" class="container" *ngIf="!failed">
   <!--<mat-card *ngIf="tId == -1" md-whiteframe="8" ng-cloak>-->
   <mat-card>
     <mat-toolbar-row>
@@ -27,12 +27,12 @@
               <br>
             </div> -->
           <div *ngIf="!lockProfile ">
-            <form [formGroup]="nameForm ">
+            <form [formGroup]="nameForm">
               <mat-form-field flex>
-                <input matInput class="formControl " placeholder="First Name " formControlName="firstName " required>
+                <input matInput class="formControl" placeholder="First Name" formControlName="firstName" required>
               </mat-form-field>
               <mat-form-field flex>
-                <input matInput class="formControl " placeholder="Last Name " name="lastLast " formControlName="lastName " required>
+                <input matInput class="formControl" placeholder="Last Name" name="lastLast " formControlName="lastName" required>
               </mat-form-field>
             </form>
           </div>
@@ -47,4 +47,8 @@
       <!-- <app-certifications></app-certifications> -->
     </mat-card-content>
   </mat-card>
+</div>
+
+<div *ngIf="failed">
+  <h1>Error: Failed to load</h1>
 </div>

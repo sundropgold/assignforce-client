@@ -31,6 +31,7 @@ export class ProfileComponent implements OnInit {
 
   myFile: FileList;
   creds: any;
+  failed = false;
   //certFile: FileList = null;
   certName: string;
   skillsList: Skill[] = [];
@@ -57,18 +58,23 @@ export class ProfileComponent implements OnInit {
       .findByEmail(this.trainerEmail)
       .toPromise()
       .then(trainer => {
-        this.trainer = trainer;
-        this.displayTrainer = this.trainer;
-        console.log(this.trainer);
-        this.loading = false;
-        const id = this.router.url.split('/')[2];
-        if (id !== this.trainer.id.toString()) {
-          this.getTrainer(Number.parseInt(id));
+        if (trainer !== null) {
+          this.trainer = trainer;
+          this.displayTrainer = this.trainer;
+          console.log(this.trainer);
+          this.loading = false;
+          const id = this.router.url.split('/')[2];
+          if (id !== this.trainer.id.toString()) {
+            this.getTrainer(Number.parseInt(id));
+          }
+        } else {
+          console.log('TRAINER = ERROR');
+          this.failed = true;
         }
       })
       .catch(error => {
         console.log(error);
-        this.trainer = new Trainer(-1, 'Not Logged In', '', [], '', false, '', []);
+        this.trainer = new Trainer(-1, 'Error', 'Failed to Login', [], '', false, '', []);
         this.loading = false;
       });
   }
