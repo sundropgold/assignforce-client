@@ -36,6 +36,7 @@ export class TrainersComponent implements OnInit {
       .then(t => {
         this.trainers = t;
         this.isLoading = false;
+        console.log(t);
       })
       .catch(error => {
         this.isLoading = false;
