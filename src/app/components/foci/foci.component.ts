@@ -12,10 +12,12 @@ import { Focus } from '../../model/Focus';
   styleUrls: ['./foci.component.css']
 })
 export class FociComponent implements OnInit {
-  focusData: Focus[] = [];
-
   constructor(private dialog: MatDialog, private focusControllerService: FocusControllerService) {}
 
+  //The array of focuses to be displayed in the list
+  focusData: Focus[] = [];
+
+  //Sets up all the focuses that will need to be displayed
   ngOnInit() {
     this.focusControllerService
       .findAll()
@@ -25,6 +27,7 @@ export class FociComponent implements OnInit {
       });
   }
 
+  //Opens up the Add Focus Modal
   openAddFocusDialog(event: Event) {
     event.stopPropagation();
     const dialogRef = this.dialog.open(AddFocusComponent, {});
@@ -33,6 +36,7 @@ export class FociComponent implements OnInit {
     });
   }
 
+  //Opens up the Edit Focus Modal
   openEditFocusDialog(focus) {
     const dialogRef = this.dialog.open(EditFocusComponent, {
       data: focus
@@ -42,26 +46,30 @@ export class FociComponent implements OnInit {
     });
   }
 
+  //Refreshes the list of focuses.  This is to be used after changing the data in the backend.
   refreshFocuses(): void {
     this.focusControllerService
       .findAll()
       .toPromise()
       .then(data => {
         this.focusData = data;
+        console.log(this.focusData);
       });
   }
 
+  //This is used to remove, and confirm removal of focuses.
   confirmRemoveFocus(focus) {
     if (confirm('Are you sure you want to remove ' + focus.name + '?')) {
       this.focusControllerService
         .remove(focus.id)
         .toPromise()
-        .then()
+        .then(() => {
+          this.refreshFocuses();
+        })
         .catch(err => {
           alert('Error occurred while removing focus');
           console.log(err);
         });
     }
-    this.refreshFocuses();
   }
 }

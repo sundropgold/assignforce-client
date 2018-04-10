@@ -13,8 +13,6 @@ import { FocusControllerService } from '../../services/api/focus-controller/focu
   styleUrls: ['./edit-focus.component.css']
 })
 export class EditFocusComponent implements OnInit {
-  focus: Focus;
-
   constructor(
     private dialogRef: MatDialogRef<EditFocusComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Curriculum,
@@ -22,10 +20,16 @@ export class EditFocusComponent implements OnInit {
     private focusControllerService: FocusControllerService
   ) {}
 
+  //The Focus in question
+  focus: Focus;
+
+  //The array of available skills
   skills: Skill[] = [];
 
+  //The array of selected skills
   selectedSkills: Skill[] = [];
 
+  //Sets up the modal with all the data it will need to occomplish its task.
   ngOnInit() {
     this.newFocus();
     this.skillControllerService
@@ -35,26 +39,30 @@ export class EditFocusComponent implements OnInit {
         this.skills = data;
         this.selectedSkills = this.data.skills;
         this.focus = JSON.parse(JSON.stringify(this.data));
-        //this.focus = this.data;
       });
   }
 
+  //Closes the Modal
   closeDialog() {
     console.log(this.selectedSkills);
     this.dialogRef.close();
   }
 
+  //Compares the skills so that you can see what already exists in the object in the select
   compareFunction(skill1, skill2) {
     return skill1.name === skill2.name;
   }
 
+  //Resets the focus object so that we don't have undefined issues when loading a page
   newFocus(): void {
     this.focus = new Focus(0, '', true, []);
   }
 
+  //Sends the updated focus to the backend to be processed
   editFocus(): void {
     console.log('We are Editing a focus ' + this.data.name);
     this.focus.skills = this.selectedSkills;
+    console.log(this.focus.skills);
     this.focusControllerService
       .update(this.focus)
       .toPromise()
