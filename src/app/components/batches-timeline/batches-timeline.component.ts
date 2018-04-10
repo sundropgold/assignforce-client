@@ -8,6 +8,7 @@ import { Curriculum } from '../../model/Curriculum';
 import { Address } from '../../model/Address';
 import { Building } from '../../model/Building';
 import { Room } from '../../model/Room';
+import { SettingControllerService } from '../../services/api/setting-controller/setting-controller.service';
 
 @Component({
   selector: 'app-batches-timeline',
@@ -140,15 +141,20 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
   tooltipNoneColor = '#FF6347';
 
   // cached data
-  batches = [];
-  trainers = [];
+  batches: Batch[] = [];
+  trainers: Trainer[] = [];
 
-  constructor(private batchController: BatchControllerService, private trainerController: TrainerControllerService) {}
+  constructor(
+    private batchController: BatchControllerService,
+    private trainerController: TrainerControllerService,
+    private settingControllerService: SettingControllerService
+  ) {}
 
   // initialize data
   ngOnInit() {
     this.loadInitialDates();
     this.currentPage = 0;
+    this.updateSettings();
     this.updateBatches();
     this.updateTrainers();
   }
@@ -276,14 +282,14 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
       this.updatePage();
     } else {
       // unknown event!
-      // console.log('unknown event filter triggered! ' + event + '\n' + event.target);
+      console.log('unknown event filter triggered! ' + event + '\n' + event.target);
     }
   }
 
   // updates the max pages
   updatePage() {
     if (this.trainersPerPage > this.trainers.length) {
-      this.trainersPerPage = this.trainers.length;
+      this.actualTrainersPerPage = this.trainers.length;
     }
     if (this.trainersPerPage === 0) {
       this.actualTrainersPerPage = this.trainers.length;
@@ -345,6 +351,10 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
             }
           }
           // add it
+          if (typeof batch.startDate !== 'number') {
+            batch.startDate = new Date(batch.startDate).valueOf();
+            batch.endDate = new Date(batch.endDate).valueOf();
+          }
           this.batches.push(batch);
         }
         this.loading = false;
@@ -397,6 +407,14 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         console.log('failed to load trainers ', err);
       }
     );
+  }
+
+  updateSettings() {
+    this.settingControllerService.find().subscribe(result => {
+      const setting = result[0];
+      this.trainersPerPage = setting.trainersPerPage;
+      this.updatePage();
+    });
   }
 
   // updates the start and end date filters
@@ -671,7 +689,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     const txtnumpx = 0;
     // make a rectangle for each batch
     for (let i = 0; i < this.batches.length; i++) {
-      const batch = this.batches[i];
+      const batch: Batch = this.batches[i];
       // valueOf gives us ms, convert to weeks to get the duration this event takes
       let duration = batch.endDate - batch.startDate;
       duration = Math.floor(duration / this.ONE_WEEK);
@@ -718,7 +736,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
         labeltext = '';
         labely = y - 2;
       } else {
-        // console.warn('batch rectangle height is negative!');
+        // console.warn('batch rectangle height is negative!' + y + ' ' + endy);
         continue;
       }
       // get the text that will be put into the rectangle
@@ -1023,7 +1041,7 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
               this.swimPos.x < this.swimDots[i].x + this.swimDots[i].r
             ) {
               this.swimPoints += 100;
-              // console.log('+100');
+              console.log('+100');
               this.swimDots.splice(i, 1);
               i--;
               continue;
@@ -1286,7 +1304,6 @@ export class BatchesTimelineComponent implements OnInit, AfterViewInit {
     const ys0 = this.dateToYPos(new Date(start_year, start_month).valueOf());
     const ys1 = this.dateToYPos(new Date(start_year, start_month + 1).valueOf());
     const dist_between_months = ys1 - ys0;
-    // console.log(dist_between_months);
 
     // the maximum number of dates to be shown on the screen
     const max_dates = 40;

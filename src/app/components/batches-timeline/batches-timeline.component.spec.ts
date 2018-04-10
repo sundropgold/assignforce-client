@@ -15,6 +15,7 @@ import { FocusControllerService } from '../../services/api/focus-controller/focu
 import { AddressControllerService } from '../../services/api/address-controller/address-controller.service';
 import { RoomControllerService } from '../../services/api/room-controller/room-controller.service';
 import { BuildingControllerService } from '../../services/api/building-controller/building-controller.service';
+import { SettingControllerService } from '../../services/api/setting-controller/setting-controller.service';
 
 describe('BatchesTimelineComponent', () => {
   let component: BatchesTimelineComponent;
@@ -35,6 +36,7 @@ describe('BatchesTimelineComponent', () => {
         providers: [
           TrainerControllerService,
           BatchControllerService,
+          SettingControllerService,
           CurriculumControllerService,
           FocusControllerService,
           AddressControllerService,

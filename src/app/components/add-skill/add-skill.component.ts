@@ -15,20 +15,25 @@ export class AddSkillComponent implements OnInit {
     private skillControllerService: SkillControllerService
   ) {}
 
+  //The skill to be added.
   skill: Skill;
 
+  //Makes sure that the skill is defined so that we may bind its properties.
   ngOnInit() {
     this.newSkill();
   }
 
+  //Closes the Add Skill Modal
   closeDialog(): void {
     this.dialogRef.close();
   }
 
+  //Resets the skill so that old data wont exist on new Modal opening.  Also makes sure that there aren't any undefined issues.
   newSkill(): void {
     this.skill = new Skill(0, '', true);
   }
 
+  //Sends the new skill to be added to the server for processing.
   addSkill(): void {
     console.log('We are Adding a skill ' + this.skill.name);
     console.log(this.skill);

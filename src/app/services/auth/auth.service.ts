@@ -22,7 +22,7 @@ export class AuthService {
 
   lock = new Auth0Lock(environment.auth0.clientId, environment.auth0.domain, {
     autoclose: true,
-    closable: false,
+    closable: true,
     auth: {
       redirectUrl: environment.auth0.redirectUri,
       responseType: environment.auth0.responseType,

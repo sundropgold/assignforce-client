@@ -120,7 +120,6 @@ export class BatchesTimelineFilterComponent implements OnInit {
       result => {
         this.buildingData = [];
         this.buildingData.push('Any');
-        console.log('load building data: ' + result);
         for (let i = 0; i < result.length; i++) {
           const location = result[i];
           for (let j = 0; j < result.length; j++) {
