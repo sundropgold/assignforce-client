@@ -68,6 +68,11 @@ export class OverviewComponent implements OnInit, AfterViewInit {
           // This starts the view on showing All Batches.
           this.applyFilter(0);
         });
+
+        if (blist.length < 1) {
+          this.isLoading = false;
+          this.panelTitle = 'All Batches';
+        }
       })
       .catch(error => {
         this.isLoading = false;

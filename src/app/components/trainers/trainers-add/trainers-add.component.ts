@@ -34,7 +34,7 @@ export class TrainersAddComponent implements OnInit {
 
   ngOnInit() {}
 
-  onSubmit(evt) {
+  onSubmit() {
     if (
       this.trainer.firstName !== '' &&
       this.trainer.lastName !== '' &&

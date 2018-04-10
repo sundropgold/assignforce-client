@@ -86,8 +86,8 @@ export class TrainersComponent implements OnInit {
           .toPromise()
           .then(t => {
             console.log(t);
-            event.stopPropagation();
-            // window.location.reload();
+            // event.stopPropagation();
+            window.location.reload();
 
             this.trainerService
               .findAll()
