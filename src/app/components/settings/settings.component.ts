@@ -20,7 +20,6 @@ export class SettingsComponent implements OnInit {
   ) {}
 
   setting: Setting = new Setting(0, '', 0, 0, 0, 0, 0, 0, 0, null, null, '');
-  setting2: Setting = new Setting(0, '', 0, 0, 0, 0, 0, 0, 0, null, null, '');
 
   defaultLocation: Address;
   defaultBuilding: Building;
@@ -68,15 +67,15 @@ export class SettingsComponent implements OnInit {
     this.isLoading = true;
 
     this.settingService
-      .find(1)
+      .find()
       .toPromise()
       .then(setting => {
         console.log('retrieved setting data!');
-        console.log(setting);
+        console.log(setting[0]);
 
-        this.setting = setting;
-        this.defaultBuilding = setting.defaultBuilding;
-        this.defaultLocation = setting.defaultLocation;
+        this.setting = setting[0];
+        this.defaultBuilding = setting[0].defaultBuilding;
+        this.defaultLocation = setting[0].defaultLocation;
 
         this.isLoading = false;
       })
@@ -92,46 +91,23 @@ export class SettingsComponent implements OnInit {
   save() {
     console.log('saving settings...');
     this.isLoading = true;
-
-    this.setting2 = {
-      id: this.setting.id,
-      alias: this.setting.alias,
-      trainersPerPage: this.setting.trainersPerPage,
-      reportGrads: this.setting.reportGrads,
-      batchLength: this.setting.batchLength,
-      reportIncomingGrads: this.setting.reportIncomingGrads,
-      minBatchSize: this.setting.minBatchSize,
-      maxBatchSize: this.setting.maxBatchSize,
-      trainerBreakDays: this.setting.trainerBreakDays,
-      defaultLocation: this.defaultLocation,
-      defaultBuilding: this.defaultBuilding,
-      defaultNamePattern: ''
-    };
-    this.isLoading = false;
-
-    // this.settingService
-    //   .update(this.setting)
-    //   .toPromise()
-    //   .then(setting => {
-    //     console.log('save success');
-    //     this.isLoading = false;
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
+    this.settingService
+      .update(this.setting)
+      .toPromise()
+      .then(setting => {
+        console.log('save success');
+        this.isLoading = false;
+      })
+      .catch(err => {
+        console.log(err);
+        this.isLoading = false;
+      });
   }
 
   // resets the settings information
   reset() {
     console.log('resetting settings');
     this.isError = false;
-    this.isLoading = true;
-
-    this.setting = this.setting2;
-
-    this.isLoading = false;
-    // this.setting
-    // this.getSettingsInfo();
-    // evt.preventDefault();
+    this.getSettingsInfo();
   }
 }
